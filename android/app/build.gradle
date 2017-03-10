@@ -118,15 +118,18 @@ android {
         }
     }
 
-    Properties props = new Properties()
-    props.load(new FileInputStream(file(project.property("release.keystore.properties.path"))))
+    Properties keystoreProps = new Properties()
+    keystoreProps.load(new FileInputStream(file(project.property("release.keystore.properties.path"))))
+
+    Properties fabricProps = new Properties()
+    fabricProps.load(new FileInputStream(file(project.property("fabric.properties.path"))))
 
     signingConfigs {
         release {
-            storeFile file(props['key.store'])
-            storePassword props['key.store.password']
-            keyAlias props['key.alias']
-            keyPassword props['key.alias.password']
+            storeFile file(keystoreProps['key.store'])
+            storePassword keystoreProps['key.store.password']
+            keyAlias keystoreProps['key.alias']
+            keyPassword keystoreProps['key.alias.password']
         }
     }
 
@@ -143,6 +146,10 @@ android {
         release {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
+
+            ext.betaDistributionGroupAliases=keystoreProps['betaDistributionGroupAliases']
+            ext.betaDistributionNotifications=true
+
             signingConfig signingConfigs.release
         }
     }
