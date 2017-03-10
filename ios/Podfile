@@ -1,0 +1,16 @@
+platform :ios, '9.0'
+use_frameworks!
+
+def shared_pods
+    pod 'Fabric'
+    pod 'Crashlytics'
+end
+
+def debug_pods
+
+end
+
+target 'SantimentMobile' do
+    shared_pods
+    debug_pods
+end
