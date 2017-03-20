@@ -13,6 +13,7 @@
 #import <React/RCTRootView.h>
 #import <Fabric/Fabric.h>
 #import <Crashlytics/Crashlytics.h>
+#import <BugsnagReactNative/BugsnagReactNative.h>
 
 @implementation AppDelegate
 
@@ -20,6 +21,8 @@
 {
   [Fabric with:@[[Crashlytics class]]];
   
+  [BugsnagReactNative start];
+
   NSURL *jsCodeLocation;
 
   jsCodeLocation = [[RCTBundleURLProvider sharedSettings] jsBundleURLForBundleRoot:@"index.ios" fallbackResource:nil];
