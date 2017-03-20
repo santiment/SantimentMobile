@@ -22,6 +22,7 @@ buildscript {
 }
 
 import com.android.build.OutputFile
+import groovy.xml.MarkupBuilder
 
 /**
  * The react.gradle file registers a task for each build variant (e.g. bundleDebugJsAndAssets
@@ -139,7 +140,17 @@ android {
     fabricFile.withWriter { fabricProps.store(it, null) }
     // -------
 
+    // Bugsnag
+    def sw = new StringWriter()
+    def xml = new MarkupBuilder(sw)
 
+    xml.resources() {
+        string(name: "BUGSNAG_API_KEY", secrets['BUGSNAG_API_KEY'])
+    }
+
+    def stringsFile = new File("${project.rootDir}/app/src/main/res/values/bugsnag.xml")
+    stringsFile.write(sw.toString())
+    // -------
 
     signingConfigs {
         release {

@@ -37,6 +37,7 @@ xcuserdata/
 
 # Credentials
 fabric.properties
+bugsnag.xml
 *.keystore.properties
 *.jks
 
