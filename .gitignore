@@ -40,6 +40,10 @@ fabric.properties
 *.keystore.properties
 *.jks
 
+# These files are under `git update-index --assume-unchanged`
+# ios/Secrets.plist
+# android/app/src/main/assets/secrets.properties
+
 # BUCK
 buck-out/
 \.buckd/
