@@ -19,14 +19,13 @@ import {observer} from 'mobx-react/native'
 
 import {AddCurrencyRoute, CurrencyDetailsRoute, EditCurrenciesRoute} from '../../navigator/routes'
 import Cell from './cell'
-import Header from './header'
 
 @observer
 export default class Currencies extends React.Component {
     componentDidMount() {
         const {store} = this.props;
 
-        store.fetchTickers();
+        // store.fetchTickers();
     }
 
     render() {
@@ -36,8 +35,8 @@ export default class Currencies extends React.Component {
             return (
                 <Cell
                     symbol={_.get(rowData, 'symbol', 'Undefined')}
-                    priceUSD={'$' + parseFloat(_.get(rowData, 'price_usd', 0.0)).toPrecision(4) }
-                    priceBTC={parseFloat(_.get(rowData, 'price_btc', 0.0)).toPrecision(4) + ' BTC' }
+                    priceUSD={parseFloat(_.get(rowData, 'price_usd', 0.0)).toPrecision(4) }
+                    change24h={parseFloat(_.get(rowData, 'percent_change_24h', 0.0))}
                     onPress={ () => navigator.push({
                         name: CurrencyDetailsRoute,
                         currency: rowData,
@@ -62,11 +61,12 @@ export default class Currencies extends React.Component {
                     }
                 />
 
-                <Header/>
-
                 <ListView
                     style={styles.listView}
                     renderRow={renderRow}
+                    renderHeader={() => <View style={styles.header}/>}
+                    renderFooter={() => <View style={styles.footer}/>}
+                    renderSeparator={() => <View style={styles.separator}/>}
                     dataSource={store.currenciesDS}
                     enableEmptySections={true}
                     removeClippedSubviews={false}
@@ -117,7 +117,7 @@ const styles = StyleSheet.create({
         borderBottomColor: "#cccccc",
     },
     listView: {
-        backgroundColor: '#f8f9fa',
+        backgroundColor: '#f0f0f0',
         flex: 1,
         marginTop: 0,
     },
@@ -128,5 +128,14 @@ const styles = StyleSheet.create({
     },
     toolbarButton: {
         padding: 10,
-    }
+    },
+    header: {
+        height: 20,
+    },
+    footer: {
+        height: 20,
+    },
+    separator: {
+        height: 20,
+    },
 });
