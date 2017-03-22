@@ -3506,6 +3506,10 @@ react-native-pathjs-charts@^0.0.26:
     paths-js "^0.4.5"
     react-native-svg "~4.5.0"
 
+react-native-segmented-control-tab@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/react-native-segmented-control-tab/-/react-native-segmented-control-tab-2.0.1.tgz#3766a04ad0756d08913c6157ce196aac8a27c1f1"
+
 react-native-side-menu@^0.20.1:
   version "0.20.1"
   resolved "https://registry.yarnpkg.com/react-native-side-menu/-/react-native-side-menu-0.20.1.tgz#df21b4bb9d8a1aa3bae53d74ddf8a739eb59bfc5"

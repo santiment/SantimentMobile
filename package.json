@@ -28,6 +28,7 @@
     "react-native-keyboard-aware-scrollview": "^1.1.5",
     "react-native-navbar": "^1.6.0",
     "react-native-pathjs-charts": "^0.0.26",
+    "react-native-segmented-control-tab": "^2.0.1",
     "react-native-vector-icons": "^4.0.0",
     "react-native-version": "^2.3.0",
     "rxjs": "^5.1.1"

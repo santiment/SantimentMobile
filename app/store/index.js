@@ -68,7 +68,6 @@ class Store {
         return this._currenciesDS.cloneWithRows(rows);
     }
 
-
     // Add Currency scene
     @observable query: string = "";
 
@@ -92,6 +91,24 @@ class Store {
     @computed get editCurrenciesDS(): Object {
         const rows = this.portfolio.slice();
         return this._editCurrenciesDS.cloneWithRows(rows);
+    }
+
+    // Currencies Details scene
+    _currencyDetailsDS = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+    @computed get currencyDetailsDS(): Object {
+        const rows = [
+            {
+                date: "21.03.2017",
+                priceUSD: "1054",
+                sentiment: "bullish",
+            },
+            {
+                date: "22.03.2017",
+                priceUSD: "1074",
+                sentiment: "catish",
+            }
+        ];
+        return this._currencyDetailsDS.cloneWithRows(rows);
     }
 }
 
