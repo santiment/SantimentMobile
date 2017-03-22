@@ -35,7 +35,7 @@ export default class Currencies extends React.Component {
             return (
                 <Cell
                     symbol={_.get(rowData, 'symbol', 'Undefined')}
-                    priceUSD={parseFloat(_.get(rowData, 'price_usd', 0.0)).toPrecision(4) }
+                    priceUSD={parseFloat(parseFloat(_.get(rowData, 'price_usd', "0.0")).toPrecision(4)) }
                     change24h={parseFloat(_.get(rowData, 'percent_change_24h', 0.0))}
                     onPress={ () => navigator.push({
                         name: CurrencyDetailsRoute,
@@ -44,6 +44,10 @@ export default class Currencies extends React.Component {
                 />
 
             )
+        };
+
+        const renderSeparator = (sectionID, rowID, adjacentRowHighlighted) => {
+            return (<View key={rowID} style={styles.separator}/>)
         };
 
         return (
@@ -56,7 +60,9 @@ export default class Currencies extends React.Component {
                         <Icon
                             containerStyle={styles.toolbarButton}
                             name="mode-edit"
-                            onPress={ () => { navigator.push({name: EditCurrenciesRoute})}}
+                            onPress={ () => {
+                                navigator.push({name: EditCurrenciesRoute})
+                            }}
                         />
                     }
                 />
@@ -66,7 +72,7 @@ export default class Currencies extends React.Component {
                     renderRow={renderRow}
                     renderHeader={() => <View style={styles.header}/>}
                     renderFooter={() => <View style={styles.footer}/>}
-                    renderSeparator={() => <View style={styles.separator}/>}
+                    renderSeparator={renderSeparator}
                     dataSource={store.currenciesDS}
                     enableEmptySections={true}
                     removeClippedSubviews={false}
@@ -86,7 +92,7 @@ export default class Currencies extends React.Component {
                         reverse
                         name="add"
                         color="green"
-                        onPress={ () => navigator.push({ name:AddCurrencyRoute }) }
+                        onPress={ () => navigator.push({name: AddCurrencyRoute}) }
                     />
 
                 </View>
