@@ -23,15 +23,15 @@ export default class AddCurrency extends React.Component {
     render() {
         const {navigator, store} = this.props;
 
-        const renderRow = (rowData, sectionID) => {
+        const renderRow = (data, sectionID) => {
             return (
                 <Cell
                     key={sectionID}
-                    symbol={rowData}
+                    symbol={data}
                     onPress={() => {
-                        store.addToPortfolio(rowData);
+                        store.addSymbol(data);
                         navigator.pop();
-                        store.updateQuery('');
+                        store.setQuery('');
                     }}
                 />
             )
@@ -54,7 +54,7 @@ export default class AddCurrency extends React.Component {
 
                 <SearchBar
                     lightTheme
-                    onChangeText={store.updateQuery}
+                    onChangeText={store.setQuery}
                     placeholder='Search Coins'
                     autoCorrect={false}
                     autoCapitalize="none"
@@ -65,7 +65,7 @@ export default class AddCurrency extends React.Component {
                     keyboardShouldPersistTaps='always'
                     style={styles.listView}
                     renderRow={renderRow}
-                    dataSource={store.addCurrencyDS}
+                    dataSource={store.dataSource}
                     enableEmptySections={true}
                     removeClippedSubviews={false}
                 />
@@ -80,9 +80,9 @@ AddCurrency.propTypes = {
         pop: React.PropTypes.func.isRequired
     }),
     store: React.PropTypes.shape({
-        addToPortfolio: React.PropTypes.func.isRequired,
-        updateQuery: React.PropTypes.func.isRequired,
-        addCurrencyDS: React.PropTypes.any.isRequired,
+        addSymbol: React.PropTypes.func.isRequired,
+        setQuery: React.PropTypes.func.isRequired,
+        dataSource: React.PropTypes.any.isRequired,
     }),
 };
 

@@ -22,7 +22,7 @@ import Cell from './cell'
 export default class CurrencyDetails extends React.Component {
 
     render() {
-        const {navigator, currency, store} = this.props;
+        const {navigator, store} = this.props;
 
         let data = [
             {"x": 0,"y": 2.5},
@@ -47,9 +47,8 @@ export default class CurrencyDetails extends React.Component {
             return (
                 <Cell
                     date={_.get(rowData, 'date', "unknown") }
-                    priceUSD={'$' + parseFloat(_.get(rowData, 'priceUSD', 0.0)).toPrecision(4) }
+                    priceUSD={'$' + parseFloat(_.get(rowData, 'price', 0.0)).toPrecision(4) }
                     sentiment={_.get(rowData, 'sentiment', "unknown") }
-
                 />
             )
         };
@@ -57,7 +56,7 @@ export default class CurrencyDetails extends React.Component {
         return (
             <View style={styles.container}>
                 <NavigationBar
-                    title={{title: currency.symbol}}
+                    title={{title: store.ticker.symbol}}
                     style={styles.navBar}
                     leftButton={
                         <Icon
@@ -73,12 +72,19 @@ export default class CurrencyDetails extends React.Component {
                 <View style={styles.currencyRowContainer}>
 
                     <Text style={[styles.text, {flex: 8}]}>
-                        {/*{this.props.priceUSD}*/}
-                        $1270
+                        {store.ticker.price}
                     </Text>
 
-                    <Text style={[styles.text, {flex: 4, marginRight: 10, textAlign: "right"}]}>
-                        +6.13%
+                    <Text style={[
+                        styles.text,
+                        {flex: 4, marginRight: 10, textAlign: "right"},
+                        store.ticker.dailyChangePercent > 0
+                            ? {color: "#28aa38"}
+                            : store.ticker.dailyChangePercent < 0
+                            ? {color: "#bd2c27"}
+                            : {color: "#b1b1b2"}
+                    ]}>
+                        {`${store.ticker.dailyChangePercent}%`}
                     </Text>
 
                     <View style={{flex: 1, justifyContent: "flex-end"}}>
@@ -99,15 +105,13 @@ export default class CurrencyDetails extends React.Component {
                 />
 
                 <View style={styles.chartContainer}>
-
-                    <Chart data={data}
-                           options={options}/>
+                    <Chart data={data} options={options}/>
                 </View>
 
                 <ListView
                     style={styles.listView}
                     renderRow={renderRow}
-                    dataSource={store.currencyDetailsDS}
+                    dataSource={store.dataSource}
                     enableEmptySections={true}
                     removeClippedSubviews={false}
                 />
@@ -119,7 +123,7 @@ export default class CurrencyDetails extends React.Component {
 CurrencyDetails.propTypes = {
     navigator: React.PropTypes.object,
     store: React.PropTypes.object,
-    currency: React.PropTypes.object,
+    symbol: React.PropTypes.string,
 };
 
 const styles = StyleSheet.create({
@@ -164,7 +168,7 @@ const styles = StyleSheet.create({
         height: 13,
         width: 13,
         borderRadius: 50,
-        backgroundColor: "#98d7b5"
+        backgroundColor: "#28aa38"
     },
     tabsContainerStyle: {
         backgroundColor: 'transparent',

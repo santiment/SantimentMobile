@@ -20,27 +20,28 @@ import {observer} from 'mobx-react/native'
 import {AddCurrencyRoute, CurrencyDetailsRoute, EditCurrenciesRoute} from '../../navigator/routes'
 import Cell from './cell'
 
+import * as BFX from '../../api/bitfinex'
+
 @observer
 export default class Currencies extends React.Component {
-    componentDidMount() {
-        const {store} = this.props;
-
-        // store.fetchTickers();
-    }
+    // componentDidMount() {
+    //     const {store} = this.props;
+    // }
 
     render() {
         const {navigator, store} = this.props;
 
-        const renderRow = (rowData, sectionID) => {
+        console.log(JSON.stringify(store.dataSource, null, 2));
+        const renderRow = (data, sectionID) => {
             return (
                 <Cell
-                    symbol={_.get(rowData, 'symbol', 'Undefined')}
-                    priceUSD={parseFloat(parseFloat(_.get(rowData, 'price_usd', "0.0")).toPrecision(4)) }
-                    change24h={parseFloat(_.get(rowData, 'percent_change_24h', 0.0))}
-                    onPress={ () => navigator.push({
-                        name: CurrencyDetailsRoute,
-                        currency: rowData,
-                    })}
+                    symbol={data.symbol}
+                    price={data.price}
+                    dailyChangePercent={data.dailyChangePercent}
+                    onPress={ () => {
+                        store.selectSymbol(data.symbol);
+                        navigator.push({name: CurrencyDetailsRoute})
+                    }}
                 />
 
             )
@@ -73,13 +74,13 @@ export default class Currencies extends React.Component {
                     renderHeader={() => <View style={styles.header}/>}
                     renderFooter={() => <View style={styles.footer}/>}
                     renderSeparator={renderSeparator}
-                    dataSource={store.currenciesDS}
+                    dataSource={store.dataSource}
                     enableEmptySections={true}
                     removeClippedSubviews={false}
                     refreshControl={
                         <RefreshControl
                             refreshing={store.isLoading}
-                            onRefresh={store.fetchTickers}
+                            onRefresh={store.refresh}
                         />
                     }
                 />
@@ -92,7 +93,9 @@ export default class Currencies extends React.Component {
                         reverse
                         name="add"
                         color="green"
-                        onPress={ () => navigator.push({name: AddCurrencyRoute}) }
+                        onPress={ () => {
+                            navigator.push({name: AddCurrencyRoute})
+                        }}
                     />
 
                 </View>
@@ -108,10 +111,10 @@ Currencies.propTypes = {
         pop: React.PropTypes.func.isRequired
     }),
     store: React.PropTypes.shape({
-        fetchTickers: React.PropTypes.func.isRequired,
+        refresh: React.PropTypes.func.isRequired,
         isLoading: React.PropTypes.any.isRequired,
-        currenciesDS: React.PropTypes.any.isRequired,
-    }),
+        dataSource: React.PropTypes.any.isRequired
+    })
 };
 
 const styles = StyleSheet.create({

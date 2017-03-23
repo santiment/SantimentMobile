@@ -55,18 +55,18 @@ export default class CurrencyCell extends React.Component {
                         <View style={styles.priceColumn}>
 
                             <Text style={styles.priceText}>
-                                {"$"+this.props.priceUSD}
+                                {this.props.price}
                             </Text>
 
                             <Text style={[
                                 styles.text,
-                                this.props.change24h > 0
+                                this.props.dailyChangePercent > 0
                                     ? {color: "#28aa38"}
-                                    : this.props.change24h < 0
+                                    : this.props.dailyChangePercent < 0
                                     ? {color: "#bd2c27"}
                                     : {color: "#b1b1b2"}
                             ]}>
-                                {this.props.change24h.toString()+"%"}
+                                {this.props.dailyChangePercent.toString()+"%"}
                             </Text>
 
                         </View>
@@ -138,8 +138,8 @@ export default class CurrencyCell extends React.Component {
 
 CurrencyCell.propTypes = {
     symbol: React.PropTypes.string.isRequired,
-    change24h: React.PropTypes.number.isRequired,
-    priceUSD: React.PropTypes.number.isRequired,
+    dailyChangePercent: React.PropTypes.number.isRequired,
+    price: React.PropTypes.string.isRequired,
     onPress: React.PropTypes.func.isRequired,
 };
 
@@ -211,13 +211,13 @@ const styles = StyleSheet.create({
         fontWeight: "500",
     },
     symbolColumn: {
-        flex: 2,
+        flex: 4,
         justifyContent: 'flex-start',
         alignItems: "stretch",
         // backgroundColor: 'blue',
     },
     symbolText: {
-        fontSize: 28,
+        fontSize: 22,
         color: "#999999",
         fontWeight: "500",
     },
@@ -233,7 +233,7 @@ const styles = StyleSheet.create({
         fontWeight: "500",
     },
     chartColumn: {
-        flex: 2,
+        flex: 3,
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'flex-start',

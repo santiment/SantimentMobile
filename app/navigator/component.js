@@ -34,13 +34,13 @@ export default class AppNavigator extends React.Component {
                 renderScene={(route, navigator) => {
                     switch (route.name) {
                         case CurrenciesRoute:
-                            return <Currencies navigator={navigator} store={store}/>;
+                            return <Currencies navigator={navigator} store={store.ui.currencies}/>;
                         case CurrencyDetailsRoute:
-                            return <CurrencyDetails navigator={navigator} store={store} currency={route.currency}/>;
+                            return <CurrencyDetails navigator={navigator} store={store.ui.currencyDetails}/>;
                         case AddCurrencyRoute:
-                            return <AddCurrency navigator={navigator} store={store}/>;
+                            return <AddCurrency navigator={navigator} store={store.ui.addCurrency}/>;
                         case EditCurrenciesRoute:
-                            return <EditCurrencies navigator={navigator} store={store}/>;
+                            return <EditCurrencies navigator={navigator} store={store.ui.editCurrencies}/>;
                         default:
                             break;
                     }

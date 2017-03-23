@@ -7,11 +7,9 @@
 
 
 import _ from 'lodash'
-import fp from 'lodash/fp'
 
 import Rx from 'rxjs'
 import axios from 'axios'
-import moment from 'moment'
 
 const apiUrl = "https://api.coinmarketcap.com/v1";
 

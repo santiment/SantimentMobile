@@ -25,7 +25,7 @@ export default class EditCurrencies extends React.Component {
             return (
                 <Cell
                     symbol={rowData}
-                    onDelete={store.removeFromPortfolio}
+                    onDelete={store.removeSymbol}
                 />
             )
         };
@@ -47,7 +47,7 @@ export default class EditCurrencies extends React.Component {
                 <List containerStyle={{flex: 1, marginTop: 0}}>
                     <ListView
                         renderRow={renderRow}
-                        dataSource={store.editCurrenciesDS}
+                        dataSource={store.dataSource}
                         enableEmptySections={true}
                         removeClippedSubviews={false}
                     />
@@ -63,8 +63,8 @@ EditCurrencies.propTypes = {
         pop: React.PropTypes.func.isRequired
     }),
     store: React.PropTypes.shape({
-        removeFromPortfolio: React.PropTypes.func.isRequired,
-        editCurrenciesDS: React.PropTypes.any.isRequired,
+        removeSymbol: React.PropTypes.func.isRequired,
+        dataSource: React.PropTypes.any.isRequired,
     }),
 };
 
