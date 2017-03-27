@@ -15,6 +15,7 @@ import {observable, computed, autorun, action, useStrict} from 'mobx'
 import {create, persist} from 'mobx-persist'
 
 import * as Bitfinex from '../../api/bitfinex'
+import * as Santiment from '../../api/santiment'
 
 class DomainStore {
     constructor() {
@@ -61,14 +62,10 @@ class DomainStore {
     @action fetchTickers = (): void => {
         const bfxSymbols = this.symbols.map(s => `t${_.replace(s, "/", "")}`);
 
-        console.log("Symbols\n", this.symbols);
-        console.log("BfxSymbols\n", bfxSymbols);
-
         // TODO: Handle empty or malformed data
         Bitfinex.getTickers(bfxSymbols)
             .map(tickers => {
                 return tickers.map(t => {
-                    console.log("T\n", t);
                     return {
                         symbol: this.symbols[bfxSymbols.indexOf(t[0])],
                         price: t[7],
@@ -102,23 +99,90 @@ class DomainStore {
         this.history = history;
     };
 
-    @action fetchCandles = (symbol: string, period: string): void => {
-        const bfxSymbol = `t${_.replace(symbol, "/", "")}`;
+    @action fetchHistory = (): void => {
+        let history = {
+            "BTC/USD": {
+                "1H": [
+                    { timestamp: "1490263200000", open: 1029.4, high: 1034.4, low: 1025.1, close: 1027.4, volume: 500 },
+                    { timestamp: "1490263200001", open: 1029.4, high: 1034.4, low: 1025.1, close: 1028.4, volume: 500 },
+                    { timestamp: "1490263200002", open: 1029.4, high: 1034.4, low: 1025.1, close: 1029.4, volume: 500 },
+                    { timestamp: "1490263200003", open: 1029.4, high: 1034.4, low: 1025.1, close: 1028.4, volume: 500 },
+                ],
+                "4H": [
+                    { timestamp: "1490263200000", open: 1029.4, high: 1034.4, low: 1025.1, close: 1030.4, volume: 500 },
+                    { timestamp: "1490263200001", open: 1029.4, high: 1034.4, low: 1025.1, close: 1028.4, volume: 500 },
+                    { timestamp: "1490263200002", open: 1029.4, high: 1034.4, low: 1025.1, close: 1027.4, volume: 500 },
+                    { timestamp: "1490263200003", open: 1029.4, high: 1034.4, low: 1025.1, close: 1028.4, volume: 500 },
+                ],
+                "1D": [
+                    { timestamp: "1490263200000", open: 1029.4, high: 1034.4, low: 1025.1, close: 1020.4, volume: 500 },
+                    { timestamp: "1490263200001", open: 1029.4, high: 1034.4, low: 1025.1, close: 1023.4, volume: 500 },
+                    { timestamp: "1490263200002", open: 1029.4, high: 1034.4, low: 1025.1, close: 1027.4, volume: 500 },
+                    { timestamp: "1490263200003", open: 1029.4, high: 1034.4, low: 1025.1, close: 1028.4, volume: 500 },
+                ],
+                "1W": [
+                    { timestamp: "1490263200000", open: 1029.4, high: 1034.4, low: 1025.1, close: 1030.4, volume: 500 },
+                    { timestamp: "1490263200001", open: 1029.4, high: 1034.4, low: 1025.1, close: 1028.4, volume: 500 },
+                    { timestamp: "1490263200002", open: 1029.4, high: 1034.4, low: 1025.1, close: 1027.4, volume: 500 },
+                    { timestamp: "1490263200003", open: 1029.4, high: 1034.4, low: 1025.1, close: 1022.4, volume: 500 },
+                ],
+            },
+            "ETH/USD": {
+                "1H": [
+                    { timestamp: "1490263200000", open: 1029.4, high: 1034.4, low: 1025.1, close: 1027.4, volume: 500 },
+                    { timestamp: "1490263200001", open: 1029.4, high: 1034.4, low: 1025.1, close: 1028.4, volume: 500 },
+                    { timestamp: "1490263200002", open: 1029.4, high: 1034.4, low: 1025.1, close: 1029.4, volume: 500 },
+                    { timestamp: "1490263200003", open: 1029.4, high: 1034.4, low: 1025.1, close: 1028.4, volume: 500 },
+                ],
+                "4H": [
+                    { timestamp: "1490263200000", open: 1029.4, high: 1034.4, low: 1025.1, close: 1030.4, volume: 500 },
+                    { timestamp: "1490263200001", open: 1029.4, high: 1034.4, low: 1025.1, close: 1028.4, volume: 500 },
+                    { timestamp: "1490263200002", open: 1029.4, high: 1034.4, low: 1025.1, close: 1027.4, volume: 500 },
+                    { timestamp: "1490263200003", open: 1029.4, high: 1034.4, low: 1025.1, close: 1028.4, volume: 500 },
+                ],
+                "1D": [
+                    { timestamp: "1490263200000", open: 1029.4, high: 1034.4, low: 1025.1, close: 1020.4, volume: 500 },
+                    { timestamp: "1490263200001", open: 1029.4, high: 1034.4, low: 1025.1, close: 1023.4, volume: 500 },
+                    { timestamp: "1490263200002", open: 1029.4, high: 1034.4, low: 1025.1, close: 1027.4, volume: 500 },
+                    { timestamp: "1490263200003", open: 1029.4, high: 1034.4, low: 1025.1, close: 1028.4, volume: 500 },
+                ],
+                "1W": [
+                    { timestamp: "1490263200000", open: 1029.4, high: 1034.4, low: 1025.1, close: 1030.4, volume: 500 },
+                    { timestamp: "1490263200001", open: 1029.4, high: 1034.4, low: 1025.1, close: 1028.4, volume: 500 },
+                    { timestamp: "1490263200002", open: 1029.4, high: 1034.4, low: 1025.1, close: 1027.4, volume: 500 },
+                    { timestamp: "1490263200003", open: 1029.4, high: 1034.4, low: 1025.1, close: 1022.4, volume: 500 },
+                ],
+            }
+        };
 
-        Bitfinex.getCandles(bfxSymbol, period, 10)
-            .map(items => {
-                return items.map(item => {
-                    return {
-                        timestamp: item[0],
-                        open: item[1],
-                        close: item[2],
-                        high: item[3],
-                        low: item[4],
-                        volume: item[5],
-                    }
-                });
-            })
-            .subscribe(candles => _.set(this.history, `${symbol}.${period}`, candles), console.log);
+        this.setHistory(history)
+    };
+
+    @action fetchCandles = (symbol: string, period: string): void => {
+        // const bfxSymbol = `t${_.replace(symbol, "/", "")}`;
+
+        //
+        // Bitfinex.getCandles(bfxSymbol, period, 10)
+        //     .map(items => {
+        //         return items.map(item => {
+        //             return {
+        //                 timestamp: item[0],
+        //                 open: item[1],
+        //                 close: item[2],
+        //                 high: item[3],
+        //                 low: item[4],
+        //                 volume: item[5],
+        //             }
+        //         });
+        //     })
+        //     .subscribe(
+        //         candles => {
+        //             let history = _.cloneDeep(this.history);
+        //             _.set(history, `${symbol}.${period}`, candles);
+        //             this.setHistory(history)
+        //         },
+        //         console.log
+        //     );
             // TODO: don't mutate this.history directly
     };
 
@@ -128,61 +192,20 @@ class DomainStore {
      * [{
      *     user: "id",
      *     data: [
-     *         { symbol: "BTC/USD", sentiment: "bullish", price: 1050 }
+     *         {"id": "aaa", "symbol": "BTC/USD", "sentiment": "bullish", "price", 1041, "date": "2017-03-16T23:23:41.229Z"},
      *     ]
      * }]
      *
      */
 
-    @persist('list') @observable sentiments: Object[] = [];
+    @persist('list') @observable sentiment: Object[] = [];
 
-    @action setSentiments = (sentiments: Object[]): void => {
-        this.sentiments = sentiments;
+    @action setSentiment = (sentiments: Object[]): void => {
+        this.sentiment = sentiments;
     };
 
     @action fetchSentiments = (): void => {
-        let sentiments = [{
-            "userId": "TESTUSER",
-            "sentiment": [
-                {
-                    "id": "aaa",
-                    "asset": "BTC",
-                    "sentiment": "bullish",
-                    "date": "2017-03-16T23:23:41.229Z"
-                },
-                {
-                    "id": "bbb", "asset": "BTC",
-                    "sentiment": "bullish",
-                    "date": "2017-03-17T23:23:41.229Z"
-                },
-                {
-                    "id": "aAA",
-                    "asset": "ETH",
-                    "sentiment": "bearish",
-                    "date": "2017-03-14T23:23:41.229Z"
-                },
-                {
-                    "id": "EEE",
-                    "asset": "ETH",
-                    "sentiment": "bearish",
-                    "date": "2017-03-15T23:23:41.229Z"
-                },
-                {
-                    "id": "GGG",
-                    "asset": "ETH",
-                    "sentiment": "bearish",
-                    "date": "2017-03-16T23:23:41.229Z"
-                },
-                {
-                    "id": "ZZZ",
-                    "asset": "ETH",
-                    "sentiment": "bearish",
-                    "date": "2017-03-17T23:23:41.229Z"
-                }
-            ]
-        }];
-
-        Rx.Observable.timer(1000).first().subscribe(() => {this.setSentiments(sentiments)}, console.log)
+        Santiment.getSentiment().subscribe(this.setSentiment, console.log);
     };
 
     // ---------
