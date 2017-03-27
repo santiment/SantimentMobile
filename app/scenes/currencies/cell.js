@@ -8,31 +8,31 @@
 
 import React from 'react';
 import ReactNative from 'react-native';
-let {View, StyleSheet, Text, TouchableWithoutFeedback, Image} = ReactNative;
+let {View, StyleSheet, Text, TouchableHighlight, TouchableWithoutFeedback, Image} = ReactNative;
 
 import ChartPreview from '../../components/chartPreview'
 
 export default class CurrencyCell extends React.Component {
-    render () {
+    render() {
 
         let data =
-                [{
-                    "x": 0,
-                    "y": 2
-                }, {
-                    "x": 1,
-                    "y": 2.5
-                }, {
-                    "x": 2,
-                    "y": 4
-                }, {
-                    "x": 3,
-                    "y": 4
-                }, {
-                    "x": 4,
-                    "y": 3.5
-                }]
-            ;
+            [{
+                "x": 0,
+                "y": 2
+            }, {
+                "x": 1,
+                "y": 2.5
+            }, {
+                "x": 2,
+                "y": 4
+            }, {
+                "x": 3,
+                "y": 4
+            }, {
+                "x": 4,
+                "y": 3.5
+            }]
+        ;
 
         let options = {
             width: 70,
@@ -66,7 +66,7 @@ export default class CurrencyCell extends React.Component {
                                     ? {color: "#bd2c27"}
                                     : {color: "#b1b1b2"}
                             ]}>
-                                {this.props.dailyChangePercent.toString()+"%"}
+                                {this.props.dailyChangePercent.toString() + "%"}
                             </Text>
 
                         </View>
@@ -90,44 +90,63 @@ export default class CurrencyCell extends React.Component {
 
                     <View style={styles.buttonRowContainer}>
 
-                        <View style={[styles.button, styles.borderRight]}>
-                            <View style={styles.imageContainer}>
-                                <Image
-                                    style={styles.image}
-                                    source={require('./../../resources/images/bull.png')}
-                                />
+                        <TouchableHighlight
+                            style={[styles.button, styles.borderRight]}
+                            onPress={() => this.props.onVote(this.props.symbol, this.props.price, "bullish")}
+                            underlayColor={"#f0f0f0"}
+                        >
+                            <View>
+                                <View style={styles.imageContainer}>
+                                    <Image
+                                        style={styles.image}
+                                        source={require('./../../resources/images/bull.png')}
+                                    />
+                                </View>
+
+                                <Text style={styles.buttonText}>
+                                    Bullish
+                                </Text>
                             </View>
+                        </TouchableHighlight>
 
-                            <Text style={styles.buttonText}>
-                                Bullish
-                            </Text>
-                        </View>
+                        <TouchableHighlight
+                            style={styles.button}
+                            onPress={() => this.props.onVote(this.props.symbol, this.props.price, "catish")}
+                            underlayColor={"#f0f0f0"}
+                        >
+                            <View>
+                                <View style={styles.imageContainer}>
+                                    <Image
+                                        style={styles.image}
+                                        source={require('./../../resources/images/cat.png')}
+                                    />
+                                </View>
 
-                        <View style={styles.button}>
-                            <View style={styles.imageContainer}>
-                                <Image
-                                    style={styles.image}
-                                    source={require('./../../resources/images/cat.png')}
-                                />
+                                <Text style={styles.buttonText}>
+                                    Catish
+                                </Text>
                             </View>
+                        </TouchableHighlight>
 
-                            <Text style={styles.buttonText}>
-                                Catish
-                            </Text>
-                        </View>
+                        <TouchableHighlight
+                            style={[styles.button, styles.borderLeft]}
+                            onPress={() => this.props.onVote(this.props.symbol, this.props.price, "bearish")}
+                            underlayColor={"#f0f0f0"}
+                        >
+                            <View>
+                                <View style={styles.imageContainer}>
+                                    <Image
+                                        style={styles.image}
+                                        source={require('./../../resources/images/bear.png')}
+                                    />
+                                </View>
 
-                        <View style={[styles.button, styles.borderLeft]}>
-                            <View style={styles.imageContainer}>
-                                <Image
-                                    style={styles.image}
-                                    source={require('./../../resources/images/bear.png')}
-                                />
+                                <Text style={styles.buttonText}>
+                                    Bearish
+                                </Text>
                             </View>
+                        </TouchableHighlight>
 
-                            <Text style={styles.buttonText}>
-                                Bearish
-                            </Text>
-                        </View>
                     </View>
 
                 </View>
@@ -141,6 +160,7 @@ CurrencyCell.propTypes = {
     dailyChangePercent: React.PropTypes.number.isRequired,
     price: React.PropTypes.string.isRequired,
     onPress: React.PropTypes.func.isRequired,
+    onVote: React.PropTypes.func.isRequired,
 };
 
 const styles = StyleSheet.create({

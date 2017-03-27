@@ -31,7 +31,6 @@ export default class Currencies extends React.Component {
     render() {
         const {navigator, store} = this.props;
 
-        console.log(JSON.stringify(store.dataSource, null, 2));
         const renderRow = (data, sectionID) => {
             return (
                 <Cell
@@ -42,6 +41,7 @@ export default class Currencies extends React.Component {
                         store.selectSymbol(data.symbol);
                         navigator.push({name: CurrencyDetailsRoute})
                     }}
+                    onVote={console.log}
                 />
 
             )
