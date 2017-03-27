@@ -57,15 +57,15 @@ export default class Currencies extends React.Component {
                 <NavigationBar
                     title={{title: "Currencies"}}
                     style={styles.navBar}
-                    rightButton={
-                        <Icon
-                            containerStyle={styles.toolbarButton}
-                            name="mode-edit"
-                            onPress={ () => {
-                                navigator.push({name: EditCurrenciesRoute})
-                            }}
-                        />
-                    }
+                    // rightButton={
+                    //     <Icon
+                    //         containerStyle={styles.toolbarButton}
+                    //         name="mode-edit"
+                    //         onPress={ () => {
+                    //             navigator.push({name: EditCurrenciesRoute})
+                    //         }}
+                    //     />
+                    // }
                 />
 
                 <ListView
@@ -86,19 +86,19 @@ export default class Currencies extends React.Component {
                 />
 
 
-                <View style={styles.fabContainer}>
+                {/*<View style={styles.fabContainer}>*/}
 
-                    <Icon
-                        raised
-                        reverse
-                        name="add"
-                        color="green"
-                        onPress={ () => {
-                            navigator.push({name: AddCurrencyRoute})
-                        }}
-                    />
+                    {/*<Icon*/}
+                        {/*raised*/}
+                        {/*reverse*/}
+                        {/*name="add"*/}
+                        {/*color="green"*/}
+                        {/*onPress={ () => {*/}
+                            {/*navigator.push({name: AddCurrencyRoute})*/}
+                        {/*}}*/}
+                    {/*/>*/}
 
-                </View>
+                {/*</View>*/}
 
             </View>
         );
