@@ -7,10 +7,20 @@
 
 import React from 'react';
 import ReactNative from 'react-native';
-let {View, StyleSheet, Text} = ReactNative;
+let {View, StyleSheet, Text, Image} = ReactNative;
 
 export default class CurrencyDetailsCell extends React.Component {
     render () {
+
+        const imagePath = (sentiment) => {
+            switch (sentiment) {
+                case "bullish": return require('../../resources/images/bull.png');
+                case "catish": return require('../../resources/images/cat.png');
+                case "bearish": return require('../../resources/images/bear.png');
+                default: return ''
+            }
+        };
+
         return (
             <View style={styles.container}>
                 <Text style={[styles.text, styles.date]}>
@@ -18,12 +28,15 @@ export default class CurrencyDetailsCell extends React.Component {
                 </Text>
 
                 <Text style={[styles.text, styles.price]}>
-                    {this.props.priceUSD}
+                    {this.props.price}
                 </Text>
 
-                <Text style={[styles.text, styles.sentiment]}>
-                    {this.props.sentiment}
-                </Text>
+                <View style={styles.imageContainer}>
+                    <Image
+                        style={styles.image}
+                        source={imagePath(this.props.sentiment)}
+                    />
+                </View>
             </View>
         )
     }
@@ -31,7 +44,7 @@ export default class CurrencyDetailsCell extends React.Component {
 
 CurrencyDetailsCell.propTypes = {
     date: React.PropTypes.string.isRequired,
-    priceUSD: React.PropTypes.string.isRequired,
+    price: React.PropTypes.string.isRequired,
     sentiment: React.PropTypes.string.isRequired,
 };
 
@@ -61,5 +74,14 @@ const styles = StyleSheet.create({
         color: "#999999",
         fontWeight: "500",
         justifyContent: 'center',
-    }
+    },
+    imageContainer: {
+        padding: 5,
+        height: 40,
+        width: 40
+    },
+    image: {
+        height: 30,
+        width: 30,
+    },
 });

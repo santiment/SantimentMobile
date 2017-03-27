@@ -15,40 +15,50 @@ import NavigationBar from 'react-native-navbar'
 import SegmentedControl from 'react-native-segmented-control-tab'
 
 import _ from 'lodash'
+import {observer} from 'mobx-react/native'
 
 import Chart from '../../components/chart'
 import Cell from './cell'
 
+@observer
 export default class CurrencyDetails extends React.Component {
+
+    componentDidMount() {
+        const {store} = this.props;
+
+        store.refresh();
+    }
 
     render() {
         const {navigator, store} = this.props;
 
-        let data = [
-            {"x": 0,"y": 2.5},
-            {"x": 1,"y": 2.7},
-            {"x": 2,"y": 2.9},
-            {"x": 3,"y": 2.95},
-            {"x": 4,"y": 3.0},
-            {"x": 5,"y": 3.5},
-            {"x": 6,"y": 3.4},
-            {"x": 7,"y": 3.0},
-            {"x": 8,"y": 2.9},
-            {"x": 9,"y": 3.0},
-            {"x": 10,"y": 2.9},
-        ];
+        // let data = [
+        //     {"x": 0,"y": 2.5},
+        //     {"x": 1,"y": 2.7},
+        //     {"x": 2,"y": 2.9},
+        //     {"x": 3,"y": 2.95},
+        //     {"x": 4,"y": 3.0},
+        //     {"x": 5,"y": 3.5},
+        //     {"x": 6,"y": 3.4},
+        //     {"x": 7,"y": 3.0},
+        //     {"x": 8,"y": 2.9},
+        //     {"x": 9,"y": 3.0},
+        //     {"x": 10,"y": 2.9},
+        // ];
 
         let options = {
             width: 330,
             height: 150,
         };
 
-        const renderRow = (rowData, sectionID) => {
+        let data = store.candles.slice().map(c => {return {x: parseInt(c.timestamp), y: c.close}});
+
+        const renderRow = (data, sectionID) => {
             return (
                 <Cell
-                    date={_.get(rowData, 'date', "unknown") }
-                    priceUSD={'$' + parseFloat(_.get(rowData, 'price', 0.0)).toPrecision(4) }
-                    sentiment={_.get(rowData, 'sentiment', "unknown") }
+                    date={data.date}
+                    price={data.price}
+                    sentiment={data.sentiment}
                 />
             )
         };
@@ -94,19 +104,20 @@ export default class CurrencyDetails extends React.Component {
                 </View>
 
                 <SegmentedControl
-                    values={['1H', '4H', '1D', '1W']}
+                    values={store.periods.slice()}
                     borderRadius={0}
                     tabsContainerStyle={styles.tabsContainerStyle}
                     tabStyle={styles.tabStyle}
                     activeTabStyle={styles.activeTabStyle}
                     tabTextStyle={styles.tabTextStyle}
                     activeTabTextStyle={styles.activeTabTextStyle}
-                    onTabPress={index => console.log(index)}
+                    onTabPress={store.setSelectedPeriod}
                 />
 
                 <View style={styles.chartContainer}>
                     <Chart data={data} options={options}/>
                 </View>
+
 
                 <ListView
                     style={styles.listView}
