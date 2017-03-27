@@ -31,7 +31,7 @@ export default class EditCurrenciesUiStore {
 
     _dataSource = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     @computed get dataSource(): Object {
-        return this._dataSource.cloneWithRows(this.rows);
+        return this._dataSource.cloneWithRows(this.rows.slice());
     }
 }
 
