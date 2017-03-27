@@ -43,7 +43,17 @@ export default class CurrencyDetailsUiStore {
     };
 
     @computed get ticker(): Object {
-        return _.find(this.domainStore.tickers, t => _.isEqual(t.symbol, this.domainStore.selectedSymbol));
+        const findTicker = (arr) => _.find(arr, t => _.isEqual(t.symbol, this.domainStore.selectedSymbol));
+        const formatTicker = (t) => { return {
+            symbol: t.symbol,
+            dailyChangePercent: t.dailyChangePercent.toPrecision(3),
+            price: t.price.toPrecision(4),
+            volume: t.volume,
+        }};
+
+        const getTicker = _.flow(findTicker, formatTicker);
+
+        return getTicker(this.domainStore.tickers);
     }
 
     @computed get candles(): Object[] {
@@ -60,7 +70,7 @@ export default class CurrencyDetailsUiStore {
 
         const rowsForSentiment = _.flow(getData, filterBySymbol, sortByDate, formatDates, formatPrice);
 
-        const rows = rowsForSentiment(this.domainStore.sentiment);
+        const rows = rowsForSentiment(this.domainStore.sentiment.slice());
         console.log("Rows:\n",JSON.stringify(rows, null, 2));
         
 

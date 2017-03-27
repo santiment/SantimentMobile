@@ -41,11 +41,10 @@ export default class CurrenciesUiStore {
         return selectedTickers.map(t => {
             return {
                 symbol: t.symbol,
-                dailyChangePercent: t.dailyChangePercent,
+                dailyChangePercent: t.dailyChangePercent.toFixed(2),
                 price: t.price.toPrecision(4),
                 volume: t.volume,
             }
-
         });
     }
 

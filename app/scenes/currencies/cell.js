@@ -12,6 +12,8 @@ let {View, StyleSheet, Text, TouchableHighlight, TouchableWithoutFeedback, Image
 
 import ChartPreview from '../../components/chartPreview'
 
+import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions';
+
 export default class CurrencyCell extends React.Component {
     render() {
 
@@ -35,7 +37,7 @@ export default class CurrencyCell extends React.Component {
         ;
 
         let options = {
-            width: 70,
+            width: responsiveWidth(15),
             height: 20
         };
 
@@ -66,7 +68,7 @@ export default class CurrencyCell extends React.Component {
                                     ? {color: "#bd2c27"}
                                     : {color: "#b1b1b2"}
                             ]}>
-                                {this.props.dailyChangePercent.toString() + "%"}
+                                {this.props.dailyChangePercent + "%"}
                             </Text>
 
                         </View>
@@ -157,7 +159,7 @@ export default class CurrencyCell extends React.Component {
 
 CurrencyCell.propTypes = {
     symbol: React.PropTypes.string.isRequired,
-    dailyChangePercent: React.PropTypes.number.isRequired,
+    dailyChangePercent: React.PropTypes.string.isRequired,
     price: React.PropTypes.string.isRequired,
     onPress: React.PropTypes.func.isRequired,
     onVote: React.PropTypes.func.isRequired,
@@ -237,7 +239,7 @@ const styles = StyleSheet.create({
         // backgroundColor: 'blue',
     },
     symbolText: {
-        fontSize: 22,
+        fontSize: responsiveFontSize(3),
         color: "#999999",
         fontWeight: "500",
     },
@@ -248,7 +250,7 @@ const styles = StyleSheet.create({
         alignItems: "stretch",
     },
     priceText: {
-        fontSize: 16,
+        fontSize: responsiveFontSize(2),
         color: "#999999",
         fontWeight: "500",
     },
@@ -256,7 +258,7 @@ const styles = StyleSheet.create({
         flex: 3,
         flexDirection: 'column',
         justifyContent: 'center',
-        alignItems: 'flex-start',
+        alignItems: 'center',
     },
     trendColumn: {
         flex: 1,
@@ -265,7 +267,7 @@ const styles = StyleSheet.create({
         alignItems: "center",
     },
     text: {
-        fontSize: 16,
+        fontSize: responsiveFontSize(2),
         color: "#999999",
         fontWeight: "500",
     },

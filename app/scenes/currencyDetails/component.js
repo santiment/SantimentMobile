@@ -14,11 +14,14 @@ import NavigationBar from 'react-native-navbar'
 
 import SegmentedControl from 'react-native-segmented-control-tab'
 
+import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions';
+
 import _ from 'lodash'
 import {observer} from 'mobx-react/native'
 
 import Chart from '../../components/chart'
 import Cell from './cell'
+
 
 @observer
 export default class CurrencyDetails extends React.Component {
@@ -47,11 +50,16 @@ export default class CurrencyDetails extends React.Component {
         // ];
 
         let options = {
-            width: 330,
+            width: responsiveWidth(85),
             height: 150,
         };
 
         let data = store.candles.slice().map(c => {return {x: parseInt(c.timestamp), y: c.close}});
+        if (_.isEmpty(data)) {
+            data = [{x: 0, y: 0}]
+        }
+        console.log(JSON.stringify(data, null, 2));
+
 
         const renderRow = (data, sectionID) => {
             return (
@@ -161,6 +169,8 @@ const styles = StyleSheet.create({
     },
     chartContainer: {
         padding: 20,
+        alignItems: 'center',
+
     },
     toolbarButton: {
         padding: 10,
