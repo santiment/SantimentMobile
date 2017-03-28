@@ -222,8 +222,9 @@ class DomainStore {
 
 }
 
-const persistStore = create({
-    storage: AsyncStorage
-});
+const hydrate = create({ storage: AsyncStorage });
 
-export default persistStore('store', new DomainStore());
+const domainStore = new DomainStore();
+export default domainStore;
+
+hydrate('store', domainStore).then(() => console.log('DomainStore hydrated'));

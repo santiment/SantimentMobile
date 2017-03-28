@@ -19,6 +19,7 @@ export default class CurrenciesUiStore {
         useStrict(true);
 
         this.domainStore = domainStore;
+        console.log("Domain Store:\n", JSON.stringify(domainStore, null, 2));
     }
 
     @observable isLoading: boolean = false;
