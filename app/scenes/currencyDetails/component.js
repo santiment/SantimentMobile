@@ -12,14 +12,16 @@ let {Text, View, StyleSheet, ListView} = ReactNative;
 import {Icon} from 'react-native-elements'
 import NavigationBar from 'react-native-navbar'
 
-import SegmentedControl from 'react-native-segmented-control-tab'
+// import SegmentedControl from 'react-native-segmented-control-tab'
 
 import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions';
 
 import _ from 'lodash'
 import {observer} from 'mobx-react/native'
 
-import Chart from '../../components/chart'
+// import Highchart from '../../components/highchartsWrapper/highchartsTest'
+// import CandlestickChart from '../../components/candlestickChart'
+
 import Cell from './cell'
 
 
@@ -34,33 +36,7 @@ export default class CurrencyDetails extends React.Component {
 
     render() {
         const {navigator, store} = this.props;
-
-        // let data = [
-        //     {"x": 0,"y": 2.5},
-        //     {"x": 1,"y": 2.7},
-        //     {"x": 2,"y": 2.9},
-        //     {"x": 3,"y": 2.95},
-        //     {"x": 4,"y": 3.0},
-        //     {"x": 5,"y": 3.5},
-        //     {"x": 6,"y": 3.4},
-        //     {"x": 7,"y": 3.0},
-        //     {"x": 8,"y": 2.9},
-        //     {"x": 9,"y": 3.0},
-        //     {"x": 10,"y": 2.9},
-        // ];
-
-        let options = {
-            width: responsiveWidth(85),
-            height: 150,
-        };
-
-        let data = store.candles.slice().map(c => {return {x: parseInt(c.timestamp), y: c.close}});
-        if (_.isEmpty(data)) {
-            data = [{x: 0, y: 0}]
-        }
-        console.log(JSON.stringify(data, null, 2));
-
-
+        
         const renderRow = (data, sectionID) => {
             return (
                 <Cell
@@ -111,21 +87,25 @@ export default class CurrencyDetails extends React.Component {
 
                 </View>
 
-                <SegmentedControl
-                    values={store.periods.slice()}
-                    borderRadius={0}
-                    tabsContainerStyle={styles.tabsContainerStyle}
-                    tabStyle={styles.tabStyle}
-                    activeTabStyle={styles.activeTabStyle}
-                    tabTextStyle={styles.tabTextStyle}
-                    activeTabTextStyle={styles.activeTabTextStyle}
-                    onTabPress={store.setSelectedPeriod}
-                />
+                {/*<SegmentedControl*/}
+                    {/*values={store.periods.slice()}*/}
+                    {/*borderRadius={0}*/}
+                    {/*tabsContainerStyle={styles.tabsContainerStyle}*/}
+                    {/*tabStyle={styles.tabStyle}*/}
+                    {/*activeTabStyle={styles.activeTabStyle}*/}
+                    {/*tabTextStyle={styles.tabTextStyle}*/}
+                    {/*activeTabTextStyle={styles.activeTabTextStyle}*/}
+                    {/*onTabPress={store.setSelectedPeriod}*/}
+                {/*/>*/}
 
-                <View style={styles.chartContainer}>
-                    <Chart data={data} options={options}/>
-                </View>
+                {/*<View style={styles.chartContainer}>*/}
+                    {/*<Chart data={data} options={options}/>*/}
+                {/*</View>*/}
 
+                {/*<CandlestickChart*/}
+                    {/*data={store.candles}*/}
+                    {/*style={styles.chart}*/}
+                {/*/>*/}
 
                 <ListView
                     style={styles.listView}
@@ -214,5 +194,10 @@ const styles = StyleSheet.create({
     },
     activeTabTextStyle: {
         color: 'white'
-    }
+    },
+    chart: {
+        height: 200,
+        marginLeft: 20,
+        marginRight: 20,
+    },
 });

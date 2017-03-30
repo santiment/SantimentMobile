@@ -10,8 +10,6 @@ import React from 'react';
 import ReactNative from 'react-native';
 let {View, StyleSheet, Text, TouchableHighlight, TouchableWithoutFeedback, Image} = ReactNative;
 
-import ChartPreview from '../../components/chartPreview'
-
 import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions';
 
 export default class CurrencyCell extends React.Component {
@@ -74,8 +72,6 @@ export default class CurrencyCell extends React.Component {
                         </View>
 
                         <View style={styles.chartColumn}>
-
-                            <ChartPreview data={data} options={options}/>
 
                         </View>
 

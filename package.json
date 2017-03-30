@@ -10,7 +10,8 @@
     "start": "node node_modules/react-native/local-cli/cli.js start",
     "test": "jest",
     "flow": "node_modules/.bin/flow",
-    "postversion": "react-native-version"
+    "postversion": "react-native-version",
+    "cleanup": "rm -rf android/build/ android/app/build/ ios/build/ node_modules/ ; yarn cache clean ; yarn install"
   },
   "dependencies": {
     "axios": "^0.15.3",
@@ -27,7 +28,6 @@
     "react-native-elements": "^0.10.2",
     "react-native-keyboard-aware-scrollview": "^1.1.5",
     "react-native-navbar": "^1.6.0",
-    "react-native-pathjs-charts": "^0.0.26",
     "react-native-responsive-dimensions": "^1.0.1",
     "react-native-segmented-control-tab": "^2.0.1",
     "react-native-vector-icons": "^4.0.0",
