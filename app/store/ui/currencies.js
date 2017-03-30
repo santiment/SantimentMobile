@@ -19,7 +19,6 @@ export default class CurrenciesUiStore {
         useStrict(true);
 
         this.domainStore = domainStore;
-        console.log("Domain Store:\n", JSON.stringify(domainStore, null, 2));
     }
 
     @observable isLoading: boolean = false;
@@ -29,11 +28,16 @@ export default class CurrenciesUiStore {
     };
 
     @action refresh = (): void => {
-        this.domainStore.fetchTickers()
+        this.domainStore.fetchSentiments();
+        this.domainStore.fetchTickers();
     };
 
     @action selectSymbol = (symbol: string): void => {
-        this.domainStore.setSelectedSymbol(symbol)
+        this.domainStore.setSelectedSymbol(symbol);
+    };
+
+    @action addSentiment = (sentiment: Object): void => {
+        this.domainStore.addSentiment(sentiment);
     };
 
     @computed get rows(): Object[] {

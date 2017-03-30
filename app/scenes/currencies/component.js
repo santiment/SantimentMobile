@@ -13,6 +13,7 @@ import {Icon} from 'react-native-elements'
 import NavigationBar from 'react-native-navbar'
 
 import _ from 'lodash'
+import moment from 'moment'
 
 import {observer} from 'mobx-react/native'
 
@@ -20,7 +21,6 @@ import {observer} from 'mobx-react/native'
 import {AddCurrencyRoute, CurrencyDetailsRoute, EditCurrenciesRoute} from '../../navigator/routes'
 import Cell from './cell'
 
-import * as BFX from '../../api/bitfinex'
 
 @observer
 export default class Currencies extends React.Component {
@@ -42,7 +42,16 @@ export default class Currencies extends React.Component {
                         store.selectSymbol(data.symbol);
                         navigator.push({name: CurrencyDetailsRoute})
                     }}
-                    onVote={console.log}
+                    onVote={(symbol, price, sentiment) => {
+                        store.selectSymbol(data.symbol);
+                        store.addSentiment({
+                            symbol: symbol,
+                            price: price,
+                            sentiment: sentiment,
+                            date: moment().toISOString(),
+                        });
+                        navigator.push({name: CurrencyDetailsRoute})
+                    }}
                 />
 
             )
