@@ -17,12 +17,12 @@ export const getSentiment = () => {
         return [{
             "userId": "TESTUSER",
             "data": [
-                {"id": "aaa", "symbol": "BTC/USD", "sentiment": "bullish", "price": 1041, "date": "2017-03-16T23:23:41.229Z"},
-                {"id": "bbb", "symbol": "BTC/USD", "sentiment": "bullish", "price": 1043,  "date": "2017-03-17T23:23:41.229Z"},
-                {"id": "aAA", "symbol": "ETH/USD", "sentiment": "catish", "price": 1046, "date": "2017-03-14T23:23:41.229Z"},
-                {"id": "EEE", "symbol": "ETH/USD", "sentiment": "bearish", "price": 1049, "date": "2017-03-15T23:23:41.229Z"},
-                {"id": "GGG", "symbol": "BTC/USD", "sentiment": "catish", "price": 1053, "date": "2017-03-16T23:23:41.229Z"},
-                {"id": "ZZZ", "symbol": "ETH/USD", "sentiment": "bearish", "price": 1011, "date": "2017-03-17T23:23:41.229Z"}
+                {"id": "aaa", "symbol": "BTC_USD", "sentiment": "bullish", "price": 1041, "date": "2017-03-12T23:23:41.229Z"},
+                {"id": "bbb", "symbol": "BTC_USD", "sentiment": "bearish", "price": 1043,  "date": "2017-03-18T23:23:41.229Z"},
+                {"id": "GGG", "symbol": "BTC_USD", "sentiment": "catish", "price": 1053, "date": "2017-03-20T23:23:41.229Z"},
+                {"id": "aAA", "symbol": "ETH_USD", "sentiment": "catish", "price": 43, "date": "2017-03-14T23:23:41.229Z"},
+                {"id": "EEE", "symbol": "ETH_USD", "sentiment": "bullish", "price": 45, "date": "2017-03-17T23:23:41.229Z"},
+                {"id": "ZZZ", "symbol": "ETH_USD", "sentiment": "bearish", "price": 49, "date": "2017-03-20T23:23:41.229Z"}
             ]
         }];
     })

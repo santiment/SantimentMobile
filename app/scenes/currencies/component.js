@@ -32,7 +32,7 @@ export default class Currencies extends React.Component {
     render() {
         const {navigator, store} = this.props;
 
-        const renderRow = (data, sectionID) => {
+        const renderRow = (data, sectionID, rowID) => {
             return (
                 <Cell
                     symbol={data.symbol}

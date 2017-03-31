@@ -10,7 +10,7 @@ import _ from 'lodash'
 import ReactNative from 'react-native';
 const {ListView} = ReactNative;
 
-import {observable, computed, autorun, action, useStrict} from 'mobx'
+import mobx, {observable, computed, autorun, action, useStrict} from 'mobx'
 
 export default class EditCurrenciesUiStore {
     domainStore: any;

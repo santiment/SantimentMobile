@@ -10,7 +10,7 @@ import _ from 'lodash'
 import ReactNative from 'react-native';
 const {ListView} = ReactNative;
 
-import {observable, computed, autorun, action, useStrict} from 'mobx'
+import mobx, {observable, computed, autorun, action, useStrict} from 'mobx'
 
 import moment from 'moment'
 
@@ -25,7 +25,7 @@ export default class CurrencyDetailsUiStore {
 
     @observable periods: string[] = ['1H', '4H', '1D', '1W'];
 
-    @observable selectedPeriod: number = 0;
+    @observable selectedPeriod: number = 2;
 
     @action setSelectedPeriod = (index: number): void => {
         this.selectedPeriod = index;
@@ -38,8 +38,6 @@ export default class CurrencyDetailsUiStore {
     };
 
     @action refresh = (): void => {
-        this.domainStore.fetchSentiments();
-        this.domainStore.fetchHistory();
     };
 
     @computed get ticker(): Object {
@@ -57,24 +55,44 @@ export default class CurrencyDetailsUiStore {
     }
 
     @computed get candles(): Object[] {
-        console.log(`${this.ticker.symbol}.${this.periods[this.selectedPeriod]}`);
-        return _.get(this.domainStore.history, `${this.ticker.symbol}.${this.periods[this.selectedPeriod]}`, []);
+        const path = [`${this.ticker.symbol}`, `${this.periods[this.selectedPeriod]}`];
+        const ohlcv = _.get(this.domainStore.history, path, []);
+        const candles = ohlcv.map(i => {
+           return {
+               x: parseFloat(i.timestamp),
+               open: i.open,
+               high: i.high,
+               low: i.low,
+               close: i.close,
+           }
+        });
+
+        return candles;
+    }
+
+    @computed get sentiments(): Object[] {
+        const getData = (obj) => _.get(obj, "[0].data", []);
+        const filterBySymbol = (arr) => _.filter(arr, s => { return _.isEqual(s.symbol, this.domainStore.selectedSymbol) });
+
+        return _.flow(getData, filterBySymbol)(this.domainStore.sentiment.slice())
+    }
+
+    @computed get sentimentSeries(): Object[] {
+        const sortByDate = (arr) => _.orderBy(arr, ['date'], ['desc']);
+        const toSeries = (arr) => _.map(arr, s => { return {
+            x: moment(s.date).valueOf(),
+            sentiment: s.sentiment,
+        }});
+
+        return _.flow(sortByDate, toSeries)(this.sentiments.slice())
     }
 
     @computed get rows(): Object[] {
-        const getData = (obj) => _.get(obj, "[0].data", []);
-        const filterBySymbol = (arr) => _.filter(arr, s => { return _.isEqual(s.symbol, this.domainStore.selectedSymbol) });
         const sortByDate = (arr) => _.orderBy(arr, ['date'], ['desc']);
         const formatDates = (arr) => _.map(arr, s => { return {...s, date: moment(s.date).fromNow()}});
         const formatPrice = (arr) => _.map(arr, s => { return {...s, price: `${s.price}`}});
 
-        const rowsForSentiment = _.flow(getData, filterBySymbol, sortByDate, formatDates, formatPrice);
-
-        const rows = rowsForSentiment(this.domainStore.sentiment.slice());
-        console.log("Rows:\n",JSON.stringify(rows, null, 2));
-        
-
-        return rows
+        return _.flow(sortByDate, formatDates, formatPrice)(this.sentiments.slice())
     }
 
     _dataSource = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });

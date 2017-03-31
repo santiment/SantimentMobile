@@ -17,10 +17,11 @@ import NavigationBar from 'react-native-navbar'
 import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions';
 
 import _ from 'lodash'
+import moment from 'moment'
 import {observer} from 'mobx-react/native'
 
 // import Highchart from '../../components/highchartsWrapper/highchartsTest'
-// import CandlestickChart from '../../components/candlestickChart'
+import CandlestickChart from '../../components/candlestickChart'
 
 import Cell from './cell'
 
@@ -36,7 +37,7 @@ export default class CurrencyDetails extends React.Component {
 
     render() {
         const {navigator, store} = this.props;
-        
+
         const renderRow = (data, sectionID) => {
             return (
                 <Cell
@@ -47,10 +48,29 @@ export default class CurrencyDetails extends React.Component {
             )
         };
 
+        let sentiments = [
+            {
+                x: 1490832000000,
+                sentiment: "bearish",
+            }, {
+                x: 1490659200000,
+                sentiment: "bullish",
+            }, {
+                x: 1490227200000,
+                sentiment: "bearish",
+            }, {
+                x: 1490140800000,
+                sentiment: "catish",
+            }, {
+                x: 1489795200000,
+                sentiment: "bullish",
+            }
+        ];
+
         return (
             <View style={styles.container}>
                 <NavigationBar
-                    title={{title: store.ticker.symbol}}
+                    title={{title: _.replace(store.ticker.symbol, "_", "/")}}
                     style={styles.navBar}
                     leftButton={
                         <Icon
@@ -102,10 +122,11 @@ export default class CurrencyDetails extends React.Component {
                     {/*<Chart data={data} options={options}/>*/}
                 {/*</View>*/}
 
-                {/*<CandlestickChart*/}
-                    {/*data={store.candles}*/}
-                    {/*style={styles.chart}*/}
-                {/*/>*/}
+                <CandlestickChart
+                    candlesticks={store.candles}
+                    sentiments={store.sentimentSeries}
+                    style={styles.chart}
+                />
 
                 <ListView
                     style={styles.listView}
@@ -196,7 +217,7 @@ const styles = StyleSheet.create({
         color: 'white'
     },
     chart: {
-        height: 200,
+        height: 300,
         marginLeft: 20,
         marginRight: 20,
     },

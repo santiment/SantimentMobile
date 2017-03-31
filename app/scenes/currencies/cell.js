@@ -12,6 +12,8 @@ let {View, StyleSheet, Text, TouchableHighlight, TouchableWithoutFeedback, Image
 
 import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions';
 
+import _ from 'lodash'
+
 export default class CurrencyCell extends React.Component {
     render() {
 
@@ -47,7 +49,7 @@ export default class CurrencyCell extends React.Component {
                         <View style={styles.symbolColumn}>
 
                             <Text style={styles.symbolText}>
-                                {this.props.symbol}
+                                {_.replace(this.props.symbol, "_", "/")}
                             </Text>
 
                         </View>

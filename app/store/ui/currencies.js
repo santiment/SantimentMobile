@@ -10,7 +10,7 @@ import _ from 'lodash'
 import ReactNative from 'react-native';
 const {ListView} = ReactNative;
 
-import {observable, computed, autorun, action, useStrict} from 'mobx'
+import mobx, {observable, computed, autorun, action, useStrict} from 'mobx'
 
 export default class CurrenciesUiStore {
     domainStore: any;
@@ -28,8 +28,9 @@ export default class CurrenciesUiStore {
     };
 
     @action refresh = (): void => {
-        this.domainStore.fetchSentiments();
+        this.domainStore.fetchSentiment();
         this.domainStore.fetchTickers();
+        this.domainStore.fetchHistory();
     };
 
     @action selectSymbol = (symbol: string): void => {
