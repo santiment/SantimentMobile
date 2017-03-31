@@ -48,3 +48,6 @@ bugsnag.xml
 # BUCK
 buck-out/
 \.buckd/
+
+# Misc
+playground.js
