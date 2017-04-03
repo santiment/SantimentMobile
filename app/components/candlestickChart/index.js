@@ -11,6 +11,23 @@ export default class CandlestickChart extends React.Component {
     render() {
         const Highcharts = 'Highcharts';
 
+        const candles = this.props.candlesticks;
+
+        let flags = this.props.sentiments.map(s => { return {
+            x: s.x,
+            title: ' ',
+            fillColor: (() => {
+                switch (s.sentiment) {
+                    case "bullish": return "#28aa38";
+                    case "catish": return "#b1b1b2";
+                    case "bearish": return "#bd2c27";
+                    default: return "#ffffff"
+                }
+            })()
+        }});
+
+        flags = flags.length > 0 ? flags : undefined;
+
         let conf = {
             chart: {
                 type: 'candlestick',
@@ -65,23 +82,12 @@ export default class CandlestickChart extends React.Component {
             },
             series: [
                 {
-                    name: 'Candlesticks',
-                    data: this.props.candlesticks,
+                    type: 'candlestick',
+                    data: candles,
                 },
                 {
-                    type: 'Sentiment',
-                    data: this.props.sentiments.map(s => { return {
-                        x: s.x,
-                        title: ' ',
-                        fillColor: (() => {
-                            switch (s.sentiment) {
-                                case "bullish": return "#28aa38";
-                                case "catish": return "#b1b1b2";
-                                case "bearish": return "#bd2c27";
-                                default: return "#ffffff"
-                            }
-                        })()
-                    }}),
+                    type: 'flags',
+                    data: flags,
                     shape: `circlepin`,
                     lineWidth: 0,
                     height: 2,

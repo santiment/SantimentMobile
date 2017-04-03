@@ -24,8 +24,8 @@ export default class HighchartsWrapper extends React.Component {
         config = flattenObject(JSON.parse(config));
 
         const highchartsJs = this.props.stock
-            ? '"https://code.highcharts.com/stock/highstock.js"'
-            : '"https://code.highcharts.com/highchartsTest.js"';
+            ? '"https://cdnjs.cloudflare.com/ajax/libs/highcharts/5.0.9/highstock.js"'
+            : '"https://cdnjs.cloudflare.com/ajax/libs/highcharts/5.0.9/highcharts.js"';
 
         const chartMethod = this.props.stock ? 'stockChart' : 'chart';
 
@@ -43,9 +43,9 @@ export default class HighchartsWrapper extends React.Component {
                     }
                 </style>
                 <head>
-                    <script src="https://code.jquery.com/jquery-2.1.4.min.js"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
                     <script src=${highchartsJs}></script>
-                    <script src="https://code.highcharts.com/modules/exporting.js"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/5.0.9/js/modules/exporting.js"></script>
                     <script>
                     $(function () {
                         Highcharts.${chartMethod}('container',

@@ -42,6 +42,14 @@ class DomainStore {
         this.symbols = symbols;
     };
 
+    @action addSymbol = (symbol: string): void => {
+        this.symbols = _.union(this.symbols, [symbol]);
+    };
+
+    @action removeSymbol = (symbol: string): void => {
+        this.symbols = _.without(this.symbols, symbol);
+    };
+
     /**
      * Selected symbol
      *
@@ -75,7 +83,7 @@ class DomainStore {
                     return {
                         symbol: this.symbols[bfxSymbols.indexOf(t[0])],
                         price: t[7],
-                        dailyChangePercent: t[6]*100,
+                        dailyChangePercent: t[6] * 100,
                         volume: t[8],
                     }
                 });
@@ -108,7 +116,7 @@ class DomainStore {
     };
 
 
-    @action fetchHistory = (): void => {
+    @action fetchHistory = (): any => {
         const period = "1D";
 
         this.symbols.map((symbol) => {
@@ -162,19 +170,7 @@ class DomainStore {
     @action fetchSentiment = (): void => {
         Santiment.getSentiment().subscribe(this.setSentiment, console.log);
     };
-
     // ---------
-
-
-    @action addSymbol = (symbol: string): void => {
-        this.symbols = _.union(this.symbols, [symbol]);
-    };
-
-    @action removeSymbol = (symbol: string): void => {
-        this.symbols = _.without(this.symbols, symbol);
-    };
-
-
 }
 
 const hydrate = create({ storage: AsyncStorage });
