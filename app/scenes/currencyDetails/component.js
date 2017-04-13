@@ -47,25 +47,6 @@ export default class CurrencyDetails extends React.Component {
             )
         };
 
-        let sentiments = [
-            {
-                x: 1490832000000,
-                sentiment: "bearish",
-            }, {
-                x: 1490659200000,
-                sentiment: "bullish",
-            }, {
-                x: 1490227200000,
-                sentiment: "bearish",
-            }, {
-                x: 1490140800000,
-                sentiment: "catish",
-            }, {
-                x: 1489795200000,
-                sentiment: "bullish",
-            }
-        ];
-
         return (
             <View style={styles.container}>
                 <NavigationBar

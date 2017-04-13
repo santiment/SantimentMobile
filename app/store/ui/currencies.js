@@ -29,6 +29,8 @@ export default class CurrenciesUiStore {
     };
 
     @action refresh = (): void => {
+        console.log("User =", JSON.stringify(this.domainStore.user, null, 2));
+
         Rx.Observable
             .forkJoin(
                 this.domainStore.fetchTickers(),
@@ -37,11 +39,6 @@ export default class CurrenciesUiStore {
             )
             .subscribe(
                 ([tickers, history, sentiment]) => {
-                    console.log("Bitfinex history fetched:\n", history);
-                    console.log("Bitfinex tickers fetched:\n", JSON.stringify(tickers, null, 2));
-                    console.log("Sentiment fetched:\n", sentiment);
-                    console.log("User:\n", JSON.stringify(this.domainStore.user, null, 2));
-
                     this.domainStore.setTickers(tickers);
                     this.domainStore.setHistory(history);
                     this.domainStore.setSentiment(sentiment);

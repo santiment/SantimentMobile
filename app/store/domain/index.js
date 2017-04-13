@@ -68,6 +68,7 @@ class DomainStore {
 
     @action setSelectedSymbol = (symbol: string): void => {
         this.selectedSymbol = symbol;
+        console.log("Symbol selected:\n", symbol);
     };
 
     /**
@@ -81,6 +82,7 @@ class DomainStore {
 
     @action setTickers = (tickers: Object[]): void => {
         this.tickers = tickers;
+        console.log("Tickers updated:\n", tickers);
     };
 
     @action fetchTickers = (): Rx.Observable<Object[]> => {
@@ -121,6 +123,7 @@ class DomainStore {
 
     @action setHistory = (history: Object): void => {
         this.history = history;
+        console.log("History updated:\n", history);
     };
 
     @action fetchHistory = (): Rx.Observable<Object> => {
@@ -171,7 +174,7 @@ class DomainStore {
 
     @action setSentiment = (sentiments: SentimentType[]): void => {
         this.sentiments = sentiments;
-        console.log("Sentiments:\n", JSON.stringify(sentiments, null, 2));
+        console.log("Sentiments updated:\n", sentiments);
     };
 
     @action addSentiment = (sentiment: SentimentType): Rx.Observable<Object> => {
