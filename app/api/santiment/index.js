@@ -5,25 +5,24 @@
 
 'use strict';
 
-
 import _ from 'lodash'
 import Rx from 'rxjs'
 import axios from 'axios'
 
+const apiUrl = "https://sa4h4y6jgb.execute-api.eu-central-1.amazonaws.com/dev";
 
-// add types
-export const getSentiment = () => {
-    return Rx.Observable.timer(1000).first().map(() => {
-        return [{
-            "userId": "TESTUSER",
-            "data": [
-                {"id": "aaa", "symbol": "BTC_USD", "sentiment": "bullish", "price": 1041, "date": "2017-03-12T23:23:41.229Z"},
-                {"id": "bbb", "symbol": "BTC_USD", "sentiment": "bearish", "price": 1043,  "date": "2017-03-18T23:23:41.229Z"},
-                {"id": "GGG", "symbol": "BTC_USD", "sentiment": "catish", "price": 1053, "date": "2017-03-20T23:23:41.229Z"},
-                {"id": "aAA", "symbol": "ETH_USD", "sentiment": "catish", "price": 43, "date": "2017-03-14T23:23:41.229Z"},
-                {"id": "EEE", "symbol": "ETH_USD", "sentiment": "bullish", "price": 45, "date": "2017-03-17T23:23:41.229Z"},
-                {"id": "ZZZ", "symbol": "ETH_USD", "sentiment": "bearish", "price": 49, "date": "2017-03-20T23:23:41.229Z"}
-            ]
-        }];
-    })
+export const getSentiment = (userId: string): any => {
+    let url = apiUrl + `/sentiment?userId=${userId}`;
+
+    return Rx.Observable
+        .fromPromise(axios.get(url))
+        .map(r => _.get(r, 'data', []));
+};
+
+export const postSentiment = (sentiment: Object, userId: string): any => {
+    let url = apiUrl + `/sentiment?userId=${userId}`;
+
+    return Rx.Observable
+        .fromPromise(axios.post(url, sentiment))
+        .map(r => _.get(r, 'data', []));
 };
