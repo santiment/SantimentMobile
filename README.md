@@ -7,13 +7,18 @@
 - Install [Brew](https://brew.sh/) (iOS-only)
 - Install [Ruby](https://www.ruby-lang.org/en/documentation/installation/) (iOS-only)
 - Install [Cocoapods](https://guides.cocoapods.org/using/getting-started.html) (iOS-only)
-- Setup [ReactNative](https://facebook.github.io/react-native/docs/getting-started.html) for iOS/Android
+- Setup [ReactNative](https://facebook.github.io/react-native/docs/getting-started.html) for both iOS and Android
+- Setup [Flow-Typed](https://github.com/flowtype/flow-typed)
 
 ## Setup
 - Clone Git repository
   - `$ git clone https://github.com/santiment-admin/SantimentMobile.git`
+- Go to project directory
+  - `$ cd SantimentMobile` 
 - Install dependencies
   - `$ yarn install`
+- Install Flow type definitions
+  - `$ flow-typed install`
 - Set your private keys in `ios/Secrets.plist` file
 - Set your private keys in `android/app/src/main/assets/secrets.properties` file
 
