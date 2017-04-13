@@ -17,6 +17,8 @@ import {create, persist} from 'mobx-persist'
 import * as Bitfinex from '../../api/bitfinex'
 import * as Santiment from '../../api/santiment'
 
+import DeviceInfo from 'react-native-device-info';
+
 class DomainStore {
     constructor() {
         useStrict(true);
@@ -26,7 +28,11 @@ class DomainStore {
      * User
      *
      */
-    @observable user: string = "TESTUSER";
+    @persist('object')
+    @observable
+    user: Object = {
+        id: DeviceInfo.getUniqueID()
+    };
 
     /**
      * Symbols
@@ -163,12 +169,21 @@ class DomainStore {
     };
 
     @action addSentiment = (sentiment: Object): void => {
-        const index = _.findIndex(this.sentiment, (o) => _.isEqual(_.get(o, "userId"), this.user));
-        this.sentiment[index].data.push(sentiment);
+        Santiment.postSentiment(sentiment, this.user.id)
+            .flatMap(Santiment.getSentiment(this.user.id))
+            .subscribe(
+                sentiment => {
+                    this.setSentiment(sentiment);
+                },
+                error => {
+                    console.log(error);
+                }
+            )
+
     };
 
-    @action fetchSentiment = (): void => {
-        Santiment.getSentiment().subscribe(this.setSentiment, console.log);
+    @action fetchSentiment = (): Rx.Observable<Object[]> => {
+        return Santiment.getSentiment(this.user.id);
     };
     // ---------
 }
