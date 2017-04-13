@@ -6,9 +6,10 @@
 'use strict';
 
 import _ from 'lodash'
+import Rx from 'rxjs'
 
 import ReactNative from 'react-native';
-const {ListView} = ReactNative;
+const {ListView, Alert} = ReactNative;
 
 import mobx, {observable, computed, autorun, action, useStrict} from 'mobx'
 
@@ -28,9 +29,32 @@ export default class CurrenciesUiStore {
     };
 
     @action refresh = (): void => {
-        this.domainStore.fetchSentiment();
-        this.domainStore.fetchTickers();
-        this.domainStore.fetchHistory();
+        Rx.Observable
+            .forkJoin(
+                this.domainStore.fetchTickers(),
+                this.domainStore.fetchHistory(),
+                this.domainStore.fetchSentiment()
+            )
+            .subscribe(
+                ([tickers, history, sentiment]) => {
+                    console.log("Bitfinex history fetched:\n", history);
+                    console.log("Bitfinex tickers fetched:\n", JSON.stringify(tickers, null, 2));
+                    console.log("Sentiment fetched:\n", sentiment);
+                    console.log("User:\n", JSON.stringify(this.domainStore.user, null, 2));
+
+                    this.domainStore.setTickers(tickers);
+                    this.domainStore.setHistory(history);
+                    this.domainStore.setSentiment(sentiment);
+                },
+                error => Alert.alert(
+                    'Error',
+                    error.toString(),
+                    [
+                        {text: 'OK', onPress: () => {}},
+                    ]
+                )
+            );
+
     };
 
     @action selectSymbol = (symbol: string): void => {
