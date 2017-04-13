@@ -61,9 +61,6 @@ export default class HighchartsWrapper extends React.Component {
             </html>
         `;
 
-        console.log("html:\n", html);
-        
-        
         return (
             <View style={this.props.style}>
                 <WebView

@@ -5,7 +5,6 @@
 
 'use strict';
 
-
 import _ from 'lodash'
 import Rx from 'rxjs'
 import axios from 'axios'
@@ -33,7 +32,7 @@ export const getTickers = (symbols: string[]): any => {
 
     return Rx.Observable
         .fromPromise(axios.get(url))
-        .map(r => _.get(r, 'data', []))
+        .map(r => _.get(r, 'data', []));
 };
 
 

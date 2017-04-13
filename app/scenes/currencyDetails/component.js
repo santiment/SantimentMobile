@@ -20,8 +20,7 @@ import _ from 'lodash'
 import moment from 'moment'
 import {observer} from 'mobx-react/native'
 
-// import Highchart from '../../components/highchartsWrapper/highchartsTest'
-import CandlestickChart from '../../components/candlestickChart'
+import CandlestickChart from '../../webviews/candlestickChart'
 
 import Cell from './cell'
 
