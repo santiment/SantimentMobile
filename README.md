@@ -31,9 +31,9 @@
 - TODO
 
 ## Linked dependencies
-- `react-native-svg`. Unlink before uninstalling `react-native-pathjs-charts` package.
 - `react-native-vector-icons`. Unlink before uninstalling `react-native-elements` package.
 - `bugsnag-react-native`. Unlink before uninstalling `bugsnag-react-native` package.
+- `react-native-device-info`. Unlink before uninstalling `react-native-device-info` package.
 
 ## Files under `git update-index --assume-unchanged`
 - `ios/Secrets.plist`
