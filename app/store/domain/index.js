@@ -39,7 +39,8 @@ class DomainStore {
      *
      */
 
-    @persist('list') @observable symbols: string[] = [
+    @persist('list')
+    @observable symbols: string[] = [
         "BTC_USD",
         "ETH_USD"
     ];
@@ -73,17 +74,18 @@ class DomainStore {
      * [{ symbol: "BTC_USD", price: 1050, dailyChangePercent: 6.34, volume: 500 }, ...]
      */
 
-    @persist('list') @observable tickers: Object[] = [];
+    @persist('list')
+    @observable tickers: Object[] = [];
 
     @action setTickers = (tickers: Object[]): void => {
         this.tickers = tickers;
     };
 
-    @action fetchTickers = (): void => {
+    @action fetchTickers = (): Rx.Observable<Object[]> => {
         const bfxSymbols = this.symbols.map(s => `t${_.replace(s, "_", "")}`);
 
         // TODO: Handle empty or malformed data
-        Bitfinex.getTickers(bfxSymbols)
+        return Bitfinex.getTickers(bfxSymbols)
             .map(tickers => {
                 return tickers.map(t => {
                     return {
@@ -94,7 +96,6 @@ class DomainStore {
                     }
                 });
             })
-            .subscribe(this.setTickers, console.log);
     };
 
     /**
@@ -116,21 +117,19 @@ class DomainStore {
     @persist('object')
     @observable history: Object = {};
 
-
     @action setHistory = (history: Object): void => {
         this.history = history;
     };
 
-
-    @action fetchHistory = (): any => {
+    @action fetchHistory = (): Rx.Observable<Object> => {
         const period = "1D";
 
-        this.symbols.map((symbol) => {
+        const observables$ = this.symbols.map((symbol) => {
             const bfxSymbol = `t${_.replace(symbol, "_", "")}`;
 
-            Bitfinex.getCandles(bfxSymbol, period, 30)
+            return Bitfinex.getCandles(bfxSymbol, period, 30)
                 .map(items => {
-                    return items.map(item => {
+                    const candles = items.map(item => {
                         return {
                             timestamp: item[0],
                             open: item[1],
@@ -140,14 +139,17 @@ class DomainStore {
                             volume: item[5],
                         }
                     });
+
+                    let obj = {};
+                    _.set(obj, [symbol, period], _.orderBy(candles, ['timestamp'], ['asc']));
+
+                    return obj;
                 })
-                .subscribe(
-                    candles => {
-                        _.set(this.history, [symbol, period], _.orderBy(candles, ['timestamp'], ['asc']));
-                    },
-                    console.log
-                );
         });
+
+        // $FlowFixMe
+        return Rx.Observable.forkJoin(observables$)
+            .map(arr => _.assign(...arr))
     };
 
     /**
@@ -188,7 +190,7 @@ class DomainStore {
     // ---------
 }
 
-const hydrate = create({ storage: AsyncStorage });
+const hydrate = create({storage: AsyncStorage});
 
 const domainStore = new DomainStore();
 export default domainStore;
