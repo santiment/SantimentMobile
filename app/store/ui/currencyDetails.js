@@ -74,7 +74,7 @@ export default class CurrencyDetailsUiStore {
         const getData = (obj) => _.get(obj, "[0].data", []);
         const filterBySymbol = (arr) => _.filter(arr, s => { return _.isEqual(s.symbol, this.domainStore.selectedSymbol) });
 
-        return _.flow(getData, filterBySymbol)(this.domainStore.sentiment.slice())
+        return _.flow(getData, filterBySymbol)(this.domainStore.sentiments.slice())
     }
 
     @computed get sentimentSeries(): Object[] {

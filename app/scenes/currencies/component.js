@@ -45,10 +45,10 @@ export default class Currencies extends React.Component {
                     onVote={(symbol, price, sentiment) => {
                         store.selectSymbol(data.symbol);
                         store.addSentiment({
-                            symbol: symbol,
+                            asset: symbol,
                             price: price,
                             sentiment: sentiment,
-                            date: moment().toISOString(),
+                            date: moment().startOf('day').toISOString(),
                         });
                         navigator.push({name: CurrencyDetailsRoute})
                     }}

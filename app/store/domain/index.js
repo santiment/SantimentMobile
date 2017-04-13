@@ -17,6 +17,8 @@ import {create, persist} from 'mobx-persist'
 import * as Bitfinex from '../../api/bitfinex'
 import * as Santiment from '../../api/santiment'
 
+import type {SentimentType} from './types'
+
 import DeviceInfo from 'react-native-device-info';
 
 class DomainStore {
@@ -164,27 +166,20 @@ class DomainStore {
      *
      */
 
-    @persist('list') @observable sentiment: Object[] = [];
+    @persist('list')
+    @observable sentiments: SentimentType[] = [];
 
-    @action setSentiment = (sentiments: Object[]): void => {
-        this.sentiment = sentiments;
+    @action setSentiment = (sentiments: SentimentType[]): void => {
+        this.sentiments = sentiments;
+        console.log("Sentiments:\n", JSON.stringify(sentiments, null, 2));
     };
 
-    @action addSentiment = (sentiment: Object): void => {
-        Santiment.postSentiment(sentiment, this.user.id)
-            .flatMap(Santiment.getSentiment(this.user.id))
-            .subscribe(
-                sentiment => {
-                    this.setSentiment(sentiment);
-                },
-                error => {
-                    console.log(error);
-                }
-            )
-
+    @action addSentiment = (sentiment: SentimentType): Rx.Observable<Object> => {
+        const userSentiment = _.assign(sentiment, {userId: this.user.id});
+        return Santiment.postSentiment(userSentiment);
     };
 
-    @action fetchSentiment = (): Rx.Observable<Object[]> => {
+    @action fetchSentiment = (): Rx.Observable<SentimentType[]> => {
         return Santiment.getSentiment(this.user.id);
     };
     // ---------

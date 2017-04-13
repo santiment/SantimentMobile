@@ -47,7 +47,7 @@ export default class CurrenciesUiStore {
                     this.domainStore.setSentiment(sentiment);
                 },
                 error => Alert.alert(
-                    'Error',
+                    'Refresh Error',
                     error.toString(),
                     [
                         {text: 'OK', onPress: () => {}},
@@ -62,7 +62,18 @@ export default class CurrenciesUiStore {
     };
 
     @action addSentiment = (sentiment: Object): void => {
-        this.domainStore.addSentiment(sentiment);
+        this.domainStore.addSentiment(sentiment)
+            .flatMap(() => this.domainStore.fetchSentiment())
+            .subscribe(
+                s => this.domainStore.setSentiment(s),
+                error => Alert.alert(
+                    'Sentiment Update Error',
+                    error.toString(),
+                    [
+                        {text: 'OK', onPress: () => {}},
+                    ]
+                )
+            )
     };
 
     @computed get rows(): Object[] {

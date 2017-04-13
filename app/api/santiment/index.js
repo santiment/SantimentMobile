@@ -11,18 +11,35 @@ import axios from 'axios'
 
 const apiUrl = "https://sa4h4y6jgb.execute-api.eu-central-1.amazonaws.com/dev";
 
+const processAndRethrow = error => {
+    const unknownError = {
+        "error": "UnknownError",
+        "message": "Unknown Error",
+        "details": [
+            "Something unexpected happened. Please try again later.",
+        ],
+        "status": "418"
+    };
+
+    throw (error.response ? _.assign(error.response.data, {status: error.response.status}) : unknownError)
+};
+
 export const getSentiment = (userId: string): any => {
     let url = apiUrl + `/sentiment?userId=${userId}`;
 
-    return Rx.Observable
-        .fromPromise(axios.get(url))
-        .map(r => _.get(r, 'data', []));
+    const promise = axios.get(url)
+        .then(r => r.data)
+        .catch(processAndRethrow);
+
+    return Rx.Observable.fromPromise(promise);
 };
 
-export const postSentiment = (sentiment: Object, userId: string): any => {
-    let url = apiUrl + `/sentiment?userId=${userId}`;
+export const postSentiment = (sentiment: Object): any => {
+    let url = apiUrl + `/sentiment`;
 
-    return Rx.Observable
-        .fromPromise(axios.post(url, sentiment))
-        .map(r => _.get(r, 'data', []));
+    const promise = axios.post(url, sentiment)
+        .then(r => r.data)
+        .catch(processAndRethrow);
+
+    return Rx.Observable.fromPromise(promise);
 };
