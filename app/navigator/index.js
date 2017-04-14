@@ -5,10 +5,10 @@
 'use strict';
 
 
-import Currencies from '../scenes/currencies/component';
-import CurrencyDetails from '../scenes/currencyDetails/component';
-import AddCurrency from '../scenes/addCurrency/component';
-import EditCurrencies from '../scenes/editCurrencies/component';
+import Currencies from '../scenes/currencies';
+import CurrencyDetails from '../scenes/currencyDetails';
+import AddCurrency from '../scenes/addCurrency';
+import EditCurrencies from '../scenes/editCurrencies';
 
 import {CurrenciesRoute, AddCurrencyRoute, CurrencyDetailsRoute, EditCurrenciesRoute} from './routes'
 

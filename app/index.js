@@ -7,7 +7,7 @@
 
 import React from 'react';
 
-import AppNavigator from './navigator/component'
+import AppNavigator from './navigator'
 import Store from './store'
 
 class App extends React.Component {
