@@ -14,7 +14,7 @@ import mobx, {observable, computed, autorun, action, useStrict} from 'mobx'
 
 import moment from 'moment'
 
-export default class CurrencyDetailsUiStore {
+export default class MySentimentUiStore {
     domainStore: any;
 
     constructor(domainStore: any) {
@@ -59,13 +59,13 @@ export default class CurrencyDetailsUiStore {
         const path = [`${this.ticker.symbol}`, `${this.periods[this.selectedPeriod]}`];
         const ohlcv = _.get(this.domainStore.history, path, []);
         const candles = ohlcv.map(i => {
-           return {
-               x: parseFloat(i.timestamp),
-               open: i.open,
-               high: i.high,
-               low: i.low,
-               close: i.close,
-           }
+            return {
+                x: parseFloat(i.timestamp),
+                open: i.open,
+                high: i.high,
+                low: i.low,
+                close: i.close,
+            }
         });
 
         return candles;
@@ -74,8 +74,8 @@ export default class CurrencyDetailsUiStore {
     @computed get sentiments(): Object[] {
         const filterBySymbol = (arr) => _.filter(arr, s => { return _.isEqual(s.asset, this.domainStore.selectedSymbol) });
         return _.flow(filterBySymbol)(this.domainStore.sentiments.slice())
-        
-        
+
+
     }
 
     @computed get sentimentSeries(): Object[] {

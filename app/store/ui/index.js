@@ -7,7 +7,6 @@
 
 import {useStrict} from 'mobx'
 
-import DomainStore from '../domain'
 import CurrenciesUiStore from './currencies'
 import AddCurrencyUiStore from './addCurrencies'
 import EditCurrenciesUiStore from './editCurrencies'

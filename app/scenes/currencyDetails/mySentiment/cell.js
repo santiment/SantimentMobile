@@ -9,14 +9,14 @@ import React from 'react';
 import ReactNative from 'react-native';
 let {View, StyleSheet, Text, Image} = ReactNative;
 
-export default class CurrencyDetailsCell extends React.Component {
+export default class MySentimentCell extends React.Component {
     render () {
 
         const imagePath = (sentiment) => {
             switch (sentiment) {
-                case "bullish": return require('../../resources/images/bull.png');
-                case "catish": return require('../../resources/images/cat.png');
-                case "bearish": return require('../../resources/images/bear.png');
+                case "bullish": return require('../../../resources/images/bull.png');
+                case "catish": return require('../../../resources/images/cat.png');
+                case "bearish": return require('../../../resources/images/bear.png');
                 default: return ''
             }
         };
@@ -42,7 +42,7 @@ export default class CurrencyDetailsCell extends React.Component {
     }
 }
 
-CurrencyDetailsCell.propTypes = {
+MySentimentCell.propTypes = {
     date: React.PropTypes.string.isRequired,
     price: React.PropTypes.string.isRequired,
     sentiment: React.PropTypes.string.isRequired,
