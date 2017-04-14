@@ -71,16 +71,16 @@ export default class CurrencyDetailsUiStore {
     }
 
     @computed get sentiments(): Object[] {
-        const getData = (obj) => _.get(obj, "[0].data", []);
-        const filterBySymbol = (arr) => _.filter(arr, s => { return _.isEqual(s.symbol, this.domainStore.selectedSymbol) });
-
-        return _.flow(getData, filterBySymbol)(this.domainStore.sentiments.slice())
+        const filterBySymbol = (arr) => _.filter(arr, s => { return _.isEqual(s.asset, this.domainStore.selectedSymbol) });
+        return _.flow(filterBySymbol)(this.domainStore.sentiments.slice())
+        
+        
     }
 
     @computed get sentimentSeries(): Object[] {
         const sortByDate = (arr) => _.orderBy(arr, ['date'], ['desc']);
         const toSeries = (arr) => _.map(arr, s => { return {
-            x: moment(s.date).valueOf(),
+            x: moment(s.date).startOf('day').valueOf(),
             sentiment: s.sentiment,
         }});
 
@@ -90,9 +90,9 @@ export default class CurrencyDetailsUiStore {
     @computed get rows(): Object[] {
         const sortByDate = (arr) => _.orderBy(arr, ['date'], ['desc']);
         const formatDates = (arr) => _.map(arr, s => { return {...s, date: moment(s.date).fromNow()}});
-        const formatPrice = (arr) => _.map(arr, s => { return {...s, price: `${s.price}`}});
+        const formatPrice = (arr) => _.map(arr, s => { return {...s, price: _.isEmpty(s.price) ? "" : s.price}});
 
-        return _.flow(sortByDate, formatDates, formatPrice)(this.sentiments.slice())
+        return _.flow(sortByDate, formatDates, formatPrice)(this.sentiments.slice());
     }
 
     _dataSource = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
