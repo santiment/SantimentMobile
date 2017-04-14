@@ -30,11 +30,20 @@ export default class AddCurrencyUiStore {
         this.domainStore.addSymbol(symbol);
     };
 
-    @computed get rows(): string[] {
-        const symbols: string[] = _.without(_.map(this.domainStore.tickers, (t) => _.get(t, 'symbol')), "");
+    @computed get rows(): Object[] {
+        const symbols: Object[] = _.map(
+            this.domainStore.tickers,
+            t => {
+                const symbol = _.get(t, 'symbol');
+                return {
+                    symbol: symbol,
+                    displaySymbol: _.replace(symbol, "_", "/")
+                }
+            }
+        );
 
-        const rows: string[] = _.filter(symbols, s => _.includes(
-            _.toLower(s),
+        const rows: Object[] = _.filter(symbols, s => _.includes(
+            _.toLower(s.displaySymbol),
             _.toLower(this.query)
         ));
 

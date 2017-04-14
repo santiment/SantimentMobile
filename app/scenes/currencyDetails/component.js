@@ -50,7 +50,7 @@ export default class CurrencyDetails extends React.Component {
         return (
             <View style={styles.container}>
                 <NavigationBar
-                    title={{title: _.replace(store.ticker.symbol, "_", "/")}}
+                    title={{title: store.ticker.displaySymbol}}
                     style={styles.navBar}
                     leftButton={
                         <Icon

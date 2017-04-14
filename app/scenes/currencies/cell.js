@@ -92,7 +92,7 @@ export default class CurrencyCell extends React.Component {
 
                         <TouchableHighlight
                             style={[styles.button, styles.borderRight]}
-                            onPress={() => this.props.onVote(this.props.symbol, this.props.price, "bullish")}
+                            onPress={() => this.props.onVote("bullish")}
                             underlayColor={"#f0f0f0"}
                         >
                             <View>
@@ -111,7 +111,7 @@ export default class CurrencyCell extends React.Component {
 
                         <TouchableHighlight
                             style={styles.button}
-                            onPress={() => this.props.onVote(this.props.symbol, this.props.price, "catish")}
+                            onPress={() => this.props.onVote("catish")}
                             underlayColor={"#f0f0f0"}
                         >
                             <View>
@@ -130,7 +130,7 @@ export default class CurrencyCell extends React.Component {
 
                         <TouchableHighlight
                             style={[styles.button, styles.borderLeft]}
-                            onPress={() => this.props.onVote(this.props.symbol, this.props.price, "bearish")}
+                            onPress={() => this.props.onVote("bearish")}
                             underlayColor={"#f0f0f0"}
                         >
                             <View>

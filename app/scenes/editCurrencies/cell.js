@@ -21,7 +21,7 @@ export default class EditCurrencyCell extends React.Component {
                 <Icon
                     name="delete-forever"
                     containerStyle={styles.deleteButton}
-                    onPress={() => this.props.onDelete(this.props.symbol)}
+                    onPress={this.props.onDelete}
                 />
             </View>
         )

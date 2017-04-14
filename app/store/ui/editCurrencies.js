@@ -25,8 +25,16 @@ export default class EditCurrenciesUiStore {
         this.domainStore.removeSymbol(symbol);
     };
 
-    @computed get rows(): string[] {
-        return this.domainStore.symbols.slice();
+    @computed get rows(): Object[] {
+        return _.map(
+            this.domainStore.symbols.slice(),
+            s => {
+                return {
+                    symbol: s,
+                    displaySymbol: _.replace(s, "_", "/")
+                }
+            }
+        );
     }
 
     _dataSource = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });

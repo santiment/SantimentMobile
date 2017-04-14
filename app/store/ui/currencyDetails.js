@@ -44,6 +44,7 @@ export default class CurrencyDetailsUiStore {
         const findTicker = (arr) => _.find(arr, t => _.isEqual(t.symbol, this.domainStore.selectedSymbol));
         const formatTicker = (t) => { return {
             symbol: t.symbol,
+            displaySymbol: _.replace(t.symbol, "_", "/"),
             dailyChangePercent: t.dailyChangePercent.toPrecision(3),
             price: t.price.toPrecision(4),
             volume: t.volume,

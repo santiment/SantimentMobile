@@ -21,11 +21,11 @@ export default class EditCurrencies extends React.Component {
     render() {
         const {navigator, store} = this.props;
 
-        const renderRow = (rowData, sectionID) => {
+        const renderRow = (data, sectionID) => {
             return (
                 <Cell
-                    symbol={rowData}
-                    onDelete={store.removeSymbol}
+                    symbol={data.displaySymbol}
+                    onDelete={() => store.removeSymbol(data.symbol)}
                 />
             )
         };

@@ -27,9 +27,9 @@ export default class AddCurrency extends React.Component {
             return (
                 <Cell
                     key={sectionID}
-                    symbol={data}
+                    symbol={data.displaySymbol}
                     onPress={() => {
-                        store.addSymbol(data);
+                        store.addSymbol(data.symbol);
                         navigator.pop();
                         store.setQuery('');
                     }}

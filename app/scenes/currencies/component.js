@@ -35,14 +35,14 @@ export default class Currencies extends React.Component {
         const renderRow = (data, sectionID, rowID) => {
             return (
                 <Cell
-                    symbol={_.replace(data.symbol, "_", "/")}
+                    symbol={data.displaySymbol}
                     price={data.price}
                     dailyChangePercent={data.dailyChangePercent}
                     onPress={ () => {
                         store.selectSymbol(data.symbol);
                         navigator.push({name: CurrencyDetailsRoute})
                     }}
-                    onVote={(symbol, price, sentiment) => {
+                    onVote={(sentiment) => {
                         store.selectSymbol(data.symbol);
                         store.addSentiment({
                             asset: data.symbol,
@@ -67,15 +67,15 @@ export default class Currencies extends React.Component {
                 <NavigationBar
                     title={{title: "Currencies"}}
                     style={styles.navBar}
-                    // rightButton={
-                    //     <Icon
-                    //         containerStyle={styles.toolbarButton}
-                    //         name="mode-edit"
-                    //         onPress={ () => {
-                    //             navigator.push({name: EditCurrenciesRoute})
-                    //         }}
-                    //     />
-                    // }
+                    rightButton={
+                        <Icon
+                            containerStyle={styles.toolbarButton}
+                            name="mode-edit"
+                            onPress={ () => {
+                                navigator.push({name: EditCurrenciesRoute})
+                            }}
+                        />
+                    }
                 />
 
                 <ListView
@@ -96,19 +96,19 @@ export default class Currencies extends React.Component {
                 />
 
 
-                {/*<View style={styles.fabContainer}>*/}
+                <View style={styles.fabContainer}>
 
-                    {/*<Icon*/}
-                        {/*raised*/}
-                        {/*reverse*/}
-                        {/*name="add"*/}
-                        {/*color="green"*/}
-                        {/*onPress={ () => {*/}
-                            {/*navigator.push({name: AddCurrencyRoute})*/}
-                        {/*}}*/}
-                    {/*/>*/}
+                    <Icon
+                        raised
+                        reverse
+                        name="add"
+                        color="green"
+                        onPress={ () => {
+                            navigator.push({name: AddCurrencyRoute})
+                        }}
+                    />
 
-                {/*</View>*/}
+                </View>
 
             </View>
         );
