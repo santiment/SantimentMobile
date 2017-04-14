@@ -35,7 +35,7 @@ export default class Currencies extends React.Component {
         const renderRow = (data, sectionID, rowID) => {
             return (
                 <Cell
-                    symbol={data.symbol}
+                    symbol={_.replace(data.symbol, "_", "/")}
                     price={data.price}
                     dailyChangePercent={data.dailyChangePercent}
                     onPress={ () => {
@@ -45,8 +45,8 @@ export default class Currencies extends React.Component {
                     onVote={(symbol, price, sentiment) => {
                         store.selectSymbol(data.symbol);
                         store.addSentiment({
-                            asset: symbol,
-                            price: price,
+                            asset: data.symbol,
+                            price: data.price,
                             sentiment: sentiment,
                             date: moment().toISOString(),
                         });

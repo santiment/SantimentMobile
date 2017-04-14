@@ -49,7 +49,7 @@ export default class CurrencyCell extends React.Component {
                         <View style={styles.symbolColumn}>
 
                             <Text style={styles.symbolText}>
-                                {_.replace(this.props.symbol, "_", "/")}
+                                {this.props.symbol}
                             </Text>
 
                         </View>
