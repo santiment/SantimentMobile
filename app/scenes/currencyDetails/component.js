@@ -20,7 +20,7 @@ import _ from 'lodash'
 import moment from 'moment'
 import {observer} from 'mobx-react/native'
 
-import CandlestickChart from '../../webviews/candlestickChart'
+import CandlestickChart from '../../web/candlestickChart'
 
 import Cell from './cell'
 

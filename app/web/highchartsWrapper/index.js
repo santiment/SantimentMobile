@@ -23,9 +23,16 @@ export default class HighchartsWrapper extends React.Component {
         });
         config = flattenObject(JSON.parse(config));
 
+        const jqueryJs = '"https://code.jquery.com/jquery-3.2.1.min.js"';
         const highchartsJs = this.props.stock
-            ? '"https://cdnjs.cloudflare.com/ajax/libs/highcharts/5.0.9/highstock.js"'
-            : '"https://cdnjs.cloudflare.com/ajax/libs/highcharts/5.0.9/highcharts.js"';
+            ? '"https://cdnjs.cloudflare.com/ajax/libs/highcharts/5.0.10/highstock.js"'
+            : '"https://cdnjs.cloudflare.com/ajax/libs/highcharts/5.0.10/highcharts.js"';
+
+        const exportingJs = '"https://cdnjs.cloudflare.com/ajax/libs/highcharts/5.0.10/js/modules/exporting.js"';
+
+        // const jqueryJs = '"vendor/jquery-3.2.1.min.js"';
+        // const highchartsJs = '"vendor/highstock.js"';
+        // const exportingJs = '"vendor/highcharts-exporting.js"';
 
         const chartMethod = this.props.stock ? 'stockChart' : 'chart';
 
@@ -43,9 +50,9 @@ export default class HighchartsWrapper extends React.Component {
                     }
                 </style>
                 <head>
-                    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+                    <script src=${jqueryJs}></script>
                     <script src=${highchartsJs}></script>
-                    <script src="https://cdnjs.cloudflare.com/ajax/libs/highcharts/5.0.9/js/modules/exporting.js"></script>
+                    <script src="${exportingJs}"></script>
                     <script>
                     $(function () {
                         Highcharts.${chartMethod}('container',
