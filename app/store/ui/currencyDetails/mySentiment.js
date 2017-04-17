@@ -37,9 +37,6 @@ export default class MySentimentUiStore {
         this.isLoading = value;
     };
 
-    @action refresh = (): void => {
-    };
-
     @computed get ticker(): Object {
         const findTicker = (arr) => _.find(arr, t => _.isEqual(t.symbol, this.domainStore.selectedSymbol));
         const formatTicker = (t) => { return {
@@ -74,8 +71,6 @@ export default class MySentimentUiStore {
     @computed get sentiments(): Object[] {
         const filterBySymbol = (arr) => _.filter(arr, s => { return _.isEqual(s.asset, this.domainStore.selectedSymbol) });
         return _.flow(filterBySymbol)(this.domainStore.sentiments.slice())
-
-
     }
 
     @computed get sentimentSeries(): Object[] {

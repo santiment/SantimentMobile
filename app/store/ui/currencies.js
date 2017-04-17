@@ -35,13 +35,16 @@ export default class CurrenciesUiStore {
             .forkJoin(
                 this.domainStore.fetchTickers(),
                 this.domainStore.fetchHistory(),
-                this.domainStore.fetchSentiment()
+                this.domainStore.fetchSentiment(),
+                this.domainStore.fetchAggregates()
             )
             .subscribe(
-                ([tickers, history, sentiment]) => {
+                ([tickers, history, sentiment, aggregates]) => {
                     this.domainStore.setTickers(tickers);
                     this.domainStore.setHistory(history);
                     this.domainStore.setSentiment(sentiment);
+                    this.domainStore.setAggregates(aggregates);
+
                 },
                 error => Alert.alert(
                     'Refresh Error',

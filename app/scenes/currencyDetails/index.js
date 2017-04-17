@@ -55,7 +55,7 @@ export default class CurrencyDetails extends React.Component {
                     locked={true}
                 >
                     <MySentimentScene tabLabel="Me" store={store.mySentiment}/>
-                    <CommunitySentimentScene tabLabel="Community" store={undefined}/>
+                    <CommunitySentimentScene tabLabel="Community" store={store.communitySentiment}/>
                     <FeedScene tabLabel="Feed" store={undefined}/>
                 </ScrollableTabView>
             </View>
@@ -64,8 +64,17 @@ export default class CurrencyDetails extends React.Component {
 }
 
 CurrencyDetails.propTypes = {
-    navigator: React.PropTypes.object,
-    store: React.PropTypes.object,
+    navigator: React.PropTypes.shape({
+        push: React.PropTypes.func.isRequired,
+        pop: React.PropTypes.func.isRequired
+    }),
+    store: React.PropTypes.shape({
+        title: React.PropTypes.string.isRequired,
+        mySentiment: React.PropTypes.any.isRequired,
+        communitySentiment: React.PropTypes.any.isRequired,
+        feed: React.PropTypes.any.isRequired,
+        refresh: React.PropTypes.func.isRequired,
+    })
 };
 
 const styles = StyleSheet.create({

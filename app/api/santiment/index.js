@@ -8,6 +8,7 @@
 import _ from 'lodash'
 import Rx from 'rxjs'
 import axios from 'axios'
+import moment from 'moment'
 
 const apiUrl = "https://sa4h4y6jgb.execute-api.eu-central-1.amazonaws.com/dev";
 
@@ -38,6 +39,19 @@ export const postSentiment = (sentiment: Object): any => {
     let url = apiUrl + `/sentiment`;
 
     const promise = axios.post(url, sentiment)
+        .then(r => r.data)
+        .catch(processAndRethrow);
+
+    return Rx.Observable.fromPromise(promise);
+};
+
+export const getAggregate = (asset: string): any => {
+    const from = moment().format('YYYY-MM-DD');
+    const to = moment().add(1, 'days').format('YYYY-MM-DD');
+
+    let url = apiUrl + `/sentiment/aggregate?asset=${asset}&from=${from}&to=${to}`;
+
+    const promise = axios.get(url)
         .then(r => r.data)
         .catch(processAndRethrow);
 

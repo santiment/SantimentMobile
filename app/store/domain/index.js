@@ -86,14 +86,19 @@ class DomainStore {
     };
 
     @action fetchTickers = (): Rx.Observable<Object[]> => {
-        const bfxSymbols = this.symbols.map(s => `t${_.replace(s, "_", "")}`);
-
+        const bfxSymbolMap = _.reduce(
+            this.symbols.slice(),
+            (obj, value) => {
+                return _.set(obj, `t${_.replace(value, "_", "")}`, value);
+            },
+            {}
+        );
         // TODO: Handle empty or malformed data
-        return Bitfinex.getTickers(bfxSymbols)
+        return Bitfinex.getTickers(_.keys(bfxSymbolMap))
             .map(tickers => {
                 return tickers.map(t => {
                     return {
-                        symbol: this.symbols[bfxSymbols.indexOf(t[0])],
+                        symbol: _.get(bfxSymbolMap, t[0]),
                         price: t[7],
                         dailyChangePercent: t[6] * 100,
                         volume: t[8],
@@ -179,15 +184,55 @@ class DomainStore {
 
     @action addSentiment = (sentiment: SentimentType): Rx.Observable<Object> => {
         const userSentiment = _.assign(sentiment, {userId: this.user.id});
-        this.setSentiment(_.concat([], this.sentiments.slice(), userSentiment));
+        const newSentiments = _.concat([], this.sentiments.slice(), userSentiment);
 
-        return Santiment.postSentiment(userSentiment);
+        this.setSentiment(newSentiments);
+
+        return Santiment.postSentiment(userSentiment)
+            .do(() => console.log("POST /sentiment succeeded"));
     };
 
     @action fetchSentiment = (): Rx.Observable<SentimentType[]> => {
         return Santiment.getSentiment(this.user.id);
     };
-    // ---------
+
+    /**
+     * Aggregate sentiment
+     *   {
+     *       "BTC_USD": [
+     *           {"bullish": 1, "bearish": 2, "catish": 0 , "date": "2017-03-16T23:23:41.229Z"},
+     *           {"bullish": 1, "bearish": 2, "catish": 0 , "date": "2017-03-16T23:23:41.229Z"}
+     *       ],
+     *       "ETH_USD": [
+     *           {"bullish": 1, "bearish": 2, "catish": 0 , "date": "2017-03-16T23:23:41.229Z"},
+     *           {"bullish": 1, "bearish": 2, "catish": 0 , "date": "2017-03-16T23:23:41.229Z"}
+     *       ],
+     *   }
+     */
+    @persist('object')
+    @observable aggregates: Object = {};
+
+    @action setAggregates = (aggregates: Object): void => {
+        this.aggregates = aggregates;
+        console.log("Aggregates updated:\n", aggregates);
+    };
+
+    @action fetchAggregates = (): Rx.Observable<Object> => {
+        const observables$ = this.symbols.map((symbol) => {
+
+            return Santiment.getAggregate(symbol)
+                .map(items => {
+                    let obj = {};
+                    _.set(obj, [symbol], items);
+
+                    return obj;
+                })
+        });
+
+        // $FlowFixMe
+        return Rx.Observable.forkJoin(observables$)
+            .map(arr => _.assign(...arr))
+    };
 }
 
 const hydrate = create({storage: AsyncStorage});

@@ -10,6 +10,8 @@ import _ from 'lodash'
 import mobx, {observable, computed, autorun, action, useStrict} from 'mobx'
 
 import MySentimentUiStore from './mySentiment'
+import CommunitySentimentUiStore from './communitySentiment'
+import Feed from './feed'
 
 export default class CurrencyDetailsUiStore {
     domainStore: any;
@@ -22,9 +24,12 @@ export default class CurrencyDetailsUiStore {
 
         this.domainStore = domainStore;
         this.mySentiment = new MySentimentUiStore(domainStore);
-        this.communitySentiment = undefined;
-        this.feed = undefined;
+        this.communitySentiment = new CommunitySentimentUiStore(domainStore);
+        this.feed = new Feed(domainStore);
     }
+
+    @action refresh = (): void => {
+    };
 
     @computed get title(): string {
         return _.replace(this.domainStore.selectedSymbol, "_", "/");

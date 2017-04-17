@@ -23,3 +23,14 @@ export default class Feed extends React.Component {
         )
     }
 }
+
+
+Feed.propTypes = {
+    navigator: React.PropTypes.shape({
+        push: React.PropTypes.func.isRequired,
+        pop: React.PropTypes.func.isRequired
+    }),
+    store: React.PropTypes.shape({
+        feed: React.PropTypes.any.isRequired
+    })
+};

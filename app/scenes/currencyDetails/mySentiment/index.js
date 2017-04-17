@@ -24,12 +24,6 @@ import Cell from './cell'
 @observer
 export default class MySentiment extends React.Component {
 
-    componentDidMount() {
-        const {store} = this.props;
-
-        store.refresh();
-    }
-
     render() {
         const {navigator, store} = this.props;
 
@@ -89,8 +83,16 @@ export default class MySentiment extends React.Component {
 }
 
 MySentiment.propTypes = {
-    navigator: React.PropTypes.object,
-    store: React.PropTypes.object,
+    navigator: React.PropTypes.shape({
+        push: React.PropTypes.func.isRequired,
+        pop: React.PropTypes.func.isRequired
+    }),
+    store: React.PropTypes.shape({
+        sentimentSeries: React.PropTypes.any.isRequired,
+        candles: React.PropTypes.any.isRequired,
+        dataSource: React.PropTypes.any.isRequired,
+        ticker: React.PropTypes.any.isRequired
+    }),
 };
 
 const styles = StyleSheet.create({
