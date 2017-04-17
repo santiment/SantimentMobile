@@ -10,7 +10,7 @@ import Rx from 'rxjs'
 import moment from 'moment'
 
 import ReactNative from 'react-native';
-const {AsyncStorage} = ReactNative;
+const {AsyncStorage, Alert} = ReactNative;
 
 import mobx, {observable, computed, autorun, action, useStrict} from 'mobx'
 import {create, persist} from 'mobx-persist'
@@ -33,6 +33,7 @@ class DomainStore {
      * User
      *
      */
+
     @persist('object')
     @observable
     user: Object = {
@@ -52,14 +53,15 @@ class DomainStore {
 
     @action setSymbols = (symbols: string[]): void => {
         this.symbols = symbols;
+        console.log("Symbols updated:\n", symbols);
     };
 
     @action addSymbol = (symbol: string): void => {
-        this.symbols = _.union(this.symbols, [symbol]);
+        this.setSymbols(_.union(this.symbols, [symbol]));
     };
 
     @action removeSymbol = (symbol: string): void => {
-        this.symbols = _.without(this.symbols, symbol);
+        this.setSymbols(_.without(this.symbols, symbol));
     };
 
     /**
@@ -67,6 +69,7 @@ class DomainStore {
      *
      * string
      */
+
     @observable selectedSymbol: string = "";
 
     @action setSelectedSymbol = (symbol: string): void => {
@@ -151,7 +154,7 @@ class DomainStore {
 
                     let obj = {};
                     _.set(obj, [symbol, period], _.orderBy(candles, ['timestamp'], ['asc']));
-                    
+
                     return obj;
                 });
         });
@@ -208,6 +211,7 @@ class DomainStore {
      *       ],
      *   }
      */
+
     @persist('object')
     @observable aggregates: Object = {};
 
@@ -232,6 +236,28 @@ class DomainStore {
         return Rx.Observable.forkJoin(observables$)
             .map(arr => _.assign(...arr))
     };
+
+    /**
+     * Refresh
+     */
+
+    @action refresh = (): Rx.Observable<any> => {
+        return Rx.Observable
+            .forkJoin(
+                this.fetchTickers(),
+                this.fetchHistory(),
+                this.fetchSentiment(),
+                this.fetchAggregates()
+            )
+            .do(
+                ([tickers, history, sentiment, aggregates]) => {
+                    this.setTickers(tickers);
+                    this.setHistory(history);
+                    this.setSentiment(sentiment);
+                    this.setAggregates(aggregates);
+                }
+            )
+    }
 }
 
 const hydrate = create({storage: AsyncStorage});
@@ -239,4 +265,23 @@ const hydrate = create({storage: AsyncStorage});
 const domainStore = new DomainStore();
 export default domainStore;
 
-hydrate('store', domainStore).then(() => console.log('DomainStore hydrated'));
+Rx.Observable.fromPromise(hydrate('store', domainStore))
+    .do(
+        () => {
+            console.log('DomainStore hydrated');
+            console.log("User =", JSON.stringify(domainStore.user, null, 2));
+            console.log("Symbols =", JSON.stringify(domainStore.symbols.slice(), null, 2));
+        }
+    )
+    .flatMap(() => domainStore.refresh())
+    .do(() => console.log('DomainStore refreshed'))
+    .subscribe(
+        () => {},
+        error => Alert.alert(
+            'Refresh Error',
+            error.toString(),
+            [
+                {text: 'OK', onPress: () => {}},
+            ]
+        ),
+    );

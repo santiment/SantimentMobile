@@ -8,7 +8,7 @@
 import _ from 'lodash'
 
 import ReactNative from 'react-native';
-const {ListView} = ReactNative;
+const {ListView, Alert} = ReactNative;
 
 import mobx, {observable, computed, autorun, action, useStrict} from 'mobx'
 
@@ -28,6 +28,17 @@ export default class AddCurrencyUiStore {
 
     @action addSymbol = (symbol: string): void => {
         this.domainStore.addSymbol(symbol);
+        this.domainStore.refresh()
+            .subscribe(
+                () => {},
+                error => Alert.alert(
+                    'Refresh Error',
+                    error.toString(),
+                    [
+                        {text: 'OK', onPress: () => {}},
+                    ]
+                ),
+            );
     };
 
     @computed get rows(): Object[] {

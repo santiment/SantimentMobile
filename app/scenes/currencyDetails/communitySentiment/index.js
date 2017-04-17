@@ -16,9 +16,6 @@ export default class CommunitySentiment extends React.Component {
     render() {
         const {navigator, store} = this.props;
 
-        console.log("Aggregate:\n", JSON.stringify(store.aggregate, null, 2));
-
-
         return (
             <View>
                 <Text>{`Bullish: ${store.aggregate.bullish}`}</Text>

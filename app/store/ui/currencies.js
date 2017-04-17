@@ -29,32 +29,17 @@ export default class CurrenciesUiStore {
     };
 
     @action refresh = (): void => {
-        console.log("User =", JSON.stringify(this.domainStore.user, null, 2));
-
-        Rx.Observable
-            .forkJoin(
-                this.domainStore.fetchTickers(),
-                this.domainStore.fetchHistory(),
-                this.domainStore.fetchSentiment(),
-                this.domainStore.fetchAggregates()
-            )
+        this.domainStore.refresh()
             .subscribe(
-                ([tickers, history, sentiment, aggregates]) => {
-                    this.domainStore.setTickers(tickers);
-                    this.domainStore.setHistory(history);
-                    this.domainStore.setSentiment(sentiment);
-                    this.domainStore.setAggregates(aggregates);
-
-                },
+                () => {},
                 error => Alert.alert(
                     'Refresh Error',
                     error.toString(),
                     [
                         {text: 'OK', onPress: () => {}},
                     ]
-                )
+                ),
             );
-
     };
 
     @action selectSymbol = (symbol: string): void => {
@@ -64,8 +49,11 @@ export default class CurrenciesUiStore {
     @action addSentiment = (sentiment: Object): void => {
         this.domainStore.addSentiment(sentiment)
             .flatMap(() => this.domainStore.fetchSentiment())
+            .do(s => this.domainStore.setSentiment(s))
+            .flatMap(() => this.domainStore.fetchAggregates())
+            .do(a => this.domainStore.setAggregates(a))
             .subscribe(
-                s => this.domainStore.setSentiment(s),
+                () => {},
                 error => Alert.alert(
                     'Sentiment Update Error',
                     error.toString(),

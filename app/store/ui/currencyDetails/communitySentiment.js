@@ -24,7 +24,7 @@ export default class CommunitySentimentUiStore {
     }
 
     @computed get aggregate(): Object {
-        const aggregatesForSymbol = _.get(this.domainStore.aggregates, `${this.domainStore.selectedSymbol}`, [{}]);
-        return aggregatesForSymbol[0]
+        const aggregatesForSymbol = _.get(this.domainStore.aggregates, `${this.domainStore.selectedSymbol}`);
+        return _.isEmpty(aggregatesForSymbol) ? {bullish: 0, catish: 0, bearish: 0} : aggregatesForSymbol[0]
     }
 }

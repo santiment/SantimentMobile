@@ -24,11 +24,6 @@ import Cell from './cell'
 
 @observer
 export default class Currencies extends React.Component {
-    componentDidMount() {
-        const {store} = this.props;
-        store.refresh();
-    }
-
     render() {
         const {navigator, store} = this.props;
 
