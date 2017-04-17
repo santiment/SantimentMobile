@@ -76,7 +76,7 @@ export default class MySentimentUiStore {
     @computed get sentimentSeries(): Object[] {
         const sortByDate = (arr) => _.orderBy(arr, ['date'], ['desc']);
         const toSeries = (arr) => _.map(arr, s => { return {
-            x: moment(s.date).startOf('day').valueOf(),
+            x: moment(s.date).startOf('day').unix(),
             sentiment: s.sentiment,
         }});
 

@@ -7,6 +7,7 @@
 
 import _ from 'lodash'
 import Rx from 'rxjs'
+import moment from 'moment'
 
 import ReactNative from 'react-native';
 const {AsyncStorage} = ReactNative;
@@ -15,6 +16,8 @@ import mobx, {observable, computed, autorun, action, useStrict} from 'mobx'
 import {create, persist} from 'mobx-persist'
 
 import * as Bitfinex from '../../api/bitfinex'
+import * as Poloniex from '../../api/poloniex'
+
 import * as Santiment from '../../api/santiment'
 
 import type {SentimentType} from './types'
@@ -43,8 +46,8 @@ class DomainStore {
 
     @persist('list')
     @observable symbols: string[] = [
-        "BTC_USD",
-        "ETH_USD"
+        "BTC_USDT",
+        "ETH_USDT"
     ];
 
     @action setSymbols = (symbols: string[]): void => {
@@ -86,22 +89,18 @@ class DomainStore {
     };
 
     @action fetchTickers = (): Rx.Observable<Object[]> => {
-        const bfxSymbolMap = _.reduce(
-            this.symbols.slice(),
-            (obj, value) => {
-                return _.set(obj, `t${_.replace(value, "_", "")}`, value);
-            },
-            {}
-        );
         // TODO: Handle empty or malformed data
-        return Bitfinex.getTickers(_.keys(bfxSymbolMap))
-            .map(tickers => {
-                return tickers.map(t => {
+
+        const reversePair = (s) => _.join(_.reverse(_.split(s, "_")), "_");
+
+        return Poloniex.getTickers()
+            .map(t => {
+                return _.map(_.keys(t), k => {
                     return {
-                        symbol: _.get(bfxSymbolMap, t[0]),
-                        price: t[7],
-                        dailyChangePercent: t[6] * 100,
-                        volume: t[8],
+                        symbol: reversePair(k),
+                        price: parseFloat(_.get(t, [k, "last"], "0")),
+                        dailyChangePercent: parseFloat(_.get(t, [k, "percentChange"], "0")) * 100,
+                        volume: parseFloat(_.get(t, [k, "baseVolume"], "0")),
                     }
                 });
             })
@@ -135,26 +134,26 @@ class DomainStore {
         const period = "1D";
 
         const observables$ = this.symbols.map((symbol) => {
-            const bfxSymbol = `t${_.replace(symbol, "_", "")}`;
+            const reversePair = (s) => _.join(_.reverse(_.split(s, "_")), "_");
 
-            return Bitfinex.getCandles(bfxSymbol, period, 30)
+            return Poloniex.getCandles(reversePair(symbol), moment().subtract(30, 'days').toDate(), moment().toDate(), 86400)
                 .map(items => {
-                    const candles = items.map(item => {
+                    const candles = items.map(i => {
                         return {
-                            timestamp: item[0],
-                            open: item[1],
-                            close: item[2],
-                            high: item[3],
-                            low: item[4],
-                            volume: item[5],
+                            timestamp: i.date,
+                            open: i.open,
+                            close: i.close,
+                            high: i.high,
+                            low: i.low,
+                            volume: i.volume,
                         }
                     });
 
                     let obj = {};
                     _.set(obj, [symbol, period], _.orderBy(candles, ['timestamp'], ['asc']));
-
+                    
                     return obj;
-                })
+                });
         });
 
         // $FlowFixMe
