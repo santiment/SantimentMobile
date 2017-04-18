@@ -25,6 +25,7 @@
     "react": "^15.4.2",
     "react-dom": "^15.4.2",
     "react-native": "0.42.3",
+    "react-native-charts-wrapper": "^0.2.7",
     "react-native-device-info": "^0.10.2",
     "react-native-elements": "^0.10.2",
     "react-native-keyboard-aware-scrollview": "^1.1.5",
