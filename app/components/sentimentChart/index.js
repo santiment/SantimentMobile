@@ -18,11 +18,15 @@ class Chart extends React.Component {
     render() {
         const {style, data} = this.props;
 
-        const formattedXs = _.map(data, o => moment.unix(o.x).format('MMM Do'));
+        const xs = _.map(data, o => moment(o.date).format('MMM Do'));
 
-        const candles = _.map(data, o => {
-            return {shadowH: o.high, shadowL: o.low, open: o.open, close: o.close}
+        const candlesticks = _.map(data, o => {
+            return {shadowH: o.candle.high, shadowL: o.candle.low, open: o.candle.open, close: o.candle.close}
         });
+
+        const bullishSentiments = _.map(data, o => _.isEqual(o.sentiment, "bullish") ? 1 : 0);
+        const catishSentiments = _.map(data, o => _.isEqual(o.sentiment, "catish") ? 1 : 0);
+        const bearishSentiments = _.map(data, o => _.isEqual(o.sentiment, "bearish") ? 1 : 0);
 
         const config = {
             xAxis: {
@@ -38,7 +42,7 @@ class Chart extends React.Component {
                 gridColor: processColor('gray'),
                 position: 'BOTTOM',
                 avoidFirstLastClipping: true,
-                valueFormatter: formattedXs,
+                valueFormatter: xs,
                 granularityEnabled: true,
                 granularity: 1,
                 labelCount: 4,
@@ -49,15 +53,19 @@ class Chart extends React.Component {
                     drawAxisLine: false,
                     axisLineColor: processColor('green'),
                     axisLineWidth: 2,
+                    drawLabels: false,
                     drawGridLines: false,
                     gridLineWidth: 1,
                     gridColor: processColor('green'),
+                    axisMaximum: 20,
+                    axisMinimum: 0,
                 },
                 right: {
                     enabled: true,
                     drawAxisLine: true,
                     axisLineColor: processColor('gray'),
                     axisLineWidth: 1,
+                    drawLabels: true,
                     drawGridLines: true,
                     gridLineWidth: 0.2,
                     gridDashedLine: {
@@ -65,6 +73,8 @@ class Chart extends React.Component {
                         spaceLength: 10
                     },
                     gridColor: processColor('gray'),
+                    // axisMaximum: _.max(_.map(candles, c => c.shadowH))*1.0,
+                    axisMinimum: _.min(_.map(candlesticks, c => c.shadowL))*0.98,
                 },
             },
             legend: {
@@ -80,21 +90,57 @@ class Chart extends React.Component {
             data: {
                 candleData: {
                     dataSets: [{
-                        values: candles,
+                        values: candlesticks,
                         label: 'Company A',
                         config: {
                             axisDependency: 'RIGHT',
                             drawValues: false,
-                            highlightColor: processColor('darkgray'),
-                            shadowColor: processColor('black'),
+                            highlightColor: processColor('#777777'),
+                            shadowColor: processColor('#777777'),
                             shadowWidth: 1,
-                            shadowColorSameAsCandle: true,
-                            increasingColor: processColor('green'),
+                            shadowColorSameAsCandle: false,
+                            increasingColor: processColor('#27aa36'),
                             increasingPaintStyle: 'fill',
-                            decreasingColor: processColor('red'),
+                            decreasingColor: processColor('#bb2b27'),
                         },
                     }],
                 },
+                barData: {
+                    dataSets: [
+                        {
+                            values: bullishSentiments,
+                            label: 'Bullish',
+
+                            config: {
+                                axisDependency: 'LEFT',
+                                drawValues: false,
+                                colors: [processColor('#28aa38')],
+                            }
+                        },
+                        {
+                            values: catishSentiments,
+                            label: 'Catish',
+
+                            config: {
+                                axisDependency: 'LEFT',
+                                drawValues: false,
+                                colors: [processColor('#b1b1b2')],
+                            }
+                        },
+                        {
+                            values: bearishSentiments,
+                            label: 'Bearish',
+
+                            config: {
+                                axisDependency: 'LEFT',
+                                drawValues: false,
+                                colors: [processColor('#bd2c27')],
+                            }
+                        }
+                    ]
+
+                },
+
             },
 
         };
@@ -120,6 +166,7 @@ class Chart extends React.Component {
                     dragDecelerationEnabled={false}
                     // dragDecelerationFrictionCoef={0.99}
                     style={{flex: 1}}
+                    chartBackgroundColor={processColor('#ffffff')}
                 />
             </View>
         );
@@ -130,11 +177,14 @@ Chart.propTypes = {
     style: React.PropTypes.any,
     data: React.PropTypes.arrayOf(
         React.PropTypes.shape({
-            x: React.PropTypes.number.isRequired,
-            open: React.PropTypes.number.isRequired,
-            high: React.PropTypes.number.isRequired,
-            low: React.PropTypes.number.isRequired,
-            close: React.PropTypes.number.isRequired,
+            date: React.PropTypes.string.isRequired,
+            candle: React.PropTypes.shape({
+                open: React.PropTypes.number.isRequired,
+                high: React.PropTypes.number.isRequired,
+                low: React.PropTypes.number.isRequired,
+                close: React.PropTypes.number.isRequired,
+            }),
+            sentiment: React.PropTypes.string,
         })
     ),
 };
