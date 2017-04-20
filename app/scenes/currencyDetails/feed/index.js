@@ -7,7 +7,7 @@
 
 import React from 'react';
 import ReactNative from 'react-native';
-let {Text, View} = ReactNative;
+let {Text, View, StyleSheet} = ReactNative;
 
 import {observer} from 'mobx-react/native'
 
@@ -17,13 +17,14 @@ export default class Feed extends React.Component {
         const {navigator, store} = this.props;
 
         return (
-            <View>
-                <Text>Sentiment feed</Text>
+            <View style={styles.container}>
+                <Text style={styles.text}>
+                    Sentiment feed placeholder
+                </Text>
             </View>
         )
     }
 }
-
 
 Feed.propTypes = {
     navigator: React.PropTypes.shape({
@@ -34,3 +35,17 @@ Feed.propTypes = {
         feed: React.PropTypes.any.isRequired
     })
 };
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: "#ffffff",
+        flexDirection: 'column',
+        justifyContent: 'center',
+    },
+    text: {
+        fontSize: 36,
+        fontWeight: "500",
+        textAlign: 'center',
+    },
+});
