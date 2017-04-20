@@ -43,7 +43,7 @@ export default class MySentimentUiStore {
             symbol: t.symbol,
             displaySymbol: _.replace(t.symbol, "_", "/"),
             dailyChangePercent: t.dailyChangePercent.toPrecision(3),
-            price: t.price.toPrecision(4),
+            price: t.price.toPrecision(6),
             volume: t.volume,
         }};
 

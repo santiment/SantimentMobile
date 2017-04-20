@@ -116,7 +116,7 @@ class Chart extends React.Component {
                             config: {
                                 axisDependency: 'LEFT',
                                 drawValues: false,
-                                colors: [processColor('#28aa38')],
+                                colors: [processColor('#27aa36')],
                             }
                         },
                         {
@@ -126,7 +126,7 @@ class Chart extends React.Component {
                             config: {
                                 axisDependency: 'LEFT',
                                 drawValues: false,
-                                colors: [processColor('#b1b1b2')],
+                                colors: [processColor('#777777')],
                             }
                         },
                         {
@@ -136,7 +136,7 @@ class Chart extends React.Component {
                             config: {
                                 axisDependency: 'LEFT',
                                 drawValues: false,
-                                colors: [processColor('#bd2c27')],
+                                colors: [processColor('#bb2b27')],
                             }
                         }
                     ]

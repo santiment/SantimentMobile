@@ -36,30 +36,30 @@ export default class MySentiment extends React.Component {
             )
         };
 
+
+        const changeColor = store.ticker.dailyChangePercent > 0
+            ? "#27aa36"
+            : store.ticker.dailyChangePercent < 0
+                ? "#bd2c27"
+                : "#b1b1b2";
+
         return (
+
+
             <View style={styles.container}>
                 <View style={styles.currencyRowContainer}>
 
-                    <Text style={[styles.text, {flex: 8}]}>
+                    <Text style={[styles.text, styles.priceText]}>
                         {store.ticker.price}
                     </Text>
 
-                    <Text style={[
-                        styles.text,
-                        {flex: 4, marginRight: 10, textAlign: "right"},
-                        store.ticker.dailyChangePercent > 0
-                            ? {color: "#28aa38"}
-                            : store.ticker.dailyChangePercent < 0
-                            ? {color: "#bd2c27"}
-                            : {color: "#b1b1b2"}
-                    ]}>
+                    <Text style={[styles.text, styles.changeText, {color: changeColor}]}>
                         {`${store.ticker.dailyChangePercent}%`}
                     </Text>
 
-                    <View style={{flex: 1, justifyContent: "flex-end"}}>
-                        <View style={styles.sentimentBadge}/>
-                    </View>
-
+                    <Text style={[styles.text, styles.periodText]}>
+                        {store.periods[store.selectedPeriod]}
+                    </Text>
                 </View>
 
                 <SentimentChart
@@ -115,10 +115,6 @@ const styles = StyleSheet.create({
     currencyRowContainer: {
         height: 50,
         flexDirection: 'row',
-        marginLeft: 20,
-        marginRight: 20,
-        paddingLeft: 10,
-        paddingRight: 10,
         paddingTop: 10,
         paddingBottom: 10,
         justifyContent: 'space-between',
@@ -134,9 +130,23 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     text: {
-        fontSize: 16,
-        color: "#999999",
+        fontSize: 14,
+        fontWeight: "400",
+    },
+    priceText: {
+        flex: 1,
+        fontSize: 15,
+        textAlign: 'center',
         fontWeight: "500",
+    },
+    changeText: {
+        flex: 1,
+        textAlign: 'center',
+    },
+    periodText: {
+        flex: 1,
+        color: "#777777",
+        textAlign: 'center',
     },
     listView: {
         backgroundColor: 'white',
