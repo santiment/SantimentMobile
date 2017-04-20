@@ -34,7 +34,7 @@ class Chart extends React.Component {
                 axisLineColor: processColor('gray'),
                 axisLineWidth: 1,
                 drawGridLines: true,
-                gridLineWidth: 0.2,
+                gridLineWidth: 0.25,
                 gridDashedLine: {
                     lineLength: 10,
                     spaceLength: 10
@@ -46,6 +46,8 @@ class Chart extends React.Component {
                 granularityEnabled: true,
                 granularity: 1,
                 labelCount: 4,
+                axisMinimum: -1,
+                axisMaximum: xs.length+15,
             },
             yAxis: {
                 left: {
@@ -67,7 +69,7 @@ class Chart extends React.Component {
                     axisLineWidth: 1,
                     drawLabels: true,
                     drawGridLines: true,
-                    gridLineWidth: 0.2,
+                    gridLineWidth: 0.25,
                     gridDashedLine: {
                         lineLength: 10,
                         spaceLength: 10
@@ -155,18 +157,19 @@ class Chart extends React.Component {
                     chartDescription={config.chartDescription}
                     onSelect={() => {}}
                     autoScaleMinMaxEnabled={true}
-                    zoom={{scaleX: 4, scaleY: 1, xValue: 0, yValue: 0, axisDependency: 'RIGHT'}}
+                    zoom={{scaleX: 4, scaleY: 1, xValue: -9999, yValue: 1, axisDependency: 'RIGHT'}}
                     touchEnabled={true}
                     dragEnabled={true}
                     scaleXEnabled={true}
                     scaleYEnabled={false}
                     scaleEnabled={false}
-                    pinchZoom={false}
+                    pinchZoom={true}
                     doubleTapToZoomEnabled={false}
                     dragDecelerationEnabled={false}
                     // dragDecelerationFrictionCoef={0.99}
                     style={{flex: 1}}
                     chartBackgroundColor={processColor('#ffffff')}
+
                 />
             </View>
         );
@@ -184,7 +187,7 @@ Chart.propTypes = {
                 low: React.PropTypes.number.isRequired,
                 close: React.PropTypes.number.isRequired,
             }),
-            sentiment: React.PropTypes.string,
+            sentiment: React.PropTypes.oneOf(['bullish', 'catish', 'bearish']),
         })
     ),
 };

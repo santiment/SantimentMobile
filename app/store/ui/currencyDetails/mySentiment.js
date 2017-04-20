@@ -52,37 +52,39 @@ export default class MySentimentUiStore {
         return getTicker(this.domainStore.tickers);
     }
 
-    @computed get candles(): Object[] {
-        const path = [`${this.ticker.symbol}`, `${this.periods[this.selectedPeriod]}`];
-        const ohlcv = _.get(this.domainStore.history, path, []);
-        const candles = ohlcv.map(i => {
-            return {
-                x: parseFloat(i.timestamp),
-                open: i.open,
-                high: i.high,
-                low: i.low,
-                close: i.close,
+    @computed get sentiments(): Object[] {
+        return _.filter(
+            this.domainStore.sentiments.slice(),
+            s => { return _.isEqual(s.asset, this.domainStore.selectedSymbol) }
+        );
+    }
+
+    @computed get chartData(): Object[] {
+        const timeseries = _.get(
+            this.domainStore.history,
+            [`${this.ticker.symbol}`, `${this.periods[this.selectedPeriod]}`],
+            []
+        );
+
+        const sentiments = _.filter(
+            this.domainStore.sentiments.slice(),
+            s => { return _.isEqual(s.asset, this.domainStore.selectedSymbol) }
+        );
+
+        const candles = _.map(
+            timeseries,
+            t => {
+                const date = moment.unix(t.date);
+                return {
+                    date: date.toISOString(),
+                    candle: _.pick(t, ['open', 'high', 'low', 'close']),
+                    sentiment: _.get(_.find(sentiments, s => moment(s.date).isSame(date, 'day')), 'sentiment'),
+                }
             }
-        });
+        );
 
         return candles;
     }
-
-    @computed get sentiments(): Object[] {
-        const filterBySymbol = (arr) => _.filter(arr, s => { return _.isEqual(s.asset, this.domainStore.selectedSymbol) });
-        return _.flow(filterBySymbol)(this.domainStore.sentiments.slice())
-    }
-
-    @computed get sentimentSeries(): Object[] {
-        const sortByDate = (arr) => _.orderBy(arr, ['date'], ['desc']);
-        const toSeries = (arr) => _.map(arr, s => { return {
-            x: moment(s.date).startOf('day').unix(),
-            sentiment: s.sentiment,
-        }});
-
-        return _.flow(sortByDate, toSeries)(this.sentiments.slice())
-    }
-
     @computed get rows(): Object[] {
         const sortByDate = (arr) => _.orderBy(arr, ['date'], ['desc']);
         const formatDates = (arr) => _.map(arr, s => { return {...s, date: moment(s.date).fromNow()}});

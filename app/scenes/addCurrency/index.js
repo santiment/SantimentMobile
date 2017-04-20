@@ -1,5 +1,6 @@
 /**
  * Created by workplace on 01/02/2017.
+ * @flow
  */
 
 'use strict';

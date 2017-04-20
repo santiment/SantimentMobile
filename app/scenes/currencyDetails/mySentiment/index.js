@@ -16,10 +16,9 @@ import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-nat
 
 import {observer} from 'mobx-react/native'
 
-import CandlestickChart from '../../../web/candlestickChart'
+import SentimentChart from '../../../components/sentimentChart'
 
 import Cell from './cell'
-
 
 @observer
 export default class MySentiment extends React.Component {
@@ -63,9 +62,8 @@ export default class MySentiment extends React.Component {
 
                 </View>
 
-                <CandlestickChart
-                    candlesticks={store.candles}
-                    sentiments={store.sentimentSeries}
+                <SentimentChart
+                    data={store.chartData}
                     style={styles.chart}
                 />
 
@@ -88,10 +86,20 @@ MySentiment.propTypes = {
         pop: React.PropTypes.func.isRequired
     }),
     store: React.PropTypes.shape({
-        sentimentSeries: React.PropTypes.any.isRequired,
-        candles: React.PropTypes.any.isRequired,
         dataSource: React.PropTypes.any.isRequired,
-        ticker: React.PropTypes.any.isRequired
+        ticker: React.PropTypes.any.isRequired,
+        data: React.PropTypes.arrayOf(
+            React.PropTypes.shape({
+                date: React.PropTypes.string.isRequired,
+                candle: React.PropTypes.shape({
+                    open: React.PropTypes.number.isRequired,
+                    high: React.PropTypes.number.isRequired,
+                    low: React.PropTypes.number.isRequired,
+                    close: React.PropTypes.number.isRequired,
+                }),
+                sentiment: React.PropTypes.string,
+            })
+        ),
     }),
 };
 
@@ -166,8 +174,6 @@ const styles = StyleSheet.create({
         color: 'white'
     },
     chart: {
-        height: 300,
-        marginLeft: 20,
-        marginRight: 20,
+        height: 250,
     },
 });
