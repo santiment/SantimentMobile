@@ -17,29 +17,11 @@ import _ from 'lodash'
 export default class CurrencyCell extends React.Component {
     render() {
 
-        let data =
-            [{
-                "x": 0,
-                "y": 2
-            }, {
-                "x": 1,
-                "y": 2.5
-            }, {
-                "x": 2,
-                "y": 4
-            }, {
-                "x": 3,
-                "y": 4
-            }, {
-                "x": 4,
-                "y": 3.5
-            }]
-        ;
-
-        let options = {
-            width: responsiveWidth(15),
-            height: 20
-        };
+        const changeColor = this.props.dailyChangePercent > 0
+            ? "#27aa36"
+            : this.props.dailyChangePercent < 0
+                ? "#bd2c27"
+                : "#b1b1b2";
 
         return (
             <TouchableWithoutFeedback onPress={this.props.onPress}>
@@ -60,25 +42,10 @@ export default class CurrencyCell extends React.Component {
                                 {this.props.price}
                             </Text>
 
-                            <Text style={[
-                                styles.text,
-                                this.props.dailyChangePercent > 0
-                                    ? {color: "#28aa38"}
-                                    : this.props.dailyChangePercent < 0
-                                    ? {color: "#bd2c27"}
-                                    : {color: "#b1b1b2"}
-                            ]}>
+                            <Text style={[styles.text, {color: changeColor}]}>
                                 {this.props.dailyChangePercent + "%"}
                             </Text>
 
-                        </View>
-
-                        <View style={styles.chartColumn}>
-
-                        </View>
-
-                        <View style={styles.trendColumn}>
-                            <View style={styles.sentimentBadge}/>
                         </View>
                     </View>
 
@@ -231,7 +198,7 @@ const styles = StyleSheet.create({
         fontWeight: "500",
     },
     symbolColumn: {
-        flex: 4,
+        flex: 3,
         justifyContent: 'flex-start',
         alignItems: "stretch",
         // backgroundColor: 'blue',
@@ -242,12 +209,19 @@ const styles = StyleSheet.create({
         fontWeight: "500",
     },
     priceColumn: {
-        flex: 2,
+        flex: 1,
         flexDirection: 'column',
         justifyContent: 'flex-start',
         alignItems: "stretch",
     },
     priceText: {
+        fontSize: responsiveFontSize(2),
+        color: "#999999",
+        fontWeight: "500",
+        textAlign: 'left',
+    },
+    changeText: {
+        textAlign: 'left',
         fontSize: responsiveFontSize(2),
         color: "#999999",
         fontWeight: "500",
@@ -257,12 +231,6 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-    },
-    trendColumn: {
-        flex: 1,
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: "center",
     },
     text: {
         fontSize: responsiveFontSize(2),
