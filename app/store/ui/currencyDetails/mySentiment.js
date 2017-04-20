@@ -74,11 +74,19 @@ export default class MySentimentUiStore {
         const candles = _.map(
             timeseries,
             t => {
-                const date = moment.unix(t.date);
+                // const date = moment.unix(t.date);
+                const candleTimestamp = new Date(t.date * 1000).setHours(0, 0, 0, 0);
+
+
+                const sentimentObject = _.find(sentiments, s => {
+                    const sentimentTimestamp = new Date(s.date).setHours(0, 0, 0, 0);
+
+                    return candleTimestamp === sentimentTimestamp;
+                });
                 return {
-                    date: date.toISOString(),
+                    date: new Date(candleTimestamp).toISOString(),
                     candle: _.pick(t, ['open', 'high', 'low', 'close']),
-                    sentiment: _.get(_.find(sentiments, s => moment(s.date).isSame(date, 'day')), 'sentiment'),
+                    sentiment: _.get(sentimentObject, 'sentiment'),
                 }
             }
         );
