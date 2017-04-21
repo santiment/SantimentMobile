@@ -197,6 +197,7 @@ android {
 }
 
 dependencies {
+    compile project(':react-native-charts-wrapper')
     compile project(':react-native-device-info')
     compile project(':bugsnag-react-native')
     compile project(':react-native-vector-icons')
