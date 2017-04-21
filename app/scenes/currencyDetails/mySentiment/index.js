@@ -67,13 +67,14 @@ export default class MySentiment extends React.Component {
                     style={styles.chart}
                 />
 
-                <ListView
-                    style={styles.listView}
-                    renderRow={renderRow}
-                    dataSource={store.dataSource}
-                    enableEmptySections={true}
-                    removeClippedSubviews={false}
-                />
+                <View style={styles.listView}>
+                    <ListView
+                        renderRow={renderRow}
+                        dataSource={store.dataSource}
+                        enableEmptySections={true}
+                        removeClippedSubviews={false}
+                    />
+                </View>
 
             </View>
         );
@@ -150,7 +151,8 @@ const styles = StyleSheet.create({
     },
     listView: {
         backgroundColor: 'white',
-        padding: 20
+        padding: 20,
+        flex: 1,
     },
     sentimentBadge: {
         margin: 4,
@@ -184,6 +186,6 @@ const styles = StyleSheet.create({
         color: 'white'
     },
     chart: {
-        height: 250,
+        height: responsiveHeight(40),
     },
 });

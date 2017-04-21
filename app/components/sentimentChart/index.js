@@ -7,7 +7,7 @@
 
 import React from 'react';
 import ReactNative from 'react-native';
-const {View, StyleSheet, processColor} = ReactNative;
+const {View, StyleSheet, processColor, Platform} = ReactNative;
 
 import _ from 'lodash'
 import moment from 'moment'
@@ -31,15 +31,15 @@ class Chart extends React.Component {
         const config = {
             xAxis: {
                 drawAxisLine: true,
-                axisLineColor: processColor('gray'),
+                axisLineColor: processColor('0x777777'),
                 axisLineWidth: 1,
                 drawGridLines: true,
-                gridLineWidth: 0.25,
+                gridLineWidth: 1,
                 gridDashedLine: {
                     lineLength: 10,
                     spaceLength: 10
                 },
-                gridColor: processColor('gray'),
+                gridColor: processColor('#77777744'),
                 position: 'BOTTOM',
                 avoidFirstLastClipping: true,
                 valueFormatter: xs,
@@ -53,28 +53,28 @@ class Chart extends React.Component {
                 left: {
                     enabled: false,
                     drawAxisLine: false,
-                    axisLineColor: processColor('green'),
+                    axisLineColor: processColor('#777777'),
                     axisLineWidth: 2,
                     drawLabels: false,
                     drawGridLines: false,
                     gridLineWidth: 1,
-                    gridColor: processColor('green'),
+                    gridColor: processColor('#777777'),
                     axisMaximum: 20,
                     axisMinimum: 0,
                 },
                 right: {
                     enabled: true,
                     drawAxisLine: true,
-                    axisLineColor: processColor('gray'),
+                    axisLineColor: processColor('#777777'),
                     axisLineWidth: 1,
                     drawLabels: true,
                     drawGridLines: true,
-                    gridLineWidth: 0.25,
+                    gridLineWidth: 1,
                     gridDashedLine: {
                         lineLength: 10,
                         spaceLength: 10
                     },
-                    gridColor: processColor('gray'),
+                    gridColor: processColor('#77777744'),
                     // axisMaximum: _.max(_.map(candles, c => c.shadowH))*1.0,
                     axisMinimum: _.min(_.map(candlesticks, c => c.shadowL))*0.98,
                 },
@@ -157,7 +157,16 @@ class Chart extends React.Component {
                     chartDescription={config.chartDescription}
                     onSelect={() => {}}
                     autoScaleMinMaxEnabled={true}
-                    zoom={{scaleX: 4, scaleY: 1, xValue: -9999, yValue: 1, axisDependency: 'RIGHT'}}
+                    zoom={{
+                        scaleX: 4,
+                        scaleY: 1,
+                        xValue: Platform.select({
+                            ios: () => { return -9999 },
+                            android: () => { return 9999 },
+                        })(),
+                        yValue: 1,
+                        axisDependency: 'RIGHT'
+                    }}
                     touchEnabled={true}
                     dragEnabled={true}
                     scaleXEnabled={true}
