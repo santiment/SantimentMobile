@@ -141,10 +141,15 @@ class DomainStore {
 
             return Poloniex.getCandles(reversePair(symbol), moment().subtract(180, 'days').toDate(), moment().toDate(), 86400)
                 .map(items => {
-                    const candles = items.map(i => _.pick(i, ['date', 'open', 'close', 'high', 'low']));
+                    const candles = items.map(i => {
+                        return {
+                            timestamp: i.date,
+                            ..._.pick(i, ['open', 'close', 'high', 'low'])
+                        }
+                    });
 
                     let obj = {};
-                    _.set(obj, [symbol, period], _.orderBy(candles, ['date'], ['asc']));
+                    _.set(obj, [symbol, period], _.orderBy(candles, ['timestamp'], ['asc']));
 
                     return obj;
                 });
@@ -161,7 +166,7 @@ class DomainStore {
      * [{
      *     user: "id",
      *     data: [
-     *         {"id": "aaa", "symbol": "BTC_USD", "sentiment": "bullish", "price", 1041, "date": "2017-03-16T23:23:41.229Z"},
+     *         {"id": "aaa", "symbol": "BTC_USD", "sentiment": "bullish", "price", 1041, "timestamp": "1318874398"},
      *     ]
      * }]
      *

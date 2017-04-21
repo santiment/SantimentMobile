@@ -18,7 +18,7 @@ class Chart extends React.Component {
     render() {
         const {style, data} = this.props;
 
-        const xs = _.map(data, o => moment(o.date).format('MMM Do'));
+        const xs = _.map(data, o => moment.unix(o.timestamp).format('MMM Do'));
 
         const candlesticks = _.map(data, o => {
             return {shadowH: o.candle.high, shadowL: o.candle.low, open: o.candle.open, close: o.candle.close}
@@ -180,7 +180,7 @@ Chart.propTypes = {
     style: React.PropTypes.any,
     data: React.PropTypes.arrayOf(
         React.PropTypes.shape({
-            date: React.PropTypes.string.isRequired,
+            timestamp: React.PropTypes.number.isRequired,
             candle: React.PropTypes.shape({
                 open: React.PropTypes.number.isRequired,
                 high: React.PropTypes.number.isRequired,

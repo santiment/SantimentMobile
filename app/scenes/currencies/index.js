@@ -43,7 +43,7 @@ export default class Currencies extends React.Component {
                             asset: data.symbol,
                             price: data.price,
                             sentiment: sentiment,
-                            date: moment().toISOString(),
+                            timestamp: moment().unix(),
                         });
                         navigator.push({name: CurrencyDetailsRoute})
                     }}

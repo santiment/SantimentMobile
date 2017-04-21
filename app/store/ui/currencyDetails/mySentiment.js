@@ -75,16 +75,16 @@ export default class MySentimentUiStore {
             timeseries,
             t => {
                 // const date = moment.unix(t.date);
-                const candleTimestamp = new Date(t.date * 1000).setHours(0, 0, 0, 0);
+                const candleTimestamp = new Date(t.timestamp * 1000).setHours(0, 0, 0, 0);
 
 
                 const sentimentObject = _.find(sentiments, s => {
-                    const sentimentTimestamp = new Date(s.date).setHours(0, 0, 0, 0);
+                    const sentimentTimestamp = new Date(s.timestamp * 1000).setHours(0, 0, 0, 0);
 
                     return candleTimestamp === sentimentTimestamp;
                 });
                 return {
-                    date: new Date(candleTimestamp).toISOString(),
+                    timestamp: candleTimestamp,
                     candle: _.pick(t, ['open', 'high', 'low', 'close']),
                     sentiment: _.get(sentimentObject, 'sentiment'),
                 }
@@ -95,7 +95,7 @@ export default class MySentimentUiStore {
     }
     @computed get rows(): Object[] {
         const sortByDate = (arr) => _.orderBy(arr, ['date'], ['desc']);
-        const formatDates = (arr) => _.map(arr, s => { return {...s, date: moment(s.date).fromNow()}});
+        const formatDates = (arr) => _.map(arr, s => { return {...s, date: moment.unix(s.timestamp).fromNow()}});
         const formatPrice = (arr) => _.map(arr, s => { return {...s, price: _.isEmpty(s.price) ? "" : s.price}});
 
         return _.flow(sortByDate, formatDates, formatPrice)(this.sentiments.slice());

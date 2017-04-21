@@ -32,17 +32,37 @@ export const getSentiment = (userId: string): any => {
         .then(r => r.data)
         .catch(processAndRethrow);
 
-    return Rx.Observable.fromPromise(promise);
+    return Rx.Observable.fromPromise(promise)
+        .observeOn(Rx.Scheduler.async)
+        .map(
+            sentiments => _.map(
+                sentiments,
+                s => _.assign({}, _.omit(s, 'date'), {timestamp: moment(s.date).unix()})
+            )
+        )
+        .do(console.log);
 };
 
 export const postSentiment = (sentiment: Object): any => {
     let url = apiUrl + `/sentiment`;
 
-    const promise = axios.post(url, sentiment)
+    const newSentiment = _.assign(
+        {},
+        _.omit(sentiment, 'timestamp'),
+        {date: moment.unix(sentiment.timestamp).toISOString()}
+    );
+
+    console.log("sentiment:\n", JSON.stringify(sentiment, null, 2));
+    console.log("newSentiment:\n", JSON.stringify(newSentiment, null, 2));
+
+
+
+    const promise = axios.post(url, newSentiment)
         .then(r => r.data)
         .catch(processAndRethrow);
 
-    return Rx.Observable.fromPromise(promise);
+    return Rx.Observable.fromPromise(promise)
+        .do(console.log);
 };
 
 export const getAggregate = (asset: string): any => {
