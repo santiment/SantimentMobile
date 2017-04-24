@@ -33,14 +33,15 @@ export const getSentiment = (userId: string): any => {
         .catch(processAndRethrow);
 
     return Rx.Observable.fromPromise(promise)
-        .observeOn(Rx.Scheduler.async)
+        // TODO: Should be async but causes bug in conjunction with Observable.forkJoin.
+        // TODO: Sometimes it doesn't fire and forkJoin never finishes
+        // .observeOn(Rx.Scheduler.async)
         .map(
             sentiments => _.map(
                 sentiments,
                 s => _.assign({}, _.omit(s, 'date'), {timestamp: moment(s.date).unix()})
             )
         )
-        .do(console.log);
 };
 
 export const postSentiment = (sentiment: Object): any => {

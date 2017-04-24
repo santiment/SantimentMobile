@@ -7,7 +7,7 @@
 
 import React from 'react';
 import ReactNative from 'react-native';
-const {View, StyleSheet, processColor, Platform} = ReactNative;
+const {View, StyleSheet, processColor, Platform, Text} = ReactNative;
 
 import _ from 'lodash'
 import moment from 'moment'
@@ -27,6 +27,8 @@ class Chart extends React.Component {
         const bullishSentiments = _.map(data, o => _.isEqual(o.sentiment, "bullish") ? 1 : 0);
         const catishSentiments = _.map(data, o => _.isEqual(o.sentiment, "catish") ? 1 : 0);
         const bearishSentiments = _.map(data, o => _.isEqual(o.sentiment, "bearish") ? 1 : 0);
+
+        const isDataAvailable = !_.isEmpty(xs) && !_.isEmpty(candlesticks);
 
         const config = {
             xAxis: {
@@ -75,8 +77,8 @@ class Chart extends React.Component {
                         spaceLength: 10
                     },
                     gridColor: processColor('#77777744'),
-                    // axisMaximum: _.max(_.map(candles, c => c.shadowH))*1.0,
-                    axisMinimum: _.min(_.map(candlesticks, c => c.shadowL))*0.98,
+                    // axisMaximum: _.max(_.map(candles, c => c.shadowH)) * 1.0,
+                    axisMinimum: _.min(_.map(candlesticks, c => c.shadowL)) * 0.98,
                 },
             },
             legend: {
@@ -147,39 +149,51 @@ class Chart extends React.Component {
 
         };
 
+        const noDataView = (
+            <View style={styles.noData}>
+                <Text style={styles.noDataText}>No chart data</Text>
+            </View>
+        );
+
+        const chartView = (
+            <CombinedChart
+                data={config.data}
+                legend={config.legend}
+                xAxis={config.xAxis}
+                yAxis={config.yAxis}
+                chartDescription={config.chartDescription}
+                onSelect={() => {}}
+                autoScaleMinMaxEnabled={true}
+                zoom={{
+                    scaleX: 4,
+                    scaleY: 1,
+                    xValue: Platform.select({
+                        ios: () => { return -9999 },
+                        android: () => { return 9999 },
+                    })(),
+                    yValue: 1,
+                    axisDependency: 'RIGHT'
+                }}
+                touchEnabled={true}
+                dragEnabled={true}
+                scaleXEnabled={true}
+                scaleYEnabled={false}
+                scaleEnabled={false}
+                pinchZoom={true}
+                doubleTapToZoomEnabled={false}
+                dragDecelerationEnabled={false}
+                // dragDecelerationFrictionCoef={0.99}
+                style={styles.chart}
+                chartBackgroundColor={processColor('#ffffff')}
+
+            />
+        );
+
+        const content = isDataAvailable ? chartView : noDataView;
+
         return (
             <View style={style}>
-                <CombinedChart
-                    data={config.data}
-                    legend={config.legend}
-                    xAxis={config.xAxis}
-                    yAxis={config.yAxis}
-                    chartDescription={config.chartDescription}
-                    onSelect={() => {}}
-                    autoScaleMinMaxEnabled={true}
-                    zoom={{
-                        scaleX: 4,
-                        scaleY: 1,
-                        xValue: Platform.select({
-                            ios: () => { return -9999 },
-                            android: () => { return 9999 },
-                        })(),
-                        yValue: 1,
-                        axisDependency: 'RIGHT'
-                    }}
-                    touchEnabled={true}
-                    dragEnabled={true}
-                    scaleXEnabled={true}
-                    scaleYEnabled={false}
-                    scaleEnabled={false}
-                    pinchZoom={true}
-                    doubleTapToZoomEnabled={false}
-                    dragDecelerationEnabled={false}
-                    // dragDecelerationFrictionCoef={0.99}
-                    style={{flex: 1}}
-                    chartBackgroundColor={processColor('#ffffff')}
-
-                />
+                {content}
             </View>
         );
     }
@@ -200,5 +214,21 @@ Chart.propTypes = {
         })
     ),
 };
+
+const styles = StyleSheet.create({
+    chart: {
+        flex: 1,
+    },
+    noData: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    noDataText: {
+        fontSize: 32,
+        color: "#999999",
+        fontWeight: "500",
+    },
+});
 
 export default Chart;

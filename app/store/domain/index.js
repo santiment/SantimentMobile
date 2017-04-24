@@ -238,12 +238,16 @@ class DomainStore {
      */
 
     @action refresh = (): Rx.Observable<any> => {
+        console.log("domainStore.refresh() called");
+        console.log("user =", JSON.stringify(domainStore.user, null, 2));
+        console.log("symbols =", JSON.stringify(domainStore.symbols.slice(), null, 2));
+
         return Rx.Observable
             .forkJoin(
                 this.fetchTickers(),
                 this.fetchHistory(),
                 this.fetchSentiment(),
-                this.fetchAggregates()
+                this.fetchAggregates(),
             )
             .do(
                 ([tickers, history, sentiment, aggregates]) => {
@@ -251,8 +255,10 @@ class DomainStore {
                     this.setHistory(history);
                     this.setSentiment(sentiment);
                     this.setAggregates(aggregates);
-                }
+                },
+                console.log
             )
+            .do(() => console.log('domainStore refreshed'), console.log)
     }
 }
 
@@ -262,15 +268,8 @@ const domainStore = new DomainStore();
 export default domainStore;
 
 Rx.Observable.fromPromise(hydrate('store', domainStore))
-    .do(
-        () => {
-            console.log('DomainStore hydrated');
-            console.log("User =", JSON.stringify(domainStore.user, null, 2));
-            console.log("Symbols =", JSON.stringify(domainStore.symbols.slice(), null, 2));
-        }
-    )
+    .do(() => console.log('domainStore hydrated'))
     .flatMap(() => domainStore.refresh())
-    .do(() => console.log('DomainStore refreshed'))
     .subscribe(
         () => {},
         error => Alert.alert(
