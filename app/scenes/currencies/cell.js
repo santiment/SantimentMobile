@@ -42,7 +42,7 @@ export default class CurrencyCell extends React.Component {
                                 {this.props.price}
                             </Text>
 
-                            <Text style={[styles.text, {color: changeColor}]}>
+                            <Text style={[styles.changeText, {color: changeColor}]}>
                                 {this.props.dailyChangePercent + "%"}
                             </Text>
 
@@ -198,7 +198,7 @@ const styles = StyleSheet.create({
         fontWeight: "500",
     },
     symbolColumn: {
-        flex: 3,
+        flex: 2,
         justifyContent: 'flex-start',
         alignItems: "stretch",
         // backgroundColor: 'blue',
@@ -218,13 +218,13 @@ const styles = StyleSheet.create({
         fontSize: responsiveFontSize(2),
         color: "#999999",
         fontWeight: "500",
-        textAlign: 'left',
+        textAlign: 'right',
     },
     changeText: {
-        textAlign: 'left',
         fontSize: responsiveFontSize(2),
         color: "#999999",
         fontWeight: "500",
+        textAlign: 'right',
     },
     chartColumn: {
         flex: 3,

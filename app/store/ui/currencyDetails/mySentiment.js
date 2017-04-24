@@ -42,8 +42,11 @@ export default class MySentimentUiStore {
         const formatTicker = (t) => { return {
             symbol: t.symbol,
             displaySymbol: _.replace(t.symbol, "_", "/"),
-            dailyChangePercent: t.dailyChangePercent.toPrecision(3),
-            price: t.price.toPrecision(6),
+            dailyChangePercent: t.dailyChangePercent.toFixed(2),
+            price: (() => {
+                const p = t.price.toPrecision(6);
+                return _.includes(p, "e") ? t.price.toFixed(8) : p
+            })(),
             volume: t.volume,
         }};
 
