@@ -73,8 +73,11 @@ export default class CurrenciesUiStore {
                 displaySymbol: _.replace(t.symbol, "_", "/"),
                 dailyChangePercent: t.dailyChangePercent.toFixed(2),
                 price: (() => {
-                    const p = t.price.toPrecision(4);
-                    return _.includes(p, "e") ? t.price.toFixed(8) : p
+                    const p = t.price.toPrecision(6);
+                    if (_.includes(p, "e") || p.length > 10) {
+                        return t.price.toFixed(8);
+                    }
+                    return p;
                 })(),
                 volume: t.volume,
             }

@@ -45,7 +45,10 @@ export default class MySentimentUiStore {
             dailyChangePercent: t.dailyChangePercent.toFixed(2),
             price: (() => {
                 const p = t.price.toPrecision(6);
-                return _.includes(p, "e") ? t.price.toFixed(8) : p
+                if (_.includes(p, "e") || p.length > 10) {
+                    return t.price.toFixed(8);
+                }
+                return p;
             })(),
             volume: t.volume,
         }};
