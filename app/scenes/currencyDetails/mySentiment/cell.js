@@ -59,10 +59,10 @@ const styles = StyleSheet.create({
         borderBottomWidth: StyleSheet.hairlineWidth,
     },
     date: {
-        flex: 8,
+        flex: 6,
     },
     price: {
-        flex: 3,
+        flex: 4,
         textAlign: "center"
     },
     sentiment: {
@@ -70,9 +70,9 @@ const styles = StyleSheet.create({
         textAlign: "center"
     },
     text: {
-        fontSize: 16,
-        color: "#999999",
-        fontWeight: "500",
+        fontSize: 14,
+        color: "#555555",
+        fontWeight: "400",
         justifyContent: 'center',
     },
     imageContainer: {

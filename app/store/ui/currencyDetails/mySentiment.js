@@ -99,7 +99,10 @@ export default class MySentimentUiStore {
     @computed get rows(): Object[] {
         const sortByDate = (arr) => _.orderBy(arr, ['date'], ['desc']);
         const formatDates = (arr) => _.map(arr, s => { return {...s, date: moment.unix(s.timestamp).fromNow()}});
-        const formatPrice = (arr) => _.map(arr, s => { return {...s, price: _.isEmpty(s.price) ? "" : s.price}});
+        const formatPrice = (arr) => _.map(arr, s => { return {
+            ...s,
+            price: _.isEmpty(s.price) ? "" : s.price
+        }});
 
         return _.flow(sortByDate, formatDates, formatPrice)(this.sentiments.slice());
     }
