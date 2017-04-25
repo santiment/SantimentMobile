@@ -182,7 +182,7 @@ class DomainStore {
 
     @action addSentiment = (sentiment: SentimentType): Rx.Observable<Object> => {
         const userSentiment = _.assign(sentiment, {userId: this.user.id});
-        const newSentiments = _.concat([], this.sentiments.slice(), userSentiment);
+        const newSentiments = _.concat([], userSentiment, this.sentiments.slice());
 
         this.setSentiment(newSentiments);
 
