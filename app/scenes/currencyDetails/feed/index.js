@@ -11,16 +11,39 @@ let {Text, View, StyleSheet} = ReactNative;
 
 import {observer} from 'mobx-react/native'
 
+import {GiftedChat, Actions, Bubble} from 'react-native-gifted-chat';
+
 @observer
 export default class Feed extends React.Component {
     render() {
         const {navigator, store} = this.props;
 
+        const renderBubble = props => {
+            return (
+                <Bubble
+                    {...props}
+                    wrapperStyle={{
+                        left: {
+                            marginRight: 10,
+                        }
+                    }}
+                />
+            );
+        };
+
         return (
             <View style={styles.container}>
-                <Text style={styles.text}>
-                    Sentiment feed placeholder
-                </Text>
+                {/*<Text style={styles.text}>*/}
+                    {/*Sentiment feed placeholder*/}
+                {/*</Text>*/}
+
+                <GiftedChat
+                    messages={store.feed}
+                    onSend={() => {}}
+                    renderInputToolbar={() => { return (<View/>)}}
+                    minInputToolbarHeight={0}
+                    renderBubble={renderBubble}
+                />
             </View>
         )
     }

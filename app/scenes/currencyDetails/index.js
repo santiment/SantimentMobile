@@ -56,7 +56,7 @@ export default class CurrencyDetails extends React.Component {
                 >
                     <MySentimentScene tabLabel="Me" store={store.mySentiment}/>
                     <CommunitySentimentScene tabLabel="Community" store={store.communitySentiment}/>
-                    <FeedScene tabLabel="Feed" store={undefined}/>
+                    <FeedScene tabLabel="Feed" store={store.feed}/>
                 </ScrollableTabView>
             </View>
         );
