@@ -18,7 +18,7 @@ class Chart extends React.Component {
     render() {
         const {style, data} = this.props;
 
-        const xs = _.map(data, o => moment.unix(o.timestamp).format('MMM Do'));
+        const xs = _.map(data, o => moment.unix(o.timestamp).format('MMM D'));
 
         const candlesticks = _.map(data, o => {
             return {shadowH: o.candle.high, shadowL: o.candle.low, open: o.candle.open, close: o.candle.close}
@@ -37,17 +37,17 @@ class Chart extends React.Component {
                 axisLineWidth: 1,
                 drawGridLines: true,
                 gridLineWidth: 1,
-                gridDashedLine: {
-                    lineLength: 10,
-                    spaceLength: 10
-                },
-                gridColor: processColor('#77777744'),
+                // gridDashedLine: {
+                //     lineLength: 10,
+                //     spaceLength: 10
+                // },
+                gridColor: processColor('#77777716'),
                 position: 'BOTTOM',
-                avoidFirstLastClipping: true,
+                // avoidFirstLastClipping: true,
                 valueFormatter: xs,
-                granularityEnabled: true,
-                granularity: 1,
-                labelCount: 4,
+                // granularityEnabled: true,
+                // granularity: 1,
+                // labelCount: 4,
                 axisMinimum: -1,
                 axisMaximum: xs.length+15,
             },
@@ -72,11 +72,11 @@ class Chart extends React.Component {
                     drawLabels: true,
                     drawGridLines: true,
                     gridLineWidth: 1,
-                    gridDashedLine: {
-                        lineLength: 10,
-                        spaceLength: 10
-                    },
-                    gridColor: processColor('#77777744'),
+                    // gridDashedLine: {
+                    //     lineLength: 10,
+                    //     spaceLength: 10
+                    // },
+                    gridColor: processColor('#77777716'),
                     // axisMaximum: _.max(_.map(candles, c => c.shadowH)) * 1.0,
                     axisMinimum: _.min(_.map(candlesticks, c => c.shadowL)) * 0.98,
                 },
