@@ -7,9 +7,9 @@
 
 import React from 'react';
 import ReactNative from 'react-native';
-let {ListView, View, StyleSheet, RefreshControl} = ReactNative;
+let {ListView, View, StyleSheet, RefreshControl, Text} = ReactNative;
 
-import {Icon} from 'react-native-elements'
+import {Icon, Button} from 'react-native-elements'
 import NavigationBar from 'react-native-navbar'
 
 import _ from 'lodash'
@@ -56,6 +56,48 @@ export default class Currencies extends React.Component {
             return (<View key={rowID} style={styles.separator}/>)
         };
 
+        const addCurrency = () => {
+            navigator.push({name: AddCurrencyRoute})
+        };
+
+        const isEmpty = _.isEmpty(store.tickers.slice());
+
+        const noDataView = (
+            <View style={styles.noData}>
+                <Text style={styles.noDataText}>Nothing here.</Text>
+                <Button
+                    raised
+                    buttonStyle={styles.noDataButton}
+                    textStyle={{textAlign: 'center'}}
+                    title={`Add coins`}
+                    backgroundColor={"#27aa36"}
+                    fontSize={20}
+                    onPress={addCurrency}
+                />
+            </View>
+        );
+
+        const listView = (
+            <ListView
+                style={styles.listView}
+                renderRow={renderRow}
+                renderHeader={() => <View style={styles.header}/>}
+                renderFooter={() => <View style={styles.footer}/>}
+                renderSeparator={renderSeparator}
+                dataSource={store.dataSource}
+                enableEmptySections={true}
+                removeClippedSubviews={false}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={store.isLoading}
+                        onRefresh={store.refresh}
+                    />
+                }
+            />
+        );
+
+        const contentView = isEmpty ? noDataView : listView;
+
         return (
             <View style={styles.container}>
 
@@ -73,23 +115,7 @@ export default class Currencies extends React.Component {
                     }
                 />
 
-                <ListView
-                    style={styles.listView}
-                    renderRow={renderRow}
-                    renderHeader={() => <View style={styles.header}/>}
-                    renderFooter={() => <View style={styles.footer}/>}
-                    renderSeparator={renderSeparator}
-                    dataSource={store.dataSource}
-                    enableEmptySections={true}
-                    removeClippedSubviews={false}
-                    refreshControl={
-                        <RefreshControl
-                            refreshing={store.isLoading}
-                            onRefresh={store.refresh}
-                        />
-                    }
-                />
-
+                {contentView}
 
                 <View style={styles.fabContainer}>
 
@@ -97,10 +123,8 @@ export default class Currencies extends React.Component {
                         raised
                         reverse
                         name="add"
-                        color="green"
-                        onPress={ () => {
-                            navigator.push({name: AddCurrencyRoute})
-                        }}
+                        color="#27aa36"
+                        onPress={addCurrency}
                     />
 
                 </View>
@@ -152,4 +176,19 @@ const styles = StyleSheet.create({
     separator: {
         height: 20,
     },
+    noData: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+    },
+    noDataText: {
+        fontSize: 32,
+        color: "#999999",
+        fontWeight: "500",
+    },
+    noDataButton: {
+        width: 250,
+        height: 40,
+        margin: 20,
+    }
 });

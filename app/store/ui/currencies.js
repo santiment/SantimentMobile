@@ -64,10 +64,15 @@ export default class CurrenciesUiStore {
             )
     };
 
+    @computed get tickers(): Object[] {
+        return _.filter(
+            this.domainStore.tickers.slice(),
+            t => _.includes(this.domainStore.symbols.slice(), t.symbol)
+        );
+    }
     @computed get rows(): Object[] {
-        const selectedTickers = _.filter(this.domainStore.tickers, t => _.includes(this.domainStore.symbols, t.symbol));
 
-        return selectedTickers.map(t => {
+        return this.tickers.map(t => {
             return {
                 symbol: t.symbol,
                 displaySymbol: _.replace(t.symbol, "_", "/"),
