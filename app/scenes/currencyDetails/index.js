@@ -7,12 +7,12 @@
 
 import React from 'react';
 import ReactNative from 'react-native';
-let {View, StyleSheet} = ReactNative;
+let {View, StyleSheet, Text, Dimensions} = ReactNative;
 
 import {Icon} from 'react-native-elements'
 import NavigationBar from 'react-native-navbar'
 
-import ScrollableTabView from 'react-native-scrollable-tab-view'
+import ScrollableTabView, {DefaultTabBar} from 'react-native-scrollable-tab-view'
 
 import {observer} from 'mobx-react/native'
 
@@ -32,6 +32,35 @@ export default class CurrencyDetails extends React.Component {
     render() {
         const {navigator, store} = this.props;
 
+        const tabs = [
+            {
+                label: "Me",
+                icon: "person",
+            },
+            {
+                label: "Community",
+                icon: "group",
+            },
+            {
+                label: "Feed",
+                icon: "rss-feed",
+            },
+        ];
+
+        const screen = Dimensions.get('window');
+
+        const renderTab = (name, page, isTabActive, onPressHandler, onLayoutHandler) => {
+            return (
+                <Icon
+                    key={`${name}_${page}`}
+                    containerStyle={styles.tabButton}
+                    name={tabs[page].icon}
+                    onPress={() => onPressHandler(page)}
+                    onLayout={onLayoutHandler}
+                />
+            )
+        };
+
         return (
             <View style={styles.container}>
                 <NavigationBar
@@ -39,7 +68,7 @@ export default class CurrencyDetails extends React.Component {
                     style={styles.navBar}
                     leftButton={
                         <Icon
-                            containerStyle={styles.toolbarButton}
+                            containerStyle={styles.navButton}
                             name="keyboard-arrow-left"
                             onPress={ () => {
                                 navigator.pop();
@@ -49,14 +78,21 @@ export default class CurrencyDetails extends React.Component {
                 />
 
                 <ScrollableTabView
-                    renderTabBar={() => <ScrollableTabView.DefaultTabBar />}
+                    renderTabBar={() =>
+                        <DefaultTabBar
+                            renderTab={renderTab}
+                            backgroundColor={"#f2f2f2"}
+                            underlineStyle={[styles.underline, {width: 30, marginLeft: (screen.width/tabs.length-30)/2}]}
+                            style={styles.tabBar}
+                        />
+                    }
                     ref={(tabView) => { }}
-                    tabBarPosition={"top"}
+                    tabBarPosition={"bottom"}
                     locked={true}
                 >
-                    <MySentimentScene tabLabel="Me" store={store.mySentiment}/>
-                    <CommunitySentimentScene tabLabel="Community" store={store.communitySentiment}/>
-                    <FeedScene tabLabel="Feed" store={store.feed}/>
+                    <MySentimentScene tabLabel={tabs[0].label} store={store.mySentiment}/>
+                    <CommunitySentimentScene tabLabel={tabs[1].label} store={store.communitySentiment}/>
+                    <FeedScene tabLabel={tabs[2].label} store={store.feed}/>
                 </ScrollableTabView>
             </View>
         );
@@ -86,7 +122,18 @@ const styles = StyleSheet.create({
         borderBottomWidth: StyleSheet.hairlineWidth,
         borderBottomColor: "#cccccc",
     },
-    toolbarButton: {
+    navButton: {
         padding: 10,
+    },
+    tabBar: {
+        justifyContent: "center",
+        alignItems: "center"
+    },
+    tabButton: {
+        padding: 10,
+        flex: 1,
+    },
+    underline: {
+        backgroundColor: "black",
     }
 });
