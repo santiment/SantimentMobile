@@ -23,20 +23,20 @@ export default class MySentimentCell extends React.Component {
 
         return (
             <View style={styles.container}>
-                <Text style={[styles.text, styles.date]}>
-                    {this.props.date}
-                </Text>
-
-                <Text style={[styles.text, styles.price]}>
-                    {this.props.price}
-                </Text>
-
                 <View style={styles.imageContainer}>
                     <Image
                         style={styles.image}
                         source={imagePath(this.props.sentiment)}
                     />
                 </View>
+
+                <Text style={[styles.text, styles.price]}>
+                    {this.props.price}
+                </Text>
+
+                <Text style={[styles.text, styles.date]}>
+                    {this.props.date}
+                </Text>
             </View>
         )
     }
@@ -60,20 +60,20 @@ const styles = StyleSheet.create({
     },
     date: {
         flex: 6,
+        textAlign: "right"
     },
     price: {
         flex: 4,
-        textAlign: "center"
+        marginLeft: 10,
+        textAlign: "left"
     },
     sentiment: {
         flex: 3,
-        textAlign: "center"
     },
     text: {
-        fontSize: 14,
-        color: "#555555",
-        fontWeight: "400",
-        justifyContent: 'center',
+        fontSize: 16,
+        color: "#aaaaaa",
+        fontWeight: "500",
     },
     imageContainer: {
         padding: 5,

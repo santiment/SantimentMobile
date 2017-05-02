@@ -38,34 +38,40 @@ export default class MySentiment extends React.Component {
 
 
         const changeColor = store.ticker.dailyChangePercent > 0
-            ? "#27aa36"
+            ? "#24e174"
             : store.ticker.dailyChangePercent < 0
-                ? "#bd2c27"
+                ? "#fd7a57"
                 : "#b1b1b2";
 
         return (
 
 
             <View style={styles.container}>
-                <View style={styles.currencyRowContainer}>
-
-                    <Text style={[styles.text, styles.priceText]}>
-                        {store.ticker.price}
-                    </Text>
-
-                    <Text style={[styles.text, styles.changeText, {color: changeColor}]}>
-                        {`${store.ticker.dailyChangePercent}%`}
-                    </Text>
-
-                    <Text style={[styles.text, styles.periodText]}>
-                        {store.periods[store.selectedPeriod]}
-                    </Text>
-                </View>
-
                 <SentimentChart
                     data={store.chartData}
                     style={styles.chart}
                 />
+
+                <View style={styles.currencyRowContainer}>
+
+                    <View style={styles.priceColumn}>
+
+                        <Text style={[styles.text, styles.priceText]}>
+                            {store.ticker.price}
+                        </Text>
+
+                        <Text style={[styles.text, styles.changeText, {color: changeColor}]}>
+                            {`${store.ticker.dailyChangePercent}%`}
+                        </Text>
+
+                    </View>
+
+                    <View style={styles.periodColumn}>
+                        <Text style={[styles.text, styles.periodText]}>
+                            {store.periods[store.selectedPeriod]}
+                        </Text>
+                    </View>
+                </View>
 
                 <View style={styles.listView}>
                     <ListView
@@ -114,18 +120,17 @@ const styles = StyleSheet.create({
         borderBottomColor: "#cccccc",
     },
     currencyRowContainer: {
-        height: 50,
+        height: responsiveHeight(9),
         flexDirection: 'row',
-        paddingTop: 10,
+        paddingTop: 20,
         paddingBottom: 10,
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: "#ffffff",
+        backgroundColor: '#333333',
     },
     chartContainer: {
         padding: 20,
         alignItems: 'center',
-
     },
     toolbarButton: {
         padding: 10,
@@ -134,32 +139,45 @@ const styles = StyleSheet.create({
         fontSize: 14,
         fontWeight: "400",
     },
+    priceColumn: {
+        flex: 8,
+        flexDirection: 'column',
+        marginLeft: 10,
+        justifyContent: 'flex-start',
+        alignItems: "stretch",
+    },
     priceText: {
-        flex: 1,
-        fontSize: 15,
-        textAlign: 'center',
+        fontSize: 18,
+        textAlign: 'left',
         fontWeight: "500",
+        color: "#e6e6e6",
     },
     changeText: {
-        flex: 1,
-        textAlign: 'center',
+        textAlign: 'left',
+    },
+    periodColumn: {
+        flex: 3,
+        justifyContent: 'center',
+        alignItems: "stretch",
+        marginRight: 10,
     },
     periodText: {
-        flex: 1,
-        color: "#777777",
+        paddingTop: 5,
+        paddingBottom: 5,
+        fontSize: 16,
+        fontWeight: "500",
+        color: "#cdcdcd",
         textAlign: 'center',
+        backgroundColor: "#454545",
+    },
+    spacer: {
+        flex: 1,
     },
     listView: {
         backgroundColor: 'white',
-        padding: 20,
+        paddingLeft: 20,
+        paddingRight: 20,
         flex: 1,
-    },
-    sentimentBadge: {
-        margin: 4,
-        height: 13,
-        width: 13,
-        borderRadius: 50,
-        backgroundColor: "#28aa38"
     },
     tabsContainerStyle: {
         backgroundColor: 'transparent',

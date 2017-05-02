@@ -33,7 +33,8 @@ class Chart extends React.Component {
         const config = {
             xAxis: {
                 drawAxisLine: true,
-                axisLineColor: processColor('0x777777'),
+                textColor: processColor('#cdcdcd'),
+                axisLineColor: processColor('#cdcdcd'),
                 axisLineWidth: 1,
                 drawGridLines: true,
                 gridLineWidth: 1,
@@ -41,7 +42,7 @@ class Chart extends React.Component {
                 //     lineLength: 10,
                 //     spaceLength: 10
                 // },
-                gridColor: processColor('#77777716'),
+                gridColor: processColor('#cdcdcd20'),
                 position: 'BOTTOM',
                 // avoidFirstLastClipping: true,
                 valueFormatter: xs,
@@ -55,19 +56,20 @@ class Chart extends React.Component {
                 left: {
                     enabled: false,
                     drawAxisLine: false,
-                    axisLineColor: processColor('#777777'),
+                    axisLineColor: processColor('#cdcdcd'),
                     axisLineWidth: 2,
                     drawLabels: false,
                     drawGridLines: false,
                     gridLineWidth: 1,
-                    gridColor: processColor('#777777'),
+                    gridColor: processColor('#cdcdcd'),
                     axisMaximum: 20,
                     axisMinimum: 0,
                 },
                 right: {
                     enabled: true,
                     drawAxisLine: true,
-                    axisLineColor: processColor('#777777'),
+                    textColor: processColor('#cdcdcd'),
+                    axisLineColor: processColor('#cdcdcd'),
                     axisLineWidth: 1,
                     drawLabels: true,
                     drawGridLines: true,
@@ -76,7 +78,7 @@ class Chart extends React.Component {
                     //     lineLength: 10,
                     //     spaceLength: 10
                     // },
-                    gridColor: processColor('#77777716'),
+                    gridColor: processColor('#cdcdcd20'),
                     // axisMaximum: _.max(_.map(candles, c => c.shadowH)) * 1.0,
                     axisMinimum: _.min(_.map(candlesticks, c => c.shadowL)) * 0.98,
                 },
@@ -103,9 +105,9 @@ class Chart extends React.Component {
                             shadowColor: processColor('#777777'),
                             shadowWidth: 1,
                             shadowColorSameAsCandle: false,
-                            increasingColor: processColor('#27aa36'),
+                            increasingColor: processColor('#24e174'),
                             increasingPaintStyle: 'fill',
-                            decreasingColor: processColor('#bb2b27'),
+                            decreasingColor: processColor('#e53e50'),
                         },
                     }],
                 },
@@ -118,7 +120,7 @@ class Chart extends React.Component {
                             config: {
                                 axisDependency: 'LEFT',
                                 drawValues: false,
-                                colors: [processColor('#27aa36')],
+                                colors: [processColor('#24e174')],
                             }
                         },
                         {
@@ -128,7 +130,7 @@ class Chart extends React.Component {
                             config: {
                                 axisDependency: 'LEFT',
                                 drawValues: false,
-                                colors: [processColor('#777777')],
+                                colors: [processColor('#cdcdcd')],
                             }
                         },
                         {
@@ -138,7 +140,7 @@ class Chart extends React.Component {
                             config: {
                                 axisDependency: 'LEFT',
                                 drawValues: false,
-                                colors: [processColor('#bb2b27')],
+                                colors: [processColor('#e53e50')],
                             }
                         }
                     ]
@@ -184,7 +186,7 @@ class Chart extends React.Component {
                 dragDecelerationEnabled={false}
                 // dragDecelerationFrictionCoef={0.99}
                 style={styles.chart}
-                chartBackgroundColor={processColor('#ffffff')}
+                chartBackgroundColor={processColor('#333333')}
 
             />
         );

@@ -7,7 +7,7 @@
 
 import React from 'react';
 import ReactNative from 'react-native';
-let {View, StyleSheet, Text, Dimensions} = ReactNative;
+let {View, StyleSheet, Text, Dimensions, TouchableWithoutFeedback} = ReactNative;
 
 import {Icon} from 'react-native-elements'
 import NavigationBar from 'react-native-navbar'
@@ -51,13 +51,25 @@ export default class CurrencyDetails extends React.Component {
 
         const renderTab = (name, page, isTabActive, onPressHandler, onLayoutHandler) => {
             return (
-                <Icon
-                    key={`${name}_${page}`}
-                    containerStyle={styles.tabButton}
-                    name={tabs[page].icon}
+                <TouchableWithoutFeedback
                     onPress={() => onPressHandler(page)}
-                    onLayout={onLayoutHandler}
-                />
+                    key={`${name}_${page}`}
+                >
+                    <View style={styles.tabButton}>
+                        <Icon
+                            name={tabs[page].icon}
+                            onLayout={onLayoutHandler}
+                            color={isTabActive ? '#000000' : '#919191'}
+                        />
+                        <Text style={[
+                            styles.tabText,
+                            {color: isTabActive ? '#000000' : '#919191'}
+                        ]}>
+                            {tabs[page].label}
+                        </Text>
+                    </View>
+
+                </TouchableWithoutFeedback>
             )
         };
 
@@ -82,17 +94,26 @@ export default class CurrencyDetails extends React.Component {
                         <DefaultTabBar
                             renderTab={renderTab}
                             backgroundColor={"#f2f2f2"}
-                            underlineStyle={[styles.underline, {width: 30, marginLeft: (screen.width/tabs.length-30)/2}]}
+                            underlineStyle={[styles.underline, {
+                                width: 30,
+                                marginLeft: (screen.width / tabs.length - 30) / 2
+                            }]}
                             style={styles.tabBar}
+                            activeTextColor={"green"}
+                            inactiveTextColor={"red"}
                         />
                     }
-                    ref={(tabView) => { }}
+                    ref={(tabView) => {
+                    }}
                     tabBarPosition={"bottom"}
                     locked={true}
                 >
-                    <MySentimentScene tabLabel={tabs[0].label} store={store.mySentiment}/>
-                    <CommunitySentimentScene tabLabel={tabs[1].label} store={store.communitySentiment}/>
-                    <FeedScene tabLabel={tabs[2].label} store={store.feed}/>
+                    <MySentimentScene tabLabel={tabs[0].label}
+                                      store={store.mySentiment}/>
+                    <CommunitySentimentScene tabLabel={tabs[1].label}
+                                             store={store.communitySentiment}/>
+                    <FeedScene tabLabel={tabs[2].label}
+                               store={store.feed}/>
                 </ScrollableTabView>
             </View>
         );
@@ -133,7 +154,12 @@ const styles = StyleSheet.create({
         padding: 10,
         flex: 1,
     },
+    tabIcon: {},
+    tabText: {
+        textAlign: "center"
+    },
     underline: {
         backgroundColor: "black",
+        height: 0,
     }
 });
