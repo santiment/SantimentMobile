@@ -51,3 +51,6 @@ buck-out/
 
 # Misc
 playground.js
+
+# Flow-Typed
+flow-typed/*
