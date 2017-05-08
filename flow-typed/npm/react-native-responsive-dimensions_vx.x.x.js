@@ -1,4 +1,4 @@
-// flow-typed signature: 6c5584f534500bf8591eb1190babf877
+// flow-typed signature: 45c16046d99601cf9220fb400444a147
 // flow-typed version: <<STUB>>/react-native-responsive-dimensions_v^1.0.1/flow_v0.42.0
 
 /**
@@ -8,8 +8,8 @@
  *
  * Fill this stub out by replacing all the `any` types.
  *
- * Once filled out, we encourage you to share your work with the 
- * community by sending a pull request to: 
+ * Once filled out, we encourage you to share your work with the
+ * community by sending a pull request to:
  * https://github.com/flowtype/flow-typed
  */
 

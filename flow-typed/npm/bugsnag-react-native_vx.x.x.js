@@ -1,4 +1,4 @@
-// flow-typed signature: 5ea224d52eaf3fe57e6eab2705fffcdc
+// flow-typed signature: a2697d40da157186cb9678bf4fbe0d9f
 // flow-typed version: <<STUB>>/bugsnag-react-native_v^2.2.0/flow_v0.42.0
 
 /**
@@ -8,8 +8,8 @@
  *
  * Fill this stub out by replacing all the `any` types.
  *
- * Once filled out, we encourage you to share your work with the 
- * community by sending a pull request to: 
+ * Once filled out, we encourage you to share your work with the
+ * community by sending a pull request to:
  * https://github.com/flowtype/flow-typed
  */
 
