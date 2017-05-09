@@ -21,7 +21,10 @@
   - `$ flow-typed install`
 - Set your private keys in `ios/Secrets.plist` file
 - Set your private keys in `android/app/src/main/assets/secrets.properties` file
-
+- Ignore changes in secrets files
+  - `$ git update-index --assume-unchanged ios/Secrets.plist`
+  - `$ git update-index --assume-unchanged android/app/src/main/assets/secrets.properties`
+  
 ## Running on iOS 
 - `$ cd SantimentMobile/ios`
 - `$ pod install`
