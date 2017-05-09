@@ -18,7 +18,7 @@ import {observer} from 'mobx-react/native'
 
 import Dropdown from 'react-native-modal-dropdown';
 
-import SentimentChart from '../../../components/sentimentChart'
+import SentimentChart from '../../../components/sentimentCandlestickChart'
 
 import Cell from './cell'
 
