@@ -25,6 +25,20 @@ export default class CommunitySentimentUiStore {
 
     @computed get aggregate(): Object {
         const aggregatesForSymbol = _.get(this.domainStore.aggregates, `${this.domainStore.selectedSymbol}`);
-        return _.isEmpty(aggregatesForSymbol) ? {bullish: 0, catish: 0, bearish: 0} : aggregatesForSymbol[0]
+        const votes = _.isEmpty(aggregatesForSymbol) ? {bullish: 0, catish: 0, bearish: 0} : aggregatesForSymbol[0]
+
+        const totalVotes = votes.bullish + votes.catish + votes.bearish;
+
+        return {
+            ...votes,
+            totalVotes: totalVotes,
+            bullishPercentage: votes.bullish / totalVotes,
+            catishPercentage: votes.catish / totalVotes,
+            bearishPercentage: votes.bearish / totalVotes,
+            bullishPercentageDisplay: (votes.bullish / totalVotes * 100).toPrecision(2) + '%',
+            catishPercentageDisplay: (votes.catish / totalVotes * 100).toPrecision(2) + '%',
+            bearishPercentageDisplay: (votes.bearish / totalVotes * 100).toPrecision(2) + '%',
+
+        }
     }
 }
