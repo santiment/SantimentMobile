@@ -16,9 +16,13 @@ import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-nat
 
 import {observer} from 'mobx-react/native'
 
+import Dropdown from 'react-native-modal-dropdown';
+
 import SentimentChart from '../../../components/sentimentChart'
 
 import Cell from './cell'
+
+const options = ["1D"];
 
 @observer
 export default class MySentiment extends React.Component {
@@ -42,6 +46,26 @@ export default class MySentiment extends React.Component {
             : store.ticker.dailyChangePercent < 0
                 ? "#fd7a57"
                 : "#b1b1b2";
+
+        const renderDropdownRow = (rowData, rowID, highlighted) => {
+            return (
+                <View style={styles.periodButton}>
+                    <Text style={styles.periodText}>
+                        {rowData}
+                    </Text>
+                </View>
+            );
+        };
+
+       const renderSeparator = (sectionID, rowID, adjacentRowHighlighted) => {
+            return (
+                <View
+                    style={styles.periodDropdownSeparator}
+                    key={`${rowID}_separator`}
+                />
+            );
+        };
+
 
         return (
 
@@ -67,9 +91,21 @@ export default class MySentiment extends React.Component {
                     </View>
 
                     <View style={styles.periodColumn}>
-                        <Text style={[styles.text, styles.periodText]}>
-                            {store.periods[store.selectedPeriod]}
-                        </Text>
+                        <Dropdown
+                            style={styles.periodButton}
+                            dropdownStyle={styles.periodDropdown}
+                            textStyle={styles.periodText}
+                            options={options}
+                            onSelect={(idx, value) => console.log}
+                            defaultValue={options[0]}
+                            defaultIndex={0}
+                            animated={false}
+                            renderRow={renderDropdownRow}
+                            renderSeparator={renderSeparator}
+                        />
+                        {/*<Text style={[styles.text, styles.periodText]}>*/}
+                            {/*{store.periods[store.selectedPeriod]}*/}
+                        {/*</Text>*/}
                     </View>
                 </View>
 
@@ -140,7 +176,7 @@ const styles = StyleSheet.create({
         fontWeight: "400",
     },
     priceColumn: {
-        flex: 8,
+        flex: 1,
         flexDirection: 'column',
         marginLeft: 10,
         justifyContent: 'flex-start',
@@ -156,19 +192,33 @@ const styles = StyleSheet.create({
         textAlign: 'left',
     },
     periodColumn: {
-        flex: 3,
+        width: 80,
         justifyContent: 'center',
         alignItems: "stretch",
         marginRight: 10,
     },
-    periodText: {
+    periodButton: {
         paddingTop: 5,
         paddingBottom: 5,
+        height: 30,
+        backgroundColor: "#454545",
+    },
+    periodText: {
         fontSize: 16,
         fontWeight: "500",
         color: "#cdcdcd",
         textAlign: 'center',
+    },
+    periodDropdown: {
+        height: (options.length*(30+2)),
+        width: 80,
         backgroundColor: "#454545",
+        borderColor: "#333333",
+        borderWidth: 2,
+    },
+    periodDropdownSeparator: {
+        height: 2,
+        backgroundColor: "#333333",
     },
     spacer: {
         flex: 1,
