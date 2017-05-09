@@ -1,4 +1,4 @@
-// flow-typed signature: 62ff2ec69ce890926feff145b4ec0d36
+// flow-typed signature: d6de10a26dd9f87530aa093c633e5d4f
 // flow-typed version: <<STUB>>/react-native-navbar_v^1.6.0/flow_v0.42.0
 
 /**
@@ -8,8 +8,8 @@
  *
  * Fill this stub out by replacing all the `any` types.
  *
- * Once filled out, we encourage you to share your work with the 
- * community by sending a pull request to: 
+ * Once filled out, we encourage you to share your work with the
+ * community by sending a pull request to:
  * https://github.com/flowtype/flow-typed
  */
 

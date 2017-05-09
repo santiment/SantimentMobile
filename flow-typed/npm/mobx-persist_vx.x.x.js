@@ -1,4 +1,4 @@
-// flow-typed signature: 43e8243b12e7234692a30b6effa0b997
+// flow-typed signature: 2821d7d825ac2aede40e449a22bf2991
 // flow-typed version: <<STUB>>/mobx-persist_v^0.3.1/flow_v0.42.0
 
 /**
@@ -8,8 +8,8 @@
  *
  * Fill this stub out by replacing all the `any` types.
  *
- * Once filled out, we encourage you to share your work with the 
- * community by sending a pull request to: 
+ * Once filled out, we encourage you to share your work with the
+ * community by sending a pull request to:
  * https://github.com/flowtype/flow-typed
  */
 

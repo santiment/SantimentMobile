@@ -1,4 +1,4 @@
-// flow-typed signature: a1c5892089af14715177497ac815c8a4
+// flow-typed signature: 259985091413816a076dd4227dfda9f3
 // flow-typed version: <<STUB>>/react-native-keyboard-aware-scrollview_v^1.1.5/flow_v0.42.0
 
 /**
@@ -8,8 +8,8 @@
  *
  * Fill this stub out by replacing all the `any` types.
  *
- * Once filled out, we encourage you to share your work with the 
- * community by sending a pull request to: 
+ * Once filled out, we encourage you to share your work with the
+ * community by sending a pull request to:
  * https://github.com/flowtype/flow-typed
  */
 

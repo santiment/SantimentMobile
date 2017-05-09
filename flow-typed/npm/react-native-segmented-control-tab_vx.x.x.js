@@ -1,4 +1,4 @@
-// flow-typed signature: 9d4aee08ea5b7c48ced10cb2a2d1ed48
+// flow-typed signature: 25c75ebd82b37b3256cdd2e40c23eacc
 // flow-typed version: <<STUB>>/react-native-segmented-control-tab_v^2.0.1/flow_v0.42.0
 
 /**
@@ -8,8 +8,8 @@
  *
  * Fill this stub out by replacing all the `any` types.
  *
- * Once filled out, we encourage you to share your work with the 
- * community by sending a pull request to: 
+ * Once filled out, we encourage you to share your work with the
+ * community by sending a pull request to:
  * https://github.com/flowtype/flow-typed
  */
 
