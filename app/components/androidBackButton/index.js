@@ -2,10 +2,7 @@
  * Created by workplace on 11/05/2017.
  */
 
-import React from 'react';
-import ReactNative from 'react-native';
-
-let {View, StyleSheet, BackAndroid} = ReactNative;
+import {BackAndroid} from 'react-native';
 
 class AndroidBackButton {
     handleBack: any;
