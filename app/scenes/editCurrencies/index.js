@@ -7,7 +7,7 @@
 
 import React from 'react';
 import ReactNative from 'react-native';
-let {ListView, View, StyleSheet} = ReactNative;
+let {ListView, View, StyleSheet, BackAndroid} = ReactNative;
 
 import {Icon, List} from 'react-native-elements'
 
@@ -16,8 +16,19 @@ import NavigationBar from 'react-native-navbar'
 import Cell from './cell';
 import {observer} from 'mobx-react/native'
 
+import AndroidBackButton from '../../components/androidBackButton'
+
 @observer
 export default class EditCurrencies extends React.Component {
+    componentDidMount() {
+        const {navigator, store} = this.props;
+        AndroidBackButton.subscribe(navigator.pop)
+    }
+
+    componentWillUnmount() {
+        AndroidBackButton.unsubscribe()
+    }
+
     render() {
         const {navigator, store} = this.props;
 

@@ -8,7 +8,7 @@
 import React from 'react';
 import ReactNative from 'react-native';
 
-let {View, StyleSheet} = ReactNative;
+let {View, StyleSheet, BackAndroid} = ReactNative;
 import {Icon, SearchBar} from 'react-native-elements'
 import {KeyboardAwareListView} from 'react-native-keyboard-aware-scrollview'
 
@@ -18,9 +18,19 @@ import {observer} from 'mobx-react/native'
 
 import Cell from './cell'
 
+import AndroidBackButton from '../../components/androidBackButton'
 
 @observer
 export default class AddCurrency extends React.Component {
+    componentDidMount() {
+        const {navigator, store} = this.props;
+        AndroidBackButton.subscribe(navigator.pop)
+    }
+
+    componentWillUnmount() {
+        AndroidBackButton.unsubscribe()
+    }
+
     render() {
         const {navigator, store} = this.props;
 

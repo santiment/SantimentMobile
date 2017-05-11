@@ -20,13 +20,17 @@ import MySentimentScene from './mySentiment'
 import CommunitySentimentScene from './communitySentiment'
 import FeedScene from './feed'
 
+import AndroidBackButton from '../../components/androidBackButton'
+
 @observer
 export default class CurrencyDetails extends React.Component {
-
     componentDidMount() {
-        const {store} = this.props;
+        const {navigator, store} = this.props;
+        AndroidBackButton.subscribe(navigator.pop)
+    }
 
-        // store.refresh();
+    componentWillUnmount() {
+        AndroidBackButton.unsubscribe()
     }
 
     render() {
