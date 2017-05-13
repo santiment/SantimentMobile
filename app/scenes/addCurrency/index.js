@@ -18,19 +18,11 @@ import {observer} from 'mobx-react/native'
 
 import Cell from './cell'
 
-import AndroidBackButton from '../../components/androidBackButton'
+import AndroidBackButton from 'android-back-button'
 
 @observer
 export default class AddCurrency extends React.Component {
-    componentDidMount() {
-        const {navigator, store} = this.props;
-        AndroidBackButton.subscribe(navigator.pop)
-    }
-
-    componentWillUnmount() {
-        AndroidBackButton.unsubscribe()
-    }
-
+    
     render() {
         const {navigator, store} = this.props;
 
@@ -79,6 +71,13 @@ export default class AddCurrency extends React.Component {
                     dataSource={store.dataSource}
                     enableEmptySections={true}
                     removeClippedSubviews={false}
+                />
+
+                <AndroidBackButton
+                    onPress={() => {
+                        navigator.pop();
+                        return true;
+                    }}
                 />
             </View>
         );
