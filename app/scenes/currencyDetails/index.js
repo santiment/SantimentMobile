@@ -20,19 +20,11 @@ import MySentimentScene from './mySentiment'
 import CommunitySentimentScene from './communitySentiment'
 import FeedScene from './feed'
 
-import AndroidBackButton from '../../components/androidBackButton'
+import AndroidBackButton from 'android-back-button'
 
 @observer
 export default class CurrencyDetails extends React.Component {
-    componentDidMount() {
-        const {navigator, store} = this.props;
-        AndroidBackButton.subscribe(navigator.pop)
-    }
-
-    componentWillUnmount() {
-        AndroidBackButton.unsubscribe()
-    }
-
+    
     render() {
         const {navigator, store} = this.props;
 
@@ -119,6 +111,13 @@ export default class CurrencyDetails extends React.Component {
                     <FeedScene tabLabel={tabs[2].label}
                                store={store.feed}/>
                 </ScrollableTabView>
+
+                <AndroidBackButton
+                    onPress={() => {
+                        navigator.pop();
+                        return true;
+                    }}
+                />
             </View>
         );
     }
