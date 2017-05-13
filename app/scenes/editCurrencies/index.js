@@ -16,19 +16,11 @@ import NavigationBar from 'react-native-navbar'
 import Cell from './cell';
 import {observer} from 'mobx-react/native'
 
-import AndroidBackButton from '../../components/androidBackButton'
+import AndroidBackButton from 'android-back-button'
 
 @observer
 export default class EditCurrencies extends React.Component {
-    componentDidMount() {
-        const {navigator, store} = this.props;
-        AndroidBackButton.subscribe(navigator.pop)
-    }
-
-    componentWillUnmount() {
-        AndroidBackButton.unsubscribe()
-    }
-
+    
     render() {
         const {navigator, store} = this.props;
 
@@ -43,6 +35,7 @@ export default class EditCurrencies extends React.Component {
 
         return (
             <View style={{ flex: 1, }}>
+                
                 <NavigationBar
                     title={{title: "Edit Portfolio"}}
                     rightButton={
@@ -55,6 +48,7 @@ export default class EditCurrencies extends React.Component {
                         />
                     }
                 />
+
                 <List containerStyle={{flex: 1, marginTop: 0}}>
                     <ListView
                         renderRow={renderRow}
@@ -63,6 +57,13 @@ export default class EditCurrencies extends React.Component {
                         removeClippedSubviews={false}
                     />
                 </List>
+
+                <AndroidBackButton
+                    onPress={() => {
+                        navigator.pop();
+                        return true;
+                    }}
+                />
             </View>
         );
     }
