@@ -23,11 +23,12 @@ export default class MySentimentUiStore {
         this.domainStore = domainStore;
     }
 
-    @observable periods: string[] = ['1H', '4H', '1D', '1W'];
+    @observable periods: string[] = ['1H', '4H', '1D'];
 
     @observable selectedPeriod: number = 2;
 
     @action setSelectedPeriod = (index: number): void => {
+        console.log(typeof index);
         this.selectedPeriod = index;
     };
 

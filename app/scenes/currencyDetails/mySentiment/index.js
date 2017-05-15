@@ -18,6 +18,8 @@ import {observer} from 'mobx-react/native'
 
 import Dropdown from 'react-native-modal-dropdown';
 
+import _ from 'lodash'
+
 import SentimentChart from '../../../components/sentimentCandlestickChart'
 
 import Cell from './cell'
@@ -58,6 +60,7 @@ export default class MySentiment extends React.Component {
         };
 
        const renderSeparator = (sectionID, rowID, adjacentRowHighlighted) => {
+            if (_.isEqual(rowID, store.periods.length-1)) return;
             return (
                 <View
                     style={styles.periodDropdownSeparator}
@@ -93,19 +96,17 @@ export default class MySentiment extends React.Component {
                     <View style={styles.periodColumn}>
                         <Dropdown
                             style={styles.periodButton}
-                            dropdownStyle={styles.periodDropdown}
+                            dropdownStyle={[styles.periodDropdown, {height: (store.periods.length*(30+2))}]}
                             textStyle={styles.periodText}
-                            options={options}
-                            onSelect={(idx, value) => console.log}
-                            defaultValue={options[0]}
-                            defaultIndex={0}
+                            options={store.periods.slice()}
+                            onSelect={(idx, value) => store.setSelectedPeriod(parseInt(idx))}
+                            defaultValue={store.periods[store.selectedPeriod]}
+                            defaultIndex={store.selectedPeriod}
                             animated={false}
                             renderRow={renderDropdownRow}
                             renderSeparator={renderSeparator}
+                            showsVerticalScrollIndicator={false}
                         />
-                        {/*<Text style={[styles.text, styles.periodText]}>*/}
-                            {/*{store.periods[store.selectedPeriod]}*/}
-                        {/*</Text>*/}
                     </View>
                 </View>
 
@@ -159,7 +160,7 @@ const styles = StyleSheet.create({
         height: responsiveHeight(9),
         flexDirection: 'row',
         paddingTop: 20,
-        paddingBottom: 10,
+        paddingBottom: 15,
         justifyContent: 'space-between',
         alignItems: 'center',
         backgroundColor: '#333333',
@@ -210,7 +211,6 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
     periodDropdown: {
-        height: (options.length*(30+2)),
         width: 80,
         backgroundColor: "#454545",
         borderColor: "#333333",

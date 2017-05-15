@@ -225,10 +225,11 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
+        backgroundColor: '#333333',
     },
     noDataText: {
         fontSize: 32,
-        color: "#999999",
+        color: "#cdcdcd",
         fontWeight: "500",
     },
 });
