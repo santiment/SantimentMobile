@@ -50,6 +50,7 @@ export default class AddCurrency extends React.Component {
                             name="close"
                             onPress={ () => {
                                 navigator.pop();
+                                store.setQuery('');
                             }}
                         />
                     }
