@@ -133,6 +133,25 @@ class DomainStore {
         console.log("History updated:\n", history);
     };
 
+    @action fetchHistory = (symbol: string, timeframe: number): Rx.Observable<Object> => {
+        const reversePair = (s) => _.join(_.reverse(_.split(s, "_")), "_");
+
+        return Poloniex.getCandles(reversePair(symbol), moment().subtract(180, 'days').toDate(), moment().toDate(), timeframe)
+            .map(items => {
+                const candles = items.map(i => {
+                    return {
+                        timestamp: i.date,
+                        ..._.pick(i, ['open', 'close', 'high', 'low'])
+                    }
+                });
+
+                let obj = {};
+                _.set(obj, [symbol, period], _.orderBy(candles, ['timestamp'], ['asc']));
+
+                return obj;
+            });
+    };
+
     @action fetchHistory = (): Rx.Observable<Object> => {
         const period = "1D";
 
@@ -234,6 +253,47 @@ class DomainStore {
     };
 
     /**
+     * Feeds
+     *   {
+     *       "BTC": [
+     *           {
+     *             "timestamp": 1494520384,
+     *             "username": "UName",
+     *             "message": "Can do you help me... Ticket #123 BTC Awaiting Approval",
+     *             "source": "trollbox"
+     *           },
+     *       ],
+     *   }
+     */
+
+    @persist('object')
+    @observable feeds: Object = {};
+
+    @action setFeeds = (feeds: Object): void => {
+        this.feeds = feeds;
+        console.log("Feeds updated:\n", feeds);
+    };
+
+    @action fetchFeeds = (): Rx.Observable<Object> => {
+        const observables$ = this.symbols.map((symbol) => {
+
+            const asset = _.split(symbol, "_")[0];
+
+            return Santiment.getFeed(asset)
+                .map(items => {
+                    let obj = {};
+                    _.set(obj, [asset], items);
+
+                    return obj;
+                })
+        });
+
+        // $FlowFixMe
+        return Rx.Observable.forkJoin(observables$)
+            .map(arr => _.assign(...arr))
+    };
+
+    /**
      * Refresh
      */
 
@@ -248,13 +308,15 @@ class DomainStore {
                 this.fetchHistory(),
                 this.fetchSentiment(),
                 this.fetchAggregates(),
+                this.fetchFeeds(),
             )
             .do(
-                ([tickers, history, sentiment, aggregates]) => {
+                ([tickers, history, sentiment, aggregates, feeds]) => {
                     this.setTickers(tickers);
                     this.setHistory(history);
                     this.setSentiment(sentiment);
                     this.setAggregates(aggregates);
+                    this.setFeeds(feeds);
                 },
                 console.log
             )
