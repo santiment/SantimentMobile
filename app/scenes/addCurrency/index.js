@@ -77,6 +77,7 @@ export default class AddCurrency extends React.Component {
                 <AndroidBackButton
                     onPress={() => {
                         navigator.pop();
+                        store.setQuery('');
                         return true;
                     }}
                 />
