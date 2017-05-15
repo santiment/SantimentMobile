@@ -14,6 +14,7 @@
     "cleanup": "rm -rf android/build/ android/app/build/ ios/build/ node_modules/ ; yarn cache clean ; yarn install"
   },
   "dependencies": {
+    "android-back-button": "^1.0.0",
     "axios": "^0.15.3",
     "bugsnag-react-native": "^2.2.0",
     "lodash": "^4.17.4",
