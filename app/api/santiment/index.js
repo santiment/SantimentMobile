@@ -78,3 +78,13 @@ export const getAggregate = (asset: string): any => {
 
     return Rx.Observable.fromPromise(promise);
 };
+
+export const getFeed = (asset: string): any => {
+    let url = apiUrl + `/feed?keyword=${asset}`;
+
+    const promise = axios.get(url)
+        .then(r => r.data)
+        .catch(processAndRethrow);
+
+    return Rx.Observable.fromPromise(promise);
+};
