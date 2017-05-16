@@ -185,10 +185,9 @@ class DomainStore {
      * [{
      *     user: "id",
      *     data: [
-     *         {"id": "aaa", "symbol": "BTC_USD", "sentiment": "bullish", "price", 1041, "timestamp": "1318874398"},
+     *         {"id": "aaa", "symbol": "BTC_USD", "sentiment": "bullish", "price": 1041, "timestamp": "1318874398"},
      *     ]
      * }]
-     *
      */
 
     @persist('list')
