@@ -209,7 +209,7 @@ class DomainStore {
     };
 
     @action fetchSentiment = (): Rx.Observable<SentimentType[]> => {
-        return Santiment.getSentiment(this.user.id);
+        return Santiment.getSentiments(this.user.id);
     };
 
     /**
