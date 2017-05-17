@@ -11,8 +11,6 @@ import moment from 'moment';
 import _ from 'lodash';
 import * as PoloniexHttpClient from './httpClient.js';
 
-const apiUrl = "https://poloniex.com/public";
-
 /*
  * Candlestick periods.
  */
