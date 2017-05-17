@@ -34,6 +34,8 @@ export const getSentiments = (userId: string): any => {
  * Makes asynchronous request for creating new sentiment on server side.
  * 
  * @param {Object} sentiment Sentiment to upload.
+ *      Note that this sentiment object should be formatted
+ *      according to requirements of server-side API.
  * @return Axios request.
  */
 export const postSentiment = (sentiment: Object): any => {
@@ -43,26 +45,11 @@ export const postSentiment = (sentiment: Object): any => {
     let url = apiUrl + `/sentiment`;
 
     /**
-     * Obtain request body.
-     */
-    const newSentiment = _.assign(
-        {
-        },
-        _.omit(sentiment, 'timestamp'),
-        {
-            date: moment.unix(sentiment.timestamp).toISOString()
-        }
-    );
-
-    console.log("sentiment:\n", JSON.stringify(sentiment, null, 2));
-    console.log("newSentiment:\n", JSON.stringify(newSentiment, null, 2));
-
-    /**
      * Start request and return it.
      */
     return axios.post(
         url,
-        newSentiment
+        sentiment
     );
 };
 

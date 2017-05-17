@@ -13,6 +13,7 @@ import * as SantimentHttpClient from './httpClient.js';
 
 /**
  * Handles error.
+ * 
  * @param {*} error Error to process.
  */
 const processAndRethrow = error => {
@@ -35,28 +36,28 @@ const processAndRethrow = error => {
 /**
  * Downloads sentiment by user ID.
  * 
- * @param {*} userId User ID.
+ * @param {String} userId User ID.
  * @return Observable.
  */
 export const getSentiments = (userId: string): any => {
     /**
      * Start request.
      */
-    let request = SantimentHttpClient.getSentiments(
+    const request = SantimentHttpClient.getSentiments(
         userId
     );
 
     /**
      * Handle response.
      */
-    request = request
+    const response = request
         .then(response => response.data)
         .catch(processAndRethrow);
     
     /**
      * Return observable.
      */
-    return Rx.Observable.fromPromise(request)
+    return Rx.Observable.fromPromise(response)
         // TODO: Should be async but causes bug in conjunction with Observable.forkJoin.
         // TODO: Sometimes it doesn't fire and forkJoin never finishes
         // .observeOn(Rx.Scheduler.async)
@@ -76,23 +77,38 @@ export const getSentiments = (userId: string): any => {
  */
 export const postSentiment = (sentiment: Object): any => {
     /**
+     * Prepare sentiment in format required by server API.
+     */
+    const formattedSentiment = _.assign(
+        {
+        },
+        _.omit(sentiment, 'timestamp'),
+        {
+            date: moment.unix(sentiment.timestamp).toISOString()
+        }
+    );
+
+    console.log("sentiment:\n", JSON.stringify(sentiment, null, 2));
+    console.log("server side sentiment:\n", JSON.stringify(formattedSentiment, null, 2));
+
+    /**
      * Start request.
      */
-    let request = SantimentHttpClient.postSentiment(
-        sentiment
+    const request = SantimentHttpClient.postSentiment(
+        formattedSentiment
     );
 
     /**
      * Handle response.
      */
-    request = request
+    const response = request
         .then(response => response.data)
         .catch(processAndRethrow);
     
     /**
      * Return observable.
      */
-    return Rx.Observable.fromPromise(request)
+    return Rx.Observable.fromPromise(response)
         .do(console.log);
 };
 
@@ -114,7 +130,7 @@ export const getAggregate = (asset: string, startDate: Date, endDate: Date): any
     /**
      * Start request.
      */
-    let request = SantimentHttpClient.getAggregate(
+    const request = SantimentHttpClient.getAggregate(
         asset,
         from,
         to
@@ -123,39 +139,39 @@ export const getAggregate = (asset: string, startDate: Date, endDate: Date): any
     /**
      * Handle response.
      */
-    request = request
+    const response = request
         .then(response => response.data)
         .catch(processAndRethrow);
 
     /**
      * Return observable.
      */
-    return Rx.Observable.fromPromise(request);
+    return Rx.Observable.fromPromise(response);
 };
 
 /**
  * Downloads feed by asset.
  * 
- * @param {*} asset Feed's asset.
+ * @param {String} asset Feed's asset.
  * @return Observable.
  */
 export const getFeed = (asset: string): any => {
     /**
      * Start request.
      */
-    let request = SantimentHttpClient.getFeed(
+    const request = SantimentHttpClient.getFeed(
         asset
     );
 
     /**
      * Handle response.
      */
-    request = request
+    const response = request
         .then(response => response.data)
         .catch(processAndRethrow);
 
     /**
      * Return observable.
      */
-    return Rx.Observable.fromPromise(request);
+    return Rx.Observable.fromPromise(response);
 };
