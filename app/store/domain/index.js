@@ -158,7 +158,7 @@ class DomainStore {
         const observables$ = this.symbols.map((symbol) => {
             const reversePair = (s) => _.join(_.reverse(_.split(s, "_")), "_");
 
-            return Poloniex.getCandles(reversePair(symbol), moment().subtract(180, 'days').toDate(), moment().toDate(), 86400)
+            return Poloniex.getCandles(reversePair(symbol), moment().subtract(180, 'days').toDate(), moment().toDate(), Poloniex.candlestickPeriod_86400)
                 .map(items => {
                     const candles = items.map(i => {
                         return {
@@ -209,7 +209,7 @@ class DomainStore {
     };
 
     @action fetchSentiment = (): Rx.Observable<SentimentType[]> => {
-        return Santiment.getSentiment(this.user.id);
+        return Santiment.getSentiments(this.user.id);
     };
 
     /**

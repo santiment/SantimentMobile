@@ -5,20 +5,50 @@
 
 'use strict';
 
-
-import _ from 'lodash'
-
-import Rx from 'rxjs'
-import axios from 'axios'
+import Rx from 'rxjs';
+import axios from 'axios';
+import moment from 'moment';
+import _ from 'lodash';
+import * as CoinMarketCapHttpClient from './httpClient.js';
 
 const apiUrl = "https://api.coinmarketcap.com/v1";
 
-// add types
-export const getTicker = () => {
-    let url = apiUrl + "/ticker?limit=50";
+/**
+ * Downloads ticker.
+ * 
+ * @param {number} limit Limit.
+ *      If not passed, default value 50 will be used.
+ * @return Observable.
+ */
+export const getTicker = (limit: number) => {
+    /**
+     * Default values.
+     */
+    const defaultLimit = 50;
 
-    return Rx.Observable
-        .fromPromise(axios.get(url))
-        .catch(Rx.Observable.empty)
-        .map(r => _.get(r, 'data', []))
+    /**
+     * Obtain parameters for request.
+     */
+    const limitOrDefault = limit ? limit : defaultLimit;
+
+    /**
+     * Start request.
+     */
+    const request = CoinMarketCapHttpClient.getTicker(
+        limitOrDefault
+    );
+
+    /**
+     * Handle response.
+     */
+    const response = request
+        .catch(Rx.Observable.empty);
+    
+    /**
+     * Return observable.
+     */
+    return Rx.Observable.fromPromise(response)
+        .map(
+            r => _.get(r, 'data', [])
+        );
 };
