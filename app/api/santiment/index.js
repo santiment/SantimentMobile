@@ -146,7 +146,13 @@ export const getAggregate = (asset: string, startDate: Date, endDate: Date): any
     /**
      * Return observable.
      */
-    return Rx.Observable.fromPromise(response);
+    return Rx.Observable.fromPromise(response)
+        .map(items => {
+            let obj = {};
+            _.set(obj, [symbol], items);
+
+            return obj;
+        });
 };
 
 /**
