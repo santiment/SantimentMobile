@@ -123,7 +123,7 @@ export const getCandles = (symbol: string, startDate: Date, endDate: Date, candl
     /**
      * Prepare data before request.
      */
-    const reversedCurrencyPair = getStringFromCandlestickPeriod(symbol);
+    const reversedCurrencyPair = utils.reversePair(symbol);
     const startDateOrDefault = (startDate && endDate) ? startDate : defaultStartDate;
     const endDateOrDefault = (startDate && endDate) ? endDate : defaultEndDate;
     const candlestickPeriodOrDefault = candlestickPeriod ? candlestickPeriod : defaultCandlestickPeriod;
@@ -164,7 +164,11 @@ export const getCandles = (symbol: string, startDate: Date, endDate: Date, candl
                     symbol,
                     getStringFromCandlestickPeriod(candlestickPeriodOrDefault)
                 ],
-                _.orderBy(candles, ['timestamp'], ['asc'])
+                _.orderBy(
+                    candles,
+                    ['timestamp'],
+                    ['asc']
+                )
             );
 
             return obj;

@@ -43,6 +43,7 @@ export const getCandles = (symbol: string, startDate: Date, endDate: Date, candl
     /**
      * Obtain parameters for request.
      */
+    const command = 'returnChartData';
     const startTimestampInSeconds = moment(startDate).unix();
     const endTimestampInSeconds = moment(endDate).unix();
 
@@ -50,7 +51,7 @@ export const getCandles = (symbol: string, startDate: Date, endDate: Date, candl
      * Obtain URL for request.
      */
     const url = apiUrl
-        + `?command=returnChartData`
+        + `?command=${command}`
         + `&currencyPair=${symbol}`
         + `&start=${startTimestampInSeconds}`
         + `&end=${endTimestampInSeconds}`
