@@ -37,6 +37,33 @@ export default class FeedUiStore {
             );
     };
 
+    @observable isLoading: boolean = false;
+
+    @action setIsLoading = (value: boolean): void => {
+        this.isLoading = value;
+    };
+
+    @computed get ticker(): Object {
+        const findTicker = (arr) => _.find(arr, t => _.isEqual(t.symbol, this.domainStore.selectedSymbol));
+        const formatTicker = (t) => { return {
+            symbol: t.symbol,
+            displaySymbol: _.replace(t.symbol, "_", "/"),
+            dailyChangePercent: t.dailyChangePercent.toFixed(2),
+            price: (() => {
+                const p = t.price.toPrecision(6);
+                if (_.includes(p, "e") || p.length > 10) {
+                    return t.price.toFixed(8);
+                }
+                return p;
+            })(),
+            volume: t.volume,
+        }};
+
+        const getTicker = _.flow(findTicker, formatTicker);
+
+        return getTicker(this.domainStore.tickers);
+    }
+
     @computed get asset(): string {
         return _.split(this.domainStore.selectedSymbol, '_')[0]
     }

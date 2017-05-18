@@ -31,11 +31,32 @@ export default class Feed extends React.Component {
             );
         };
 
+        const changeColor = store.ticker.dailyChangePercent > 0
+            ? "#24e174"
+            : store.ticker.dailyChangePercent < 0
+                ? "#fd7a57"
+                : "#b1b1b2";
+
         return (
             <View style={styles.container}>
-                {/*<Text style={styles.text}>*/}
-                    {/*Sentiment feed placeholder*/}
-                {/*</Text>*/}
+                <View style={styles.currencyRowContainer}>
+
+                    <View style={styles.priceColumn}>
+
+                        <Text style={[styles.text, styles.priceText]}>
+                            {store.ticker.price}
+                        </Text>
+
+                        <Text style={[styles.text, styles.changeText, {color: changeColor}]}>
+                            {`${store.ticker.dailyChangePercent}%`}
+                        </Text>
+
+                    </View>
+
+                    <View style={styles.periodColumn}>
+                        <Text style={styles.periodText}>Poloniex</Text>
+                    </View>
+                </View>
 
                 <GiftedChat
                     messages={store.feed}
@@ -67,8 +88,51 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
     },
     text: {
-        fontSize: 36,
+        fontSize: 14,
+        fontWeight: "400",
+    },
+    currencyRowContainer: {
+        flexDirection: 'row',
+        paddingTop: 10,
+        paddingBottom: 10,
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        backgroundColor: '#333333',
+    },
+    priceColumn: {
+        flex: 1,
+        flexDirection: 'row',
+        marginLeft: 10,
+        justifyContent: 'flex-start',
+        alignItems: "stretch",
+    },
+    priceText: {
+        fontSize: 16,
+        textAlign: 'left',
         fontWeight: "500",
+        color: "#e6e6e6",
+    },
+    changeText: {
+        marginLeft: 10,
+        textAlign: 'left',
+        fontSize: 16,
+    },
+    periodColumn: {
+        width: 80,
+        justifyContent: 'center',
+        alignItems: "stretch",
+        marginRight: 10,
+    },
+    periodButton: {
+        paddingTop: 5,
+        paddingBottom: 5,
+        height: 30,
+        backgroundColor: "#454545",
+    },
+    periodText: {
+        fontSize: 16,
+        fontWeight: "500",
+        color: "#cdcdcd",
         textAlign: 'center',
     },
 });
