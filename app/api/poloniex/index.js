@@ -11,15 +11,49 @@ import moment from 'moment';
 import _ from 'lodash';
 import * as PoloniexHttpClient from './httpClient.js';
 
-/*
+/**
  * Candlestick periods.
+ * 
+ * Each period is represented in seconds.
+ * 
+ * You can check list of available periods here:
+ * https://poloniex.com/support/api (`returnChartData` section)
  */
-export const candlestickPeriod_300 = 300;
-export const candlestickPeriod_900 = 900;
-export const candlestickPeriod_1800 = 1800;
-export const candlestickPeriod_7200 = 7200;
-export const candlestickPeriod_14400 = 14400;
-export const candlestickPeriod_86400 = 86400;
+export const candlestickPeriods = {
+    fiveMinutes: 300,
+    fifteenMinutes: 900,
+    thirtyMinutes: 1800,
+    twoHours: 7200,
+    fourHours: 14400,
+    oneDay: 86400
+};
+
+/**
+ * Returns string representation of Poloniex candlestick period.
+ * 
+ * @param {period} period Period in seconds, e.g. 14400.
+ * @return String representation of Poloniex candlestick period.
+ *      In case when period is not included in the list of available periods,
+ *      method returns empty string.
+ */
+export const getStringFromCandlestickPeriod = (period: number): string => {
+    switch (period) {
+        case candlestickPeriods.fiveMinutes:
+            return '5m';
+        case candlestickPeriods.fifteenMinutes:
+            return '15m';
+        case candlestickPeriods.thirtyMinutes:
+            return '30m';
+        case candlestickPeriods.twoHours:
+            return '2H';
+        case candlestickPeriods.fourHours:
+            return '4H';
+        case candlestickPeriods.oneDay:
+            return '1D';
+        default:
+            return '';
+    }
+};
 
 /**
  * Downloads tickers.
@@ -37,31 +71,24 @@ export const getTickers = (): any => {
      */
     const response = request
         .then(response => response.data);
-
+    
     /**
      * Return observable.
      */
-    return Rx.Observable.fromPromise(response);
+    return Rx.Observable.fromPromise(response)
+        .map(t => {
+            return _.map(_.keys(t), k => {
+                return {
+                    symbol: utils.reversePair(k),
+                    price: parseFloat(_.get(t, [k, "last"], "0")),
+                    dailyChangePercent: parseFloat(_.get(t, [k, "percentChange"], "0")) * 100,
+                    volume: parseFloat(_.get(t, [k, "baseVolume"], "0")),
+                }
+            });
+        });
+    
+    // TODO: Handle empty or malformed data.
 };
-
-
-// response with Section = "hist"
-// [
-//     [ MTS, OPEN, CLOSE, HIGH, LOW, VOLUME ],
-//     ...
-// ]
-
-/**
- *
- * @param symbol: string, e.g. BTC_STEEM
- * @param from: Date
- * @param to: Date
- * @param period: number, e.g. 14400
- * @returns rxjs$Observable.<U>
- *
- * Example:
- * https://poloniex.com/public?command=returnChartData&currencyPair=BTC_XMR&start=1405699200&end=9999999999&period=14400
- */
 
 /**
  * Downloads candles.
@@ -72,23 +99,27 @@ export const getTickers = (): any => {
  *     ...
  * ]
  * 
- * @param {string} symbol Currency pair associated with candles.
+ * @param {string} symbol Currency pair, e.g. "BTC_STEEM".
  * @param {Date} from Start date.
  * @param {Date} to End date.
- * @param {number} period Period.
+ * @param {number} period Period in seconds, e.g. 14400.
  *      Poloniex API allows limited set of periods.
  *      For correct usage, you can take period from
- *      one of `candlestickPeriod_...` constants,
- *      for example: `candlestickPeriod_300`,
- *      `candlestickPeriod_900`, etc.
+ *      one of constants: `candlestickPeriods.thirtyMinutes`,
+ *      `candlestickPeriods.fourHours`, etc.
  * @return Observable.
  */
 export const getCandles = (symbol: string, startDate: Date, endDate: Date, period: number): any => {
     /**
+     * Prepare data before request.
+     */
+    const reversedCurrencyPair = getStringFromCandlestickPeriod(symbol);
+
+    /**
      * Start request.
      */
     const request = PoloniexHttpClient.getCandles(
-        symbol,
+        reversedCurrencyPair,
         startDate,
         endDate,
         period
@@ -103,5 +134,49 @@ export const getCandles = (symbol: string, startDate: Date, endDate: Date, perio
     /**
      * Return observable.
      */
-    return Rx.Observable.fromPromise(response);
+    return Rx.Observable.fromPromise(response)
+        .map(items => {
+            const candles = items.map(i => {
+                return {
+                    timestamp: i.date,
+                    ..._.pick(i, ['open', 'close', 'high', 'low'])
+                }
+            });
+
+            let obj = {};
+            
+            _.set(
+                obj,
+                [
+                    symbol,
+                    getStringFromCandlestickPeriod(period)
+                ],
+                _.orderBy(candles, ['timestamp'], ['asc'])
+            );
+
+            return obj;
+        });
+};
+
+/**
+ * Utils for solving small but frequent tasks.
+ */
+export const utils = {
+    
+    /**
+     * Reverses pair of currencies.
+     * 
+     * @param {string} currencyPair String with currency pair, e.g. "BTC_STEEM".
+     * @return String containing reversed pair of currencies.
+     */
+    reversePair: (currencyPair) =>
+        _.join(
+            _.reverse(
+                _.split(
+                    currencyPair,
+                    "_"
+                )
+            ),
+            "_"
+        )
 };
