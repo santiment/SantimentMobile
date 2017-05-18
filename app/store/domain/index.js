@@ -115,40 +115,6 @@ class DomainStore {
         console.log("History updated:\n", history);
     };
 
-    @action fetchHistory = (symbol: string, timeframe: number): Rx.Observable<Object> => {
-        const reversePair = (s) => _.join(_.reverse(_.split(s, "_")), "_");
-
-        return Poloniex.getCandles(reversePair(symbol), moment().subtract(180, 'days').toDate(), moment().toDate(), timeframe)
-            .map(items => {
-                const candles = items.map(i => {
-                    return {
-                        timestamp: i.date,
-                        ..._.pick(i, ['open', 'close', 'high', 'low'])
-                    }
-                });
-
-                let obj = {};
-                _.set(obj, [symbol, period], _.orderBy(candles, ['timestamp'], ['asc']));
-
-                return obj;
-            })
-    };
-
-    @action fetchHistory = (): Rx.Observable<Object> => {
-        const observables$ = this.symbols.map((symbol) => {
-            return Poloniex.getCandles(
-                symbol,
-                moment().subtract(180, 'days').toDate(),
-                moment().toDate(),
-                Poloniex.candlestickPeriods.oneDay
-            );
-        });
-
-        // $FlowFixMe
-        return Rx.Observable.forkJoin(observables$)
-            .map(arr => _.assign(...arr));
-    };
-
     /**
      * Sentiment
      *
@@ -257,13 +223,13 @@ class DomainStore {
 
     @action refresh = (): Rx.Observable<any> => {
         console.log("domainStore.refresh() called");
-        console.log("user =", JSON.stringify(domainStore.user, null, 2));
-        console.log("symbols =", JSON.stringify(domainStore.symbols.slice(), null, 2));
+        console.log("user =", JSON.stringify(this.user, null, 2));
+        console.log("symbols =", JSON.stringify(this.symbols.slice(), null, 2));
 
         return Rx.Observable
             .forkJoin(
                 Poloniex.getTickers(),
-                this.fetchHistory(),
+                Poloniex.getCandles(this.symbols),
                 Santiment.getSentiments(this.user.id),
                 this.fetchAggregates(),
                 this.fetchFeeds(),
@@ -313,7 +279,7 @@ class DomainStore {
      * @param {number} candlestickPeriod Candlestick period in seconds.
      * @return Observable.
      */
-    @action refreshHistory = (symbols: any, candlestickPeriod: number): Rx.Observable<any> => {
+    @action refreshHistory = (symbols: string[], candlestickPeriod: number): Rx.Observable<any> => {
         /**
          * Console output.
          */
@@ -327,29 +293,16 @@ class DomainStore {
         const defaultEndDate = moment().toDate();
 
         /**
-         * Start updating candles for each symbol.
+         * Return observable.
          */
-        const observables = symbols.map((symbol) => {
-            return Poloniex.getCandles(
-                symbol,
-                defaultStartDate,
-                defaultEndDate,
-                Poloniex.candlestickPeriods.oneDay
-            );
-        });
-
-        /**
-         * Return observables.
-         */
-        return Rx.Observable.forkJoin(observables)
-            .map(arr => _.assign(...arr))
+        return Poloniex.getCandles(symbols, defaultStartDate, defaultEndDate, candlestickPeriod)
             .do(
                 ([history]) => {
                     this.setHistory(history);
                 },
                 console.log
             )
-            .do(() => console.log('Candles refreshed'), console.log);
+            .do(() => console.log('History refreshed'), console.log);
     };
 }
 
