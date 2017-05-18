@@ -5,22 +5,22 @@
 
 'use strict';
 
-import _ from 'lodash'
-import Rx from 'rxjs'
-import moment from 'moment'
+import _ from 'lodash';
+import Rx from 'rxjs';
+import moment from 'moment';
 
 import ReactNative from 'react-native';
 const {AsyncStorage, Alert} = ReactNative;
 
-import mobx, {observable, computed, autorun, action, useStrict} from 'mobx'
-import {create, persist} from 'mobx-persist'
+import mobx, {observable, computed, autorun, action, useStrict} from 'mobx';
+import {create, persist} from 'mobx-persist';
 
-import * as Bitfinex from '../../api/bitfinex'
-import * as Poloniex from '../../api/poloniex'
+import * as Bitfinex from '../../api/bitfinex';
+import * as Poloniex from '../../api/poloniex';
 
-import * as Santiment from '../../api/santiment'
+import * as Santiment from '../../api/santiment';
 
-import type {SentimentType} from './types'
+import type {SentimentType} from './types';
 
 import DeviceInfo from 'react-native-device-info';
 
@@ -178,10 +178,6 @@ class DomainStore {
             .do(() => console.log("POST /sentiment succeeded"));
     };
 
-    @action fetchSentiment = (): Rx.Observable<SentimentType[]> => {
-        return Santiment.getSentiments(this.user.id);
-    };
-
     /**
      * Aggregate sentiment
      *   {
@@ -206,14 +202,7 @@ class DomainStore {
 
     @action fetchAggregates = (): Rx.Observable<Object> => {
         const observables$ = this.symbols.map((symbol) => {
-
-            return Santiment.getAggregate(symbol)
-                .map(items => {
-                    let obj = {};
-                    _.set(obj, [symbol], items);
-
-                    return obj;
-                })
+            return Santiment.getAggregate(symbol);
         });
 
         // $FlowFixMe
@@ -275,7 +264,7 @@ class DomainStore {
             .forkJoin(
                 Poloniex.getTickers(),
                 this.fetchHistory(),
-                this.fetchSentiment(),
+                Santiment.getSentiments(this.user.id),
                 this.fetchAggregates(),
                 this.fetchFeeds(),
             )
