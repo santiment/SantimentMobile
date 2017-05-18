@@ -166,16 +166,6 @@ class DomainStore {
         console.log("Aggregates updated:\n", aggregates);
     };
 
-    @action fetchAggregates = (): Rx.Observable<Object> => {
-        const observables$ = this.symbols.map((symbol) => {
-            return Santiment.getAggregate(symbol);
-        });
-
-        // $FlowFixMe
-        return Rx.Observable.forkJoin(observables$)
-            .map(arr => _.assign(...arr))
-    };
-
     /**
      * Feeds
      *   {
@@ -218,20 +208,28 @@ class DomainStore {
     };
 
     /**
-     * Refresh
+     * Updates tickers, history, sentiments, aggregates and feeds
+     * in local storage.
+     * 
+     * @return Observable.
      */
-
     @action refresh = (): Rx.Observable<any> => {
+        /**
+         * Console output.
+         */
         console.log("domainStore.refresh() called");
         console.log("user =", JSON.stringify(this.user, null, 2));
         console.log("symbols =", JSON.stringify(this.symbols.slice(), null, 2));
 
+        /**
+         * Update local storage and return observable.
+         */
         return Rx.Observable
             .forkJoin(
                 Poloniex.getTickers(),
                 Poloniex.getCandles(this.symbols),
                 Santiment.getSentiments(this.user.id),
-                this.fetchAggregates(),
+                Santiment.getAggregates(this.symbols),
                 this.fetchFeeds(),
             )
             .do(
@@ -256,11 +254,10 @@ class DomainStore {
         /**
          * Console output.
          */
-        
         console.log("domainStore.refreshTickers() called");
 
         /**
-         * Return observable.
+         * Update local storage and return observable.
          */
         return Poloniex.getTickers()
             .do(
@@ -275,7 +272,7 @@ class DomainStore {
     /**
      * Updates history in local storage.
      * 
-     * @param {*} symbols Collection of currency pairs.
+     * @param {string[]} symbols Collection of currency pairs.
      * @param {number} candlestickPeriod Candlestick period in seconds.
      * @return Observable.
      */
@@ -283,7 +280,6 @@ class DomainStore {
         /**
          * Console output.
          */
-        
         console.log("domainStore.refreshHistory() called");
 
         /**
@@ -293,7 +289,7 @@ class DomainStore {
         const defaultEndDate = moment().toDate();
 
         /**
-         * Return observable.
+         * Update local storage and return observable.
          */
         return Poloniex.getCandles(symbols, defaultStartDate, defaultEndDate, candlestickPeriod)
             .do(
@@ -303,6 +299,25 @@ class DomainStore {
                 console.log
             )
             .do(() => console.log('History refreshed'), console.log);
+    };
+
+    @action refreshAggregates = (symbols: string[]): Rx.Observable<Object> => {
+        /**
+         * Console output.
+         */
+        console.log("domainStore.refreshAggregates() called");
+
+        /**
+         * Update local storage and return observable.
+         */
+        return Santiment.getAggregates(symbols)
+            .do(
+                ([aggregates]) => {
+                    this.setAggregates(aggregates);
+                },
+                console.log
+            )
+            .do(() => console.log('Aggregates refreshed'), console.log);
     };
 }
 
