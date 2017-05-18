@@ -91,24 +91,6 @@ class DomainStore {
         console.log("Tickers updated:\n", tickers);
     };
 
-    @action fetchTickers = (): Rx.Observable<Object[]> => {
-        // TODO: Handle empty or malformed data
-
-        const reversePair = (s) => _.join(_.reverse(_.split(s, "_")), "_");
-
-        return Poloniex.getTickers()
-            .map(t => {
-                return _.map(_.keys(t), k => {
-                    return {
-                        symbol: reversePair(k),
-                        price: parseFloat(_.get(t, [k, "last"], "0")),
-                        dailyChangePercent: parseFloat(_.get(t, [k, "percentChange"], "0")) * 100,
-                        volume: parseFloat(_.get(t, [k, "baseVolume"], "0")),
-                    }
-                });
-            })
-    };
-
     /**
      * History
      *
@@ -149,34 +131,22 @@ class DomainStore {
                 _.set(obj, [symbol, period], _.orderBy(candles, ['timestamp'], ['asc']));
 
                 return obj;
-            });
+            })
     };
 
     @action fetchHistory = (): Rx.Observable<Object> => {
-        const period = "1D";
-
         const observables$ = this.symbols.map((symbol) => {
-            const reversePair = (s) => _.join(_.reverse(_.split(s, "_")), "_");
-
-            return Poloniex.getCandles(reversePair(symbol), moment().subtract(180, 'days').toDate(), moment().toDate(), Poloniex.candlestickPeriod_86400)
-                .map(items => {
-                    const candles = items.map(i => {
-                        return {
-                            timestamp: i.date,
-                            ..._.pick(i, ['open', 'close', 'high', 'low'])
-                        }
-                    });
-
-                    let obj = {};
-                    _.set(obj, [symbol, period], _.orderBy(candles, ['timestamp'], ['asc']));
-
-                    return obj;
-                });
+            return Poloniex.getCandles(
+                symbol,
+                moment().subtract(180, 'days').toDate(),
+                moment().toDate(),
+                Poloniex.candlestickPeriods.oneDay
+            );
         });
 
         // $FlowFixMe
         return Rx.Observable.forkJoin(observables$)
-            .map(arr => _.assign(...arr))
+            .map(arr => _.assign(...arr));
     };
 
     /**
@@ -303,7 +273,7 @@ class DomainStore {
 
         return Rx.Observable
             .forkJoin(
-                this.fetchTickers(),
+                Poloniex.getTickers(),
                 this.fetchHistory(),
                 this.fetchSentiment(),
                 this.fetchAggregates(),
@@ -321,6 +291,77 @@ class DomainStore {
             )
             .do(() => console.log('domainStore refreshed'), console.log)
     }
+
+    /**
+     * Updates tickers in local storage.
+     * 
+     * @return Observable.
+     */
+    @action refreshTickers = (): Rx.Observable<any> => {
+        /**
+         * Console output.
+         */
+        
+        console.log("domainStore.refreshTickers() called");
+
+        /**
+         * Return observable.
+         */
+        return Poloniex.getTickers()
+            .do(
+                ([tickers]) => {
+                    this.setTickers(tickers);
+                },
+                console.log
+            )
+            .do(() => console.log('Tickers refreshed'), console.log);
+    };
+
+    /**
+     * Updates history in local storage.
+     * 
+     * @param {*} symbols Collection of currency pairs.
+     * @param {number} candlestickPeriod Candlestick period in seconds.
+     * @return Observable.
+     */
+    @action refreshHistory = (symbols: any, candlestickPeriod: number): Rx.Observable<any> => {
+        /**
+         * Console output.
+         */
+        
+        console.log("domainStore.refreshHistory() called");
+
+        /**
+         * Default values.
+         */
+        const defaultStartDate = moment().subtract(180, 'days').toDate();
+        const defaultEndDate = moment().toDate();
+
+        /**
+         * Start updating candles for each symbol.
+         */
+        const observables = symbols.map((symbol) => {
+            return Poloniex.getCandles(
+                symbol,
+                defaultStartDate,
+                defaultEndDate,
+                Poloniex.candlestickPeriods.oneDay
+            );
+        });
+
+        /**
+         * Return observables.
+         */
+        return Rx.Observable.forkJoin(observables)
+            .map(arr => _.assign(...arr))
+            .do(
+                ([history]) => {
+                    this.setHistory(history);
+                },
+                console.log
+            )
+            .do(() => console.log('Candles refreshed'), console.log);
+    };
 }
 
 const hydrate = create({storage: AsyncStorage});
