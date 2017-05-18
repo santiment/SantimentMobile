@@ -112,7 +112,7 @@ export const getTickers = (): any => {
  *      If not specified, 1 day period will be used by default.
  * @return Observable.
  */
-export const getCandles = (symbol: string, startDate: Date, endDate: Date, candlestickPeriod: number): any => {
+export const getCandles = (symbols: string[], startDate: Date, endDate: Date, candlestickPeriod: number): any => {
     /**
      * Default values.
      */
@@ -121,58 +121,73 @@ export const getCandles = (symbol: string, startDate: Date, endDate: Date, candl
     const defaultCandlestickPeriod = candlestickPeriods.oneDay;
 
     /**
-     * Prepare data before request.
+     * Prepare default data for candle requests.
      */
-    const reversedCurrencyPair = utils.reversePair(symbol);
     const startDateOrDefault = (startDate && endDate) ? startDate : defaultStartDate;
     const endDateOrDefault = (startDate && endDate) ? endDate : defaultEndDate;
     const candlestickPeriodOrDefault = candlestickPeriod ? candlestickPeriod : defaultCandlestickPeriod;
 
     /**
-     * Start request.
+     * Send request for each symbol.
      */
-    const request = PoloniexHttpClient.getCandles(
-        reversedCurrencyPair,
-        startDateOrDefault,
-        endDateOrDefault,
-        candlestickPeriodOrDefault
-    );
+    const observables = symbols.map((symbol) => {
+        /**
+         * Obtain reversed currency pair which is required by Poloniex API.
+         */
+        const reversedCurrencyPair = utils.reversePair(symbol);
 
-    /**
-     * Handle response.
-     */
-    const response = request
-        .then(response => response.data);
-    
+        /**
+         * Start request.
+         */
+        const request = PoloniexHttpClient.getCandles(
+            reversedCurrencyPair,
+            startDateOrDefault,
+            endDateOrDefault,
+            candlestickPeriodOrDefault
+        );
+
+        /**
+         * Handle response.
+         */
+        const response = request
+            .then(response => response.data);
+        
+        /**
+         * Obtain observable.
+         */
+        return Rx.Observable.fromPromise(response)
+            .map(items => {
+                const candles = items.map(i => {
+                    return {
+                        timestamp: i.date,
+                        ..._.pick(i, ['open', 'close', 'high', 'low'])
+                    }
+                });
+
+                let obj = {};
+
+                _.set(
+                    obj,
+                    [
+                        symbol,
+                        getStringFromCandlestickPeriod(candlestickPeriodOrDefault)
+                    ],
+                    _.orderBy(
+                        candles,
+                        ['timestamp'],
+                        ['asc']
+                    )
+                );
+
+                return obj;
+            });
+    });
+
     /**
      * Return observable.
      */
-    return Rx.Observable.fromPromise(response)
-        .map(items => {
-            const candles = items.map(i => {
-                return {
-                    timestamp: i.date,
-                    ..._.pick(i, ['open', 'close', 'high', 'low'])
-                }
-            });
-
-            let obj = {};
-            
-            _.set(
-                obj,
-                [
-                    symbol,
-                    getStringFromCandlestickPeriod(candlestickPeriodOrDefault)
-                ],
-                _.orderBy(
-                    candles,
-                    ['timestamp'],
-                    ['asc']
-                )
-            );
-
-            return obj;
-        });
+    return Rx.Observable.forkJoin(observables)
+            .map(arr => _.assign(...arr));
 };
 
 /**
