@@ -115,7 +115,7 @@ export const postSentiment = (sentiment: Object): any => {
 /**
  * Downloads aggregate by asset and date interval.
  * 
- * @param {string} asset Aggregate's asset.
+ * @param {string} asset Currency, e.g. "BTC".
  * @param {Date} startDate Aggregate's start date.
  * @param {Date} endDate Aggregate's end date.
  * @return Observable.
@@ -124,16 +124,16 @@ export const getAggregate = (asset: string, startDate: Date, endDate: Date): any
     /**
      * Obtain time interval.
      */
-    const from = startDate ? startDate : new Date();
-    const to = endDate ? endDate : moment().add(1, 'days').toDate();
+    const startDateOrDefault = startDate ? startDate : new Date();
+    const endDateOrDefault = endDate ? endDate : moment().add(1, 'days').toDate();
 
     /**
      * Start request.
      */
     const request = SantimentHttpClient.getAggregate(
         asset,
-        from,
-        to
+        startDateOrDefault,
+        endDateOrDefault
     );
 
     /**
@@ -149,7 +149,7 @@ export const getAggregate = (asset: string, startDate: Date, endDate: Date): any
     return Rx.Observable.fromPromise(response)
         .map(items => {
             let obj = {};
-            _.set(obj, [symbol], items);
+            _.set(obj, [asset], items);
 
             return obj;
         });
