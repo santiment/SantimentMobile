@@ -99,7 +99,7 @@ export const getTickers = (): any => {
  *     ...
  * ]
  * 
- * @param {string} symbol Currency pair, e.g. "BTC_STEEM".
+ * @param {string[]} symbols Array of currency pairs, e.g. ["BTC_STEEM", "BTC_USDT"].
  * @param {Date} from Start date.
  *      If not specified, 180 days ago date will be used by default.
  * @param {Date} to End date.
