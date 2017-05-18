@@ -36,10 +36,10 @@ export const getTickers = (): any => {
  * @param {string} symbol Currency pair, e.g. "BTC_STEEM".
  * @param {Date} startDate Start date.
  * @param {Date} endDate End date.
- * @param {number} period Period in seconds, e.g. 14400.
+ * @param {number} candlestickPeriod Candlestick period in seconds, e.g. 14400.
  * @return Axios request.
  */
-export const getCandles = (symbol: string, startDate: Date, endDate: Date, period: number): any => {
+export const getCandles = (symbol: string, startDate: Date, endDate: Date, candlestickPeriod: number): any => {
     /**
      * Obtain parameters for request.
      */
@@ -54,7 +54,7 @@ export const getCandles = (symbol: string, startDate: Date, endDate: Date, perio
         + `&currencyPair=${symbol}`
         + `&start=${startTimestampInSeconds}`
         + `&end=${endTimestampInSeconds}`
-        + `&period=${period}`;
+        + `&period=${candlestickPeriod}`;
     
     /**
      * Start request and return it.

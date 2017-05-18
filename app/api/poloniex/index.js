@@ -101,28 +101,41 @@ export const getTickers = (): any => {
  * 
  * @param {string} symbol Currency pair, e.g. "BTC_STEEM".
  * @param {Date} from Start date.
+ *      If not specified, 180 days ago date will be used by default.
  * @param {Date} to End date.
- * @param {number} period Period in seconds, e.g. 14400.
+ *      If not specified, current date will be used by default.
+ * @param {number} candlestickPeriod Candlestick period in seconds, e.g. 14400.
  *      Poloniex API allows limited set of periods.
  *      For correct usage, you can take period from
  *      one of constants: `candlestickPeriods.thirtyMinutes`,
  *      `candlestickPeriods.fourHours`, etc.
+ *      If not specified, 1 day period will be used by default.
  * @return Observable.
  */
-export const getCandles = (symbol: string, startDate: Date, endDate: Date, period: number): any => {
+export const getCandles = (symbol: string, startDate: Date, endDate: Date, candlestickPeriod: number): any => {
+    /**
+     * Default values.
+     */
+    const defaultStartDate = moment().subtract(180, 'days').toDate();
+    const defaultEndDate = moment().toDate();
+    const defaultCandlestickPeriod = candlestickPeriods.oneDay;
+
     /**
      * Prepare data before request.
      */
     const reversedCurrencyPair = getStringFromCandlestickPeriod(symbol);
+    const startDateOrDefault = (startDate && endDate) ? startDate : defaultStartDate;
+    const endDateOrDefault = (startDate && endDate) ? endDate : defaultEndDate;
+    const candlestickPeriodOrDefault = candlestickPeriod ? candlestickPeriod : defaultCandlestickPeriod;
 
     /**
      * Start request.
      */
     const request = PoloniexHttpClient.getCandles(
         reversedCurrencyPair,
-        startDate,
-        endDate,
-        period
+        startDateOrDefault,
+        endDateOrDefault,
+        candlestickPeriodOrDefault
     );
 
     /**
@@ -149,7 +162,7 @@ export const getCandles = (symbol: string, startDate: Date, endDate: Date, perio
                 obj,
                 [
                     symbol,
-                    getStringFromCandlestickPeriod(period)
+                    getStringFromCandlestickPeriod(candlestickPeriodOrDefault)
                 ],
                 _.orderBy(candles, ['timestamp'], ['asc'])
             );
