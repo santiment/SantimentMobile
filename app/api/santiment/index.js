@@ -113,46 +113,58 @@ export const postSentiment = (sentiment: Object): any => {
 };
 
 /**
- * Downloads aggregate by asset and date interval.
+ * Downloads aggregates for specified currency pairs and date interval.
  * 
- * @param {string} asset Currency, e.g. "BTC".
+ * @param {string[]} symbols Array of currency pairs, e.g. ["BTC_STEEM", "BTC_USDT"].
+ *      Should contain at least one currency pair.
  * @param {Date} startDate Aggregate's start date.
  * @param {Date} endDate Aggregate's end date.
  * @return Observable.
  */
-export const getAggregate = (asset: string, startDate: Date, endDate: Date): any => {
+export const getAggregates = (symbols: string[], startDate: Date, endDate: Date): any => {
     /**
-     * Obtain time interval.
+     * Prepare data for aggregate requests.
      */
     const startDateOrDefault = startDate ? startDate : new Date();
     const endDateOrDefault = endDate ? endDate : moment().add(1, 'days').toDate();
 
     /**
-     * Start request.
+     * Send request for each aggregate.
      */
-    const request = SantimentHttpClient.getAggregate(
-        asset,
-        startDateOrDefault,
-        endDateOrDefault
-    );
+    const observables = symbols.map((symbol) => {
+        /**
+         * Start request.
+         */
+        const request = SantimentHttpClient.getAggregate(
+            symbol,
+            startDateOrDefault,
+            endDateOrDefault
+        );
 
-    /**
-     * Handle response.
-     */
-    const response = request
-        .then(response => response.data)
-        .catch(processAndRethrow);
+        /**
+         * Handle response.
+         */
+        const response = request
+            .then(response => response.data)
+            .catch(processAndRethrow);
+        
+        /**
+         * Obtain observable.
+         */
+        return Rx.Observable.fromPromise(response)
+            .map(items => {
+                let obj = {};
+                _.set(obj, [symbol], items);
+
+                return obj;
+            });
+    });
 
     /**
      * Return observable.
      */
-    return Rx.Observable.fromPromise(response)
-        .map(items => {
-            let obj = {};
-            _.set(obj, [asset], items);
-
-            return obj;
-        });
+    return Rx.Observable.forkJoin(observables)
+        .map(arr => _.assign(...arr));
 };
 
 /**
