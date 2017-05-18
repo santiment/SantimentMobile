@@ -52,7 +52,7 @@ export default class CurrenciesUiStore {
         this.domainStore.addSentiment(sentiment)
             .flatMap(() => Santiment.getSentiments(this.domainStore.user.id))
             .do(s => this.domainStore.setSentiment(s))
-            .flatMap(() => this.domainStore.fetchAggregates())
+            .flatMap(() => Santiment.getAggregates(this.domainStore.symbols))
             .do(a => this.domainStore.setAggregates(a))
             .subscribe(
                 () => {},
