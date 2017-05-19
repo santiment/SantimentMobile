@@ -254,7 +254,7 @@ class DomainStore {
          */
         return Santiment.getSentiments(userId)
             .do(
-                ([sentiments]) => {
+                sentiments => {
                     this.setSentiment(sentiments);
                 },
                 console.log
@@ -278,7 +278,7 @@ class DomainStore {
          */
         return Poloniex.getTickers()
             .do(
-                ([tickers]) => {
+                tickers => {
                     this.setTickers(tickers);
                 },
                 console.log
@@ -310,7 +310,7 @@ class DomainStore {
          */
         return Poloniex.getCandles(symbols, defaultStartDate, defaultEndDate, candlestickPeriod)
             .do(
-                ([history]) => {
+                history => {
                     this.setHistory(history);
                 },
                 console.log
@@ -335,7 +335,7 @@ class DomainStore {
          */
         return Santiment.getAggregates(symbols)
             .do(
-                ([aggregates]) => {
+                aggregates => {
                     this.setAggregates(aggregates);
                 },
                 console.log
@@ -360,7 +360,7 @@ class DomainStore {
          */
         return Santiment.getFeeds(assets)
             .do(
-                ([feeds]) => {
+                feeds => {
                     this.setFeeds(feeds);
                 },
                 console.log
