@@ -8,7 +8,10 @@
 import _ from 'lodash';
 
 import ReactNative from 'react-native';
-const {ListView} = ReactNative;
+const {
+    ListView,
+    Alert
+} = ReactNative;
 
 import Rx from 'rxjs';
 
