@@ -168,28 +168,46 @@ export const getAggregates = (symbols: string[], startDate: Date, endDate: Date)
 };
 
 /**
- * Downloads feed by asset.
+ * Downloads feeds.
  * 
- * @param {String} asset Feed's asset.
+ * @param {string[]} asset Array of currencies, e.g. ["BTC", "ETH"].
+ *      Should contain at least one currency.
  * @return Observable.
  */
-export const getFeed = (asset: string): any => {
+export const getFeeds = (assets: string[]): any => {
     /**
-     * Start request.
+     * Send request for each asset.
      */
-    const request = SantimentHttpClient.getFeed(
-        asset
-    );
+    const observables = assets.map((asset) => {
+        /**
+         * Start request.
+         */
+        const request = SantimentHttpClient.getFeed(
+            asset
+        );
 
-    /**
-     * Handle response.
-     */
-    const response = request
-        .then(response => response.data)
-        .catch(processAndRethrow);
+        /**
+         * Handle response.
+         */
+        const response = request
+            .then(response => response.data)
+            .catch(processAndRethrow);
+        
+        /**
+         * Obtain observable.
+         */
+        return Rx.Observable.fromPromise(response)
+            .map(items => {
+                let obj = {};
+                _.set(obj, [asset], items);
+
+                return obj;
+            });
+    });
 
     /**
      * Return observable.
      */
-    return Rx.Observable.fromPromise(response);
+    return Rx.Observable.forkJoin(observables)
+        .map(arr => _.assign(...arr));
 };
