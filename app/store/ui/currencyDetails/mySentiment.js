@@ -5,14 +5,18 @@
 
 'use strict';
 
-import _ from 'lodash'
+import _ from 'lodash';
 
 import ReactNative from 'react-native';
 const {ListView} = ReactNative;
 
-import mobx, {observable, computed, autorun, action, useStrict} from 'mobx'
+import Rx from 'rxjs';
 
-import moment from 'moment'
+import mobx, {observable, computed, autorun, action, useStrict} from 'mobx';
+
+import moment from 'moment';
+
+import * as Poloniex from '../../../api/poloniex';
 
 export default class MySentimentUiStore {
     domainStore: any;
@@ -115,4 +119,31 @@ export default class MySentimentUiStore {
     @computed get dataSource(): Object {
         return this._dataSource.cloneWithRows(this.rows.slice());
     }
+
+    @action refresh = (): void => {
+        Rx.Observable
+            .forkJoin(
+                this.domainStore.refreshSentiments(
+                    this.domainStore.user.id
+                ),
+                this.domainStore.refreshHistory(
+                    this.domainStore.symbols,
+                    Poloniex.candlestickPeriods.oneDay
+                ),
+            )
+            .subscribe(
+                () => { },
+                error => Alert.alert(
+                    'Refresh Error',
+                    error.toString(),
+                    [
+                        {
+                            text: 'OK',
+                            onPress: () => {
+                            }
+                        }
+                    ]
+                )
+            );
+    };
 }

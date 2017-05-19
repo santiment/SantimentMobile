@@ -121,16 +121,7 @@ export default class MySentiment extends React.Component {
                         refreshControl={
                             <RefreshControl
                                 refreshing={store.isLoading}
-                                onRefresh={() => {
-                                    store.domainStore.refreshHistory(
-                                        [store.domainStore.selectedSymbol],
-                                        Poloniex.candlestickPeriods.oneDay
-                                    );
-
-                                    store.domainStore.refreshSentiments(
-                                        store.domainStore.user.id
-                                    );
-                                }}
+                                onRefresh={store.refresh}
                             />
                         }
                     />
@@ -271,6 +262,6 @@ const styles = StyleSheet.create({
         color: 'white'
     },
     chart: {
-        height: responsiveHeight(40),
+        height: 40,//responsiveHeight(40),
     },
 });
