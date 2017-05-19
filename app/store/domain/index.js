@@ -238,6 +238,31 @@ class DomainStore {
     }
 
     /**
+     * Updates sentiments in local storage.
+     * 
+     * @param {string} userId User ID.
+     * @return Observable.
+     */
+    @action refreshSentiments = (userId: string): Rx.Observable<any> => {
+        /**
+         * Console output.
+         */
+        console.log("Did begin to refresh sentiments");
+
+        /**
+         * Update local storage and return observable.
+         */
+        return Santiment.getSentiments(userId)
+            .do(
+                ([sentiments]) => {
+                    this.setSentiment(sentiments);
+                },
+                console.log
+            )
+            .do(() => console.log('Did finish to refresh sentiments'), console.log);
+    };
+
+    /**
      * Updates tickers in local storage.
      * 
      * @return Observable.
@@ -246,7 +271,7 @@ class DomainStore {
         /**
          * Console output.
          */
-        console.log("domainStore.refreshTickers() called");
+        console.log("Did begin to refresh tickers");
 
         /**
          * Update local storage and return observable.
@@ -258,13 +283,13 @@ class DomainStore {
                 },
                 console.log
             )
-            .do(() => console.log('Tickers refreshed'), console.log);
+            .do(() => console.log('Did finish to refresh tickers'), console.log);
     };
 
     /**
      * Updates history in local storage.
      * 
-     * @param {string[]} symbols Collection of currency pairs.
+     * @param {string[]} symbols Array of currency pairs.
      * @param {number} candlestickPeriod Candlestick period in seconds.
      * @return Observable.
      */
@@ -272,7 +297,7 @@ class DomainStore {
         /**
          * Console output.
          */
-        console.log("domainStore.refreshHistory() called");
+        console.log("Did begin to refresh history");
 
         /**
          * Default values.
@@ -290,14 +315,20 @@ class DomainStore {
                 },
                 console.log
             )
-            .do(() => console.log('History refreshed'), console.log);
+            .do(() => console.log('Did finish to refresh history'), console.log);
     };
 
+    /**
+     * Updates feeds in local storage.
+     * 
+     * @param {string[]} symbols Array of currency pairs.
+     * @return Observable.
+     */
     @action refreshAggregates = (symbols: string[]): Rx.Observable<Object> => {
         /**
          * Console output.
          */
-        console.log("domainStore.refreshAggregates() called");
+        console.log("Did begin to refresh aggregates");
 
         /**
          * Update local storage and return observable.
@@ -309,14 +340,20 @@ class DomainStore {
                 },
                 console.log
             )
-            .do(() => console.log('Aggregates refreshed'), console.log);
+            .do(() => console.log('Did finish to refresh aggregates'), console.log);
     };
 
+    /**
+     * Updates feeds in local storage.
+     * 
+     * @param {string[]} assets Array of currencies, e.g. ["BTC", "ETH"].
+     * @return Observable.
+     */
     @action refreshFeeds = (assets: string[]): Rx.Observable<Object> => {
         /**
          * Console output.
          */
-        console.log('domainStore.refreshFeeds() called');
+        console.log("Did begin to refresh feeds");
 
         /**
          * Update local storage and return observable.
@@ -328,7 +365,7 @@ class DomainStore {
                 },
                 console.log
             )
-            .do(() => console.log('Feeds refreshed'), console.log);
+            .do(() => console.log('Did finish to refresh feeds'), console.log);
     };
 }
 
