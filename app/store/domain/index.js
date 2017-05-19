@@ -64,6 +64,17 @@ class DomainStore {
         this.setSymbols(_.without(this.symbols, symbol));
     };
 
+    @action getAssets = (): string[] => {
+        return this.symbols.map(pairOfCurrencies => {
+            /**
+             * Extract asset from pair of currencies
+             * and return it.
+             */
+            const asset = _.split(pairOfCurrencies, "_")[0];
+            return asset;
+        });
+    };
+
     /**
      * Selected symbol
      *
@@ -188,25 +199,6 @@ class DomainStore {
         console.log("Feeds updated:\n", feeds);
     };
 
-    @action fetchFeeds = (): Rx.Observable<Object> => {
-        const observables$ = this.symbols.map((symbol) => {
-
-            const asset = _.split(symbol, "_")[0];
-
-            return Santiment.getFeed(asset)
-                .map(items => {
-                    let obj = {};
-                    _.set(obj, [asset], items);
-
-                    return obj;
-                })
-        });
-
-        // $FlowFixMe
-        return Rx.Observable.forkJoin(observables$)
-            .map(arr => _.assign(...arr))
-    };
-
     /**
      * Updates tickers, history, sentiments, aggregates and feeds
      * in local storage.
@@ -230,7 +222,7 @@ class DomainStore {
                 Poloniex.getCandles(this.symbols),
                 Santiment.getSentiments(this.user.id),
                 Santiment.getAggregates(this.symbols),
-                this.fetchFeeds(),
+                Santiment.getFeeds(this.getAssets()),
             )
             .do(
                 ([tickers, history, sentiment, aggregates, feeds]) => {
@@ -318,6 +310,25 @@ class DomainStore {
                 console.log
             )
             .do(() => console.log('Aggregates refreshed'), console.log);
+    };
+
+    @action refreshFeeds = (assets: string[]): Rx.Observable<Object> => {
+        /**
+         * Console output.
+         */
+        console.log('domainStore.refreshFeeds() called');
+
+        /**
+         * Update local storage and return observable.
+         */
+        return Santiment.getFeeds(assets)
+            .do(
+                ([feeds]) => {
+                    this.setFeeds(feeds);
+                },
+                console.log
+            )
+            .do(() => console.log('Feeds refreshed'), console.log);
     };
 }
 
