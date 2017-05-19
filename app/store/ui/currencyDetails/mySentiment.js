@@ -66,7 +66,7 @@ export default class MySentimentUiStore {
         return getTicker(this.domainStore.tickers);
     }
 
-    @computed get sentiments(): Object[] {
+    @computed get sentimentsForCurrentSymbol(): Object[] {
         return _.filter(
             this.domainStore.sentiments.slice(),
             s => { return _.isEqual(s.asset, this.domainStore.selectedSymbol) }
@@ -80,7 +80,7 @@ export default class MySentimentUiStore {
             []
         );
 
-        const sentiments = _.filter(
+        const sentimentsForCurrentSymbol = _.filter(
             this.domainStore.sentiments.slice(),
             s => { return _.isEqual(s.asset, this.domainStore.selectedSymbol) }
         );
@@ -92,7 +92,7 @@ export default class MySentimentUiStore {
                 const candleTimestamp = new Date(t.timestamp * 1000).setHours(0, 0, 0, 0);
 
 
-                const sentimentObject = _.find(sentiments, s => {
+                const sentimentObject = _.find(sentimentsForCurrentSymbol, s => {
                     const sentimentTimestamp = new Date(s.timestamp * 1000).setHours(0, 0, 0, 0);
 
                     return candleTimestamp === sentimentTimestamp;
@@ -115,7 +115,7 @@ export default class MySentimentUiStore {
             price: _.isEmpty(s.price) ? "" : s.price
         }});
 
-        return _.flow(sortByDate, formatDates, formatPrice)(this.sentiments.slice());
+        return _.flow(sortByDate, formatDates, formatPrice)(this.sentimentsForCurrentSymbol.slice());
     }
 
     _dataSource = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
