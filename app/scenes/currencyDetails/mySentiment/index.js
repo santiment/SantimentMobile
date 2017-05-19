@@ -262,6 +262,6 @@ const styles = StyleSheet.create({
         color: 'white'
     },
     chart: {
-        height: 40,//responsiveHeight(40),
+        height: responsiveHeight(40),
     },
 });
