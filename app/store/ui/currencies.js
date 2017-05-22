@@ -5,13 +5,15 @@
 
 'use strict';
 
-import _ from 'lodash'
-import Rx from 'rxjs'
+import _ from 'lodash';
+import Rx from 'rxjs';
 
 import ReactNative from 'react-native';
 const {ListView, Alert} = ReactNative;
 
-import mobx, {observable, computed, autorun, action, useStrict} from 'mobx'
+import mobx, {observable, computed, autorun, action, useStrict} from 'mobx';
+
+import * as Santiment from '../../api/santiment';
 
 export default class CurrenciesUiStore {
     domainStore: any;
@@ -48,9 +50,9 @@ export default class CurrenciesUiStore {
 
     @action addSentiment = (sentiment: Object): void => {
         this.domainStore.addSentiment(sentiment)
-            .flatMap(() => this.domainStore.fetchSentiment())
+            .flatMap(() => Santiment.getSentiments(this.domainStore.user.id))
             .do(s => this.domainStore.setSentiment(s))
-            .flatMap(() => this.domainStore.fetchAggregates())
+            .flatMap(() => Santiment.getAggregates(this.domainStore.symbols))
             .do(a => this.domainStore.setAggregates(a))
             .subscribe(
                 () => {},

@@ -30,16 +30,20 @@ export const getTickers = (): any => {
 /**
  * Makes asynchronous request for candles.
  * 
- * @param {string} symbol Currency pair associated with candles.
- * @param {Date} from Start date.
- * @param {Date} to End date.
- * @param {number} period Period.
+ * Example of API request:
+ * https://poloniex.com/public?command=returnChartData&currencyPair=BTC_XMR&start=1405699200&end=9999999999&period=14400
+ * 
+ * @param {string} symbol Currency pair, e.g. "BTC_STEEM".
+ * @param {Date} startDate Start date.
+ * @param {Date} endDate End date.
+ * @param {number} candlestickPeriod Candlestick period in seconds, e.g. 14400.
  * @return Axios request.
  */
-export const getCandles = (symbol: string, startDate: Date, endDate: Date, period: number): any => {
+export const getCandles = (symbol: string, startDate: Date, endDate: Date, candlestickPeriod: number): any => {
     /**
      * Obtain parameters for request.
      */
+    const command = 'returnChartData';
     const startTimestampInSeconds = moment(startDate).unix();
     const endTimestampInSeconds = moment(endDate).unix();
 
@@ -47,11 +51,11 @@ export const getCandles = (symbol: string, startDate: Date, endDate: Date, perio
      * Obtain URL for request.
      */
     const url = apiUrl
-        + `?command=returnChartData`
+        + `?command=${command}`
         + `&currencyPair=${symbol}`
         + `&start=${startTimestampInSeconds}`
         + `&end=${endTimestampInSeconds}`
-        + `&period=${period}`;
+        + `&period=${candlestickPeriod}`;
     
     /**
      * Start request and return it.

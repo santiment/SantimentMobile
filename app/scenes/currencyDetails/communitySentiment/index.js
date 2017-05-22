@@ -6,10 +6,17 @@
 'use strict';
 
 import React from 'react';
-import ReactNative from 'react-native';
-let {Text, View, StyleSheet, Image} = ReactNative;
 
-import {observer} from 'mobx-react/native'
+import ReactNative, {
+    View,
+    ScrollView,
+    Text,
+    Image,
+    RefreshControl,
+    StyleSheet
+} from 'react-native';
+
+import {observer} from 'mobx-react/native';
 
 @observer
 export default class CommunitySentiment extends React.Component {
@@ -17,46 +24,57 @@ export default class CommunitySentiment extends React.Component {
         const {navigator, store} = this.props;
 
         return (
-            <View style={styles.container}>
-                <View style={styles.column}>
-                    <Text style={styles.text}>
-                        {`${store.aggregate.bullish}`}
-                    </Text>
-                    <View style={styles.imageContainer}>
-                        <Image
-                            style={styles.image}
-                            source={require('../../../resources/images/bull.png')}
-                        />
+            <ScrollView
+                contentContainerStyle={styles.container}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={store.isLoading}
+                        onRefresh={store.refresh}
+                    />
+                }
+            >
+
+                <View style={styles.viewContainer}>
+                    
+                    <View style={styles.column}>
+                        <Text style={styles.text}>
+                            {`${store.aggregate.bullish}`}
+                        </Text>
+                        <View style={styles.imageContainer}>
+                            <Image
+                                style={styles.image}
+                                source={require('../../../resources/images/bull.png')}
+                            />
+                        </View>
                     </View>
+
+                    <View style={styles.column}>
+                        <Text style={styles.text}>
+                            {`${store.aggregate.catish}`}
+                        </Text>
+                        <View style={styles.imageContainer}>
+                            <Image
+                                style={styles.image}
+                                source={require('../../../resources/images/cat.png')}
+                            />
+                        </View>
+                    </View>
+
+                    <View style={styles.column}>
+                        <Text style={styles.text}>
+                            {`${store.aggregate.bearish}`}
+                        </Text>
+                        <View style={styles.imageContainer}>
+                            <Image
+                                style={styles.image}
+                                source={require('../../../resources/images/bear.png')}
+                            />
+                        </View>
+                    </View>
+
                 </View>
 
-                <View style={styles.column}>
-                    <Text style={styles.text}>
-                        {`${store.aggregate.catish}`}
-                    </Text>
-                    <View style={styles.imageContainer}>
-                        <Image
-                            style={styles.image}
-                            source={require('../../../resources/images/cat.png')}
-                        />
-                    </View>
-                </View>
-
-                <View style={styles.column}>
-                    <Text style={styles.text}>
-                        {`${store.aggregate.bearish}`}
-                    </Text>
-                    <View style={styles.imageContainer}>
-                        <Image
-                            style={styles.image}
-                            source={require('../../../resources/images/bear.png')}
-                        />
-                    </View>
-                </View>
-
-
-
-            </View>
+            </ScrollView>
         )
     }
 }
@@ -77,6 +95,21 @@ const styles = StyleSheet.create({
         backgroundColor: "#ffffff",
         flexDirection: 'row',
         justifyContent: 'center',
+        marginTop: 0,
+        marginRight: 0,
+        marginBottom: 0,
+        marginLeft: 0,
+    },
+    viewContainer: {
+        flexDirection: 'row',
+        flexWrap: 'wrap',
+        alignItems: 'center',
+        justifyContent: 'center',
+        flex: 1,
+        marginTop: 0,
+        marginRight: 0,
+        marginBottom: 0,
+        marginLeft: 0,
     },
     column: {
         width: 80,
@@ -87,7 +120,7 @@ const styles = StyleSheet.create({
     imageContainer: {
         padding: 5,
         height: 60,
-        width: 60
+        width: 60,
     },
     image: {
         height: 50,

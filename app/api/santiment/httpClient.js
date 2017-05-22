@@ -54,25 +54,25 @@ export const postSentiment = (sentiment: Object): any => {
 };
 
 /**
- * Makes asynchronous request for aggregate by asset.
+ * Makes asynchronous request for aggregate.
  * 
- * @param {string} asset Aggregate's asset.
+ * @param {string} symbol Currency pair, e.g. "BTC_USDT".
  * @param {Date} startDate Start date.
  * @param {Date} endDate End date.
  * @return Axios request.
  */
-export const getAggregate = (asset: string, startDate: Date, endDate: Date): any => {
+export const getAggregate = (symbol: string, startDate: Date, endDate: Date): any => {
     /**
      * Obtain parameters for request.
      */
     const dateFormat = 'YYYY-MM-DD';
-    const from = moment(startDate).format(dateFormat);
-    const to = moment(endDate).format(dateFormat);
+    const formattedStartDate = moment(startDate).format(dateFormat);
+    const formattedEndDate = moment(endDate).format(dateFormat);
 
     /**
      * Obtain URL for request.
      */
-    let url = apiUrl + `/sentiment/aggregate?asset=${asset}&from=${from}&to=${to}`;
+    let url = apiUrl + `/sentiment/aggregate?asset=${symbol}&from=${formattedStartDate}&to=${formattedEndDate}`;
 
     /**
      * Start request and return it.

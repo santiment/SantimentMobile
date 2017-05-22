@@ -5,14 +5,21 @@
 
 'use strict';
 
-import _ from 'lodash'
+import _ from 'lodash';
 
 import ReactNative from 'react-native';
-const {ListView} = ReactNative;
+const {
+    ListView,
+    Alert
+} = ReactNative;
 
-import mobx, {observable, computed, autorun, action, useStrict} from 'mobx'
+import Rx from 'rxjs';
 
-import moment from 'moment'
+import mobx, {observable, computed, autorun, action, useStrict} from 'mobx';
+
+import moment from 'moment';
+
+import * as Poloniex from '../../../api/poloniex';
 
 export default class MySentimentUiStore {
     domainStore: any;
@@ -59,7 +66,7 @@ export default class MySentimentUiStore {
         return getTicker(this.domainStore.tickers);
     }
 
-    @computed get sentiments(): Object[] {
+    @computed get sentimentsForCurrentSymbol(): Object[] {
         return _.filter(
             this.domainStore.sentiments.slice(),
             s => { return _.isEqual(s.asset, this.domainStore.selectedSymbol) }
@@ -73,7 +80,7 @@ export default class MySentimentUiStore {
             []
         );
 
-        const sentiments = _.filter(
+        const sentimentsForCurrentSymbol = _.filter(
             this.domainStore.sentiments.slice(),
             s => { return _.isEqual(s.asset, this.domainStore.selectedSymbol) }
         );
@@ -85,7 +92,7 @@ export default class MySentimentUiStore {
                 const candleTimestamp = new Date(t.timestamp * 1000).setHours(0, 0, 0, 0);
 
 
-                const sentimentObject = _.find(sentiments, s => {
+                const sentimentObject = _.find(sentimentsForCurrentSymbol, s => {
                     const sentimentTimestamp = new Date(s.timestamp * 1000).setHours(0, 0, 0, 0);
 
                     return candleTimestamp === sentimentTimestamp;
@@ -108,11 +115,38 @@ export default class MySentimentUiStore {
             price: _.isEmpty(s.price) ? "" : s.price
         }});
 
-        return _.flow(sortByDate, formatDates, formatPrice)(this.sentiments.slice());
+        return _.flow(sortByDate, formatDates, formatPrice)(this.sentimentsForCurrentSymbol.slice());
     }
 
     _dataSource = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     @computed get dataSource(): Object {
         return this._dataSource.cloneWithRows(this.rows.slice());
     }
+
+    @action refresh = (): void => {
+        Rx.Observable
+            .forkJoin(
+                this.domainStore.refreshSentiments(
+                    this.domainStore.user.id
+                ),
+                this.domainStore.refreshHistory(
+                    this.domainStore.symbols,
+                    Poloniex.candlestickPeriods.oneDay
+                ),
+            )
+            .subscribe(
+                () => { },
+                error => Alert.alert(
+                    'Refresh Error',
+                    error.toString(),
+                    [
+                        {
+                            text: 'OK',
+                            onPress: () => {
+                            }
+                        }
+                    ]
+                )
+            );
+    };
 }
