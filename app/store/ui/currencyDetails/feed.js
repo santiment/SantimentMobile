@@ -24,16 +24,31 @@ export default class FeedUiStore {
     }
 
     @action refresh = (): void => {
-        this.domainStore.refresh()
+        /**
+         * Obtain all required information
+         * before updating domain store.
+         */
+        const assetsToUpdate = [
+            this.asset
+        ];
+        
+        /**
+         * Update feeds for current asset.
+         */
+        this.domainStore.refreshFeeds(assetsToUpdate)
             .subscribe(
                 () => {},
                 error => Alert.alert(
                     'Refresh Error',
                     error.toString(),
                     [
-                        {text: 'OK', onPress: () => {}},
+                        {
+                            text: 'OK',
+                            onPress: () => {
+                            }
+                        }
                     ]
-                ),
+                )
             );
     };
 
