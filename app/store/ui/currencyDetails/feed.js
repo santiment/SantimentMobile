@@ -68,12 +68,21 @@ export default class FeedUiStore {
             );
     };
 
+    /**
+     * Shows whether data is loading now.
+     */
     @observable isLoading: boolean = false;
 
+    /**
+     * Updates `isLoading` boolean flag.
+     */
     @action setIsLoading = (value: boolean): void => {
         this.isLoading = value;
     };
 
+    /**
+     * Ticker.
+     */
     @computed get ticker(): Object {
         const findTicker = (arr) => _.find(arr, t => _.isEqual(t.symbol, this.domainStore.selectedSymbol));
         const formatTicker = (t) => { return {
@@ -95,12 +104,25 @@ export default class FeedUiStore {
         return getTicker(this.domainStore.tickers);
     }
 
+    /**
+     * Asset.
+     */
     @computed get asset(): string {
         return _.split(this.domainStore.selectedSymbol, '_')[0]
     }
 
+    /**
+     * Feed.
+     */
     @computed get feed(): Object[] {
-        const feed = _.get(this.domainStore.feeds, [this.asset], []);
+        /**
+         * Retrieve feed from domain store.
+         */
+        const feed = _.get(
+            this.domainStore.feeds,
+            [this.asset],
+            []
+        );
 
         /**
          * Server-side API doesn't return ID for messages.
@@ -122,8 +144,8 @@ export default class FeedUiStore {
 
             /**
              * Obtain creation date for current message.
-             * Timestamp provided by server is measured in milliseconds,
-             * but we need to use seconds.
+             * Timestamp provided by server is measured in seconds,
+             * but we need to use milliseconds.
              */
             const messageCreationDate = new Date(m.timestamp * 1000);
 
@@ -164,5 +186,3 @@ export default class FeedUiStore {
         return formattedFeed
     }
 }
-
-
