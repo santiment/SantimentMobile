@@ -7,12 +7,21 @@
 
 import _ from 'lodash'
 
-import ReactNative from 'react-native';
-const {ListView, Alert} = ReactNative;
+import ReactNative, {
+    ListView,
+    Alert
+} from 'react-native';
 
-import mobx, {observable, computed, autorun, action, useStrict} from 'mobx'
+import mobx, {
+    observable,
+    computed,
+    autorun,
+    action,
+    useStrict
+} from 'mobx';
 
 export default class AddCurrencyUiStore {
+    
     domainStore: any;
 
     constructor(domainStore: any) {

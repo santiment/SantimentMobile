@@ -32,9 +32,24 @@ export default class AddCurrency extends React.Component {
                     key={sectionID}
                     symbol={data.displaySymbol}
                     onPress={() => {
+                        /**
+                         * Update Add Currency UI Store.
+                         */
                         store.addSymbol(data.symbol);
-                        navigator.pop();
                         store.setQuery('');
+
+                        /**
+                         * Update domain store.
+                         */
+                        store.domainStore.refreshTickers();
+                        store.domainStore.refreshAggregates(
+                            [data.symbol]
+                        );
+
+                        /**
+                         * Navigate to previous scene.
+                         */
+                        navigator.pop();
                     }}
                 />
             )

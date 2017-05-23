@@ -98,7 +98,7 @@ export default class Feed extends React.Component {
                  */
                 uiStore.refresh();
             },
-            2000
+            feedRefreshPeriod
         );
     }
 
@@ -175,3 +175,5 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
 });
+
+const feedRefreshPeriod = 5000;
