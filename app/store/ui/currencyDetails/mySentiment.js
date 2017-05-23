@@ -80,23 +80,23 @@ export default class MySentimentUiStore {
             []
         );
 
-        const sentimentsForCurrentSymbolHashMap = {};
-        this.domainStore.sentiments.forEach(
-            s => {
-                if (_.isEqual(s.asset, this.domainStore.selectedSymbol)) {
-                    const sentimentTimestamp = new Date(s.timestamp * 1000).setHours(0, 0, 0, 0);
-                    sentimentsForCurrentSymbolHashMap[sentimentTimestamp] = s;
-                }
-            }
+        const sentimentsForCurrentSymbol = _.filter(
+            this.domainStore.sentiments.slice(),
+            s => { return _.isEqual(s.asset, this.domainStore.selectedSymbol) }
         );
 
         const candles = _.map(
             timeseries,
             t => {
+                // const date = moment.unix(t.date);
                 const candleTimestamp = new Date(t.timestamp * 1000).setHours(0, 0, 0, 0);
 
-                const sentimentObject = sentimentsForCurrentSymbolHashMap[candleTimestamp];
 
+                const sentimentObject = _.find(sentimentsForCurrentSymbol, s => {
+                    const sentimentTimestamp = new Date(s.timestamp * 1000).setHours(0, 0, 0, 0);
+
+                    return candleTimestamp === sentimentTimestamp;
+                });
                 return {
                     timestamp: candleTimestamp,
                     candle: _.pick(t, ['open', 'high', 'low', 'close']),
@@ -107,7 +107,6 @@ export default class MySentimentUiStore {
 
         return candles;
     }
-
     @computed get rows(): Object[] {
         const sortByDate = (arr) => _.orderBy(arr, ['date'], ['desc']);
         const formatDates = (arr) => _.map(arr, s => { return {...s, date: moment.unix(s.timestamp).fromNow()}});
