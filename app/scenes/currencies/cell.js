@@ -7,12 +7,23 @@
 
 
 import React from 'react';
-import ReactNative from 'react-native';
-let {View, StyleSheet, Text, TouchableHighlight, TouchableWithoutFeedback, Image} = ReactNative;
 
-import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions';
+import ReactNative, {
+    View,
+    Text,
+    Image,
+    TouchableHighlight,
+    TouchableWithoutFeedback,
+    StyleSheet
+} from 'react-native';
 
-import _ from 'lodash'
+import {
+    responsiveHeight,
+    responsiveWidth,
+    responsiveFontSize
+} from 'react-native-responsive-dimensions';
+
+import _ from 'lodash';
 
 export default class CurrencyCell extends React.Component {
     render() {
