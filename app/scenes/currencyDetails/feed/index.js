@@ -6,15 +6,28 @@
 'use strict';
 
 import React from 'react';
-import ReactNative from 'react-native';
-let {Text, View, StyleSheet} = ReactNative;
 
-import {observer} from 'mobx-react/native'
+import ReactNative, {
+    View,
+    Text,
+    StyleSheet
+} from 'react-native';
 
-import {GiftedChat, Actions, Bubble} from 'react-native-gifted-chat';
+import {
+    observer
+} from 'mobx-react/native';
+
+import {
+    GiftedChat,
+    Actions,
+    Bubble
+} from 'react-native-gifted-chat';
 
 @observer
 export default class Feed extends React.Component {
+    
+    refreshStoreTimerId: any;
+
     render() {
         const {navigator, store} = this.props;
 
@@ -67,6 +80,32 @@ export default class Feed extends React.Component {
                 />
             </View>
         )
+    }
+
+    componentDidMount() {
+        /**
+         * Obtain UI store.
+         */
+        const uiStore = this.props.store;
+
+        /**
+         * Create timer for updating UI store.
+         */
+        this.refreshStoreTimerId = setInterval(
+            () => {
+                /**
+                 * Update UI store.
+                 */
+                uiStore.refresh();
+            },
+            feedRefreshPeriod
+        );
+    }
+
+    componentWillUnmount() {
+        clearInterval(
+            this.refreshStoreTimerId
+        );
     }
 }
 
@@ -136,3 +175,5 @@ const styles = StyleSheet.create({
         textAlign: 'center',
     },
 });
+
+const feedRefreshPeriod = 5000;

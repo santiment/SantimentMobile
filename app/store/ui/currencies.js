@@ -6,16 +6,26 @@
 'use strict';
 
 import _ from 'lodash';
+
 import Rx from 'rxjs';
 
-import ReactNative from 'react-native';
-const {ListView, Alert} = ReactNative;
+import ReactNative, {
+    ListView,
+    Alert
+} from 'react-native';
 
-import mobx, {observable, computed, autorun, action, useStrict} from 'mobx';
+import mobx, {
+    observable,
+    computed,
+    autorun,
+    action,
+    useStrict
+} from 'mobx';
 
 import * as Santiment from '../../api/santiment';
 
 export default class CurrenciesUiStore {
+    
     domainStore: any;
 
     constructor(domainStore: any) {
@@ -31,7 +41,7 @@ export default class CurrenciesUiStore {
     };
 
     @action refresh = (): void => {
-        this.domainStore.refresh()
+        this.domainStore.refreshTickers()
             .subscribe(
                 () => {},
                 error => Alert.alert(
@@ -72,8 +82,8 @@ export default class CurrenciesUiStore {
             t => _.includes(this.domainStore.symbols.slice(), t.symbol)
         );
     }
-    @computed get rows(): Object[] {
 
+    @computed get rows(): Object[] {
         return this.tickers.map(t => {
             return {
                 symbol: t.symbol,
@@ -92,6 +102,7 @@ export default class CurrenciesUiStore {
     }
 
     _dataSource = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
+    
     @computed get dataSource(): Object {
         return this._dataSource.cloneWithRows(this.rows.slice());
     }

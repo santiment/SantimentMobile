@@ -6,21 +6,36 @@
 'use strict';
 
 import React from 'react';
-import ReactNative from 'react-native';
-let {View, StyleSheet, Text, Dimensions, TouchableWithoutFeedback} = ReactNative;
 
-import {Icon} from 'react-native-elements'
-import NavigationBar from 'react-native-navbar'
+import ReactNative, {
+    View,
+    Text,
+    Dimensions,
+    TouchableWithoutFeedback,
+    StyleSheet
+} from 'react-native';
 
-import ScrollableTabView, {DefaultTabBar} from 'react-native-scrollable-tab-view'
+import {
+    Icon
+} from 'react-native-elements';
 
-import {observer} from 'mobx-react/native'
+import NavigationBar from 'react-native-navbar';
 
-import MySentimentScene from './mySentiment'
-import CommunitySentimentScene from './communitySentiment'
-import FeedScene from './feed'
+import ScrollableTabView, {
+    DefaultTabBar
+} from 'react-native-scrollable-tab-view';
 
-import AndroidBackButton from 'android-back-button'
+import {
+    observer
+} from 'mobx-react/native';
+
+import MySentimentScene from './mySentiment';
+
+import CommunitySentimentScene from './communitySentiment';
+
+import FeedScene from './feed';
+
+import AndroidBackButton from 'android-back-button';
 
 @observer
 export default class CurrencyDetails extends React.Component {

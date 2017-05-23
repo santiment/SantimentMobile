@@ -6,20 +6,36 @@
 'use strict';
 
 import React from 'react';
-import ReactNative from 'react-native';
-let {ListView, View, StyleSheet, RefreshControl, Text} = ReactNative;
 
-import {Icon, Button} from 'react-native-elements'
-import NavigationBar from 'react-native-navbar'
+import ReactNative, {
+    View,
+    Text,
+    ListView,
+    RefreshControl,
+    StyleSheet
+} from 'react-native';
 
-import _ from 'lodash'
-import moment from 'moment'
+import {
+    Icon,
+    Button
+} from 'react-native-elements';
 
-import {observer} from 'mobx-react/native'
+import NavigationBar from 'react-native-navbar';
+
+import _ from 'lodash';
+
+import moment from 'moment';
+
+import {observer} from 'mobx-react/native';
 
 
-import {AddCurrencyRoute, CurrencyDetailsRoute, EditCurrenciesRoute} from '../../navigator/routes'
-import Cell from './cell'
+import {
+    AddCurrencyRoute,
+    CurrencyDetailsRoute,
+    EditCurrenciesRoute
+} from '../../navigator/routes';
+
+import Cell from './cell';
 
 
 @observer
@@ -171,7 +187,12 @@ const styles = StyleSheet.create({
         height: 20,
     },
     footer: {
-        height: 20,
+        /**
+         * Height includes offset (20 points)
+         * and height of floating action button
+         * (52 points).
+         */
+        height: 20 + 52,
     },
     separator: {
         height: 20,
