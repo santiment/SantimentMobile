@@ -5,16 +5,28 @@
 
 'use strict';
 
-import _ from 'lodash'
+import _ from 'lodash';
 
-import ReactNative from 'react-native';
-const {ListView, Alert} = ReactNative;
+import ReactNative, {
+    ListView,
+    Alert
+} from 'react-native';
 
-import mobx, {observable, computed, autorun, action, useStrict} from 'mobx'
+import mobx, {
+    observable,
+    computed,
+    autorun,
+    action,
+    useStrict
+} from 'mobx';
 
-import moment from 'moment'
+import moment from 'moment';
 
 export default class FeedUiStore {
+    
+    /**
+     * Domain store.
+     */
     domainStore: any;
 
     constructor(domainStore: any) {
@@ -23,6 +35,10 @@ export default class FeedUiStore {
         this.domainStore = domainStore;
     }
 
+    /**
+     * Updates domain store with information
+     * associated with Feed scene.
+     */
     @action refresh = (): void => {
         /**
          * Obtain all required information
@@ -86,20 +102,65 @@ export default class FeedUiStore {
     @computed get feed(): Object[] {
         const feed = _.get(this.domainStore.feeds, [this.asset], []);
 
+        /**
+         * Server-side API doesn't return ID for messages.
+         * So we will use incremental index as unique ID.
+         */
+        let messageIndex = 0;
+
+        /**
+         * Obtain formatted feed.
+         */
         const formattedFeed = _.map(_.orderBy(feed, ['timestamp'], ['desc']), m => {
-           return {
-               _id: m.timestamp,
-               text: m.message,
-               createdAt: new Date(m.timestamp*1000),
-               user: {
-                   _id: m.username,
-                   name: m.username,
-               }
-           }
+            /**
+             * Obtain unique ID for current message.
+             * Currently it's just a message index,
+             * but later we can just the algorithm
+             * that generates IDs.
+             */
+            const messageUniqueIdentifier = messageIndex;
+
+            /**
+             * Obtain creation date for current message.
+             * Timestamp provided by server is measured in milliseconds,
+             * but we need to use seconds.
+             */
+            const messageCreationDate = new Date(m.timestamp * 1000);
+
+            /**
+             * Increment index for next message.
+             */
+            messageIndex++;
+
+            /**
+             * Return formatted message object.
+             */
+            return {
+                _id: messageIndex,
+                text: m.message,
+                createdAt: messageCreationDate,
+                user: {
+                    _id: m.username,
+                    name: m.username,
+                }
+            }
         });
 
-        console.log("formattedFeed:\n", JSON.stringify(formattedFeed, null, 2));
+        /**
+         * Console output (helpful for checking feed's content).
+         */
+        console.log(
+            "formattedFeed:\n",
+            JSON.stringify(
+                formattedFeed,
+                null,
+                2
+            )
+        );
 
+        /**
+         * Return formatted feed.
+         */
         return formattedFeed
     }
 }
