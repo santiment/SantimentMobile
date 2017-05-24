@@ -101,11 +101,15 @@ export default class MySentimentUiStore {
     }
 
     @computed get chartData(): Object[] {
+        const formattedPeriod = Poloniex.periodToString(
+            this.periods[this.indexOfSelectedPeriod]
+        );
+
         const timeseries = _.get(
             this.domainStore.history,
             [
                 `${this.ticker.symbol}`,
-                `${this.periods[this.indexOfSelectedPeriod]}`
+                `${formattedPeriod}`
             ],
             []
         );

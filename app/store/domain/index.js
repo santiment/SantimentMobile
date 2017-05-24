@@ -6,21 +6,38 @@
 'use strict';
 
 import _ from 'lodash';
+
 import Rx from 'rxjs';
+
 import moment from 'moment';
 
-import ReactNative from 'react-native';
-const {AsyncStorage, Alert} = ReactNative;
+import ReactNative, {
+    AsyncStorage,
+    Alert
+} from 'react-native';
 
-import mobx, {observable, computed, autorun, action, useStrict} from 'mobx';
-import {create, persist} from 'mobx-persist';
+import mobx, {
+    observable,
+    computed,
+    autorun,
+    action,
+    useStrict
+} from 'mobx';
+
+import {
+    create,
+    persist
+} from 'mobx-persist';
 
 import * as Bitfinex from '../../api/bitfinex';
+
 import * as Poloniex from '../../api/poloniex';
 
 import * as Santiment from '../../api/santiment';
 
-import type {SentimentType} from './types';
+import type {
+    SentimentType
+} from './types';
 
 import DeviceInfo from 'react-native-device-info';
 
@@ -103,6 +120,30 @@ class DomainStore {
     };
 
     /**
+     * Updates tickers in local storage.
+     * 
+     * @return Observable.
+     */
+    @action refreshTickers = (): Rx.Observable<any> => {
+        /**
+         * Console output.
+         */
+        console.log("Did begin to refresh tickers");
+
+        /**
+         * Update local storage and return observable.
+         */
+        return Poloniex.getTickers()
+            .do(
+                tickers => {
+                    this.setTickers(tickers);
+                },
+                console.log
+            )
+            .do(() => console.log('Did finish to refresh tickers'), console.log);
+    };
+
+    /**
      * History
      *
      * {
@@ -122,8 +163,54 @@ class DomainStore {
     @observable history: Object = {};
 
     @action setHistory = (history: Object): void => {
-        this.history = history;
-        console.log("History updated:\n", history);
+        /**
+         * Merge existing history with new one.
+         */
+        this.history = _.assign(
+            {},
+            this.history,
+            history
+        );
+
+        /**
+         * Console output.
+         */
+        console.log(
+            "History updated:\n",
+            history
+        );
+    };
+
+    /**
+     * Updates history in local storage.
+     * 
+     * @param {string[]} symbols Array of currency pairs.
+     * @param {number} candlestickPeriod Candlestick period in seconds.
+     * @return Observable.
+     */
+    @action refreshHistory = (symbols: string[], candlestickPeriod: number): Rx.Observable<any> => {
+        /**
+         * Console output.
+         */
+        console.log("Did begin to refresh history");
+
+        /**
+         * Obtain time interval.
+         */
+        const defaultStartDate = moment().subtract(180, 'days').toDate();
+        const defaultEndDate = moment().toDate();
+
+        /**
+         * Update local storage and return observable.
+         */
+        return Poloniex.getCandles(symbols, defaultStartDate, defaultEndDate, candlestickPeriod)
+            .do(
+                history => {
+                    this.setHistory(history);
+                },
+                console.log
+            )
+            .do(() => console.log('Did finish to refresh history'), console.log);
     };
 
     /**
@@ -156,6 +243,31 @@ class DomainStore {
     };
 
     /**
+     * Updates sentiments in local storage.
+     * 
+     * @param {string} userId User ID.
+     * @return Observable.
+     */
+    @action refreshSentiments = (userId: string): Rx.Observable<any> => {
+        /**
+         * Console output.
+         */
+        console.log("Did begin to refresh sentiments");
+
+        /**
+         * Update local storage and return observable.
+         */
+        return Santiment.getSentiments(userId)
+            .do(
+                sentiments => {
+                    this.setSentiment(sentiments);
+                },
+                console.log
+            )
+            .do(() => console.log('Did finish to refresh sentiments'), console.log);
+    };
+
+    /**
      * Aggregate sentiment
      *   {
      *       "BTC_USD": [
@@ -175,6 +287,31 @@ class DomainStore {
     @action setAggregates = (aggregates: Object): void => {
         this.aggregates = aggregates;
         console.log("Aggregates updated:\n", aggregates);
+    };
+
+    /**
+     * Updates feeds in local storage.
+     * 
+     * @param {string[]} symbols Array of currency pairs.
+     * @return Observable.
+     */
+    @action refreshAggregates = (symbols: string[]): Rx.Observable<Object> => {
+        /**
+         * Console output.
+         */
+        console.log("Did begin to refresh aggregates");
+
+        /**
+         * Update local storage and return observable.
+         */
+        return Santiment.getAggregates(symbols)
+            .do(
+                aggregates => {
+                    this.setAggregates(aggregates);
+                },
+                console.log
+            )
+            .do(() => console.log('Did finish to refresh aggregates'), console.log);
     };
 
     /**
@@ -200,26 +337,28 @@ class DomainStore {
     };
 
     /**
-     * Selected candlestick period.
+     * Updates feeds in local storage.
+     * 
+     * @param {string[]} assets Array of currencies, e.g. ["BTC", "ETH"].
+     * @return Observable.
      */
-    @observable selectedCandlestickPeriod: number = Poloniex.candlestickPeriods.oneDay;
-
-    /**
-     * Updates selected candlestick period.
-     */
-    @action setSelectedCandlestickPeriod = (period: number): void => {
-        /**
-         * Update selected candlestick period.
-         */
-        this.selectedCandlestickPeriod = period;
-
+    @action refreshFeeds = (assets: string[]): Rx.Observable<Object> => {
         /**
          * Console output.
          */
-        console.log(
-            "Did select candlestick period:\n",
-            period
-        );
+        console.log("Did begin to refresh feeds");
+
+        /**
+         * Update local storage and return observable.
+         */
+        return Santiment.getFeeds(assets)
+            .do(
+                feeds => {
+                    this.setFeeds(feeds);
+                },
+                console.log
+            )
+            .do(() => console.log('Did finish to refresh feeds'), console.log);
     };
 
     /**
@@ -261,134 +400,26 @@ class DomainStore {
     }
 
     /**
-     * Updates sentiments in local storage.
-     * 
-     * @param {string} userId User ID.
-     * @return Observable.
+     * Selected candlestick period.
      */
-    @action refreshSentiments = (userId: string): Rx.Observable<any> => {
-        /**
-         * Console output.
-         */
-        console.log("Did begin to refresh sentiments");
-
-        /**
-         * Update local storage and return observable.
-         */
-        return Santiment.getSentiments(userId)
-            .do(
-                sentiments => {
-                    this.setSentiment(sentiments);
-                },
-                console.log
-            )
-            .do(() => console.log('Did finish to refresh sentiments'), console.log);
-    };
+    @observable selectedCandlestickPeriod: number = Poloniex.candlestickPeriods.oneDay;
 
     /**
-     * Updates tickers in local storage.
-     * 
-     * @return Observable.
+     * Updates selected candlestick period.
      */
-    @action refreshTickers = (): Rx.Observable<any> => {
+    @action setSelectedCandlestickPeriod = (period: number): void => {
+        /**
+         * Update selected candlestick period.
+         */
+        this.selectedCandlestickPeriod = period;
+
         /**
          * Console output.
          */
-        console.log("Did begin to refresh tickers");
-
-        /**
-         * Update local storage and return observable.
-         */
-        return Poloniex.getTickers()
-            .do(
-                tickers => {
-                    this.setTickers(tickers);
-                },
-                console.log
-            )
-            .do(() => console.log('Did finish to refresh tickers'), console.log);
-    };
-
-    /**
-     * Updates history in local storage.
-     * 
-     * @param {string[]} symbols Array of currency pairs.
-     * @param {number} candlestickPeriod Candlestick period in seconds.
-     * @return Observable.
-     */
-    @action refreshHistory = (symbols: string[], candlestickPeriod: number): Rx.Observable<any> => {
-        /**
-         * Console output.
-         */
-        console.log("Did begin to refresh history");
-
-        /**
-         * Obtain time interval.
-         */
-        const defaultStartDate = moment().subtract(180, 'days').toDate();
-        const defaultEndDate = moment().toDate();
-
-        /**
-         * Update local storage and return observable.
-         */
-        return Poloniex.getCandles(symbols, defaultStartDate, defaultEndDate, candlestickPeriod)
-            .do(
-                history => {
-                    this.setHistory(history);
-                },
-                console.log
-            )
-            .do(() => console.log('Did finish to refresh history'), console.log);
-    };
-
-    /**
-     * Updates feeds in local storage.
-     * 
-     * @param {string[]} symbols Array of currency pairs.
-     * @return Observable.
-     */
-    @action refreshAggregates = (symbols: string[]): Rx.Observable<Object> => {
-        /**
-         * Console output.
-         */
-        console.log("Did begin to refresh aggregates");
-
-        /**
-         * Update local storage and return observable.
-         */
-        return Santiment.getAggregates(symbols)
-            .do(
-                aggregates => {
-                    this.setAggregates(aggregates);
-                },
-                console.log
-            )
-            .do(() => console.log('Did finish to refresh aggregates'), console.log);
-    };
-
-    /**
-     * Updates feeds in local storage.
-     * 
-     * @param {string[]} assets Array of currencies, e.g. ["BTC", "ETH"].
-     * @return Observable.
-     */
-    @action refreshFeeds = (assets: string[]): Rx.Observable<Object> => {
-        /**
-         * Console output.
-         */
-        console.log("Did begin to refresh feeds");
-
-        /**
-         * Update local storage and return observable.
-         */
-        return Santiment.getFeeds(assets)
-            .do(
-                feeds => {
-                    this.setFeeds(feeds);
-                },
-                console.log
-            )
-            .do(() => console.log('Did finish to refresh feeds'), console.log);
+        console.log(
+            "Did select candlestick period:\n",
+            period
+        );
     };
 }
 

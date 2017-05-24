@@ -51,6 +51,8 @@ MySentimentCell.propTypes = {
 const styles = StyleSheet.create({
     container: {
         height: 50,
+        paddingLeft: 20,
+        paddingRight: 20,
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',

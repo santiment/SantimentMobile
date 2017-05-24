@@ -95,17 +95,17 @@ export const getTickers = (): any => {
 
 /**
  * Downloads candles.
- * 
+ *
  * Response with Section = "hist":
  * [
  *     [ MTS, OPEN, CLOSE, HIGH, LOW, VOLUME],
  *     ...
  * ]
- * 
+ *
  * @param {string[]} symbols Array of currency pairs, e.g. ["BTC_STEEM", "BTC_USDT"].
- * @param {Date} from Start date.
+ * @param {Date} startDate Start date.
  *      If not specified, 180 days ago date will be used by default.
- * @param {Date} to End date.
+ * @param {Date} endDate End date.
  *      If not specified, current date will be used by default.
  * @param {number} candlestickPeriod Candlestick period in seconds, e.g. 14400.
  *      Poloniex API allows limited set of periods.
@@ -115,20 +115,12 @@ export const getTickers = (): any => {
  *      If not specified, 1 day period will be used by default.
  * @return Observable.
  */
-export const getCandles = (symbols: string[], startDate: Date, endDate: Date, candlestickPeriod: number): any => {
-    /**
-     * Default values.
-     */
-    const defaultStartDate = moment().subtract(180, 'days').toDate();
-    const defaultEndDate = moment().toDate();
-    const defaultCandlestickPeriod = candlestickPeriods.oneDay;
-
-    /**
-     * Prepare default data for candle requests.
-     */
-    const startDateOrDefault = (startDate && endDate) ? startDate : defaultStartDate;
-    const endDateOrDefault = (startDate && endDate) ? endDate : defaultEndDate;
-    const candlestickPeriodOrDefault = candlestickPeriod ? candlestickPeriod : defaultCandlestickPeriod;
+export const getCandles = (
+    symbols: string[],
+    startDate: Date = moment().subtract(180, 'days').toDate(),
+    endDate: Date = moment().toDate(),
+    candlestickPeriod: number = candlestickPeriods.oneDay
+): any => {
 
     /**
      * Send request for each symbol.
@@ -144,9 +136,9 @@ export const getCandles = (symbols: string[], startDate: Date, endDate: Date, ca
          */
         const request = PoloniexHttpClient.getCandles(
             reversedCurrencyPair,
-            startDateOrDefault,
-            endDateOrDefault,
-            candlestickPeriodOrDefault
+            startDate,
+            endDate,
+            candlestickPeriod
         );
 
         /**
@@ -173,7 +165,7 @@ export const getCandles = (symbols: string[], startDate: Date, endDate: Date, ca
                     obj,
                     [
                         symbol,
-                        candlestickPeriodOrDefault
+                        periodToString(candlestickPeriod)
                     ],
                     _.orderBy(
                         candles,
