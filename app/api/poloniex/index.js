@@ -23,6 +23,7 @@ export const candlestickPeriods = {
     fiveMinutes: 300,
     fifteenMinutes: 900,
     thirtyMinutes: 1800,
+    oneHour: 3600, // not supported by Poloniex API
     twoHours: 7200,
     fourHours: 14400,
     oneDay: 86400
@@ -44,6 +45,8 @@ export const getStringFromCandlestickPeriod = (period: number): string => {
             return '15m';
         case candlestickPeriods.thirtyMinutes:
             return '30m';
+        case candlestickPeriods.oneHour:
+            return '1H';
         case candlestickPeriods.twoHours:
             return '2H';
         case candlestickPeriods.fourHours:
