@@ -105,7 +105,7 @@ export default class MySentimentUiStore {
             this.domainStore.history,
             [
                 `${this.ticker.symbol}`,
-                `${this.periods[this.indexOfSelectedPeriod]}`
+                `${String(this.periods[this.indexOfSelectedPeriod])}`
             ],
             []
         );
