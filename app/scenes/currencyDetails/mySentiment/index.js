@@ -107,8 +107,16 @@ export default class MySentiment extends React.Component {
                             options={store.dropdownOptions}
                             onSelect={
                                 (index, value) => {
+                                    /**
+                                     * Update index of selected period in store.
+                                     */
                                     const indexOfSelectedPeriod = parseInt(index);
                                     store.setIndexOfSelectedPeriod(indexOfSelectedPeriod);
+
+                                    /**
+                                     * Refresh store.
+                                     */
+                                    store.refresh();
                                 }
                             }
                             defaultValue={store.dropdownDefaultValue}
