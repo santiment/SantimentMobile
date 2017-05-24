@@ -200,6 +200,29 @@ class DomainStore {
     };
 
     /**
+     * Selected candlestick period.
+     */
+    @observable selectedCandlestickPeriod: number = Poloniex.candlestickPeriods.oneDay;
+
+    /**
+     * Updates selected candlestick period.
+     */
+    @action setSelectedCandlestickPeriod = (period: number): void => {
+        /**
+         * Update selected candlestick period.
+         */
+        this.selectedCandlestickPeriod = period;
+
+        /**
+         * Console output.
+         */
+        console.log(
+            "Did select candlestick period:\n",
+            period
+        );
+    };
+
+    /**
      * Updates tickers, history, sentiments, aggregates and feeds
      * in local storage.
      * 
