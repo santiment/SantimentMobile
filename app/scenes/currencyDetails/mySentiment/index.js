@@ -6,13 +6,24 @@
 'use strict';
 
 import React from 'react';
-import ReactNative from 'react-native';
-let {Text, View, StyleSheet, ListView, RefreshControl} = ReactNative;
+
+import ReactNative, {
+    View,
+    Text,
+    ListView,
+    RefreshControl,
+    StyleSheet
+} from 'react-native';
 
 import {Icon} from 'react-native-elements';
+
 import NavigationBar from 'react-native-navbar';
 
-import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions';
+import {
+    responsiveHeight,
+    responsiveWidth,
+    responsiveFontSize
+} from 'react-native-responsive-dimensions';
 
 import {observer} from 'mobx-react/native';
 
@@ -25,8 +36,6 @@ import SentimentChart from '../../../components/sentimentCandlestickChart';
 import Cell from './cell';
 
 import * as Poloniex from '../../../api/poloniex';
-
-const options = ["1D"];
 
 @observer
 export default class MySentiment extends React.Component {
@@ -44,7 +53,6 @@ export default class MySentiment extends React.Component {
             )
         };
 
-
         const changeColor = store.ticker.dailyChangePercent > 0
             ? "#24e174"
             : store.ticker.dailyChangePercent < 0
@@ -61,7 +69,7 @@ export default class MySentiment extends React.Component {
             );
         };
 
-       const renderSeparator = (sectionID, rowID, adjacentRowHighlighted) => {
+        const renderSeparator = (sectionID, rowID, adjacentRowHighlighted) => {
             if (_.isEqual(rowID, store.periods.length-1)) return;
             return (
                 <View
@@ -71,11 +79,9 @@ export default class MySentiment extends React.Component {
             );
         };
 
-
         return (
-
-
             <View style={styles.container}>
+                
                 <SentimentChart
                     data={store.chartData}
                     style={styles.chart}
@@ -84,7 +90,6 @@ export default class MySentiment extends React.Component {
                 <View style={styles.currencyRowContainer}>
 
                     <View style={styles.priceColumn}>
-
                         <Text style={[styles.text, styles.priceText]}>
                             {store.ticker.price}
                         </Text>
@@ -92,7 +97,6 @@ export default class MySentiment extends React.Component {
                         <Text style={[styles.text, styles.changeText, {color: changeColor}]}>
                             {`${store.ticker.dailyChangePercent}%`}
                         </Text>
-
                     </View>
 
                     <View style={styles.periodColumn}>
@@ -100,19 +104,33 @@ export default class MySentiment extends React.Component {
                             style={styles.periodButton}
                             dropdownStyle={[styles.periodDropdown, {height: (store.periods.length*(30+2))}]}
                             textStyle={styles.periodText}
-                            options={store.periods.slice()}
-                            onSelect={(idx, value) => store.setSelectedPeriod(parseInt(idx))}
-                            defaultValue={store.periods[store.selectedPeriod]}
-                            defaultIndex={store.selectedPeriod}
+                            options={store.dropdownOptions}
+                            onSelect={
+                                (index, value) => {
+                                    /**
+                                     * Update index of selected period in store.
+                                     */
+                                    const indexOfSelectedPeriod = parseInt(index);
+                                    store.setIndexOfSelectedPeriod(indexOfSelectedPeriod);
+
+                                    /**
+                                     * Refresh store.
+                                     */
+                                    //store.refresh();
+                                }
+                            }
+                            defaultValue={store.dropdownDefaultValue}
+                            defaultIndex={store.dropdownDefaultIndex}
                             animated={false}
                             renderRow={renderDropdownRow}
                             renderSeparator={renderSeparator}
                             showsVerticalScrollIndicator={false}
                         />
                     </View>
+
                 </View>
 
-                <View style={styles.listView}>
+                <View style={styles.listViewContainer}>
                     <ListView
                         renderRow={renderRow}
                         dataSource={store.dataSource}
@@ -138,11 +156,19 @@ MySentiment.propTypes = {
         pop: React.PropTypes.func.isRequired
     }),
     store: React.PropTypes.shape({
-        dataSource: React.PropTypes.any.isRequired,
+        domainStore: React.PropTypes.any.isRequired,
+        periods: React.PropTypes.any.isRequired,
+        indexOfSelectedPeriod: React.PropTypes.number.isRequired,
+        setIndexOfSelectedPeriod: React.PropTypes.func.isRequired,
+        isLoading: React.PropTypes.bool.isRequired,
+        setIsLoading: React.PropTypes.func.isRequired,
         ticker: React.PropTypes.any.isRequired,
-        data: React.PropTypes.arrayOf(
+        sentimentsForCurrentSymbol: React.PropTypes.arrayOf(
+            React.PropTypes.any
+        ).isRequired,
+        chartData: React.PropTypes.arrayOf(
             React.PropTypes.shape({
-                date: React.PropTypes.string.isRequired,
+                date: React.PropTypes.string,
                 candle: React.PropTypes.shape({
                     open: React.PropTypes.number.isRequired,
                     high: React.PropTypes.number.isRequired,
@@ -151,7 +177,17 @@ MySentiment.propTypes = {
                 }),
                 sentiment: React.PropTypes.string,
             })
-        ),
+        ).isRequired,
+        rows: React.PropTypes.arrayOf(
+            React.PropTypes.object
+        ).isRequired,
+        dataSource: React.PropTypes.any.isRequired,
+        refresh: React.PropTypes.func.isRequired,
+        dropdownOptions: React.PropTypes.arrayOf(
+            React.PropTypes.string
+        ).isRequired,
+        dropdownDefaultValue: React.PropTypes.string.isRequired,
+        dropdownDefaultIndex: React.PropTypes.number.isRequired,
     }),
 };
 
@@ -231,7 +267,7 @@ const styles = StyleSheet.create({
     spacer: {
         flex: 1,
     },
-    listView: {
+    listViewContainer: {
         backgroundColor: 'white',
         paddingLeft: 20,
         paddingRight: 20,

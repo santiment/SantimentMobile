@@ -5,23 +5,32 @@
 
 'use strict';
 
-import _ from 'lodash';
-
-import ReactNative from 'react-native';
-const {
+import ReactNative, {
     ListView,
     Alert
-} = ReactNative;
+} from 'react-native';
+
+import _ from 'lodash';
 
 import Rx from 'rxjs';
 
-import mobx, {observable, computed, autorun, action, useStrict} from 'mobx';
+import mobx, {
+    observable,
+    computed,
+    autorun,
+    action,
+    useStrict
+} from 'mobx';
 
 import moment from 'moment';
 
 import * as Poloniex from '../../../api/poloniex';
 
 export default class MySentimentUiStore {
+    
+    /**
+     * Domain store.
+     */
     domainStore: any;
 
     constructor(domainStore: any) {
@@ -30,17 +39,35 @@ export default class MySentimentUiStore {
         this.domainStore = domainStore;
     }
 
-    @observable periods: string[] = ['1H', '4H', '1D'];
+    /**
+     * Periods for displaying on the list.
+     */
+    @observable periods: Number[] = [
+        Poloniex.candlestickPeriods.twoHours,
+        Poloniex.candlestickPeriods.fourHours,
+        Poloniex.candlestickPeriods.oneDay
+    ];
 
-    @observable selectedPeriod: number = 2;
+    /**
+     * Index of selected candlestick period.
+     */
+    @observable indexOfSelectedPeriod: number = 2;
 
-    @action setSelectedPeriod = (index: number): void => {
-        console.log(typeof index);
-        this.selectedPeriod = index;
+    /**
+     * Updates index of selected candlestick period.
+     */
+    @action setIndexOfSelectedPeriod = (index: number): void => {
+        this.indexOfSelectedPeriod = index;
     };
 
+    /**
+     * Shows whether data is loading now.
+     */
     @observable isLoading: boolean = false;
 
+    /**
+     * Updates `isLoading` flag.
+     */
     @action setIsLoading = (value: boolean): void => {
         this.isLoading = value;
     };
@@ -76,7 +103,10 @@ export default class MySentimentUiStore {
     @computed get chartData(): Object[] {
         const timeseries = _.get(
             this.domainStore.history,
-            [`${this.ticker.symbol}`, `${this.periods[this.selectedPeriod]}`],
+            [
+                `${this.ticker.symbol}`,
+                `${this.periods[this.indexOfSelectedPeriod]}`
+            ],
             []
         );
 
@@ -107,6 +137,7 @@ export default class MySentimentUiStore {
 
         return candles;
     }
+
     @computed get rows(): Object[] {
         const sortByDate = (arr) => _.orderBy(arr, ['date'], ['desc']);
         const formatDates = (arr) => _.map(arr, s => { return {...s, date: moment.unix(s.timestamp).fromNow()}});
@@ -119,11 +150,14 @@ export default class MySentimentUiStore {
     }
 
     _dataSource = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+
     @computed get dataSource(): Object {
         return this._dataSource.cloneWithRows(this.rows.slice());
     }
 
     @action refresh = (): void => {
+        const selectedCandlestickPeriod = this.periods[this.indexOfSelectedPeriod];
+
         Rx.Observable
             .forkJoin(
                 this.domainStore.refreshSentiments(
@@ -131,8 +165,8 @@ export default class MySentimentUiStore {
                 ),
                 this.domainStore.refreshHistory(
                     this.domainStore.symbols,
-                    Poloniex.candlestickPeriods.oneDay
-                ),
+                    selectedCandlestickPeriod
+                )
             )
             .subscribe(
                 () => { },
@@ -149,4 +183,26 @@ export default class MySentimentUiStore {
                 )
             );
     };
+
+    @computed get dropdownOptions(): String[] {
+        return this.periods.map(Poloniex.periodToString);
+    }
+
+    @computed get dropdownDefaultValue(): String {
+        /**
+         * Obtain selected period by index.
+         */
+        const selectedPeriod = this.periods[this.indexOfSelectedPeriod];
+        
+        /**
+         * Return string containing formatted period.
+         */
+        return Poloniex.periodToString(
+            selectedPeriod
+        );
+    }
+
+    @computed get dropdownDefaultIndex(): Number {
+        return this.indexOfSelectedPeriod;
+    }
 }
