@@ -157,10 +157,8 @@ MySentiment.propTypes = {
     }),
     store: React.PropTypes.shape({
         domainStore: React.PropTypes.any.isRequired,
-        periods: React.PropTypes.arrayOf(
-            React.PropTypes.number
-        ),
-        indexOfSelectedPeriod: React.PropTypes.number,
+        periods: React.PropTypes.any.isRequired,
+        indexOfSelectedPeriod: React.PropTypes.number.isRequired,
         setIndexOfSelectedPeriod: React.PropTypes.func.isRequired,
         isLoading: React.PropTypes.bool.isRequired,
         setIsLoading: React.PropTypes.func.isRequired,
@@ -170,7 +168,7 @@ MySentiment.propTypes = {
         ).isRequired,
         chartData: React.PropTypes.arrayOf(
             React.PropTypes.shape({
-                date: React.PropTypes.string.isRequired,
+                date: React.PropTypes.string,
                 candle: React.PropTypes.shape({
                     open: React.PropTypes.number.isRequired,
                     high: React.PropTypes.number.isRequired,
