@@ -7,22 +7,24 @@
 
 import React from 'react';
 import ReactNative from 'react-native';
-let {Text, View, StyleSheet, ListView} = ReactNative;
+let {Text, View, StyleSheet, ListView, RefreshControl} = ReactNative;
 
-import {Icon} from 'react-native-elements'
-import NavigationBar from 'react-native-navbar'
+import {Icon} from 'react-native-elements';
+import NavigationBar from 'react-native-navbar';
 
 import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions';
 
-import {observer} from 'mobx-react/native'
+import {observer} from 'mobx-react/native';
 
 import Dropdown from 'react-native-modal-dropdown';
 
-import _ from 'lodash'
+import _ from 'lodash';
 
-import SentimentChart from '../../../components/sentimentCandlestickChart'
+import SentimentChart from '../../../components/sentimentCandlestickChart';
 
-import Cell from './cell'
+import Cell from './cell';
+
+import * as Poloniex from '../../../api/poloniex';
 
 const options = ["1D"];
 
@@ -116,6 +118,12 @@ export default class MySentiment extends React.Component {
                         dataSource={store.dataSource}
                         enableEmptySections={true}
                         removeClippedSubviews={false}
+                        refreshControl={
+                            <RefreshControl
+                                refreshing={store.isLoading}
+                                onRefresh={store.refresh}
+                            />
+                        }
                     />
                 </View>
 

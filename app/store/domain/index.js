@@ -5,22 +5,22 @@
 
 'use strict';
 
-import _ from 'lodash'
-import Rx from 'rxjs'
-import moment from 'moment'
+import _ from 'lodash';
+import Rx from 'rxjs';
+import moment from 'moment';
 
 import ReactNative from 'react-native';
 const {AsyncStorage, Alert} = ReactNative;
 
-import mobx, {observable, computed, autorun, action, useStrict} from 'mobx'
-import {create, persist} from 'mobx-persist'
+import mobx, {observable, computed, autorun, action, useStrict} from 'mobx';
+import {create, persist} from 'mobx-persist';
 
-import * as Bitfinex from '../../api/bitfinex'
-import * as Poloniex from '../../api/poloniex'
+import * as Bitfinex from '../../api/bitfinex';
+import * as Poloniex from '../../api/poloniex';
 
-import * as Santiment from '../../api/santiment'
+import * as Santiment from '../../api/santiment';
 
-import type {SentimentType} from './types'
+import type {SentimentType} from './types';
 
 import DeviceInfo from 'react-native-device-info';
 
@@ -64,6 +64,17 @@ class DomainStore {
         this.setSymbols(_.without(this.symbols, symbol));
     };
 
+    @action getAssets = (): string[] => {
+        return this.symbols.map(pairOfCurrencies => {
+            /**
+             * Extract asset from pair of currencies
+             * and return it.
+             */
+            const asset = _.split(pairOfCurrencies, "_")[0];
+            return asset;
+        });
+    };
+
     /**
      * Selected symbol
      *
@@ -91,24 +102,6 @@ class DomainStore {
         console.log("Tickers updated:\n", tickers);
     };
 
-    @action fetchTickers = (): Rx.Observable<Object[]> => {
-        // TODO: Handle empty or malformed data
-
-        const reversePair = (s) => _.join(_.reverse(_.split(s, "_")), "_");
-
-        return Poloniex.getTickers()
-            .map(t => {
-                return _.map(_.keys(t), k => {
-                    return {
-                        symbol: reversePair(k),
-                        price: parseFloat(_.get(t, [k, "last"], "0")),
-                        dailyChangePercent: parseFloat(_.get(t, [k, "percentChange"], "0")) * 100,
-                        volume: parseFloat(_.get(t, [k, "baseVolume"], "0")),
-                    }
-                });
-            })
-    };
-
     /**
      * History
      *
@@ -133,62 +126,15 @@ class DomainStore {
         console.log("History updated:\n", history);
     };
 
-    @action fetchHistory = (symbol: string, timeframe: number): Rx.Observable<Object> => {
-        const reversePair = (s) => _.join(_.reverse(_.split(s, "_")), "_");
-
-        return Poloniex.getCandles(reversePair(symbol), moment().subtract(180, 'days').toDate(), moment().toDate(), timeframe)
-            .map(items => {
-                const candles = items.map(i => {
-                    return {
-                        timestamp: i.date,
-                        ..._.pick(i, ['open', 'close', 'high', 'low'])
-                    }
-                });
-
-                let obj = {};
-                _.set(obj, [symbol, period], _.orderBy(candles, ['timestamp'], ['asc']));
-
-                return obj;
-            });
-    };
-
-    @action fetchHistory = (): Rx.Observable<Object> => {
-        const period = "1D";
-
-        const observables$ = this.symbols.map((symbol) => {
-            const reversePair = (s) => _.join(_.reverse(_.split(s, "_")), "_");
-
-            return Poloniex.getCandles(reversePair(symbol), moment().subtract(180, 'days').toDate(), moment().toDate(), 86400)
-                .map(items => {
-                    const candles = items.map(i => {
-                        return {
-                            timestamp: i.date,
-                            ..._.pick(i, ['open', 'close', 'high', 'low'])
-                        }
-                    });
-
-                    let obj = {};
-                    _.set(obj, [symbol, period], _.orderBy(candles, ['timestamp'], ['asc']));
-
-                    return obj;
-                });
-        });
-
-        // $FlowFixMe
-        return Rx.Observable.forkJoin(observables$)
-            .map(arr => _.assign(...arr))
-    };
-
     /**
      * Sentiment
      *
      * [{
      *     user: "id",
      *     data: [
-     *         {"id": "aaa", "symbol": "BTC_USD", "sentiment": "bullish", "price", 1041, "timestamp": "1318874398"},
+     *         {"id": "aaa", "symbol": "BTC_USD", "sentiment": "bullish", "price": 1041, "timestamp": "1318874398"},
      *     ]
      * }]
-     *
      */
 
     @persist('list')
@@ -207,10 +153,6 @@ class DomainStore {
 
         return Santiment.postSentiment(userSentiment)
             .do(() => console.log("POST /sentiment succeeded"));
-    };
-
-    @action fetchSentiment = (): Rx.Observable<SentimentType[]> => {
-        return Santiment.getSentiment(this.user.id);
     };
 
     /**
@@ -235,23 +177,6 @@ class DomainStore {
         console.log("Aggregates updated:\n", aggregates);
     };
 
-    @action fetchAggregates = (): Rx.Observable<Object> => {
-        const observables$ = this.symbols.map((symbol) => {
-
-            return Santiment.getAggregate(symbol)
-                .map(items => {
-                    let obj = {};
-                    _.set(obj, [symbol], items);
-
-                    return obj;
-                })
-        });
-
-        // $FlowFixMe
-        return Rx.Observable.forkJoin(observables$)
-            .map(arr => _.assign(...arr))
-    };
-
     /**
      * Feeds
      *   {
@@ -274,41 +199,53 @@ class DomainStore {
         console.log("Feeds updated:\n", feeds);
     };
 
-    @action fetchFeeds = (): Rx.Observable<Object> => {
-        const observables$ = this.symbols.map((symbol) => {
+    /**
+     * Selected candlestick period.
+     */
+    @observable selectedCandlestickPeriod: number = Poloniex.candlestickPeriods.oneDay;
 
-            const asset = _.split(symbol, "_")[0];
+    /**
+     * Updates selected candlestick period.
+     */
+    @action setSelectedCandlestickPeriod = (period: number): void => {
+        /**
+         * Update selected candlestick period.
+         */
+        this.selectedCandlestickPeriod = period;
 
-            return Santiment.getFeed(asset)
-                .map(items => {
-                    let obj = {};
-                    _.set(obj, [asset], items);
-
-                    return obj;
-                })
-        });
-
-        // $FlowFixMe
-        return Rx.Observable.forkJoin(observables$)
-            .map(arr => _.assign(...arr))
+        /**
+         * Console output.
+         */
+        console.log(
+            "Did select candlestick period:\n",
+            period
+        );
     };
 
     /**
-     * Refresh
+     * Updates tickers, history, sentiments, aggregates and feeds
+     * in local storage.
+     * 
+     * @return Observable.
      */
-
     @action refresh = (): Rx.Observable<any> => {
+        /**
+         * Console output.
+         */
         console.log("domainStore.refresh() called");
-        console.log("user =", JSON.stringify(domainStore.user, null, 2));
-        console.log("symbols =", JSON.stringify(domainStore.symbols.slice(), null, 2));
+        console.log("user =", JSON.stringify(this.user, null, 2));
+        console.log("symbols =", JSON.stringify(this.symbols.slice(), null, 2));
 
+        /**
+         * Update local storage and return observable.
+         */
         return Rx.Observable
             .forkJoin(
-                this.fetchTickers(),
-                this.fetchHistory(),
-                this.fetchSentiment(),
-                this.fetchAggregates(),
-                this.fetchFeeds(),
+                Poloniex.getTickers(),
+                Poloniex.getCandles(this.symbols),
+                Santiment.getSentiments(this.user.id),
+                Santiment.getAggregates(this.symbols),
+                Santiment.getFeeds(this.getAssets()),
             )
             .do(
                 ([tickers, history, sentiment, aggregates, feeds]) => {
@@ -322,6 +259,137 @@ class DomainStore {
             )
             .do(() => console.log('domainStore refreshed'), console.log)
     }
+
+    /**
+     * Updates sentiments in local storage.
+     * 
+     * @param {string} userId User ID.
+     * @return Observable.
+     */
+    @action refreshSentiments = (userId: string): Rx.Observable<any> => {
+        /**
+         * Console output.
+         */
+        console.log("Did begin to refresh sentiments");
+
+        /**
+         * Update local storage and return observable.
+         */
+        return Santiment.getSentiments(userId)
+            .do(
+                sentiments => {
+                    this.setSentiment(sentiments);
+                },
+                console.log
+            )
+            .do(() => console.log('Did finish to refresh sentiments'), console.log);
+    };
+
+    /**
+     * Updates tickers in local storage.
+     * 
+     * @return Observable.
+     */
+    @action refreshTickers = (): Rx.Observable<any> => {
+        /**
+         * Console output.
+         */
+        console.log("Did begin to refresh tickers");
+
+        /**
+         * Update local storage and return observable.
+         */
+        return Poloniex.getTickers()
+            .do(
+                tickers => {
+                    this.setTickers(tickers);
+                },
+                console.log
+            )
+            .do(() => console.log('Did finish to refresh tickers'), console.log);
+    };
+
+    /**
+     * Updates history in local storage.
+     * 
+     * @param {string[]} symbols Array of currency pairs.
+     * @param {number} candlestickPeriod Candlestick period in seconds.
+     * @return Observable.
+     */
+    @action refreshHistory = (symbols: string[], candlestickPeriod: number): Rx.Observable<any> => {
+        /**
+         * Console output.
+         */
+        console.log("Did begin to refresh history");
+
+        /**
+         * Default values.
+         */
+        const defaultStartDate = moment().subtract(180, 'days').toDate();
+        const defaultEndDate = moment().toDate();
+
+        /**
+         * Update local storage and return observable.
+         */
+        return Poloniex.getCandles(symbols, defaultStartDate, defaultEndDate, candlestickPeriod)
+            .do(
+                history => {
+                    this.setHistory(history);
+                },
+                console.log
+            )
+            .do(() => console.log('Did finish to refresh history'), console.log);
+    };
+
+    /**
+     * Updates feeds in local storage.
+     * 
+     * @param {string[]} symbols Array of currency pairs.
+     * @return Observable.
+     */
+    @action refreshAggregates = (symbols: string[]): Rx.Observable<Object> => {
+        /**
+         * Console output.
+         */
+        console.log("Did begin to refresh aggregates");
+
+        /**
+         * Update local storage and return observable.
+         */
+        return Santiment.getAggregates(symbols)
+            .do(
+                aggregates => {
+                    this.setAggregates(aggregates);
+                },
+                console.log
+            )
+            .do(() => console.log('Did finish to refresh aggregates'), console.log);
+    };
+
+    /**
+     * Updates feeds in local storage.
+     * 
+     * @param {string[]} assets Array of currencies, e.g. ["BTC", "ETH"].
+     * @return Observable.
+     */
+    @action refreshFeeds = (assets: string[]): Rx.Observable<Object> => {
+        /**
+         * Console output.
+         */
+        console.log("Did begin to refresh feeds");
+
+        /**
+         * Update local storage and return observable.
+         */
+        return Santiment.getFeeds(assets)
+            .do(
+                feeds => {
+                    this.setFeeds(feeds);
+                },
+                console.log
+            )
+            .do(() => console.log('Did finish to refresh feeds'), console.log);
+    };
 }
 
 const hydrate = create({storage: AsyncStorage});

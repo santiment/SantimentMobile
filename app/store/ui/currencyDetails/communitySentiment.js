@@ -41,4 +41,36 @@ export default class CommunitySentimentUiStore {
 
         }
     }
+
+    @observable isLoading: boolean = false;
+
+    @action setLoading = (value: boolean): void => {
+        this.isLoading = value;
+    };
+
+    @action refresh = (): void => {
+        this.setLoading(true);
+
+        this.domainStore.refreshAggregates(this.domainStore.symbols)
+            .do(
+                () => {
+                    this.setLoading(false);
+                }
+            )
+            .subscribe(
+                () => {
+                },
+                error => Alert.alert(
+                    'Refresh Error',
+                    error.toString(),
+                    [
+                        {
+                            text: 'OK',
+                            onPress: () => {
+                            }
+                        }
+                    ]
+                )
+            );
+    };
 }

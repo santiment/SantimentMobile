@@ -5,13 +5,17 @@
 
 'use strict';
 
-import _ from 'lodash'
-import Rx from 'rxjs'
-import axios from 'axios'
-import moment from 'moment'
+import _ from 'lodash';
+import Rx from 'rxjs';
+import axios from 'axios';
+import moment from 'moment';
+import * as SantimentHttpClient from './httpClient.js';
 
-const apiUrl = "https://sa4h4y6jgb.execute-api.eu-central-1.amazonaws.com/dev";
-
+/**
+ * Handles error.
+ * 
+ * @param {*} error Error to process.
+ */
 const processAndRethrow = error => {
     const unknownError = {
         "error": "UnknownError",
@@ -22,17 +26,38 @@ const processAndRethrow = error => {
         "status": "418"
     };
 
-    throw (error.response ? _.assign(error.response.data, {status: error.response.status}) : unknownError)
+    throw (
+        error.response
+            ? _.assign(error.response.data, {status: error.response.status})
+            : unknownError
+    );
 };
 
-export const getSentiment = (userId: string): any => {
-    let url = apiUrl + `/sentiment?userId=${userId}`;
+/**
+ * Downloads sentiment by user ID.
+ * 
+ * @param {String} userId User ID.
+ * @return Observable.
+ */
+export const getSentiments = (userId: string): any => {
+    /**
+     * Start request.
+     */
+    const request = SantimentHttpClient.getSentiments(
+        userId
+    );
 
-    const promise = axios.get(url)
-        .then(r => r.data)
+    /**
+     * Handle response.
+     */
+    const response = request
+        .then(response => response.data)
         .catch(processAndRethrow);
-
-    return Rx.Observable.fromPromise(promise)
+    
+    /**
+     * Return observable.
+     */
+    return Rx.Observable.fromPromise(response)
         // TODO: Should be async but causes bug in conjunction with Observable.forkJoin.
         // TODO: Sometimes it doesn't fire and forkJoin never finishes
         // .observeOn(Rx.Scheduler.async)
@@ -41,50 +66,148 @@ export const getSentiment = (userId: string): any => {
                 sentiments,
                 s => _.assign({}, _.omit(s, 'date'), {timestamp: moment(s.date).unix()})
             )
-        )
+        );
 };
 
+/**
+ * Creates new sentiment on server side.
+ * 
+ * @param {Object} sentiment Sentiment.
+ * @return Observable.
+ */
 export const postSentiment = (sentiment: Object): any => {
-    let url = apiUrl + `/sentiment`;
-
-    const newSentiment = _.assign(
-        {},
+    /**
+     * Prepare sentiment in format required by server API.
+     */
+    const formattedSentiment = _.assign(
+        {
+        },
         _.omit(sentiment, 'timestamp'),
-        {date: moment.unix(sentiment.timestamp).toISOString()}
+        {
+            date: moment.unix(sentiment.timestamp).toISOString()
+        }
     );
 
     console.log("sentiment:\n", JSON.stringify(sentiment, null, 2));
-    console.log("newSentiment:\n", JSON.stringify(newSentiment, null, 2));
+    console.log("server side sentiment:\n", JSON.stringify(formattedSentiment, null, 2));
 
+    /**
+     * Start request.
+     */
+    const request = SantimentHttpClient.postSentiment(
+        formattedSentiment
+    );
 
-
-    const promise = axios.post(url, newSentiment)
-        .then(r => r.data)
+    /**
+     * Handle response.
+     */
+    const response = request
+        .then(response => response.data)
         .catch(processAndRethrow);
-
-    return Rx.Observable.fromPromise(promise)
+    
+    /**
+     * Return observable.
+     */
+    return Rx.Observable.fromPromise(response)
         .do(console.log);
 };
 
-export const getAggregate = (asset: string): any => {
-    const from = moment().format('YYYY-MM-DD');
-    const to = moment().add(1, 'days').format('YYYY-MM-DD');
+/**
+ * Downloads aggregates for specified currency pairs and date interval.
+ * 
+ * @param {string[]} symbols Array of currency pairs, e.g. ["BTC_STEEM", "BTC_USDT"].
+ *      Should contain at least one currency pair.
+ * @param {Date} startDate Aggregate's start date.
+ * @param {Date} endDate Aggregate's end date.
+ * @return Observable.
+ */
+export const getAggregates = (symbols: string[], startDate: Date, endDate: Date): any => {
+    /**
+     * Prepare data for aggregate requests.
+     */
+    const startDateOrDefault = startDate ? startDate : new Date();
+    const endDateOrDefault = endDate ? endDate : moment().add(1, 'days').toDate();
 
-    let url = apiUrl + `/sentiment/aggregate?asset=${asset}&from=${from}&to=${to}`;
+    /**
+     * Send request for each aggregate.
+     */
+    const observables = symbols.map((symbol) => {
+        /**
+         * Start request.
+         */
+        const request = SantimentHttpClient.getAggregate(
+            symbol,
+            startDateOrDefault,
+            endDateOrDefault
+        );
 
-    const promise = axios.get(url)
-        .then(r => r.data)
-        .catch(processAndRethrow);
+        /**
+         * Handle response.
+         */
+        const response = request
+            .then(response => response.data)
+            .catch(processAndRethrow);
+        
+        /**
+         * Obtain observable.
+         */
+        return Rx.Observable.fromPromise(response)
+            .map(items => {
+                let obj = {};
+                _.set(obj, [symbol], items);
 
-    return Rx.Observable.fromPromise(promise);
+                return obj;
+            });
+    });
+
+    /**
+     * Return observable.
+     */
+    return Rx.Observable.forkJoin(observables)
+        .map(arr => _.assign(...arr));
 };
 
-export const getFeed = (asset: string): any => {
-    let url = apiUrl + `/feed?keyword=${asset}`;
+/**
+ * Downloads feeds.
+ * 
+ * @param {string[]} asset Array of currencies, e.g. ["BTC", "ETH"].
+ *      Should contain at least one currency.
+ * @return Observable.
+ */
+export const getFeeds = (assets: string[]): any => {
+    /**
+     * Send request for each asset.
+     */
+    const observables = assets.map((asset) => {
+        /**
+         * Start request.
+         */
+        const request = SantimentHttpClient.getFeed(
+            asset
+        );
 
-    const promise = axios.get(url)
-        .then(r => r.data)
-        .catch(processAndRethrow);
+        /**
+         * Handle response.
+         */
+        const response = request
+            .then(response => response.data)
+            .catch(processAndRethrow);
+        
+        /**
+         * Obtain observable.
+         */
+        return Rx.Observable.fromPromise(response)
+            .map(items => {
+                let obj = {};
+                _.set(obj, [asset], items);
 
-    return Rx.Observable.fromPromise(promise);
+                return obj;
+            });
+    });
+
+    /**
+     * Return observable.
+     */
+    return Rx.Observable.forkJoin(observables)
+        .map(arr => _.assign(...arr));
 };
