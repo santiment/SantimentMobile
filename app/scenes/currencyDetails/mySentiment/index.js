@@ -69,7 +69,7 @@ export default class MySentiment extends React.Component {
             );
         };
 
-       const renderSeparator = (sectionID, rowID, adjacentRowHighlighted) => {
+        const renderSeparator = (sectionID, rowID, adjacentRowHighlighted) => {
             if (_.isEqual(rowID, store.periods.length-1)) return;
             return (
                 <View
@@ -151,8 +151,8 @@ MySentiment.propTypes = {
         domainStore: React.PropTypes.any.isRequired,
         periods: React.PropTypes.arrayOf(
             React.PropTypes.number
-        ).isRequired,
-        indexOfSelectedPeriod: React.PropTypes.number.isRequired,
+        ),
+        indexOfSelectedPeriod: React.PropTypes.number,
         setIndexOfSelectedPeriod: React.PropTypes.func.isRequired,
         isLoading: React.PropTypes.bool.isRequired,
         setIsLoading: React.PropTypes.func.isRequired,
@@ -292,6 +292,6 @@ const styles = StyleSheet.create({
         color: 'white'
     },
     chart: {
-        height: 20,//responsiveHeight(40),
+        height: responsiveHeight(40),
     },
 });
