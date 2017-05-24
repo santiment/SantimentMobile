@@ -166,7 +166,8 @@ export default class MySentimentUiStore {
                 this.domainStore.refreshHistory(
                     this.domainStore.symbols,
                     selectedCandlestickPeriod
-                )
+                ),
+                this.domainStore.refreshTickers()
             )
             .subscribe(
                 () => { },
