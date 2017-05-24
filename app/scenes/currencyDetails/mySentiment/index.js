@@ -59,18 +59,6 @@ export default class MySentiment extends React.Component {
                 ? "#fd7a57"
                 : "#b1b1b2";
 
-        const dropdownOptions = store.periods
-            .map(period => {
-                return Poloniex.periodToString(period);
-            })
-            .slice();
-        
-        const dropdownDefaultValue = Poloniex.periodToString(
-            store.periods[store.indexOfSelectedPeriod]
-        );
-
-        const dropdownDefaultIndex = store.indexOfSelectedPeriod;
-
         const renderDropdownRow = (rowData, rowID, highlighted) => {
             return (
                 <View style={styles.periodButton}>
@@ -116,15 +104,15 @@ export default class MySentiment extends React.Component {
                             style={styles.periodButton}
                             dropdownStyle={[styles.periodDropdown, {height: (store.periods.length*(30+2))}]}
                             textStyle={styles.periodText}
-                            options={dropdownOptions}
+                            options={store.dropdownOptions}
                             onSelect={
                                 (index, value) => {
                                     const indexOfSelectedPeriod = parseInt(index);
                                     store.setIndexOfSelectedPeriod(indexOfSelectedPeriod);
                                 }
                             }
-                            defaultValue={dropdownDefaultValue}
-                            defaultIndex={dropdownDefaultIndex}
+                            defaultValue={store.dropdownDefaultValue}
+                            defaultIndex={store.dropdownDefaultIndex}
                             animated={false}
                             renderRow={renderDropdownRow}
                             renderSeparator={renderSeparator}
@@ -160,9 +148,19 @@ MySentiment.propTypes = {
         pop: React.PropTypes.func.isRequired
     }),
     store: React.PropTypes.shape({
-        dataSource: React.PropTypes.any.isRequired,
+        domainStore: React.PropTypes.any.isRequired,
+        periods: React.PropTypes.arrayOf(
+            React.PropTypes.number
+        ).isRequired,
+        indexOfSelectedPeriod: React.PropTypes.number.isRequired,
+        setIndexOfSelectedPeriod: React.PropTypes.func.isRequired,
+        isLoading: React.PropTypes.bool.isRequired,
+        setIsLoading: React.PropTypes.func.isRequired,
         ticker: React.PropTypes.any.isRequired,
-        data: React.PropTypes.arrayOf(
+        sentimentsForCurrentSymbol: React.PropTypes.arrayOf(
+            React.PropTypes.any
+        ).isRequired,
+        chartData: React.PropTypes.arrayOf(
             React.PropTypes.shape({
                 date: React.PropTypes.string.isRequired,
                 candle: React.PropTypes.shape({
@@ -173,7 +171,17 @@ MySentiment.propTypes = {
                 }),
                 sentiment: React.PropTypes.string,
             })
-        ),
+        ).isRequired,
+        rows: React.PropTypes.arrayOf(
+            React.PropTypes.object
+        ).isRequired,
+        dataSource: React.PropTypes.any.isRequired,
+        refresh: React.PropTypes.func.isRequired,
+        dropdownOptions: React.PropTypes.arrayOf(
+            React.PropTypes.string
+        ).isRequired,
+        dropdownDefaultValue: React.PropTypes.string.isRequired,
+        dropdownDefaultIndex: React.PropTypes.number.isRequired,
     }),
 };
 

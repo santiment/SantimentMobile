@@ -42,7 +42,7 @@ export default class MySentimentUiStore {
     /**
      * Periods for displaying on the list.
      */
-    @observable periods: number[] = [
+    @observable periods: Number[] = [
         Poloniex.candlestickPeriods.oneHour,
         Poloniex.candlestickPeriods.fourHours,
         Poloniex.candlestickPeriods.oneDay
@@ -183,4 +183,26 @@ export default class MySentimentUiStore {
                 )
             );
     };
+
+    @computed get dropdownOptions(): String[] {
+        return this.periods.map(Poloniex.periodToString);
+    }
+
+    @computed get dropdownDefaultValue(): String {
+        /**
+         * Obtain selected period by index.
+         */
+        const selectedPeriod = this.periods[this.indexOfSelectedPeriod];
+        
+        /**
+         * Return string containing formatted period.
+         */
+        return Poloniex.periodToString(
+            selectedPeriod
+        );
+    }
+
+    @computed get dropdownDefaultIndex(): Number {
+        return this.indexOfSelectedPeriod;
+    }
 }
