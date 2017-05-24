@@ -173,7 +173,7 @@ export const getCandles = (symbols: string[], startDate: Date, endDate: Date, ca
                     obj,
                     [
                         symbol,
-                        periodToString(candlestickPeriodOrDefault)
+                        candlestickPeriodOrDefault
                     ],
                     _.orderBy(
                         candles,
