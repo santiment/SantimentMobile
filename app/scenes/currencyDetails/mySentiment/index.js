@@ -269,8 +269,6 @@ const styles = StyleSheet.create({
     },
     listViewContainer: {
         backgroundColor: 'white',
-        paddingLeft: 20,
-        paddingRight: 20,
         flex: 1,
     },
     tabsContainerStyle: {
