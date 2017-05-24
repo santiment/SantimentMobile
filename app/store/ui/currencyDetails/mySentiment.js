@@ -22,6 +22,10 @@ import moment from 'moment';
 import * as Poloniex from '../../../api/poloniex';
 
 export default class MySentimentUiStore {
+    
+    /**
+     * Domain store.
+     */
     domainStore: any;
 
     constructor(domainStore: any) {
@@ -30,17 +34,35 @@ export default class MySentimentUiStore {
         this.domainStore = domainStore;
     }
 
-    @observable periods: string[] = ['1H', '4H', '1D'];
+    /**
+     * Periods for displaying on the list.
+     */
+    @observable availablePeriods: [number] = [
+        Poloniex.candlestickPeriods.oneHour,
+        Poloniex.candlestickPeriods.fourHours,
+        Poloniex.candlestickPeriods.oneDay
+    ];
 
-    @observable selectedPeriod: number = 2;
+    /**
+     * Index of selected candlestick period.
+     */
+    @observable indexOfSelectedPeriod: number = 2;
 
-    @action setSelectedPeriod = (index: number): void => {
-        console.log(typeof index);
-        this.selectedPeriod = index;
+    /**
+     * Updates index of selected candlestick period.
+     */
+    @action setIndexOfSelectedPeriod = (index: number): void => {
+        this.indexOfSelectedPeriod = index;
     };
 
+    /**
+     * Shows whether data is loading now.
+     */
     @observable isLoading: boolean = false;
 
+    /**
+     * Updates `isLoading` flag.
+     */
     @action setIsLoading = (value: boolean): void => {
         this.isLoading = value;
     };
@@ -76,7 +98,10 @@ export default class MySentimentUiStore {
     @computed get chartData(): Object[] {
         const timeseries = _.get(
             this.domainStore.history,
-            [`${this.ticker.symbol}`, `${this.periods[this.selectedPeriod]}`],
+            [
+                `${this.ticker.symbol}`,
+                `${this.availablePeriods[this.indexOfSelectedPeriod]}`
+            ],
             []
         );
 
@@ -124,6 +149,8 @@ export default class MySentimentUiStore {
     }
 
     @action refresh = (): void => {
+        const selectedCandlestickPeriod = this.availablePeriods[this.indexOfSelectedPeriod];
+
         Rx.Observable
             .forkJoin(
                 this.domainStore.refreshSentiments(
@@ -131,8 +158,8 @@ export default class MySentimentUiStore {
                 ),
                 this.domainStore.refreshHistory(
                     this.domainStore.symbols,
-                    Poloniex.candlestickPeriods.oneDay
-                ),
+                    selectedCandlestickPeriod
+                )
             )
             .subscribe(
                 () => { },

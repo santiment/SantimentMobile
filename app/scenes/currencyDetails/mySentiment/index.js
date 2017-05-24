@@ -6,13 +6,24 @@
 'use strict';
 
 import React from 'react';
-import ReactNative from 'react-native';
-let {Text, View, StyleSheet, ListView, RefreshControl} = ReactNative;
+
+import ReactNative, {
+    View,
+    Text,
+    ListView,
+    RefreshControl,
+    StyleSheet
+} from 'react-native';
 
 import {Icon} from 'react-native-elements';
+
 import NavigationBar from 'react-native-navbar';
 
-import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions';
+import {
+    responsiveHeight,
+    responsiveWidth,
+    responsiveFontSize
+} from 'react-native-responsive-dimensions';
 
 import {observer} from 'mobx-react/native';
 
@@ -25,8 +36,6 @@ import SentimentChart from '../../../components/sentimentCandlestickChart';
 import Cell from './cell';
 
 import * as Poloniex from '../../../api/poloniex';
-
-const options = ["1D"];
 
 @observer
 export default class MySentiment extends React.Component {
@@ -44,12 +53,23 @@ export default class MySentiment extends React.Component {
             )
         };
 
-
         const changeColor = store.ticker.dailyChangePercent > 0
             ? "#24e174"
             : store.ticker.dailyChangePercent < 0
                 ? "#fd7a57"
                 : "#b1b1b2";
+
+        const dropdownOptions = store.availablePeriods
+            .map(period => {
+                return Poloniex.getStringFromCandlestickPeriod(period);
+            })
+            .slice();
+        
+        const dropdownDefaultValue = Poloniex.getStringFromCandlestickPeriod(
+            store.availablePeriods[store.indexOfSelectedPeriod]
+        );
+
+        const dropdownDefaultIndex = store.indexOfSelectedPeriod;
 
         const renderDropdownRow = (rowData, rowID, highlighted) => {
             return (
@@ -62,7 +82,7 @@ export default class MySentiment extends React.Component {
         };
 
        const renderSeparator = (sectionID, rowID, adjacentRowHighlighted) => {
-            if (_.isEqual(rowID, store.periods.length-1)) return;
+            if (_.isEqual(rowID, store.availablePeriods.length-1)) return;
             return (
                 <View
                     style={styles.periodDropdownSeparator}
@@ -71,11 +91,9 @@ export default class MySentiment extends React.Component {
             );
         };
 
-
         return (
-
-
             <View style={styles.container}>
+                
                 <SentimentChart
                     data={store.chartData}
                     style={styles.chart}
@@ -84,7 +102,6 @@ export default class MySentiment extends React.Component {
                 <View style={styles.currencyRowContainer}>
 
                     <View style={styles.priceColumn}>
-
                         <Text style={[styles.text, styles.priceText]}>
                             {store.ticker.price}
                         </Text>
@@ -92,27 +109,32 @@ export default class MySentiment extends React.Component {
                         <Text style={[styles.text, styles.changeText, {color: changeColor}]}>
                             {`${store.ticker.dailyChangePercent}%`}
                         </Text>
-
                     </View>
 
                     <View style={styles.periodColumn}>
                         <Dropdown
                             style={styles.periodButton}
-                            dropdownStyle={[styles.periodDropdown, {height: (store.periods.length*(30+2))}]}
+                            dropdownStyle={[styles.periodDropdown, {height: (store.availablePeriods.length*(30+2))}]}
                             textStyle={styles.periodText}
-                            options={store.periods.slice()}
-                            onSelect={(idx, value) => store.setSelectedPeriod(parseInt(idx))}
-                            defaultValue={store.periods[store.selectedPeriod]}
-                            defaultIndex={store.selectedPeriod}
+                            options={dropdownOptions}
+                            onSelect={
+                                (index, value) => {
+                                    const indexOfSelectedPeriod = parseInt(index);
+                                    store.setIndexOfSelectedPeriod(indexOfSelectedPeriod);
+                                }
+                            }
+                            defaultValue={dropdownDefaultValue}
+                            defaultIndex={dropdownDefaultIndex}
                             animated={false}
                             renderRow={renderDropdownRow}
                             renderSeparator={renderSeparator}
                             showsVerticalScrollIndicator={false}
                         />
                     </View>
+
                 </View>
 
-                <View style={styles.listView}>
+                <View style={styles.listViewContainer}>
                     <ListView
                         renderRow={renderRow}
                         dataSource={store.dataSource}
@@ -154,6 +176,8 @@ MySentiment.propTypes = {
         ),
     }),
 };
+
+const options = ["1D"];
 
 const styles = StyleSheet.create({
     container: {
@@ -231,7 +255,7 @@ const styles = StyleSheet.create({
     spacer: {
         flex: 1,
     },
-    listView: {
+    listViewContainer: {
         backgroundColor: 'white',
         paddingLeft: 20,
         paddingRight: 20,
@@ -262,6 +286,6 @@ const styles = StyleSheet.create({
         color: 'white'
     },
     chart: {
-        height: responsiveHeight(40),
+        height: 20,//responsiveHeight(40),
     },
 });
