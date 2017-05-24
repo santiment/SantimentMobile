@@ -122,8 +122,22 @@ class DomainStore {
     @observable history: Object = {};
 
     @action setHistory = (history: Object): void => {
-        this.history = history;
-        console.log("History updated:\n", history);
+        /**
+         * Merge existing history with new one.
+         */
+        this.history = _.assign(
+            {},
+            this.history,
+            history
+        );
+
+        /**
+         * Console output.
+         */
+        console.log(
+            "History updated:\n",
+            history
+        );
     };
 
     /**
