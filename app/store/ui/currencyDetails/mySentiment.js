@@ -43,7 +43,7 @@ export default class MySentimentUiStore {
      * Periods for displaying on the list.
      */
     @observable periods: Number[] = [
-        Poloniex.candlestickPeriods.oneHour,
+        Poloniex.candlestickPeriods.twoHours,
         Poloniex.candlestickPeriods.fourHours,
         Poloniex.candlestickPeriods.oneDay
     ];
