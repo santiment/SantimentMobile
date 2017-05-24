@@ -37,7 +37,7 @@ export const candlestickPeriods = {
  *      In case when period is not included in the list of available periods,
  *      method returns empty string.
  */
-export const getStringFromCandlestickPeriod = (period: number): string => {
+export const periodToString = (period: number): string => {
     switch (period) {
         case candlestickPeriods.fiveMinutes:
             return '5m';
@@ -173,7 +173,7 @@ export const getCandles = (symbols: string[], startDate: Date, endDate: Date, ca
                     obj,
                     [
                         symbol,
-                        getStringFromCandlestickPeriod(candlestickPeriodOrDefault)
+                        periodToString(candlestickPeriodOrDefault)
                     ],
                     _.orderBy(
                         candles,

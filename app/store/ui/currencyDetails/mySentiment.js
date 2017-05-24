@@ -5,17 +5,22 @@
 
 'use strict';
 
-import _ from 'lodash';
-
-import ReactNative from 'react-native';
-const {
+import ReactNative, {
     ListView,
     Alert
-} = ReactNative;
+} from 'react-native';
+
+import _ from 'lodash';
 
 import Rx from 'rxjs';
 
-import mobx, {observable, computed, autorun, action, useStrict} from 'mobx';
+import mobx, {
+    observable,
+    computed,
+    autorun,
+    action,
+    useStrict
+} from 'mobx';
 
 import moment from 'moment';
 
@@ -37,7 +42,7 @@ export default class MySentimentUiStore {
     /**
      * Periods for displaying on the list.
      */
-    @observable availablePeriods: [number] = [
+    @observable periods: number[] = [
         Poloniex.candlestickPeriods.oneHour,
         Poloniex.candlestickPeriods.fourHours,
         Poloniex.candlestickPeriods.oneDay
@@ -100,7 +105,7 @@ export default class MySentimentUiStore {
             this.domainStore.history,
             [
                 `${this.ticker.symbol}`,
-                `${this.availablePeriods[this.indexOfSelectedPeriod]}`
+                `${this.periods[this.indexOfSelectedPeriod]}`
             ],
             []
         );
@@ -132,6 +137,7 @@ export default class MySentimentUiStore {
 
         return candles;
     }
+
     @computed get rows(): Object[] {
         const sortByDate = (arr) => _.orderBy(arr, ['date'], ['desc']);
         const formatDates = (arr) => _.map(arr, s => { return {...s, date: moment.unix(s.timestamp).fromNow()}});
@@ -144,12 +150,13 @@ export default class MySentimentUiStore {
     }
 
     _dataSource = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+
     @computed get dataSource(): Object {
         return this._dataSource.cloneWithRows(this.rows.slice());
     }
 
     @action refresh = (): void => {
-        const selectedCandlestickPeriod = this.availablePeriods[this.indexOfSelectedPeriod];
+        const selectedCandlestickPeriod = this.periods[this.indexOfSelectedPeriod];
 
         Rx.Observable
             .forkJoin(

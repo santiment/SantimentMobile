@@ -59,14 +59,14 @@ export default class MySentiment extends React.Component {
                 ? "#fd7a57"
                 : "#b1b1b2";
 
-        const dropdownOptions = store.availablePeriods
+        const dropdownOptions = store.periods
             .map(period => {
-                return Poloniex.getStringFromCandlestickPeriod(period);
+                return Poloniex.periodToString(period);
             })
             .slice();
         
-        const dropdownDefaultValue = Poloniex.getStringFromCandlestickPeriod(
-            store.availablePeriods[store.indexOfSelectedPeriod]
+        const dropdownDefaultValue = Poloniex.periodToString(
+            store.periods[store.indexOfSelectedPeriod]
         );
 
         const dropdownDefaultIndex = store.indexOfSelectedPeriod;
@@ -82,7 +82,7 @@ export default class MySentiment extends React.Component {
         };
 
        const renderSeparator = (sectionID, rowID, adjacentRowHighlighted) => {
-            if (_.isEqual(rowID, store.availablePeriods.length-1)) return;
+            if (_.isEqual(rowID, store.periods.length-1)) return;
             return (
                 <View
                     style={styles.periodDropdownSeparator}
@@ -114,7 +114,7 @@ export default class MySentiment extends React.Component {
                     <View style={styles.periodColumn}>
                         <Dropdown
                             style={styles.periodButton}
-                            dropdownStyle={[styles.periodDropdown, {height: (store.availablePeriods.length*(30+2))}]}
+                            dropdownStyle={[styles.periodDropdown, {height: (store.periods.length*(30+2))}]}
                             textStyle={styles.periodText}
                             options={dropdownOptions}
                             onSelect={
@@ -176,8 +176,6 @@ MySentiment.propTypes = {
         ),
     }),
 };
-
-const options = ["1D"];
 
 const styles = StyleSheet.create({
     container: {
