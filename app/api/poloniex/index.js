@@ -165,7 +165,7 @@ export const getCandles = (
                     obj,
                     [
                         symbol,
-                        String(candlestickPeriod)
+                        periodToString(candlestickPeriod)
                     ],
                     _.orderBy(
                         candles,
