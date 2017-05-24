@@ -323,9 +323,9 @@ class DomainStore {
         console.log("Did begin to refresh history");
 
         /**
-         * Default values.
+         * Obtain time interval.
          */
-        const defaultStartDate = moment().subtract(30, 'days').toDate();
+        const defaultStartDate = moment().subtract(180, 'days').toDate();
         const defaultEndDate = moment().toDate();
 
         /**
