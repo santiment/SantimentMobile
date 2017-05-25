@@ -30,12 +30,12 @@ export default class AddCurrencyUiStore {
         this.domainStore = domainStore;
     }
 
-    @observable query: string = "";
-    @action setQuery = (query: string): void => {
+    @observable query: String = "";
+    @action setQuery = (query: String): void => {
         this.query = query;
     };
 
-    @action addSymbol = (symbol: string): void => {
+    @action addSymbol = (symbol: String): void => {
         this.domainStore.addSymbol(symbol);
         this.domainStore.refresh()
             .subscribe(

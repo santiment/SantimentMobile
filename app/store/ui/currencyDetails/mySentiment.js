@@ -51,24 +51,24 @@ export default class MySentimentUiStore {
     /**
      * Index of selected candlestick period.
      */
-    @observable indexOfSelectedPeriod: number = 2;
+    @observable indexOfSelectedPeriod: Number = 2;
 
     /**
      * Updates index of selected candlestick period.
      */
-    @action setIndexOfSelectedPeriod = (index: number): void => {
+    @action setIndexOfSelectedPeriod = (index: Number): void => {
         this.indexOfSelectedPeriod = index;
     };
 
     /**
      * Shows whether data is loading now.
      */
-    @observable isLoading: boolean = false;
+    @observable isLoading: Boolean = false;
 
     /**
      * Updates `isLoading` flag.
      */
-    @action setIsLoading = (value: boolean): void => {
+    @action setIsLoading = (value: Boolean): void => {
         this.isLoading = value;
     };
 

@@ -34,9 +34,9 @@ export default class CurrenciesUiStore {
         this.domainStore = domainStore;
     }
 
-    @observable isLoading: boolean = false;
+    @observable isLoading: Boolean = false;
 
-    @action setIsLoading = (value: boolean): void => {
+    @action setIsLoading = (value: Boolean): void => {
         this.isLoading = value;
     };
 
@@ -54,7 +54,7 @@ export default class CurrenciesUiStore {
             );
     };
 
-    @action selectSymbol = (symbol: string): void => {
+    @action selectSymbol = (symbol: String): void => {
         this.domainStore.setSelectedSymbol(symbol);
     };
 

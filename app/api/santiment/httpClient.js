@@ -16,7 +16,9 @@ const apiUrl = "https://sa4h4y6jgb.execute-api.eu-central-1.amazonaws.com/dev";
  * @param {*} userId User ID.
  * @return Axios request.
  */
-export const getSentiments = (userId: string): any => {
+export const getSentiments = (
+    userId: String
+): any => {
     /**
      * Obtain URL for request.
      */
@@ -38,7 +40,9 @@ export const getSentiments = (userId: string): any => {
  *      according to requirements of server-side API.
  * @return Axios request.
  */
-export const postSentiment = (sentiment: Object): any => {
+export const postSentiment = (
+    sentiment: Object
+): any => {
     /*
      * Obtain URL for request.
      */
@@ -61,7 +65,11 @@ export const postSentiment = (sentiment: Object): any => {
  * @param {Date} endDate End date.
  * @return Axios request.
  */
-export const getAggregate = (symbol: string, startDate: Date, endDate: Date): any => {
+export const getAggregate = (
+    symbol: String,
+    startDate: Date,
+    endDate: Date
+): any => {
     /**
      * Obtain parameters for request.
      */
@@ -88,7 +96,9 @@ export const getAggregate = (symbol: string, startDate: Date, endDate: Date): an
  * @param {string} asset Feed's asset.
  * @return Axios request.
  */
-export const getFeed = (asset: string): any => {
+export const getFeed = (
+    asset: String
+): any => {
     /**
      * Obtain URL for request.
      */

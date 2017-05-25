@@ -31,7 +31,7 @@ export default class CurrencyDetailsUiStore {
     @action refresh = (): void => {
     };
 
-    @computed get title(): string {
+    @computed get title(): String {
         return _.replace(this.domainStore.selectedSymbol, "_", "/");
     }
 }

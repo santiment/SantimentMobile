@@ -5,4 +5,9 @@
 
 'use strict';
 
-export type SentimentType = {userId: string, date: string, asset: string, sentiment: string};
+export type SentimentType = {
+    userId: String,
+    date: String,
+    asset: String,
+    sentiment: String
+};

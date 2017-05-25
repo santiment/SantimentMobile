@@ -63,25 +63,25 @@ class DomainStore {
      */
 
     @persist('list')
-    @observable symbols: string[] = [
+    @observable symbols: String[] = [
         "BTC_USDT",
         "ETH_USDT"
     ];
 
-    @action setSymbols = (symbols: string[]): void => {
+    @action setSymbols = (symbols: String[]): void => {
         this.symbols = symbols;
         console.log("Symbols updated:\n", symbols);
     };
 
-    @action addSymbol = (symbol: string): void => {
+    @action addSymbol = (symbol: String): void => {
         this.setSymbols(_.union(this.symbols, [symbol]));
     };
 
-    @action removeSymbol = (symbol: string): void => {
+    @action removeSymbol = (symbol: String): void => {
         this.setSymbols(_.without(this.symbols, symbol));
     };
 
-    @action getAssets = (): string[] => {
+    @action getAssets = (): String[] => {
         return this.symbols.map(pairOfCurrencies => {
             /**
              * Extract asset from pair of currencies
@@ -98,9 +98,9 @@ class DomainStore {
      * string
      */
 
-    @observable selectedSymbol: string = "";
+    @observable selectedSymbol: String = "";
 
-    @action setSelectedSymbol = (symbol: string): void => {
+    @action setSelectedSymbol = (symbol: String): void => {
         this.selectedSymbol = symbol;
         console.log("Symbol selected:\n", symbol);
     };
@@ -188,7 +188,7 @@ class DomainStore {
      * @param {number} candlestickPeriod Candlestick period in seconds.
      * @return Observable.
      */
-    @action refreshHistory = (symbols: string[], candlestickPeriod: number): Rx.Observable<any> => {
+    @action refreshHistory = (symbols: String[], candlestickPeriod: Number): Rx.Observable<any> => {
         /**
          * Console output.
          */
@@ -248,7 +248,7 @@ class DomainStore {
      * @param {string} userId User ID.
      * @return Observable.
      */
-    @action refreshSentiments = (userId: string): Rx.Observable<any> => {
+    @action refreshSentiments = (userId: String): Rx.Observable<any> => {
         /**
          * Console output.
          */
@@ -295,7 +295,7 @@ class DomainStore {
      * @param {string[]} symbols Array of currency pairs.
      * @return Observable.
      */
-    @action refreshAggregates = (symbols: string[]): Rx.Observable<Object> => {
+    @action refreshAggregates = (symbols: String[]): Rx.Observable<Object> => {
         /**
          * Console output.
          */
@@ -342,7 +342,7 @@ class DomainStore {
      * @param {string[]} assets Array of currencies, e.g. ["BTC", "ETH"].
      * @return Observable.
      */
-    @action refreshFeeds = (assets: string[]): Rx.Observable<Object> => {
+    @action refreshFeeds = (assets: String[]): Rx.Observable<Object> => {
         /**
          * Console output.
          */
@@ -402,12 +402,12 @@ class DomainStore {
     /**
      * Selected candlestick period.
      */
-    @observable selectedCandlestickPeriod: number = Poloniex.candlestickPeriods.oneDay;
+    @observable selectedCandlestickPeriod: Number = Poloniex.candlestickPeriods.oneDay;
 
     /**
      * Updates selected candlestick period.
      */
-    @action setSelectedCandlestickPeriod = (period: number): void => {
+    @action setSelectedCandlestickPeriod = (period: Number): void => {
         /**
          * Update selected candlestick period.
          */

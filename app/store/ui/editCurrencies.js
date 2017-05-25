@@ -21,7 +21,7 @@ export default class EditCurrenciesUiStore {
         this.domainStore = domainStore;
     }
 
-    @action removeSymbol = (symbol: string): void => {
+    @action removeSymbol = (symbol: String): void => {
         this.domainStore.removeSymbol(symbol);
     };
 

@@ -37,7 +37,9 @@ export const candlestickPeriods = {
  *      In case when period is not included in the list of available periods,
  *      method returns empty string.
  */
-export const periodToString = (period: number): string => {
+export const periodToString = (
+    period: Number
+): String => {
     switch (period) {
         case candlestickPeriods.fiveMinutes:
             return '5m';
@@ -63,7 +65,8 @@ export const periodToString = (period: number): string => {
  * 
  * @return Observable.
  */
-export const getTickers = (): any => {
+export const getTickers = (
+): any => {
     /**
      * Start request.
      */
@@ -116,12 +119,11 @@ export const getTickers = (): any => {
  * @return Observable.
  */
 export const getCandles = (
-    symbols: string[],
+    symbols: String[],
     startDate: Date = moment().subtract(180, 'days').toDate(),
     endDate: Date = moment().toDate(),
-    candlestickPeriod: number = candlestickPeriods.oneDay
+    candlestickPeriod: Number = candlestickPeriods.oneDay
 ): any => {
-
     /**
      * Send request for each symbol.
      */

@@ -27,7 +27,9 @@ const apiUrl = "https://api.bitfinex.com/v2";
 //  10  LOW
 // ],
 
-export const getTickers = (symbols: string[]): any => {
+export const getTickers = (
+    symbols: String[]
+): any => {
     const url = apiUrl + `/tickers?symbols=${_.join(symbols, ",")}`;
 
     return Rx.Observable
@@ -42,7 +44,11 @@ export const getTickers = (symbols: string[]): any => {
 //     ...
 // ]
 
-export const getCandles = (symbol: string, period: string, limit: number): any => {
+export const getCandles = (
+    symbol: String,
+    period: String,
+    limit: Number
+): any => {
     const url = apiUrl + `/candles/trade:${period}:${symbol}/hist?limit=${limit}`;
 
     return Rx.Observable

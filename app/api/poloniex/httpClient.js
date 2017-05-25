@@ -39,7 +39,12 @@ export const getTickers = (): any => {
  * @param {number} candlestickPeriod Candlestick period in seconds, e.g. 14400.
  * @return Axios request.
  */
-export const getCandles = (symbol: string, startDate: Date, endDate: Date, candlestickPeriod: number): any => {
+export const getCandles = (
+    symbol: String,
+    startDate: Date,
+    endDate: Date,
+    candlestickPeriod: Number
+): any => {
     /**
      * Obtain parameters for request.
      */
