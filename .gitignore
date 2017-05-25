@@ -52,6 +52,3 @@ buck-out/
 
 # Misc
 playground.js
-
-# Visual Studio Code
-jsconfig.json
