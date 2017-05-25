@@ -39,7 +39,9 @@ const processAndRethrow = error => {
  * @param {String} userId User ID.
  * @return Observable.
  */
-export const getSentiments = (userId: string): any => {
+export const getSentiments = (
+    userId: String
+): any => {
     /**
      * Start request.
      */
@@ -75,7 +77,9 @@ export const getSentiments = (userId: string): any => {
  * @param {Object} sentiment Sentiment.
  * @return Observable.
  */
-export const postSentiment = (sentiment: Object): any => {
+export const postSentiment = (
+    sentiment: Object
+): any => {
     /**
      * Prepare sentiment in format required by server API.
      */
@@ -121,13 +125,11 @@ export const postSentiment = (sentiment: Object): any => {
  * @param {Date} endDate Aggregate's end date.
  * @return Observable.
  */
-export const getAggregates = (symbols: string[], startDate: Date, endDate: Date): any => {
-    /**
-     * Prepare data for aggregate requests.
-     */
-    const startDateOrDefault = startDate ? startDate : new Date();
-    const endDateOrDefault = endDate ? endDate : moment().add(1, 'days').toDate();
-
+export const getAggregates = (
+    symbols: String[],
+    startDate: Date = new Date(),
+    endDate: Date = moment().add(1, 'days').toDate()
+): any => {
     /**
      * Send request for each aggregate.
      */
@@ -137,8 +139,8 @@ export const getAggregates = (symbols: string[], startDate: Date, endDate: Date)
          */
         const request = SantimentHttpClient.getAggregate(
             symbol,
-            startDateOrDefault,
-            endDateOrDefault
+            startDate,
+            endDate
         );
 
         /**
@@ -174,7 +176,9 @@ export const getAggregates = (symbols: string[], startDate: Date, endDate: Date)
  *      Should contain at least one currency.
  * @return Observable.
  */
-export const getFeeds = (assets: string[]): any => {
+export const getFeeds = (
+    assets: String[]
+): any => {
     /**
      * Send request for each asset.
      */

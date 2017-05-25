@@ -20,22 +20,14 @@ const apiUrl = "https://api.coinmarketcap.com/v1";
  *      If not passed, default value 50 will be used.
  * @return Observable.
  */
-export const getTicker = (limit: number) => {
-    /**
-     * Default values.
-     */
-    const defaultLimit = 50;
-
-    /**
-     * Obtain parameters for request.
-     */
-    const limitOrDefault = limit ? limit : defaultLimit;
-
+export const getTicker = (
+    limit: Number = 50
+) => {
     /**
      * Start request.
      */
     const request = CoinMarketCapHttpClient.getTicker(
-        limitOrDefault
+        limit
     );
 
     /**
