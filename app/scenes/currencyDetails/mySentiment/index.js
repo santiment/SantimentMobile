@@ -12,6 +12,7 @@ import ReactNative, {
     Text,
     ListView,
     RefreshControl,
+    InteractionManager,
     StyleSheet
 } from 'react-native';
 
@@ -63,22 +64,26 @@ export default class MySentiment extends React.Component {
     }
 
     componentDidMount() {
-        /**
-         * Update state.
-         */
-        this.setState({
-            didAppear: true
-        });
+        InteractionManager.runAfterInteractions(
+            () => {
+                /**
+                 * Update state.
+                 */
+                this.setState({
+                    didAppear: true
+                });
 
-        /**
-         * End to measure appearance time interval.
-         */
-        const appearanceTimeInterval = this.appearanceClock.stop();
+                /**
+                 * End to measure appearance time interval.
+                 */
+                const appearanceTimeInterval = this.appearanceClock.stop();
 
-        console.log(
-            "MySentiment scene did appear in ",
-            appearanceTimeInterval,
-            " milliseconds"
+                console.log(
+                    "MySentiment scene did appear in ",
+                    appearanceTimeInterval,
+                    " milliseconds"
+                );
+            }
         );
     }
 
