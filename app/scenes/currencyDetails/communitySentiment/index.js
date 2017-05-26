@@ -18,8 +18,51 @@ import ReactNative, {
 
 import {observer} from 'mobx-react/native';
 
+import Clock from '../../../utils/clock.js';
+
 @observer
 export default class CommunitySentiment extends React.Component {
+
+    appearanceClock: Clock;
+
+    constructor(props) {
+        super(props);
+
+        /**
+         * Initialize appearance clock and
+         * start to measure time interval.
+         */
+        this.appearanceClock = new Clock();
+        this.appearanceClock.start();
+
+        /**
+         * Initialize state.
+         */
+        this.state = {
+            didAppear: false
+        };
+    }
+
+    componentDidMount() {
+        /**
+         * Update state.
+         */
+        this.setState({
+            didAppear: true
+        });
+
+        /**
+         * End to measure appearance time interval.
+         */
+        const appearanceTimeInterval = this.appearanceClock.stop();
+
+        console.log(
+            "CommunitySentiment scene did appear in ",
+            appearanceTimeInterval,
+            " milliseconds"
+        );
+    }
+
     render() {
         const {navigator, store} = this.props;
 

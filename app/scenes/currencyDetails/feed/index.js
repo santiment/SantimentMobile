@@ -23,10 +23,52 @@ import {
     Bubble
 } from 'react-native-gifted-chat';
 
+import Clock from '../../../utils/clock.js';
+
 @observer
 export default class Feed extends React.Component {
     
+    appearanceClock: Clock;
+
     refreshStoreTimerId: any;
+
+    constructor(props) {
+        super(props);
+
+        /**
+         * Initialize appearance clock and
+         * start to measure time interval.
+         */
+        this.appearanceClock = new Clock();
+        this.appearanceClock.start();
+
+        /**
+         * Initialize state.
+         */
+        this.state = {
+            didAppear: false
+        };
+    }
+
+    componentDidMount() {
+        /**
+         * Update state.
+         */
+        this.setState({
+            didAppear: true
+        });
+
+        /**
+         * End to measure appearance time interval.
+         */
+        const appearanceTimeInterval = this.appearanceClock.stop();
+
+        console.log(
+            "Feed scene did appear in ",
+            appearanceTimeInterval,
+            " milliseconds"
+        );
+    }
 
     render() {
         const {navigator, store} = this.props;

@@ -37,10 +37,56 @@ import Cell from './cell';
 
 import * as Poloniex from '../../../api/poloniex';
 
+import Clock from '../../../utils/clock.js';
+
 @observer
 export default class MySentiment extends React.Component {
 
+    appearanceClock: Clock;
+
+    constructor(props) {
+        super(props);
+
+        /**
+         * Initialize appearance clock and
+         * start to measure time interval.
+         */
+        this.appearanceClock = new Clock();
+        this.appearanceClock.start();
+
+        /**
+         * Initialize state.
+         */
+        this.state = {
+            didAppear: false
+        };
+    }
+
+    componentDidMount() {
+        /**
+         * Update state.
+         */
+        this.setState({
+            didAppear: true
+        });
+
+        /**
+         * End to measure appearance time interval.
+         */
+        const appearanceTimeInterval = this.appearanceClock.stop();
+
+        console.log(
+            "MySentiment scene did appear in ",
+            appearanceTimeInterval,
+            " milliseconds"
+        );
+    }
+
     render() {
+        if (!this.state.didAppear) {
+            return null;
+        }
+
         const {navigator, store} = this.props;
 
         const renderRow = (data, sectionID) => {
