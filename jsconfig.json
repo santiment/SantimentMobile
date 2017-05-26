@@ -9,7 +9,9 @@
         "experimentalDecorators": true,
         "removeComments": false,
         "noImplicitAny": false,
-        "allowSyntheticDefaultImports": true
+        "allowSyntheticDefaultImports": true,
+        "flow.useNPMPackagedFlow": true,
+        "javascript.validate.enable": false
     },
     "exclude": [
         "node_modules"
