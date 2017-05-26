@@ -107,7 +107,6 @@ export default class MySentimentUiStore {
          * Start to measure time interval.
          */
         const clock = new Clock();
-        clock.debug = true;
         clock.start();
 
         /**
@@ -154,7 +153,13 @@ export default class MySentimentUiStore {
         /**
          * Stop to measure time interval.
          */
-        clock.stop();
+        const algorithmTimeInterval = clock.stop();
+        
+        console.log(
+            "sentiment-to-candle algorithm has finished in ",
+            algorithmTimeInterval,
+            " milliseconds"
+        );
 
         /**
          * Return candles.
