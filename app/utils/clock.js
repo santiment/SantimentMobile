@@ -91,8 +91,8 @@ export default class Clock {
                 this.endTimestamp,
                 "\n",
                 "Result time: ",
-                this.lastResult / 1000,
-                " seconds"
+                measuredTimeIntervalInMilliseconds,
+                " milliseconds"
             );
         }
 
