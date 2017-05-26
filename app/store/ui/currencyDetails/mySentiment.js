@@ -26,6 +26,8 @@ import moment from 'moment';
 
 import * as Poloniex from '../../../api/poloniex';
 
+import Clock from '../../../utils/clock.js';
+
 export default class MySentimentUiStore {
     
     /**
@@ -101,6 +103,16 @@ export default class MySentimentUiStore {
     }
 
     @computed get chartData(): Object[] {
+        /**
+         * Start to measure time interval.
+         */
+        const clock = new Clock();
+        clock.debug = true;
+        clock.start();
+
+        /**
+         * Obtain candles.
+         */
         const formattedPeriod = Poloniex.periodToString(
             this.periods[this.indexOfSelectedPeriod]
         );
@@ -118,7 +130,7 @@ export default class MySentimentUiStore {
             this.domainStore.sentiments.slice(),
             s => { return _.isEqual(s.asset, this.domainStore.selectedSymbol) }
         );
-
+        
         const candles = _.map(
             timeseries,
             t => {
@@ -139,6 +151,14 @@ export default class MySentimentUiStore {
             }
         );
 
+        /**
+         * Stop to measure time interval.
+         */
+        clock.stop();
+
+        /**
+         * Return candles.
+         */
         return candles;
     }
 
