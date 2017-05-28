@@ -167,7 +167,7 @@ export default class MySentiment extends React.Component {
                                     /**
                                      * Refresh store.
                                      */
-                                    //store.refresh();
+                                    store.refresh();
                                 }
                             }
                             defaultValue={store.dropdownDefaultValue}
