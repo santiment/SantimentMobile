@@ -44,7 +44,7 @@ export default class MySentimentUiStore {
     /**
      * Periods for displaying on the list.
      */
-    @observable periods: Number[] = [
+    @observable periods: number[] = [
         Poloniex.candlestickPeriods.twoHours,
         Poloniex.candlestickPeriods.fourHours,
         Poloniex.candlestickPeriods.oneDay
@@ -53,24 +53,24 @@ export default class MySentimentUiStore {
     /**
      * Index of selected candlestick period.
      */
-    @observable indexOfSelectedPeriod: Number = 2;
+    @observable indexOfSelectedPeriod: number = 2;
 
     /**
      * Updates index of selected candlestick period.
      */
-    @action setIndexOfSelectedPeriod = (index: Number): void => {
+    @action setIndexOfSelectedPeriod = (index: number): void => {
         this.indexOfSelectedPeriod = index;
     };
 
     /**
      * Shows whether data is loading now.
      */
-    @observable isLoading: Boolean = false;
+    @observable isLoading: boolean = false;
 
     /**
      * Updates `isLoading` flag.
      */
-    @action setIsLoading = (value: Boolean): void => {
+    @action setIsLoading = (value: boolean): void => {
         this.isLoading = value;
     };
 
@@ -102,7 +102,7 @@ export default class MySentimentUiStore {
         );
     }
 
-    @computed get chartData(): Object[] {
+    @computed get chartData_oldImplementation(): Object[] {
         /**
          * Start to measure time interval.
          */
@@ -144,6 +144,79 @@ export default class MySentimentUiStore {
                 });
                 return {
                     timestamp: candleTimestamp,
+                    candle: _.pick(t, ['open', 'high', 'low', 'close']),
+                    sentiment: _.get(sentimentObject, 'sentiment'),
+                }
+            }
+        );
+
+        /**
+         * Stop to measure time interval.
+         */
+        const algorithmTimeInterval = clock.stop();
+        
+        console.log(
+            "sentiment-to-candle algorithm has finished in ",
+            algorithmTimeInterval,
+            " milliseconds"
+        );
+
+        /**
+         * Return candles.
+         */
+        return candles;
+    }
+
+    @computed get chartData(): Object[] {
+        /**
+         * Start to measure time interval.
+         */
+        const clock = new Clock();
+        clock.start();
+
+        /**
+         * Obtain candles.
+         */
+        const selectedPeriod = this.periods[this.indexOfSelectedPeriod];
+
+        const formattedPeriod = Poloniex.periodToString(
+            selectedPeriod
+        );
+
+        const timeseries = _.get(
+            this.domainStore.history,
+            [
+                `${this.ticker.symbol}`,
+                `${formattedPeriod}`
+            ],
+            []
+        );
+
+        const sentimentsForCurrentSymbolHashMap = {};
+        
+        this.domainStore.sentiments.forEach(
+            s => {
+                if (_.isEqual(s.asset, this.domainStore.selectedSymbol)) {
+                    console.log("Source timestamp: ", new Date(s.timestamp * 1000));
+                    const correctedSentimentTimestampInSeconds = s.timestamp - (s.timestamp % selectedPeriod);
+                    console.log("Corrected timestamp: ", new Date(correctedSentimentTimestampInSeconds * 1000));
+                    const correctedSentimentTimestampInMilliseconds = correctedSentimentTimestampInSeconds * 1000;
+                    
+                    sentimentsForCurrentSymbolHashMap[correctedSentimentTimestampInMilliseconds] = s;
+                }
+            }
+        );
+
+        const candles = _.map(
+            timeseries,
+            t => {
+                const correctedCandleTimestampInSeconds = t.timestamp - (t.timestamp % selectedPeriod);
+                const correctedCandleTimestampInMilliseconds = correctedCandleTimestampInSeconds * 1000;
+
+                const sentimentObject = sentimentsForCurrentSymbolHashMap[correctedCandleTimestampInMilliseconds];
+
+                return {
+                    timestamp: correctedCandleTimestampInMilliseconds,
                     candle: _.pick(t, ['open', 'high', 'low', 'close']),
                     sentiment: _.get(sentimentObject, 'sentiment'),
                 }
