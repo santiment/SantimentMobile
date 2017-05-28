@@ -64,33 +64,33 @@ export default class MySentiment extends React.Component {
     }
 
     componentDidMount() {
-        InteractionManager.runAfterInteractions(
-            () => {
-                /**
-                 * Update state.
-                 */
-                this.setState({
-                    didAppear: true
-                });
+        /**
+         * Update state.
+         */
+        this.setState({
+            didAppear: true
+        });
 
-                /**
-                 * End to measure appearance time interval.
-                 */
-                const appearanceTimeInterval = this.appearanceClock.stop();
+        /**
+         * End to measure appearance time interval.
+         */
+        const appearanceTimeInterval = this.appearanceClock.stop();
 
-                console.log(
-                    "MySentiment scene did appear in ",
-                    appearanceTimeInterval,
-                    " milliseconds"
-                );
-            }
+        console.log(
+            "MySentiment scene did appear in ",
+            appearanceTimeInterval,
+            " milliseconds"
         );
     }
 
     render() {
-        if (!this.state.didAppear) {
+        /**
+         * Uncomment the block below to
+         * speed up screen appearance.
+         */
+        /*if (!this.state.didAppear) {
             return null;
-        }
+        }*/
 
         const {navigator, store} = this.props;
 

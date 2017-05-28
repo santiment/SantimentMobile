@@ -83,9 +83,13 @@ export default class CurrencyDetails extends React.Component {
     }
     
     render() {
-        if (!this.state.didAppear) {
+        /**
+         * Uncomment the block below to
+         * speed up screen appearance.
+         */
+        /*if (!this.state.didAppear) {
             return null;
-        }
+        }*/
 
         const {navigator, store} = this.props;
 
