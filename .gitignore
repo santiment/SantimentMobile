@@ -52,3 +52,6 @@ buck-out/
 
 # Misc
 playground.js
+
+# VS Code
+.vscode/.react/debuggerWorker.js
