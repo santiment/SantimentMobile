@@ -199,16 +199,17 @@ class DomainStore {
         /**
          * Obtain time interval.
          */
-        const defaultStartDate = moment().subtract(180, 'days').toDate();
-        const defaultEndDate = moment().toDate();
+        const numberOfCandlesticksToDownload = 360;
+        const endDate = moment().toDate();
+        const startDate = candlestickPeriod.findStartDate(endDate, numberOfCandlesticksToDownload);
 
         /**
          * Update local storage and return observable.
          */
         return Poloniex.getCandles(
             this.symbols,
-            defaultStartDate,
-            defaultEndDate,
+            startDate,
+            endDate,
             candlestickPeriod
         ).do(
             history => {
@@ -406,6 +407,27 @@ class DomainStore {
             )
             .do(() => console.log('domainStore refreshed'), console.log)
     }
+
+    /**
+     * Periods for displaying on the list.
+     */
+    @observable periods: CandlestickPeriod[] = [
+        Poloniex.candlestickPeriods.twoHours,
+        Poloniex.candlestickPeriods.fourHours,
+        Poloniex.candlestickPeriods.oneDay
+    ];
+
+    /**
+     * Index of selected candlestick period.
+     */
+    @observable indexOfSelectedPeriod: number = 2;
+
+    /**
+     * Updates index of selected candlestick period.
+     */
+    @action setIndexOfSelectedPeriod = (index: number): void => {
+        this.indexOfSelectedPeriod = index;
+    };
 }
 
 const hydrate = create({storage: AsyncStorage});

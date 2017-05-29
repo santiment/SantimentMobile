@@ -121,7 +121,7 @@ export default class MySentiment extends React.Component {
         };
 
         const renderSeparator = (sectionID, rowID, adjacentRowHighlighted) => {
-            if (_.isEqual(rowID, store.periods.length-1)) return;
+            if (_.isEqual(rowID, store.domainStore.periods.length-1)) return;
             return (
                 <View
                     style={styles.periodDropdownSeparator}
@@ -153,7 +153,7 @@ export default class MySentiment extends React.Component {
                     <View style={styles.periodColumn}>
                         <Dropdown
                             style={styles.periodButton}
-                            dropdownStyle={[styles.periodDropdown, {height: (store.periods.length*(30+2))}]}
+                            dropdownStyle={[styles.periodDropdown, {height: (store.domainStore.periods.length*(30+2))}]}
                             textStyle={styles.periodText}
                             options={store.dropdownOptions}
                             onSelect={
@@ -162,7 +162,7 @@ export default class MySentiment extends React.Component {
                                      * Update index of selected period in store.
                                      */
                                     const indexOfSelectedPeriod = parseInt(index);
-                                    store.setIndexOfSelectedPeriod(indexOfSelectedPeriod);
+                                    store.domainStore.setIndexOfSelectedPeriod(indexOfSelectedPeriod);
 
                                     /**
                                      * Refresh store.
@@ -208,9 +208,6 @@ MySentiment.propTypes = {
     }),
     store: React.PropTypes.shape({
         domainStore: React.PropTypes.any.isRequired,
-        periods: React.PropTypes.any.isRequired,
-        indexOfSelectedPeriod: React.PropTypes.number.isRequired,
-        setIndexOfSelectedPeriod: React.PropTypes.func.isRequired,
         isLoading: React.PropTypes.bool.isRequired,
         setIsLoading: React.PropTypes.func.isRequired,
         ticker: React.PropTypes.any.isRequired,

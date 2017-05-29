@@ -44,27 +44,6 @@ export default class MySentimentUiStore {
     }
 
     /**
-     * Periods for displaying on the list.
-     */
-    @observable periods: CandlestickPeriod[] = [
-        Poloniex.candlestickPeriods.twoHours,
-        Poloniex.candlestickPeriods.fourHours,
-        Poloniex.candlestickPeriods.oneDay
-    ];
-
-    /**
-     * Index of selected candlestick period.
-     */
-    @observable indexOfSelectedPeriod: number = 2;
-
-    /**
-     * Updates index of selected candlestick period.
-     */
-    @action setIndexOfSelectedPeriod = (index: number): void => {
-        this.indexOfSelectedPeriod = index;
-    };
-
-    /**
      * Shows whether data is loading now.
      */
     @observable isLoading: boolean = false;
@@ -114,7 +93,7 @@ export default class MySentimentUiStore {
         /**
          * Obtain candles.
          */
-        const selectedPeriod = this.periods[this.indexOfSelectedPeriod];
+        const selectedPeriod = this.domainStore.periods[this.domainStore.indexOfSelectedPeriod];
 
         const timeseries = _.get(
             this.domainStore.history,
@@ -185,7 +164,7 @@ export default class MySentimentUiStore {
     }
 
     @action refresh = (): void => {
-        const selectedCandlestickPeriod = this.periods[this.indexOfSelectedPeriod];
+        const selectedCandlestickPeriod = this.domainStore.periods[this.domainStore.indexOfSelectedPeriod];
 
         Rx.Observable
             .forkJoin(
@@ -215,7 +194,7 @@ export default class MySentimentUiStore {
     };
 
     @computed get dropdownOptions(): string[] {
-        return this.periods.map((period) => {
+        return this.domainStore.periods.map((period) => {
             return period.text;
         });
     }
@@ -224,7 +203,7 @@ export default class MySentimentUiStore {
         /**
          * Obtain selected period by index.
          */
-        const selectedPeriod = this.periods[this.indexOfSelectedPeriod];
+        const selectedPeriod = this.domainStore.periods[this.domainStore.indexOfSelectedPeriod];
         
         /**
          * Return string containing formatted period.
@@ -233,6 +212,6 @@ export default class MySentimentUiStore {
     }
 
     @computed get dropdownDefaultIndex(): number {
-        return this.indexOfSelectedPeriod;
+        return this.domainStore.indexOfSelectedPeriod;
     }
 }
