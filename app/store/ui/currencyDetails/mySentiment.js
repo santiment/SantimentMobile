@@ -26,6 +26,8 @@ import moment from 'moment';
 
 import * as Poloniex from '../../../api/poloniex';
 
+import CandlestickPeriod from '../../../utils/candlestickPeriod.js';
+
 import Clock from '../../../utils/clock.js';
 
 export default class MySentimentUiStore {
@@ -44,7 +46,7 @@ export default class MySentimentUiStore {
     /**
      * Periods for displaying on the list.
      */
-    @observable periods: number[] = [
+    @observable periods: CandlestickPeriod[] = [
         Poloniex.candlestickPeriods.twoHours,
         Poloniex.candlestickPeriods.fourHours,
         Poloniex.candlestickPeriods.oneDay
@@ -102,71 +104,6 @@ export default class MySentimentUiStore {
         );
     }
 
-    @computed get chartData_oldImplementation(): Object[] {
-        /**
-         * Start to measure time interval.
-         */
-        const clock = new Clock();
-        clock.start();
-
-        /**
-         * Obtain candles.
-         */
-        const formattedPeriod = Poloniex.periodToString(
-            this.periods[this.indexOfSelectedPeriod]
-        );
-
-        const timeseries = _.get(
-            this.domainStore.history,
-            [
-                `${this.ticker.symbol}`,
-                `${formattedPeriod}`
-            ],
-            []
-        );
-
-        const sentimentsForCurrentSymbol = _.filter(
-            this.domainStore.sentiments.slice(),
-            s => { return _.isEqual(s.asset, this.domainStore.selectedSymbol) }
-        );
-        
-        const candles = _.map(
-            timeseries,
-            t => {
-                // const date = moment.unix(t.date);
-                const candleTimestamp = new Date(t.timestamp * 1000).setHours(0, 0, 0, 0);
-
-
-                const sentimentObject = _.find(sentimentsForCurrentSymbol, s => {
-                    const sentimentTimestamp = new Date(s.timestamp * 1000).setHours(0, 0, 0, 0);
-
-                    return candleTimestamp === sentimentTimestamp;
-                });
-                return {
-                    timestamp: candleTimestamp,
-                    candle: _.pick(t, ['open', 'high', 'low', 'close']),
-                    sentiment: _.get(sentimentObject, 'sentiment'),
-                }
-            }
-        );
-
-        /**
-         * Stop to measure time interval.
-         */
-        const algorithmTimeInterval = clock.stop();
-        
-        console.log(
-            "sentiment-to-candle algorithm has finished in ",
-            algorithmTimeInterval,
-            " milliseconds"
-        );
-
-        /**
-         * Return candles.
-         */
-        return candles;
-    }
-
     @computed get chartData(): Object[] {
         /**
          * Start to measure time interval.
@@ -179,15 +116,11 @@ export default class MySentimentUiStore {
          */
         const selectedPeriod = this.periods[this.indexOfSelectedPeriod];
 
-        const formattedPeriod = Poloniex.periodToString(
-            selectedPeriod
-        );
-
         const timeseries = _.get(
             this.domainStore.history,
             [
                 `${this.ticker.symbol}`,
-                `${formattedPeriod}`
+                `${selectedPeriod.text}`
             ],
             []
         );
@@ -197,7 +130,7 @@ export default class MySentimentUiStore {
         this.domainStore.sentiments.forEach(
             s => {
                 if (_.isEqual(s.asset, this.domainStore.selectedSymbol)) {
-                    const correctedSentimentTimestampInSeconds = s.timestamp - (s.timestamp % selectedPeriod);
+                    const correctedSentimentTimestampInSeconds = s.timestamp - (s.timestamp % selectedPeriod.durationInSeconds);
                     sentimentsForCurrentSymbolHashMap[correctedSentimentTimestampInSeconds] = s;
                 }
             }
@@ -206,7 +139,7 @@ export default class MySentimentUiStore {
         const candles = _.map(
             timeseries,
             t => {
-                const correctedCandleTimestampInSeconds = t.timestamp - (t.timestamp % selectedPeriod);
+                const correctedCandleTimestampInSeconds = t.timestamp - (t.timestamp % selectedPeriod.durationInSeconds);
                 const sentimentObject = sentimentsForCurrentSymbolHashMap[correctedCandleTimestampInSeconds];
 
                 return {
@@ -281,11 +214,13 @@ export default class MySentimentUiStore {
             );
     };
 
-    @computed get dropdownOptions(): String[] {
-        return this.periods.map(Poloniex.periodToString);
+    @computed get dropdownOptions(): string[] {
+        return this.periods.map((period) => {
+            return period.text;
+        });
     }
 
-    @computed get dropdownDefaultValue(): String {
+    @computed get dropdownDefaultValue(): string {
         /**
          * Obtain selected period by index.
          */
@@ -294,12 +229,10 @@ export default class MySentimentUiStore {
         /**
          * Return string containing formatted period.
          */
-        return Poloniex.periodToString(
-            selectedPeriod
-        );
+        return selectedPeriod.text;
     }
 
-    @computed get dropdownDefaultIndex(): Number {
+    @computed get dropdownDefaultIndex(): number {
         return this.indexOfSelectedPeriod;
     }
 }

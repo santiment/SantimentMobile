@@ -41,6 +41,8 @@ import type {
 
 import DeviceInfo from 'react-native-device-info';
 
+import CandlestickPeriod from '../../utils/candlestickPeriod.js';
+
 class DomainStore {
     constructor() {
         useStrict(true);
@@ -185,10 +187,10 @@ class DomainStore {
      * Updates history in local storage.
      * 
      * @param {string[]} symbols Array of currency pairs.
-     * @param {number} candlestickPeriod Candlestick period in seconds.
+     * @param {CandlestickPeriod} candlestickPeriod Candlestick period.
      * @return Observable.
      */
-    @action refreshHistory = (symbols: String[], candlestickPeriod: Number): Rx.Observable<any> => {
+    @action refreshHistory = (symbols: String[], candlestickPeriod: CandlestickPeriod): Rx.Observable<any> => {
         /**
          * Console output.
          */
@@ -203,14 +205,20 @@ class DomainStore {
         /**
          * Update local storage and return observable.
          */
-        return Poloniex.getCandles(symbols, defaultStartDate, defaultEndDate, candlestickPeriod)
-            .do(
-                history => {
-                    this.setHistory(history);
-                },
-                console.log
-            )
-            .do(() => console.log('Did finish to refresh history'), console.log);
+        return Poloniex.getCandles(
+            this.symbols,
+            defaultStartDate,
+            defaultEndDate,
+            candlestickPeriod
+        ).do(
+            history => {
+                this.setHistory(history);
+            },
+            console.log
+        ).do(
+            () => console.log('Did finish to refresh history'),
+            console.log
+        );
     };
 
     /**
@@ -398,29 +406,6 @@ class DomainStore {
             )
             .do(() => console.log('domainStore refreshed'), console.log)
     }
-
-    /**
-     * Selected candlestick period.
-     */
-    @observable selectedCandlestickPeriod: Number = Poloniex.candlestickPeriods.oneDay;
-
-    /**
-     * Updates selected candlestick period.
-     */
-    @action setSelectedCandlestickPeriod = (period: Number): void => {
-        /**
-         * Update selected candlestick period.
-         */
-        this.selectedCandlestickPeriod = period;
-
-        /**
-         * Console output.
-         */
-        console.log(
-            "Did select candlestick period:\n",
-            period
-        );
-    };
 }
 
 const hydrate = create({storage: AsyncStorage});
