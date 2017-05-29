@@ -190,7 +190,7 @@ class DomainStore {
      * @param {CandlestickPeriod} candlestickPeriod Candlestick period.
      * @return Observable.
      */
-    @action refreshHistory = (symbols: String[], candlestickPeriod: CandlestickPeriod): Rx.Observable<any> => {
+    @action refreshHistory = (symbols: string[], candlestickPeriod: CandlestickPeriod): Rx.Observable<any> => {
         /**
          * Console output.
          */
@@ -199,9 +199,12 @@ class DomainStore {
         /**
          * Obtain time interval.
          */
-        const numberOfCandlesticksToDownload = 360;
         const endDate = moment().toDate();
-        const startDate = candlestickPeriod.findStartDate(endDate, numberOfCandlesticksToDownload);
+        
+        const startDate = candlestickPeriod.findStartDate(
+            endDate,
+            numberOfCandlesticksToDownload
+        );
 
         /**
          * Update local storage and return observable.
@@ -385,15 +388,36 @@ class DomainStore {
         console.log("symbols =", JSON.stringify(this.symbols.slice(), null, 2));
 
         /**
+         * Obtain time interval for candles.
+         */
+        const dateForLastCandle = moment().toDate();
+        
+        const dateForFirstCandle = this.selectedCandlestickPeriod.findStartDate(
+            dateForLastCandle,
+            numberOfCandlesticksToDownload
+        );
+
+        /**
          * Update local storage and return observable.
          */
         return Rx.Observable
             .forkJoin(
                 Poloniex.getTickers(),
-                Poloniex.getCandles(this.symbols),
-                Santiment.getSentiments(this.user.id),
-                Santiment.getAggregates(this.symbols),
-                Santiment.getFeeds(this.getAssets()),
+                Poloniex.getCandles(
+                    this.symbols,
+                    dateForFirstCandle,
+                    dateForLastCandle,
+                    this.selectedCandlestickPeriod
+                ),
+                Santiment.getSentiments(
+                    this.user.id
+                ),
+                Santiment.getAggregates(
+                    this.symbols
+                ),
+                Santiment.getFeeds(
+                    this.getAssets()
+                )
             )
             .do(
                 ([tickers, history, sentiment, aggregates, feeds]) => {
@@ -428,6 +452,13 @@ class DomainStore {
     @action setIndexOfSelectedPeriod = (index: number): void => {
         this.indexOfSelectedPeriod = index;
     };
+
+    /**
+     * Selected candlestick period.
+     */
+    @computed get selectedCandlestickPeriod(): CandlestickPeriod {
+        return this.periods[this.indexOfSelectedPeriod];
+    }
 }
 
 const hydrate = create({storage: AsyncStorage});
@@ -448,3 +479,5 @@ Rx.Observable.fromPromise(hydrate('store', domainStore))
             ]
         ),
     );
+
+const numberOfCandlesticksToDownload = 360;
