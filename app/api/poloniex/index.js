@@ -109,7 +109,7 @@ export const getTickers = (
  *      If not specified, 180 days ago date will be used by default.
  * @param {Date} endDate End date.
  *      If not specified, current date will be used by default.
- * @param {number} candlestickPeriod Candlestick period.
+ * @param {CandlestickPeriod} candlestickPeriod Candlestick period.
  *      Poloniex API allows limited set of periods.
  *      For correct usage, you can take period from
  *      one of constants: `candlestickPeriods.thirtyMinutes`,
