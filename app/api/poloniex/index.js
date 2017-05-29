@@ -10,23 +10,22 @@ import axios from 'axios';
 import moment from 'moment';
 import _ from 'lodash';
 import * as PoloniexHttpClient from './httpClient.js';
+import CandlestickPeriod from '../../utils/candlestickPeriod.js';
 
 /**
  * Candlestick periods.
- * 
- * Each period is represented in seconds.
  * 
  * You can check list of available periods here:
  * https://poloniex.com/support/api (`returnChartData` section)
  */
 export const candlestickPeriods = {
-    fiveMinutes: 300,
-    fifteenMinutes: 900,
-    thirtyMinutes: 1800,
-    oneHour: 3600, // not supported by Poloniex API
-    twoHours: 7200,
-    fourHours: 14400,
-    oneDay: 86400
+    fiveMinutes: new CandlestickPeriod(300),
+    fifteenMinutes: new CandlestickPeriod(900),
+    thirtyMinutes: new CandlestickPeriod(1800),
+    oneHour: new CandlestickPeriod(3600), // not supported by Poloniex API
+    twoHours: new CandlestickPeriod(7200),
+    fourHours: new CandlestickPeriod(14400),
+    oneDay: new CandlestickPeriod(86400)
 };
 
 /**
@@ -110,7 +109,7 @@ export const getTickers = (
  *      If not specified, 180 days ago date will be used by default.
  * @param {Date} endDate End date.
  *      If not specified, current date will be used by default.
- * @param {number} candlestickPeriod Candlestick period in seconds, e.g. 14400.
+ * @param {CandlestickPeriod} candlestickPeriod Candlestick period.
  *      Poloniex API allows limited set of periods.
  *      For correct usage, you can take period from
  *      one of constants: `candlestickPeriods.thirtyMinutes`,
@@ -119,10 +118,10 @@ export const getTickers = (
  * @return Observable.
  */
 export const getCandles = (
-    symbols: String[],
+    symbols: string[],
     startDate: Date = moment().subtract(180, 'days').toDate(),
     endDate: Date = moment().toDate(),
-    candlestickPeriod: Number = candlestickPeriods.oneDay
+    candlestickPeriod: CandlestickPeriod = candlestickPeriods.oneDay
 ): any => {
     /**
      * Send request for each symbol.
@@ -167,7 +166,7 @@ export const getCandles = (
                     obj,
                     [
                         symbol,
-                        periodToString(candlestickPeriod)
+                        candlestickPeriod.text
                     ],
                     _.orderBy(
                         candles,

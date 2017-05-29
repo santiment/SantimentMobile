@@ -37,10 +37,60 @@ import FeedScene from './feed';
 
 import AndroidBackButton from 'android-back-button';
 
+import Clock from '../../utils/clock.js';
+
 @observer
 export default class CurrencyDetails extends React.Component {
+
+    appearanceClock: Clock;
+
+    constructor(props) {
+        super(props);
+
+        /**
+         * Initialize appearance clock and
+         * start to measure time interval.
+         */
+        this.appearanceClock = new Clock();
+        this.appearanceClock.start();
+
+        /**
+         * Initialize state.
+         */
+        this.state = {
+            didAppear: false
+        };
+    }
+
+    componentDidMount() {
+        /**
+         * Update state.
+         */
+        this.setState({
+            didAppear: true
+        });
+
+        /**
+         * End to measure appearance time interval.
+         */
+        const appearanceTimeInterval = this.appearanceClock.stop();
+
+        console.log(
+            "CurrencyDetails scene did appear in ",
+            appearanceTimeInterval,
+            " milliseconds"
+        );
+    }
     
     render() {
+        /**
+         * Uncomment the block below to
+         * speed up screen appearance.
+         */
+        /*if (!this.state.didAppear) {
+            return null;
+        }*/
+
         const {navigator, store} = this.props;
 
         const tabs = [

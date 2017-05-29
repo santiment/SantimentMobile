@@ -41,6 +41,8 @@ import type {
 
 import DeviceInfo from 'react-native-device-info';
 
+import CandlestickPeriod from '../../utils/candlestickPeriod.js';
+
 class DomainStore {
     constructor() {
         useStrict(true);
@@ -185,10 +187,10 @@ class DomainStore {
      * Updates history in local storage.
      * 
      * @param {string[]} symbols Array of currency pairs.
-     * @param {number} candlestickPeriod Candlestick period in seconds.
+     * @param {CandlestickPeriod} candlestickPeriod Candlestick period.
      * @return Observable.
      */
-    @action refreshHistory = (symbols: String[], candlestickPeriod: Number): Rx.Observable<any> => {
+    @action refreshHistory = (symbols: string[], candlestickPeriod: CandlestickPeriod): Rx.Observable<any> => {
         /**
          * Console output.
          */
@@ -197,20 +199,30 @@ class DomainStore {
         /**
          * Obtain time interval.
          */
-        const defaultStartDate = moment().subtract(180, 'days').toDate();
-        const defaultEndDate = moment().toDate();
+        const endDate = moment().toDate();
+        
+        const startDate = candlestickPeriod.findStartDate(
+            endDate,
+            numberOfCandlesticksToDownload
+        );
 
         /**
          * Update local storage and return observable.
          */
-        return Poloniex.getCandles(symbols, defaultStartDate, defaultEndDate, candlestickPeriod)
-            .do(
-                history => {
-                    this.setHistory(history);
-                },
-                console.log
-            )
-            .do(() => console.log('Did finish to refresh history'), console.log);
+        return Poloniex.getCandles(
+            this.symbols,
+            startDate,
+            endDate,
+            candlestickPeriod
+        ).do(
+            history => {
+                this.setHistory(history);
+            },
+            console.log
+        ).do(
+            () => console.log('Did finish to refresh history'),
+            console.log
+        );
     };
 
     /**
@@ -376,15 +388,36 @@ class DomainStore {
         console.log("symbols =", JSON.stringify(this.symbols.slice(), null, 2));
 
         /**
+         * Obtain time interval for candles.
+         */
+        const dateForLastCandle = moment().toDate();
+        
+        const dateForFirstCandle = this.selectedCandlestickPeriod.findStartDate(
+            dateForLastCandle,
+            numberOfCandlesticksToDownload
+        );
+
+        /**
          * Update local storage and return observable.
          */
         return Rx.Observable
             .forkJoin(
                 Poloniex.getTickers(),
-                Poloniex.getCandles(this.symbols),
-                Santiment.getSentiments(this.user.id),
-                Santiment.getAggregates(this.symbols),
-                Santiment.getFeeds(this.getAssets()),
+                Poloniex.getCandles(
+                    this.symbols,
+                    dateForFirstCandle,
+                    dateForLastCandle,
+                    this.selectedCandlestickPeriod
+                ),
+                Santiment.getSentiments(
+                    this.user.id
+                ),
+                Santiment.getAggregates(
+                    this.symbols
+                ),
+                Santiment.getFeeds(
+                    this.getAssets()
+                )
             )
             .do(
                 ([tickers, history, sentiment, aggregates, feeds]) => {
@@ -400,27 +433,32 @@ class DomainStore {
     }
 
     /**
-     * Selected candlestick period.
+     * Periods for displaying on the list.
      */
-    @observable selectedCandlestickPeriod: Number = Poloniex.candlestickPeriods.oneDay;
+    @observable periods: CandlestickPeriod[] = [
+        Poloniex.candlestickPeriods.twoHours,
+        Poloniex.candlestickPeriods.fourHours,
+        Poloniex.candlestickPeriods.oneDay
+    ];
 
     /**
-     * Updates selected candlestick period.
+     * Index of selected candlestick period.
      */
-    @action setSelectedCandlestickPeriod = (period: Number): void => {
-        /**
-         * Update selected candlestick period.
-         */
-        this.selectedCandlestickPeriod = period;
+    @observable indexOfSelectedPeriod: number = 2;
 
-        /**
-         * Console output.
-         */
-        console.log(
-            "Did select candlestick period:\n",
-            period
-        );
+    /**
+     * Updates index of selected candlestick period.
+     */
+    @action setIndexOfSelectedPeriod = (index: number): void => {
+        this.indexOfSelectedPeriod = index;
     };
+
+    /**
+     * Selected candlestick period.
+     */
+    @computed get selectedCandlestickPeriod(): CandlestickPeriod {
+        return this.periods[this.indexOfSelectedPeriod];
+    }
 }
 
 const hydrate = create({storage: AsyncStorage});
@@ -441,3 +479,5 @@ Rx.Observable.fromPromise(hydrate('store', domainStore))
             ]
         ),
     );
+
+const numberOfCandlesticksToDownload = 360;

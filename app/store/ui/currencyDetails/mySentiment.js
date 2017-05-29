@@ -26,6 +26,10 @@ import moment from 'moment';
 
 import * as Poloniex from '../../../api/poloniex';
 
+import CandlestickPeriod from '../../../utils/candlestickPeriod.js';
+
+import Clock from '../../../utils/clock.js';
+
 export default class MySentimentUiStore {
     
     /**
@@ -40,35 +44,14 @@ export default class MySentimentUiStore {
     }
 
     /**
-     * Periods for displaying on the list.
-     */
-    @observable periods: Number[] = [
-        Poloniex.candlestickPeriods.twoHours,
-        Poloniex.candlestickPeriods.fourHours,
-        Poloniex.candlestickPeriods.oneDay
-    ];
-
-    /**
-     * Index of selected candlestick period.
-     */
-    @observable indexOfSelectedPeriod: Number = 2;
-
-    /**
-     * Updates index of selected candlestick period.
-     */
-    @action setIndexOfSelectedPeriod = (index: Number): void => {
-        this.indexOfSelectedPeriod = index;
-    };
-
-    /**
      * Shows whether data is loading now.
      */
-    @observable isLoading: Boolean = false;
+    @observable isLoading: boolean = false;
 
     /**
      * Updates `isLoading` flag.
      */
-    @action setIsLoading = (value: Boolean): void => {
+    @action setIsLoading = (value: boolean): void => {
         this.isLoading = value;
     };
 
@@ -101,44 +84,65 @@ export default class MySentimentUiStore {
     }
 
     @computed get chartData(): Object[] {
-        const formattedPeriod = Poloniex.periodToString(
-            this.periods[this.indexOfSelectedPeriod]
-        );
+        /**
+         * Start to measure time interval.
+         */
+        const clock = new Clock();
+        clock.start();
+
+        /**
+         * Obtain candles.
+         */
+        const selectedPeriod = this.domainStore.periods[this.domainStore.indexOfSelectedPeriod];
 
         const timeseries = _.get(
             this.domainStore.history,
             [
                 `${this.ticker.symbol}`,
-                `${formattedPeriod}`
+                `${selectedPeriod.text}`
             ],
             []
         );
 
-        const sentimentsForCurrentSymbol = _.filter(
-            this.domainStore.sentiments.slice(),
-            s => { return _.isEqual(s.asset, this.domainStore.selectedSymbol) }
+        const sentimentsForCurrentSymbolHashMap = {};
+        
+        this.domainStore.sentiments.forEach(
+            s => {
+                if (_.isEqual(s.asset, this.domainStore.selectedSymbol)) {
+                    const correctedSentimentTimestampInSeconds = s.timestamp - (s.timestamp % selectedPeriod.durationInSeconds);
+                    sentimentsForCurrentSymbolHashMap[correctedSentimentTimestampInSeconds] = s;
+                }
+            }
         );
 
         const candles = _.map(
             timeseries,
             t => {
-                // const date = moment.unix(t.date);
-                const candleTimestamp = new Date(t.timestamp * 1000).setHours(0, 0, 0, 0);
+                const correctedCandleTimestampInSeconds = t.timestamp - (t.timestamp % selectedPeriod.durationInSeconds);
+                const sentimentObject = sentimentsForCurrentSymbolHashMap[correctedCandleTimestampInSeconds];
 
-
-                const sentimentObject = _.find(sentimentsForCurrentSymbol, s => {
-                    const sentimentTimestamp = new Date(s.timestamp * 1000).setHours(0, 0, 0, 0);
-
-                    return candleTimestamp === sentimentTimestamp;
-                });
                 return {
-                    timestamp: candleTimestamp,
+                    timestamp: correctedCandleTimestampInSeconds,
                     candle: _.pick(t, ['open', 'high', 'low', 'close']),
                     sentiment: _.get(sentimentObject, 'sentiment'),
                 }
             }
         );
 
+        /**
+         * Stop to measure time interval.
+         */
+        const algorithmTimeInterval = clock.stop();
+        
+        console.log(
+            "sentiment-to-candle algorithm has finished in ",
+            algorithmTimeInterval,
+            " milliseconds"
+        );
+
+        /**
+         * Return candles.
+         */
         return candles;
     }
 
@@ -160,7 +164,7 @@ export default class MySentimentUiStore {
     }
 
     @action refresh = (): void => {
-        const selectedCandlestickPeriod = this.periods[this.indexOfSelectedPeriod];
+        const selectedCandlestickPeriod = this.domainStore.periods[this.domainStore.indexOfSelectedPeriod];
 
         Rx.Observable
             .forkJoin(
@@ -189,25 +193,25 @@ export default class MySentimentUiStore {
             );
     };
 
-    @computed get dropdownOptions(): String[] {
-        return this.periods.map(Poloniex.periodToString);
+    @computed get dropdownOptions(): string[] {
+        return this.domainStore.periods.map((period) => {
+            return period.text;
+        });
     }
 
-    @computed get dropdownDefaultValue(): String {
+    @computed get dropdownDefaultValue(): string {
         /**
          * Obtain selected period by index.
          */
-        const selectedPeriod = this.periods[this.indexOfSelectedPeriod];
+        const selectedPeriod = this.domainStore.periods[this.domainStore.indexOfSelectedPeriod];
         
         /**
          * Return string containing formatted period.
          */
-        return Poloniex.periodToString(
-            selectedPeriod
-        );
+        return selectedPeriod.text;
     }
 
-    @computed get dropdownDefaultIndex(): Number {
-        return this.indexOfSelectedPeriod;
+    @computed get dropdownDefaultIndex(): number {
+        return this.domainStore.indexOfSelectedPeriod;
     }
 }
