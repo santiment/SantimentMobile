@@ -197,12 +197,8 @@ export default class MySentimentUiStore {
         this.domainStore.sentiments.forEach(
             s => {
                 if (_.isEqual(s.asset, this.domainStore.selectedSymbol)) {
-                    console.log("Source timestamp: ", new Date(s.timestamp * 1000));
                     const correctedSentimentTimestampInSeconds = s.timestamp - (s.timestamp % selectedPeriod);
-                    console.log("Corrected timestamp: ", new Date(correctedSentimentTimestampInSeconds * 1000));
-                    const correctedSentimentTimestampInMilliseconds = correctedSentimentTimestampInSeconds * 1000;
-                    
-                    sentimentsForCurrentSymbolHashMap[correctedSentimentTimestampInMilliseconds] = s;
+                    sentimentsForCurrentSymbolHashMap[correctedSentimentTimestampInSeconds] = s;
                 }
             }
         );
@@ -211,12 +207,10 @@ export default class MySentimentUiStore {
             timeseries,
             t => {
                 const correctedCandleTimestampInSeconds = t.timestamp - (t.timestamp % selectedPeriod);
-                const correctedCandleTimestampInMilliseconds = correctedCandleTimestampInSeconds * 1000;
-
-                const sentimentObject = sentimentsForCurrentSymbolHashMap[correctedCandleTimestampInMilliseconds];
+                const sentimentObject = sentimentsForCurrentSymbolHashMap[correctedCandleTimestampInSeconds];
 
                 return {
-                    timestamp: correctedCandleTimestampInMilliseconds,
+                    timestamp: correctedCandleTimestampInSeconds,
                     candle: _.pick(t, ['open', 'high', 'low', 'close']),
                     sentiment: _.get(sentimentObject, 'sentiment'),
                 }
