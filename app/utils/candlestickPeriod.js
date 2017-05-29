@@ -63,8 +63,15 @@ export default class CandlestickPeriod {
         }
     }
 
+    /**
+     * Returns start date for candlestick chart.
+     * 
+     * @param {Date} endDate End date for candlestick chart.
+     * @param {number} requiredNumberOfCandles Number of candlesticks to be displayed.
+     * @return Start date for candlestick chart.
+     */
     findStartDate = (endDate: Date, requiredNumberOfCandles: number): Date => {
-        const endTimestampInMilliseconds = endDate.getTime() / 1000;
+        const endTimestampInMilliseconds = endDate.getTime();
         const totalTimeIntervalInMilliseconds = this.durationInMilliseconds * requiredNumberOfCandles;
         const startTimestampInMilliseconds = endTimestampInMilliseconds - totalTimeIntervalInMilliseconds;
         return new Date(startTimestampInMilliseconds);
