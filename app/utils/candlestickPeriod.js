@@ -80,11 +80,6 @@ class CandlestickPeriod {
                 'seconds',
             )
             .toDate();
-
-        /*const endTimestampInMilliseconds = endDate.getTime();
-        const totalTimeIntervalInMilliseconds = this.durationInMilliseconds * requiredNumberOfCandles;
-        const startTimestampInMilliseconds = endTimestampInMilliseconds - totalTimeIntervalInMilliseconds;
-        return new Date(startTimestampInMilliseconds);*/
     }
 }
 
