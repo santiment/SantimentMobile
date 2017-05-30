@@ -1,8 +1,6 @@
 /**
- * Created by workplace on 31/01/2017.
  * @flow
  */
-
 
 import React from 'react';
 
