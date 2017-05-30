@@ -1,69 +1,86 @@
 /**
- * Created by workplace on 01/02/2017.
  * @flow
  */
 
-'use strict';
-
 import React from 'react';
-import ReactNative from 'react-native';
+import { View, StyleSheet } from 'react-native';
+import { Icon, SearchBar } from 'react-native-elements';
+import { KeyboardAwareListView } from 'react-native-keyboard-aware-scrollview';
+import { observer } from 'mobx-react/native';
+import NavigationBar from 'react-native-navbar';
+import AndroidBackButton from 'android-back-button';
 
-let {View, StyleSheet, BackAndroid} = ReactNative;
-import {Icon, SearchBar} from 'react-native-elements'
-import {KeyboardAwareListView} from 'react-native-keyboard-aware-scrollview'
+import Cell from './cell';
 
-import NavigationBar from 'react-native-navbar'
 
-import {observer} from 'mobx-react/native'
+const propTypes = {
+    navigator: React.PropTypes.shape({
+        push: React.PropTypes.func.isRequired,
+        pop: React.PropTypes.func.isRequired,
+    }).isRequired,
+    store: React.PropTypes.shape({
+        addSymbol: React.PropTypes.func.isRequired,
+        setQuery: React.PropTypes.func.isRequired,
+        dataSource: React.PropTypes.any.isRequired,
+    }).isRequired,
+};
 
-import Cell from './cell'
-
-import AndroidBackButton from 'android-back-button'
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+    listView: {
+        backgroundColor: 'white',
+        flex: 1,
+        marginTop: 0,
+    },
+    toolbarButton: {
+        padding: 10,
+    },
+});
 
 @observer
-export default class AddCurrency extends React.Component {
-    
-    render() {
-        const {navigator, store} = this.props;
+class AddCurrency extends React.PureComponent {
 
-        const renderRow = (data, sectionID) => {
-            return (
-                <Cell
-                    key={sectionID}
-                    symbol={data.displaySymbol}
-                    onPress={() => {
+    render() {
+        const { navigator, store } = this.props;
+
+        const renderRow = (data, sectionID) => (
+            <Cell
+                key={sectionID}
+                symbol={data.displaySymbol}
+                onPress={() => {
                         /**
                          * Update Add Currency UI Store.
                          */
-                        store.addSymbol(data.symbol);
-                        store.setQuery('');
+                    store.addSymbol(data.symbol);
+                    store.setQuery('');
 
                         /**
                          * Update domain store.
                          */
-                        store.domainStore.refreshTickers();
-                        store.domainStore.refreshAggregates(
-                            [data.symbol]
+                    store.domainStore.refreshTickers();
+                    store.domainStore.refreshAggregates(
+                            [data.symbol],
                         );
 
                         /**
                          * Navigate to previous scene.
                          */
-                        navigator.pop();
-                    }}
-                />
-            )
-        };
+                    navigator.pop();
+                }}
+            />
+            );
 
         return (
             <View style={styles.container}>
                 <NavigationBar
-                    title={{title: "Add Currency"}}
+                    title={{ title: 'Add Currency' }}
                     leftButton={
                         <Icon
                             containerStyle={styles.toolbarButton}
                             name="close"
-                            onPress={ () => {
+                            onPress={() => {
                                 navigator.pop();
                                 store.setQuery('');
                             }}
@@ -74,18 +91,18 @@ export default class AddCurrency extends React.Component {
                 <SearchBar
                     lightTheme
                     onChangeText={store.setQuery}
-                    placeholder='Search Coins'
+                    placeholder="Search Coins"
                     autoCorrect={false}
                     autoCapitalize="none"
                 />
 
                 <KeyboardAwareListView
-                    keyboardDismissMode='on-drag'
-                    keyboardShouldPersistTaps='always'
+                    keyboardDismissMode="on-drag"
+                    keyboardShouldPersistTaps="always"
                     style={styles.listView}
                     renderRow={renderRow}
                     dataSource={store.dataSource}
-                    enableEmptySections={true}
+                    enableEmptySections
                     removeClippedSubviews={false}
                 />
 
@@ -101,28 +118,6 @@ export default class AddCurrency extends React.Component {
     }
 }
 
-AddCurrency.propTypes = {
-    navigator: React.PropTypes.shape({
-        push: React.PropTypes.func.isRequired,
-        pop: React.PropTypes.func.isRequired
-    }),
-    store: React.PropTypes.shape({
-        addSymbol: React.PropTypes.func.isRequired,
-        setQuery: React.PropTypes.func.isRequired,
-        dataSource: React.PropTypes.any.isRequired,
-    }),
-};
+AddCurrency.propTypes = propTypes;
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    listView: {
-        backgroundColor: 'white',
-        flex: 1,
-        marginTop: 0,
-    },
-    toolbarButton: {
-        padding: 10,
-    }
-});
+export default AddCurrency;

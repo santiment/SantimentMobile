@@ -3,27 +3,11 @@
  * @flow
  */
 
-'use strict';
 
 import React from 'react';
-import ReactNative from 'react-native';
-let {View, StyleSheet, Text, TouchableWithoutFeedback} = ReactNative;
+import { View, StyleSheet, Text, TouchableWithoutFeedback } from 'react-native';
 
-export default class AddCurrencyCell extends React.Component {
-    render () {
-        return (
-            <TouchableWithoutFeedback onPress={this.props.onPress}>
-                <View style={styles.container}>
-                    <Text style={styles.text}>
-                        {this.props.symbol}
-                    </Text>
-                </View>
-            </TouchableWithoutFeedback>
-        )
-    }
-}
-
-AddCurrencyCell.propTypes = {
+const propTypes = {
     symbol: React.PropTypes.string.isRequired,
     onPress: React.PropTypes.func.isRequired,
 };
@@ -36,11 +20,30 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         borderBottomColor: '#CCCCCC',
         borderBottomWidth: StyleSheet.hairlineWidth,
-        height: 50
+        height: 50,
     },
     text: {
         flex: 1,
         marginLeft: 10,
-        marginRight: 10
-    }
+        marginRight: 10,
+    },
 });
+
+class AddCurrencyCell extends React.PureComponent {
+    render() {
+        return (
+            <TouchableWithoutFeedback onPress={this.props.onPress}>
+                <View style={styles.container}>
+                    <Text style={styles.text}>
+                        {this.props.symbol}
+                    </Text>
+                </View>
+            </TouchableWithoutFeedback>
+        );
+    }
+}
+
+AddCurrencyCell.propTypes = propTypes;
+
+
+export default AddCurrencyCell;
