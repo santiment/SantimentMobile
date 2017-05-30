@@ -55,3 +55,7 @@ playground.js
 
 # VS Code
 .vscode/.react/debuggerWorker.js
+
+# Sublime Text 3
+*.sublime-project
+*.sublime-workspace
