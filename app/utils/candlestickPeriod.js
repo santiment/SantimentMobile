@@ -1,6 +1,10 @@
+'use strict';
+
 /**
  * @flow
  */
+
+import moment from 'moment';
 
 /**
  * Represents candlestick period.
@@ -8,42 +12,42 @@
 class CandlestickPeriod {
 
     constructor(durationInSeconds: number) {
-        this.durationInSeconds = durationInSeconds;
+        this._durationInSeconds = durationInSeconds;
     }
 
     /**
      * Duration in days.
      */
     get durationInDays(): number {
-        return this.durationInSeconds / 86400;
+        return this._durationInSeconds / 86400;
     }
 
     /**
      * Duration in hours.
      */
     get durationInHours(): number {
-        return this.durationInSeconds / 3600;
+        return this._durationInSeconds / 3600;
     }
 
     /**
      * Duration in minutes.
      */
     get durationInMinutes(): number {
-        return this.durationInSeconds / 60;
+        return this._durationInSeconds / 60;
     }
 
     /**
      * Duration in seconds.
      */
     get durationInSeconds(): number {
-        return this.durationInSeconds;
+        return this._durationInSeconds;
     }
 
     /**
      * Duration in milliseconds.
      */
     get durationInMilliseconds(): number {
-        return this.durationInSeconds * 1000;
+        return this._durationInSeconds * 1000;
     }
 
     /**
@@ -70,10 +74,17 @@ class CandlestickPeriod {
      * @return Start date for candlestick chart.
      */
     findStartDate = (endDate: Date, requiredNumberOfCandles: number): Date => {
-        const endTimestampInMilliseconds = endDate.getTime();
+        return moment(endDate)
+            .subtract(
+                (this.durationInMilliseconds * requiredNumberOfCandles) / 1000,
+                'seconds',
+            )
+            .toDate();
+
+        /*const endTimestampInMilliseconds = endDate.getTime();
         const totalTimeIntervalInMilliseconds = this.durationInMilliseconds * requiredNumberOfCandles;
         const startTimestampInMilliseconds = endTimestampInMilliseconds - totalTimeIntervalInMilliseconds;
-        return new Date(startTimestampInMilliseconds);
+        return new Date(startTimestampInMilliseconds);*/
     }
 }
 
