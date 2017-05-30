@@ -13,7 +13,7 @@ import moment from 'moment';
 import { CombinedChart } from 'react-native-charts-wrapper';
 
 const propTypes = {
-    style: React.PropTypes.Object.isRequired,
+    style: React.PropTypes.object.isRequired,
     data: React.PropTypes.arrayOf(
         React.PropTypes.shape({
             timestamp: React.PropTypes.number.isRequired,

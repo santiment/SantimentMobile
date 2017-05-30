@@ -15,10 +15,10 @@ import { CurrenciesRoute, AddCurrencyRoute, CurrencyDetailsRoute, EditCurrencies
 const propTypes = {
     store: React.PropTypes.shape({
         ui: React.PropTypes.shape({
-            currencies: React.PropTypes.Object.isRequired,
-            currencyDetails: React.PropTypes.Object.isRequired,
-            addCurrency: React.PropTypes.Object.isRequired,
-            editCurrencies: React.PropTypes.Object.isRequired,
+            currencies: React.PropTypes.object.isRequired,
+            currencyDetails: React.PropTypes.object.isRequired,
+            addCurrency: React.PropTypes.object.isRequired,
+            editCurrencies: React.PropTypes.object.isRequired,
         }).isRequired,
     }).isRequired,
 };

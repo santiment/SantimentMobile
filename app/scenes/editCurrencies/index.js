@@ -17,11 +17,11 @@ import Cell from './cell';
 
 const propTypes = {
     navigator: React.PropTypes.shape({
-        push: React.propTypes.func.isRequired,
-        pop: React.propTypes.func.isRequired,
+        push: React.PropTypes.func.isRequired,
+        pop: React.PropTypes.func.isRequired,
     }).isRequired,
     store: React.PropTypes.shape({
-        removeSymbol: React.propTypes.func.isRequired,
+        removeSymbol: React.PropTypes.func.isRequired,
         dataSource: React.PropTypes.any.isRequired,
     }).isRequired,
 };
