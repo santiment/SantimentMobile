@@ -1,29 +1,22 @@
 /**
- * Created by workplace on 14/04/2017.
  * @flow
  */
 
-'use strict';
-
 import _ from 'lodash';
 
-import ReactNative, {
-    ListView,
-    Alert
+import {
+    Alert,
 } from 'react-native';
 
-import mobx, {
+import {
     observable,
     computed,
-    autorun,
     action,
-    useStrict
+    useStrict,
 } from 'mobx';
 
-import moment from 'moment';
+class FeedUiStore {
 
-export default class FeedUiStore {
-    
     /**
      * Domain store.
      */
@@ -45,9 +38,9 @@ export default class FeedUiStore {
          * before updating domain store.
          */
         const assetsToUpdate = [
-            this.asset
+            this.asset,
         ];
-        
+
         /**
          * Update feeds for current asset.
          */
@@ -61,10 +54,10 @@ export default class FeedUiStore {
                         {
                             text: 'OK',
                             onPress: () => {
-                            }
-                        }
-                    ]
-                )
+                            },
+                        },
+                    ],
+                ),
             );
     };
 
@@ -84,20 +77,20 @@ export default class FeedUiStore {
      * Ticker.
      */
     @computed get ticker(): Object {
-        const findTicker = (arr) => _.find(arr, t => _.isEqual(t.symbol, this.domainStore.selectedSymbol));
-        const formatTicker = (t) => { return {
+        const findTicker = arr => _.find(arr, t => _.isEqual(t.symbol, this.domainStore.selectedSymbol));
+        const formatTicker = t => ({
             symbol: t.symbol,
-            displaySymbol: _.replace(t.symbol, "_", "/"),
+            displaySymbol: _.replace(t.symbol, '_', '/'),
             dailyChangePercent: t.dailyChangePercent.toFixed(2),
             price: (() => {
                 const p = t.price.toPrecision(6);
-                if (_.includes(p, "e") || p.length > 10) {
+                if (_.includes(p, 'e') || p.length > 10) {
                     return t.price.toFixed(8);
                 }
                 return p;
             })(),
             volume: t.volume,
-        }};
+        });
 
         const getTicker = _.flow(findTicker, formatTicker);
 
@@ -108,7 +101,7 @@ export default class FeedUiStore {
      * Asset.
      */
     @computed get asset(): String {
-        return _.split(this.domainStore.selectedSymbol, '_')[0]
+        return _.split(this.domainStore.selectedSymbol, '_')[0];
     }
 
     /**
@@ -121,7 +114,7 @@ export default class FeedUiStore {
         const feed = _.get(
             this.domainStore.feeds,
             [this.asset],
-            []
+            [],
         );
 
         /**
@@ -133,14 +126,14 @@ export default class FeedUiStore {
         /**
          * Obtain formatted feed.
          */
-        const formattedFeed = _.map(_.orderBy(feed, ['timestamp'], ['desc']), m => {
+        const formattedFeed = _.map(_.orderBy(feed, ['timestamp'], ['desc']), (m) => {
             /**
              * Obtain unique ID for current message.
              * Currently it's just a message index,
              * but later we can just the algorithm
              * that generates IDs.
              */
-            const messageUniqueIdentifier = messageIndex;
+            // const messageUniqueIdentifier = messageIndex;
 
             /**
              * Obtain creation date for current message.
@@ -152,7 +145,7 @@ export default class FeedUiStore {
             /**
              * Increment index for next message.
              */
-            messageIndex++;
+            messageIndex += 1;
 
             /**
              * Return formatted message object.
@@ -164,25 +157,27 @@ export default class FeedUiStore {
                 user: {
                     _id: m.username,
                     name: m.username,
-                }
-            }
+                },
+            };
         });
 
         /**
          * Console output (helpful for checking feed's content).
          */
         console.log(
-            "formattedFeed:\n",
+            'formattedFeed:\n',
             JSON.stringify(
                 formattedFeed,
                 null,
-                2
-            )
+                2,
+            ),
         );
 
         /**
          * Return formatted feed.
          */
-        return formattedFeed
+        return formattedFeed;
     }
 }
+
+export default FeedUiStore;

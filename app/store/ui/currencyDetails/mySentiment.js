@@ -1,37 +1,29 @@
 /**
- * Created by workplace on 23/03/2017.
  * @flow
  */
 
-'use strict';
-
-import ReactNative, {
+import {
     ListView,
-    Alert
+    Alert,
 } from 'react-native';
 
 import _ from 'lodash';
 
 import Rx from 'rxjs';
 
-import mobx, {
+import {
     observable,
     computed,
-    autorun,
     action,
-    useStrict
+    useStrict,
 } from 'mobx';
 
 import moment from 'moment';
 
-import * as Poloniex from '../../../api/poloniex';
+import Clock from '../../../utils/clock';
 
-import CandlestickPeriod from '../../../utils/candlestickPeriod.js';
+class MySentimentUiStore {
 
-import Clock from '../../../utils/clock.js';
-
-export default class MySentimentUiStore {
-    
     /**
      * Domain store.
      */
@@ -56,20 +48,20 @@ export default class MySentimentUiStore {
     };
 
     @computed get ticker(): Object {
-        const findTicker = (arr) => _.find(arr, t => _.isEqual(t.symbol, this.domainStore.selectedSymbol));
-        const formatTicker = (t) => { return {
+        const findTicker = arr => _.find(arr, t => _.isEqual(t.symbol, this.domainStore.selectedSymbol));
+        const formatTicker = t => ({
             symbol: t.symbol,
-            displaySymbol: _.replace(t.symbol, "_", "/"),
+            displaySymbol: _.replace(t.symbol, '_', '/'),
             dailyChangePercent: t.dailyChangePercent.toFixed(2),
             price: (() => {
                 const p = t.price.toPrecision(6);
-                if (_.includes(p, "e") || p.length > 10) {
+                if (_.includes(p, 'e') || p.length > 10) {
                     return t.price.toFixed(8);
                 }
                 return p;
             })(),
             volume: t.volume,
-        }};
+        });
 
         const getTicker = _.flow(findTicker, formatTicker);
 
@@ -79,7 +71,7 @@ export default class MySentimentUiStore {
     @computed get sentimentsForCurrentSymbol(): Object[] {
         return _.filter(
             this.domainStore.sentiments.slice(),
-            s => { return _.isEqual(s.asset, this.domainStore.selectedSymbol) }
+            s => _.isEqual(s.asset, this.domainStore.selectedSymbol),
         );
     }
 
@@ -99,25 +91,25 @@ export default class MySentimentUiStore {
             this.domainStore.history,
             [
                 `${this.ticker.symbol}`,
-                `${selectedPeriod.text}`
+                `${selectedPeriod.text}`,
             ],
-            []
+            [],
         );
 
         const sentimentsForCurrentSymbolHashMap = {};
-        
+
         this.domainStore.sentiments.forEach(
-            s => {
+            (s) => {
                 if (_.isEqual(s.asset, this.domainStore.selectedSymbol)) {
                     const correctedSentimentTimestampInSeconds = s.timestamp - (s.timestamp % selectedPeriod.durationInSeconds);
                     sentimentsForCurrentSymbolHashMap[correctedSentimentTimestampInSeconds] = s;
                 }
-            }
+            },
         );
 
         const candles = _.map(
             timeseries,
-            t => {
+            (t) => {
                 const correctedCandleTimestampInSeconds = t.timestamp - (t.timestamp % selectedPeriod.durationInSeconds);
                 const sentimentObject = sentimentsForCurrentSymbolHashMap[correctedCandleTimestampInSeconds];
 
@@ -125,19 +117,19 @@ export default class MySentimentUiStore {
                     timestamp: correctedCandleTimestampInSeconds,
                     candle: _.pick(t, ['open', 'high', 'low', 'close']),
                     sentiment: _.get(sentimentObject, 'sentiment'),
-                }
-            }
+                };
+            },
         );
 
         /**
          * Stop to measure time interval.
          */
         const algorithmTimeInterval = clock.stop();
-        
+
         console.log(
-            "sentiment-to-candle algorithm has finished in ",
+            'sentiment-to-candle algorithm has finished in ',
             algorithmTimeInterval,
-            " milliseconds"
+            ' milliseconds',
         );
 
         /**
@@ -147,20 +139,20 @@ export default class MySentimentUiStore {
     }
 
     @computed get rows(): Object[] {
-        const sortByDate = (arr) => _.orderBy(arr, ['date'], ['desc']);
-        const formatDates = (arr) => _.map(arr, s => { return {...s, date: moment.unix(s.timestamp).fromNow()}});
-        const formatPrice = (arr) => _.map(arr, s => { return {
+        const sortByDate = arr => _.orderBy(arr, ['date'], ['desc']);
+        const formatDates = arr => _.map(arr, s => ({ ...s, date: moment.unix(s.timestamp).fromNow() }));
+        const formatPrice = arr => _.map(arr, s => ({
             ...s,
-            price: _.isEmpty(s.price) ? "" : s.price
-        }});
+            price: _.isEmpty(s.price) ? '' : s.price,
+        }));
 
         return _.flow(sortByDate, formatDates, formatPrice)(this.sentimentsForCurrentSymbol.slice());
     }
 
-    _dataSource = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+    ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
 
     @computed get dataSource(): Object {
-        return this._dataSource.cloneWithRows(this.rows.slice());
+        return this.ds.cloneWithRows(this.rows.slice());
     }
 
     @action refresh = (): void => {
@@ -169,13 +161,13 @@ export default class MySentimentUiStore {
         Rx.Observable
             .forkJoin(
                 this.domainStore.refreshSentiments(
-                    this.domainStore.user.id
+                    this.domainStore.user.id,
                 ),
                 this.domainStore.refreshHistory(
                     this.domainStore.symbols,
-                    selectedCandlestickPeriod
+                    selectedCandlestickPeriod,
                 ),
-                this.domainStore.refreshTickers()
+                this.domainStore.refreshTickers(),
             )
             .subscribe(
                 () => { },
@@ -186,17 +178,15 @@ export default class MySentimentUiStore {
                         {
                             text: 'OK',
                             onPress: () => {
-                            }
-                        }
-                    ]
-                )
+                            },
+                        },
+                    ],
+                ),
             );
     };
 
     @computed get dropdownOptions(): string[] {
-        return this.domainStore.periods.map((period) => {
-            return period.text;
-        });
+        return this.domainStore.periods.map(period => period.text);
     }
 
     @computed get dropdownDefaultValue(): string {
@@ -204,7 +194,7 @@ export default class MySentimentUiStore {
          * Obtain selected period by index.
          */
         const selectedPeriod = this.domainStore.periods[this.domainStore.indexOfSelectedPeriod];
-        
+
         /**
          * Return string containing formatted period.
          */
@@ -215,3 +205,6 @@ export default class MySentimentUiStore {
         return this.domainStore.indexOfSelectedPeriod;
     }
 }
+
+export default MySentimentUiStore;
+

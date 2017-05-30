@@ -1,16 +1,13 @@
 /**
- * Created by workplace on 23/03/2017.
  * @flow
  */
 
-'use strict';
+import { useStrict } from 'mobx';
 
-import {useStrict} from 'mobx'
-
-import CurrenciesUiStore from './currencies'
-import AddCurrencyUiStore from './addCurrencies'
-import EditCurrenciesUiStore from './editCurrencies'
-import CurrencyDetailsUiStore from './currencyDetails'
+import CurrenciesUiStore from './currencies';
+import AddCurrencyUiStore from './addCurrencies';
+import EditCurrenciesUiStore from './editCurrencies';
+import CurrencyDetailsUiStore from './currencyDetails';
 
 export default class UiStore {
     currencies: any;

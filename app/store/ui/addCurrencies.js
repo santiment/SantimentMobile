@@ -1,27 +1,23 @@
 /**
- * Created by workplace on 23/03/2017.
  * @flow
  */
 
-'use strict';
+import _ from 'lodash';
 
-import _ from 'lodash'
-
-import ReactNative, {
+import {
     ListView,
-    Alert
+    Alert,
 } from 'react-native';
 
-import mobx, {
+import {
     observable,
     computed,
-    autorun,
     action,
-    useStrict
+    useStrict,
 } from 'mobx';
 
-export default class AddCurrencyUiStore {
-    
+class AddCurrencyUiStore {
+
     domainStore: any;
 
     constructor(domainStore: any) {
@@ -30,7 +26,7 @@ export default class AddCurrencyUiStore {
         this.domainStore = domainStore;
     }
 
-    @observable query: String = "";
+    @observable query: String = '';
     @action setQuery = (query: String): void => {
         this.query = query;
     };
@@ -44,8 +40,8 @@ export default class AddCurrencyUiStore {
                     'Refresh Error',
                     error.toString(),
                     [
-                        {text: 'OK', onPress: () => {}},
-                    ]
+                        { text: 'OK', onPress: () => {} },
+                    ],
                 ),
             );
     };
@@ -53,25 +49,27 @@ export default class AddCurrencyUiStore {
     @computed get rows(): Object[] {
         const symbols: Object[] = _.map(
             this.domainStore.tickers,
-            t => {
+            (t) => {
                 const symbol = _.get(t, 'symbol');
                 return {
-                    symbol: symbol,
-                    displaySymbol: _.replace(symbol, "_", "/")
-                }
-            }
+                    symbol,
+                    displaySymbol: _.replace(symbol, '_', '/'),
+                };
+            },
         );
 
         const rows: Object[] = _.filter(symbols, s => _.includes(
             _.toLower(s.displaySymbol),
-            _.toLower(this.query)
+            _.toLower(this.query),
         ));
 
-        return rows
+        return rows;
     }
 
-    _dataSource = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+    ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     @computed get dataSource(): Object {
-        return this._dataSource.cloneWithRows(this.rows.slice());
+        return this.ds.cloneWithRows(this.rows.slice());
     }
 }
+
+export default AddCurrencyUiStore;
