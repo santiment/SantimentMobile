@@ -4,8 +4,12 @@
     "browser": true
   },
   "plugins": [
-    "react"
+    "react",
+    "react-native"
   ],
+  "ecmaFeatures": {
+    "jsx": true
+  },
   "extends": "airbnb",
   "rules": {
     "indent": ["error", 4],
@@ -22,5 +26,9 @@
       "ignoreTemplateLiterals": true,
     }],
     "no-unused-vars": ["error", { "vars": "all", "args": "none", "ignoreRestSiblings": true }],
+    "react-native/no-unused-styles": 2,
+    "react-native/split-platform-components": 2,
+    "react-native/no-inline-styles": 2,
+    "react-native/no-color-literals": 0,
   }
 }
