@@ -1,17 +1,12 @@
 {
     "compilerOptions": {
         "target": "es2017",
-        "allowJs": true,
         "module": "system",
-        "moduleResolution": "node",
         "sourceMap": true,
         "emitDecoratorMetadata": true,
         "experimentalDecorators": true,
         "removeComments": false,
-        "noImplicitAny": false,
-        "allowSyntheticDefaultImports": true,
-        "flow.useNPMPackagedFlow": true,
-        "javascript.validate.enable": false
+        "allowSyntheticDefaultImports": true
     },
     "exclude": [
         "node_modules"
