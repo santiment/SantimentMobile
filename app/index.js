@@ -9,7 +9,7 @@ import React from 'react';
 import AppNavigator from './navigator';
 import Store from './store';
 
-class App extends React.Component {
+class App extends React.PureComponent {
     render() {
         return (
             <AppNavigator store={Store} />
