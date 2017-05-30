@@ -6,12 +6,21 @@
   "plugins": [
     "react"
   ],
-  "extends": [
-    "eslint:recommended",
-    "plugin:react/recommended"
-  ],
+  "extends": "airbnb",
   "rules": {
-    "no-console": 0,
-    "no-unused-vars": 0
+    "indent": ["error", 4],
+    "react/jsx-indent-props": ["error", 4],
+    "react/jsx-indent": ["error", 4],
+    "react/jsx-filename-extension": ["error", { "extensions": [".js"] }],
+    "global-require": "off",
+    "no-console": "off",
+    "max-len": ["error", 120, 2, {
+      "ignoreUrls": true,
+      "ignoreComments": false,
+      "ignoreRegExpLiterals": true,
+      "ignoreStrings": true,
+      "ignoreTemplateLiterals": true,
+    }],
+    "no-unused-vars": ["error", { "vars": "all", "args": "none", "ignoreRestSiblings": true }],
   }
 }
