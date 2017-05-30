@@ -33,13 +33,13 @@ class Clock {
     debug: boolean = false;
 
     constructor() {
-        this.startTimestamp = null;
-        this.endTimestamp = null;
-        this.lastResult = null;
+        this._startTimestamp = null;
+        this._endTimestamp = null;
+        this._lastResult = null;
 
         this.clearTimestamps = () => {
-            this.startTimestamp = null;
-            this.endTimestamp = null;
+            this._startTimestamp = null;
+            this._endTimestamp = null;
         };
     }
 
@@ -50,7 +50,7 @@ class Clock {
         /**
          * Update start timestamp.
          */
-        this.startTimestamp = new Date().getTime();
+        this._startTimestamp = new Date().getTime();
 
         /**
          * Output debug information if needed.
@@ -72,17 +72,17 @@ class Clock {
         /**
          * Update end timestamp.
          */
-        this.endTimestamp = new Date().getTime();
+        this._endTimestamp = new Date().getTime();
 
         /**
          * Obtain measured time interval.
          */
-        const measuredTimeIntervalInMilliseconds = this.endTimestamp - this.startTimestamp;
+        const measuredTimeIntervalInMilliseconds = this._endTimestamp - this._startTimestamp;
 
         /**
          * Update last result.
          */
-        this.lastResult = measuredTimeIntervalInMilliseconds;
+        this._lastResult = measuredTimeIntervalInMilliseconds;
 
         /**
          * Output debug information if needed.
