@@ -1,10 +1,11 @@
+/**
+ * @flow
+ */
 
-
-import Rx from 'rxjs';
 import axios from 'axios';
 import moment from 'moment';
-import _ from 'lodash';
-import CandlestickPeriod from '../../utils/candlestickPeriod.js';
+
+import CandlestickPeriod from '../../utils/candlestickPeriod';
 
 /**
  * Base URL for API endpoints.

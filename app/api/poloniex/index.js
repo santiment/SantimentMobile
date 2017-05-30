@@ -1,8 +1,6 @@
 /**
- * Created by workplace on 17/04/2017.
  * @flow
  */
-
 
 import Rx from 'rxjs';
 import moment from 'moment';
@@ -56,6 +54,29 @@ export const periodToString = (
     default:
         return '';
     }
+};
+
+/**
+ * Utils for solving small but frequent tasks.
+ */
+export const utils = {
+
+    /**
+     * Reverses pair of currencies.
+     *
+     * @param {string} currencyPair String with currency pair, e.g. "BTC_STEEM".
+     * @return String containing reversed pair of currencies.
+     */
+    reversePair: currencyPair =>
+        _.join(
+            _.reverse(
+                _.split(
+                    currencyPair,
+                    '_',
+                ),
+            ),
+            '_',
+        ),
 };
 
 /**
@@ -177,27 +198,4 @@ export const getCandles = (
      */
     return Rx.Observable.forkJoin(observables)
             .map(arr => _.assign(...arr));
-};
-
-/**
- * Utils for solving small but frequent tasks.
- */
-export const utils = {
-
-    /**
-     * Reverses pair of currencies.
-     *
-     * @param {string} currencyPair String with currency pair, e.g. "BTC_STEEM".
-     * @return String containing reversed pair of currencies.
-     */
-    reversePair: currencyPair =>
-        _.join(
-            _.reverse(
-                _.split(
-                    currencyPair,
-                    '_',
-                ),
-            ),
-            '_',
-        ),
 };

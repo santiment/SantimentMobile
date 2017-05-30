@@ -1,9 +1,8 @@
+/**
+ * @flow
+ */
 
-
-import Rx from 'rxjs';
 import axios from 'axios';
-import moment from 'moment';
-import _ from 'lodash';
 
 /**
  * Base URL for API endpoints.

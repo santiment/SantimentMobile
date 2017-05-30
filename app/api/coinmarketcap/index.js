@@ -1,16 +1,10 @@
 /**
- * Created by workplace on 06/02/2017.
  * @flow
  */
 
-
 import Rx from 'rxjs';
-import axios from 'axios';
-import moment from 'moment';
 import _ from 'lodash';
-import * as CoinMarketCapHttpClient from './httpClient.js';
-
-const apiUrl = 'https://api.coinmarketcap.com/v1';
+import * as CoinMarketCapHttpClient from './httpClient';
 
 /**
  * Downloads ticker.

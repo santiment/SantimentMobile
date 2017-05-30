@@ -1,65 +1,65 @@
-'use strict';
+/**
+ * @flow
+ */
 
-import Rx from 'rxjs';
 import axios from 'axios';
 import moment from 'moment';
-import _ from 'lodash';
 
 /**
  * Base URL for API endpoints.
  */
-const apiUrl = "https://sa4h4y6jgb.execute-api.eu-central-1.amazonaws.com/dev";
+const apiUrl = 'https://sa4h4y6jgb.execute-api.eu-central-1.amazonaws.com/dev';
 
 /**
  * Makes asynchronous request for sentiments by user ID.
- * 
+ *
  * @param {*} userId User ID.
  * @return Axios request.
  */
 export const getSentiments = (
-    userId: String
+    userId: String,
 ): any => {
     /**
      * Obtain URL for request.
      */
-    let url = apiUrl + `/sentiment?userId=${userId}`;
+    const url = `${apiUrl}/sentiment?userId=${userId}`;
 
     /**
      * Start request and return it.
      */
     return axios.get(
-        url
+        url,
     );
 };
 
 /**
  * Makes asynchronous request for creating new sentiment on server side.
- * 
+ *
  * @param {Object} sentiment Sentiment to upload.
  *      Note that this sentiment object should be formatted
  *      according to requirements of server-side API.
  * @return Axios request.
  */
 export const postSentiment = (
-    sentiment: Object
+    sentiment: Object,
 ): any => {
     /*
      * Obtain URL for request.
      */
-    let url = apiUrl + `/sentiment`;
+    const url = `${apiUrl}/sentiment`;
 
     /**
      * Start request and return it.
      */
     return axios.post(
         url,
-        sentiment
+        sentiment,
     );
 };
 
 /**
  * Makes asynchronous request for aggregate.
- * 
+ *
  * @param {string} symbol Currency pair, e.g. "BTC_USDT".
  * @param {Date} startDate Start date.
  * @param {Date} endDate End date.
@@ -68,7 +68,7 @@ export const postSentiment = (
 export const getAggregate = (
     symbol: String,
     startDate: Date,
-    endDate: Date
+    endDate: Date,
 ): any => {
     /**
      * Obtain parameters for request.
@@ -80,34 +80,34 @@ export const getAggregate = (
     /**
      * Obtain URL for request.
      */
-    let url = apiUrl + `/sentiment/aggregate?asset=${symbol}&from=${formattedStartDate}&to=${formattedEndDate}`;
+    const url = `${apiUrl}/sentiment/aggregate?asset=${symbol}&from=${formattedStartDate}&to=${formattedEndDate}`;
 
     /**
      * Start request and return it.
      */
     return axios.get(
-        url
+        url,
     );
 };
 
 /**
  * Makes asynchronous request for feed by asset.
- * 
+ *
  * @param {string} asset Feed's asset.
  * @return Axios request.
  */
 export const getFeed = (
-    asset: String
+    asset: String,
 ): any => {
     /**
      * Obtain URL for request.
      */
-    let url = apiUrl + `/feed?keyword=${asset}`;
+    const url = `${apiUrl}/feed?keyword=${asset}`;
 
     /**
      * Start request and return it.
      */
     return axios.get(
-        url
+        url,
     );
 };
