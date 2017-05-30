@@ -1,28 +1,28 @@
-// @flow
+/**
+ * @flow
+ */
 
-'use strict';
-
-export default class Clock {
+class Clock {
 
     /**
      * Start timestamp in milliseconds seconds.
      */
     get startTimestamp(): number {
-        return this._startTimestamp;
+        return this.startTimestamp;
     }
 
     /**
      * End timestamp in milliseconds.
      */
     get endTimestamp(): number {
-        return this._endTimestamp;
+        return this.endTimestamp;
     }
 
     /**
      * Last measured time interval in milliseconds.
      */
     get lastResult(): number {
-        return this._lastResult;
+        return this.lastResult;
     }
 
     /**
@@ -33,13 +33,13 @@ export default class Clock {
     debug: boolean = false;
 
     constructor() {
-        this._startTimestamp = null;
-        this._endTimestamp = null;
-        this._lastResult = null;
+        this.startTimestamp = null;
+        this.endTimestamp = null;
+        this.lastResult = null;
 
         this.clearTimestamps = () => {
-            this._startTimestamp = null;
-            this._endTimestamp = null;
+            this.startTimestamp = null;
+            this.endTimestamp = null;
         };
     }
 
@@ -50,29 +50,29 @@ export default class Clock {
         /**
          * Update start timestamp.
          */
-        this._startTimestamp = new Date().getTime();
+        this.startTimestamp = new Date().getTime();
 
         /**
          * Output debug information if needed.
          */
         if (this.debug) {
             console.log(
-                "Started to measure time interval at moment: ",
-                this.startTimestamp
+                'Started to measure time interval at moment: ',
+                this.startTimestamp,
             );
         }
     };
 
     /**
      * Ends time measurement procedure.
-     * 
+     *
      * @return Measured time interval in milliseconds.
      */
     stop = (): number => {
         /**
          * Update end timestamp.
          */
-        this._endTimestamp = new Date().getTime();
+        this.endTimestamp = new Date().getTime();
 
         /**
          * Obtain measured time interval.
@@ -82,19 +82,19 @@ export default class Clock {
         /**
          * Update last result.
          */
-        this._lastResult = measuredTimeIntervalInMilliseconds;
+        this.lastResult = measuredTimeIntervalInMilliseconds;
 
         /**
          * Output debug information if needed.
          */
         if (this.debug) {
             console.log(
-                "Finished to measure time interval at moment: ",
+                'Finished to measure time interval at moment: ',
                 this.endTimestamp,
-                "\n",
-                "Result time: ",
+                '\n',
+                'Result time: ',
                 measuredTimeIntervalInMilliseconds,
-                " milliseconds"
+                ' milliseconds',
             );
         }
 
@@ -109,3 +109,5 @@ export default class Clock {
         return measuredTimeIntervalInMilliseconds;
     };
 }
+
+export default Clock;

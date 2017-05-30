@@ -1,49 +1,49 @@
-// @flow
-
-'use strict';
+/**
+ * @flow
+ */
 
 /**
  * Represents candlestick period.
  */
-export default class CandlestickPeriod {
+class CandlestickPeriod {
 
     constructor(durationInSeconds: number) {
-        this._durationInSeconds = durationInSeconds;
+        this.durationInSeconds = durationInSeconds;
     }
 
     /**
      * Duration in days.
      */
     get durationInDays(): number {
-        return this._durationInSeconds / 86400;
+        return this.durationInSeconds / 86400;
     }
 
     /**
      * Duration in hours.
      */
     get durationInHours(): number {
-        return this._durationInSeconds / 3600;
+        return this.durationInSeconds / 3600;
     }
 
     /**
      * Duration in minutes.
      */
     get durationInMinutes(): number {
-        return this._durationInSeconds / 60;
+        return this.durationInSeconds / 60;
     }
 
     /**
      * Duration in seconds.
      */
     get durationInSeconds(): number {
-        return this._durationInSeconds;
+        return this.durationInSeconds;
     }
 
     /**
      * Duration in milliseconds.
      */
     get durationInMilliseconds(): number {
-        return this._durationInSeconds * 1000;
+        return this.durationInSeconds * 1000;
     }
 
     /**
@@ -58,14 +58,13 @@ export default class CandlestickPeriod {
             return `${this.durationInHours}m`;
         } else if (this.durationInSeconds >= 1) {
             return `${this.durationInSeconds}s`;
-        } else {
-            return '';
         }
+        return '';
     }
 
     /**
      * Returns start date for candlestick chart.
-     * 
+     *
      * @param {Date} endDate End date for candlestick chart.
      * @param {number} requiredNumberOfCandles Number of candlesticks to be displayed.
      * @return Start date for candlestick chart.
@@ -77,3 +76,5 @@ export default class CandlestickPeriod {
         return new Date(startTimestampInMilliseconds);
     }
 }
+
+export default CandlestickPeriod;
