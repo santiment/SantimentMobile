@@ -3,30 +3,61 @@
  * @flow
  */
 
-'use strict';
 
 import React from 'react';
-import ReactNative from 'react-native';
-const {View, StyleSheet, processColor, Platform, Text} = ReactNative;
+import { View, StyleSheet, processColor, Platform, Text } from 'react-native';
 
-import _ from 'lodash'
-import moment from 'moment'
+import _ from 'lodash';
+import moment from 'moment';
 
-import {CombinedChart} from 'react-native-charts-wrapper';
+import { CombinedChart } from 'react-native-charts-wrapper';
 
-class Chart extends React.Component {
+const propTypes = {
+    style: React.PropTypes.Object.isRequired,
+    data: React.PropTypes.arrayOf(
+        React.PropTypes.shape({
+            timestamp: React.PropTypes.number.isRequired,
+            candle: React.PropTypes.shape({
+                open: React.PropTypes.number.isRequired,
+                high: React.PropTypes.number.isRequired,
+                low: React.PropTypes.number.isRequired,
+                close: React.PropTypes.number.isRequired,
+            }),
+            sentiment: React.PropTypes.oneOf(['bullish', 'catish', 'bearish']),
+        }),
+    ).isRequired,
+};
+
+const styles = StyleSheet.create({
+    chart: {
+        flex: 1,
+    },
+    noData: {
+        flex: 1,
+        alignItems: 'center',
+        justifyContent: 'center',
+        backgroundColor: '#333333',
+    },
+    noDataText: {
+        fontSize: 32,
+        color: '#cdcdcd',
+        fontWeight: '500',
+    },
+});
+
+class Chart extends React.PureComponent {
     render() {
-        const {style, data} = this.props;
+        const { style, data } = this.props;
 
         const xs = _.map(data, o => moment.unix(o.timestamp).format('MMM D'));
 
-        const candlesticks = _.map(data, o => {
-            return {shadowH: o.candle.high, shadowL: o.candle.low, open: o.candle.open, close: o.candle.close}
-        });
+        const candlesticks = _.map(data, o => (
+            { shadowH: o.candle.high, shadowL: o.candle.low, open: o.candle.open, close: o.candle.close }
+        ));
 
-        const bullishSentiments = _.map(data, o => _.isEqual(o.sentiment, "bullish") ? 1 : 0);
-        const catishSentiments = _.map(data, o => _.isEqual(o.sentiment, "catish") ? 1 : 0);
-        const bearishSentiments = _.map(data, o => _.isEqual(o.sentiment, "bearish") ? 1 : 0);
+        const bullishSentiments = _.map(data, o => (_.isEqual(o.sentiment, 'bullish') ? 1 : 0));
+        const catishSentiments = _.map(data, o => (_.isEqual(o.sentiment, 'catish') ? 1 : 0));
+        const bearishSentiments = _.map(data, o => (_.isEqual(o.sentiment, 'bearish') ? 1 : 0));
 
         const isDataAvailable = !_.isEmpty(xs) && !_.isEmpty(candlesticks);
 
@@ -50,7 +81,7 @@ class Chart extends React.Component {
                 // granularity: 1,
                 // labelCount: 4,
                 axisMinimum: -1,
-                axisMaximum: xs.length+15,
+                axisMaximum: xs.length + 15,
             },
             yAxis: {
                 left: {
@@ -88,10 +119,10 @@ class Chart extends React.Component {
                 textSize: 14,
                 form: 'CIRCLE',
                 position: 'BELOW_CHART_RIGHT',
-                wordWrapEnabled: true
+                wordWrapEnabled: true,
             },
             chartDescription: {
-                text: "",
+                text: '',
             },
             data: {
                 candleData: {
@@ -121,7 +152,7 @@ class Chart extends React.Component {
                                 axisDependency: 'LEFT',
                                 drawValues: false,
                                 colors: [processColor('#24e174')],
-                            }
+                            },
                         },
                         {
                             values: catishSentiments,
@@ -131,7 +162,7 @@ class Chart extends React.Component {
                                 axisDependency: 'LEFT',
                                 drawValues: false,
                                 colors: [processColor('#cdcdcd')],
-                            }
+                            },
                         },
                         {
                             values: bearishSentiments,
@@ -141,9 +172,9 @@ class Chart extends React.Component {
                                 axisDependency: 'LEFT',
                                 drawValues: false,
                                 colors: [processColor('#e53e50')],
-                            }
-                        }
-                    ]
+                            },
+                        },
+                    ],
 
                 },
 
@@ -165,23 +196,23 @@ class Chart extends React.Component {
                 yAxis={config.yAxis}
                 chartDescription={config.chartDescription}
                 onSelect={() => {}}
-                autoScaleMinMaxEnabled={true}
+                autoScaleMinMaxEnabled
                 zoom={{
                     scaleX: 4,
                     scaleY: 1,
                     xValue: Platform.select({
-                        ios: () => { return -9999 },
-                        android: () => { return 9999 },
+                        ios: () => -9999,
+                        android: () => 9999,
                     })(),
                     yValue: 1,
-                    axisDependency: 'RIGHT'
+                    axisDependency: 'RIGHT',
                 }}
-                touchEnabled={true}
-                dragEnabled={true}
-                scaleXEnabled={true}
+                touchEnabled
+                dragEnabled
+                scaleXEnabled
                 scaleYEnabled={false}
                 scaleEnabled={false}
-                pinchZoom={true}
+                pinchZoom
                 doubleTapToZoomEnabled={false}
                 dragDecelerationEnabled={false}
                 // dragDecelerationFrictionCoef={0.99}
@@ -201,37 +232,6 @@ class Chart extends React.Component {
     }
 }
 
-Chart.propTypes = {
-    style: React.PropTypes.any,
-    data: React.PropTypes.arrayOf(
-        React.PropTypes.shape({
-            timestamp: React.PropTypes.number.isRequired,
-            candle: React.PropTypes.shape({
-                open: React.PropTypes.number.isRequired,
-                high: React.PropTypes.number.isRequired,
-                low: React.PropTypes.number.isRequired,
-                close: React.PropTypes.number.isRequired,
-            }),
-            sentiment: React.PropTypes.oneOf(['bullish', 'catish', 'bearish']),
-        })
-    ),
-};
-
-const styles = StyleSheet.create({
-    chart: {
-        flex: 1,
-    },
-    noData: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: '#333333',
-    },
-    noDataText: {
-        fontSize: 32,
-        color: "#cdcdcd",
-        fontWeight: "500",
-    },
-});
+Chart.propTypes = propTypes;
 
 export default Chart;
