@@ -28,9 +28,9 @@ class CurrenciesUiStore {
         this.domainStore = domainStore;
     }
 
-    @observable isLoading: Boolean = false;
+    @observable isLoading: boolean = false;
 
-    @action setIsLoading = (value: Boolean): void => {
+    @action setIsLoading = (value: boolean): void => {
         this.isLoading = value;
     };
 

@@ -42,7 +42,7 @@ export const getTickers = (): any => {
  * @return Axios request.
  */
 export const getCandles = (
-    symbol: String,
+    symbol: string,
     startDate: Date,
     endDate: Date,
     candlestickPeriod: CandlestickPeriod,

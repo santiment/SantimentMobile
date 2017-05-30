@@ -60,25 +60,25 @@ class DomainStore {
      */
 
     @persist('list')
-    @observable symbols: String[] = [
+    @observable symbols: string[] = [
         'BTC_USDT',
         'ETH_USDT',
     ];
 
-    @action setSymbols = (symbols: String[]): void => {
+    @action setSymbols = (symbols: string[]): void => {
         this.symbols = symbols;
         console.log('Symbols updated:\n', symbols);
     };
 
-    @action addSymbol = (symbol: String): void => {
+    @action addSymbol = (symbol: string): void => {
         this.setSymbols(_.union(this.symbols, [symbol]));
     };
 
-    @action removeSymbol = (symbol: String): void => {
+    @action removeSymbol = (symbol: string): void => {
         this.setSymbols(_.without(this.symbols, symbol));
     };
 
-    @action getAssets = (): String[] => this.symbols.map((pairOfCurrencies) => {
+    @action getAssets = (): string[] => this.symbols.map((pairOfCurrencies) => {
             /**
              * Extract asset from pair of currencies
              * and return it.
@@ -93,9 +93,9 @@ class DomainStore {
      * string
      */
 
-    @observable selectedSymbol: String = '';
+    @observable selectedSymbol: string = '';
 
-    @action setSelectedSymbol = (symbol: String): void => {
+    @action setSelectedSymbol = (symbol: string): void => {
         this.selectedSymbol = symbol;
         console.log('Symbol selected:\n', symbol);
     };
@@ -348,7 +348,7 @@ class DomainStore {
      * @param {string[]} assets Array of currencies, e.g. ["BTC", "ETH"].
      * @return Observable.
      */
-    @action refreshFeeds = (assets: String[]): Rx.Observable<Object> => {
+    @action refreshFeeds = (assets: string[]): Rx.Observable<Object> => {
         /**
          * Console output.
          */
