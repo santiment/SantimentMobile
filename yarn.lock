@@ -1050,9 +1050,9 @@ buffer-shims@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/buffer-shims/-/buffer-shims-1.0.0.tgz#9978ce317388c649ad8793028c3477ef044a8b51"
 
-bugsnag-react-native@^2.2.0:
-  version "2.2.0"
-  resolved "https://registry.yarnpkg.com/bugsnag-react-native/-/bugsnag-react-native-2.2.0.tgz#63b26ec67687b57f4df841f5e3fea7f29439cc16"
+bugsnag-react-native@^2.2.3:
+  version "2.2.3"
+  resolved "https://registry.yarnpkg.com/bugsnag-react-native/-/bugsnag-react-native-2.2.3.tgz#8e28b0041d0e11a99426928d72b6388f773d444b"
   dependencies:
     promise "^7"
 

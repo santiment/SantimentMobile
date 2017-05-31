@@ -16,7 +16,7 @@
   "dependencies": {
     "android-back-button": "^1.0.0",
     "axios": "^0.16.1",
-    "bugsnag-react-native": "^2.2.0",
+    "bugsnag-react-native": "^2.2.3",
     "eslint-plugin-react-native": "^2.3.2",
     "lodash": "^4.17.4",
     "mobx": "^3.1.0",
