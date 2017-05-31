@@ -15,12 +15,16 @@ import {
     useStrict,
 } from 'mobx';
 
+const feedRefreshPeriod = 5000;
+
 class FeedUiStore {
 
     /**
      * Domain store.
      */
     domainStore: any;
+
+    refreshTimerId: any;
 
     constructor(domainStore: any) {
         useStrict(true);
@@ -177,6 +181,55 @@ class FeedUiStore {
          * Return formatted feed.
          */
         return formattedFeed;
+    }
+
+    /**
+     * Starts refreshing store by timer.
+     */
+    startToRefreshPeriodically = (): void => {
+        /**
+         * Check if timer is not already created.
+         */
+        if (this.refreshTimerId) {
+            return;
+        }
+
+        /**
+         * Create timer for updating UI store.
+         */
+        this.refreshTimerId = setInterval(
+            () => {
+                /**
+                 * Update UI store.
+                 */
+                this.refresh();
+            },
+            feedRefreshPeriod,
+        );
+    }
+
+    /**
+     * Stops refreshing store by timer.
+     */
+    stopToRefreshPeriodically = (): void => {
+        /**
+         * Check if timer was created.
+         */
+        if (!this.refreshTimerId) {
+            return;
+        }
+
+        /**
+         * Stop timer.
+         */
+        clearInterval(
+            this.refreshTimerId,
+        );
+
+        /**
+         * Nullify timer ID.
+         */
+        this.refreshTimerId = null;
     }
 }
 
