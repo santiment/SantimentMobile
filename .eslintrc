@@ -25,7 +25,7 @@
       "ignoreStrings": true,
       "ignoreTemplateLiterals": true
     }],
-    "no-unused-vars": ["error", { "vars": "all", "args": "none", "ignoreRestSiblings": true }],
+    "no-unused-vars": ["warn", { "vars": "all", "args": "all", "ignoreRestSiblings": true }],
     "react-native/no-unused-styles": 2,
     "react-native/split-platform-components": 2,
     "react-native/no-inline-styles": 2,
