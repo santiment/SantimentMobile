@@ -1,26 +1,25 @@
-'use strict';
+/**
+ * @flow
+ */
 
-import Rx from 'rxjs';
 import axios from 'axios';
 import moment from 'moment';
-import _ from 'lodash';
-import CandlestickPeriod from '../../utils/candlestickPeriod.js';
 
 /**
  * Base URL for API endpoints.
  */
-const apiUrl = "https://poloniex.com/public";
+const apiUrl = 'https://poloniex.com/public';
 
 /**
  * Makes asynchronous request for tickers.
- * 
+ *
  * @return Axios request.
  */
 export const getTickers = (): any => {
     /**
      * Obtain URL for request.
      */
-    const url = apiUrl + `?command=returnTicker`;
+    const url = `${apiUrl}?command=returnTicker`;
 
     /**
      * Start request and return it.
@@ -30,21 +29,21 @@ export const getTickers = (): any => {
 
 /**
  * Makes asynchronous request for candles.
- * 
+ *
  * Example of API request:
  * https://poloniex.com/public?command=returnChartData&currencyPair=BTC_XMR&start=1405699200&end=9999999999&period=14400
- * 
+ *
  * @param {string} symbol Currency pair, e.g. "BTC_STEEM".
  * @param {Date} startDate Start date.
  * @param {Date} endDate End date.
- * @param {CandlestickPeriod} candlestickPeriod Candlestick period.
+ * @param {number} candlestickPeriod Candlestick period in seconds, e.g. 14400.
  * @return Axios request.
  */
 export const getCandles = (
-    symbol: String,
+    symbol: string,
     startDate: Date,
     endDate: Date,
-    candlestickPeriod: CandlestickPeriod
+    candlestickPeriod: number,
 ): any => {
     /**
      * Obtain parameters for request.
@@ -52,18 +51,16 @@ export const getCandles = (
     const command = 'returnChartData';
     const startTimestampInSeconds = moment(startDate).unix();
     const endTimestampInSeconds = moment(endDate).unix();
-    const candlestickPeriodInSeconds = candlestickPeriod.durationInSeconds;
 
     /**
      * Obtain URL for request.
      */
-    const url = apiUrl
-        + `?command=${command}`
+    const url = `${apiUrl}?command=${command}`
         + `&currencyPair=${symbol}`
         + `&start=${startTimestampInSeconds}`
         + `&end=${endTimestampInSeconds}`
-        + `&period=${candlestickPeriodInSeconds}`;
-    
+        + `&period=${candlestickPeriod}`;
+
     /**
      * Start request and return it.
      */

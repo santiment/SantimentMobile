@@ -3,17 +3,24 @@
  * @flow
  */
 
-'use strict';
 
 import React from 'react';
-import ReactNative from 'react-native';
-let {Text, View, StyleSheet, Image, Dimensions} = ReactNative;
+import { Text, View, StyleSheet, Image, Dimensions } from 'react-native';
 
-import { responsiveHeight, responsiveWidth, responsiveFontSize } from 'react-native-responsive-dimensions';
+const propTypes = {
+    aggregate: React.PropTypes.shape({
+        bullishPercentage: React.PropTypes.number.isRequired,
+        catishPercentage: React.PropTypes.number.isRequired,
+        bearishPercentage: React.PropTypes.number.isRequired,
+        bullishPercentageDisplay: React.PropTypes.string.isRequired,
+        catishPercentageDisplay: React.PropTypes.string.isRequired,
+        bearishPercentageDisplay: React.PropTypes.string.isRequired,
+    }).isRequired,
+};
 
-export default class CrowdSentimentBarChart extends React.Component {
+class CrowdSentimentBarChart extends React.PureComponent {
     render() {
-        const {aggregate} = this.props;
+        const { aggregate } = this.props;
 
         const imageSize = 50;
         const percentageWidth = 30;
@@ -22,7 +29,7 @@ export default class CrowdSentimentBarChart extends React.Component {
             container: {
                 flex: 1,
                 margin: 20,
-                backgroundColor: "#ffffff",
+                backgroundColor: '#ffffff',
                 flexDirection: 'column',
                 justifyContent: 'center',
             },
@@ -35,24 +42,24 @@ export default class CrowdSentimentBarChart extends React.Component {
             imageContainer: {
                 padding: 5,
                 height: imageSize,
-                width: imageSize
+                width: imageSize,
             },
             image: {
-                height: imageSize-10,
-                width: imageSize-10,
+                height: imageSize - 10,
+                width: imageSize - 10,
             },
             text: {
                 fontSize: 36,
-                fontWeight: "500",
+                fontWeight: '500',
             },
             percentage: {
                 marginLeft: 10,
-                textAlign: "center",
+                textAlign: 'center',
                 width: percentageWidth,
             },
             barContainer: {
                 flex: 1,
-            }
+            },
         });
 
         const screen = Dimensions.get('window');
@@ -67,7 +74,7 @@ export default class CrowdSentimentBarChart extends React.Component {
                         />
                     </View>
                     <View style={styles.barContainer}>
-                        <Text style={{width: (screen.width-imageSize-percentageWidth)*aggregate.bullishPercentage, backgroundColor: "#00e36f"}}/>
+                        <Text style={{ width: (screen.width - imageSize - percentageWidth) * aggregate.bullishPercentage, backgroundColor: '#00e36f' }} />
                     </View>
                     <Text style={styles.percentage}>{aggregate.bullishPercentageDisplay}</Text>
                 </View>
@@ -80,7 +87,7 @@ export default class CrowdSentimentBarChart extends React.Component {
                         />
                     </View>
                     <View style={styles.barContainer}>
-                        <Text style={{width: (screen.width-imageSize-percentageWidth)*aggregate.catishPercentage, backgroundColor: "#cccccc"}}/>
+                        <Text style={{ width: (screen.width - imageSize - percentageWidth) * aggregate.catishPercentage, backgroundColor: '#cccccc' }} />
                     </View>
                     <Text style={styles.percentage}>{aggregate.catishPercentageDisplay}</Text>
                 </View>
@@ -93,23 +100,16 @@ export default class CrowdSentimentBarChart extends React.Component {
                         />
                     </View>
                     <View style={styles.barContainer}>
-                        <Text style={{width: (screen.width-imageSize-percentageWidth)*aggregate.bearishPercentage, backgroundColor: "#e73c4c"}}/>
+                        <Text style={{ width: (screen.width - imageSize - percentageWidth) * aggregate.bearishPercentage, backgroundColor: '#e73c4c' }} />
                     </View>
                     <Text style={styles.percentage}>{aggregate.bearishPercentageDisplay}</Text>
                 </View>
             </View>
-        )
+        );
     }
 }
 
-CrowdSentimentBarChart.propTypes = {
-    aggregate: React.PropTypes.shape({
-        bullishPercentage: React.PropTypes.number.isRequired,
-        catishPercentage: React.PropTypes.number.isRequired,
-        bearishPercentage: React.PropTypes.number.isRequired,
-        bullishPercentageDisplay: React.PropTypes.string.isRequired,
-        catishPercentageDisplay: React.PropTypes.string.isRequired,
-        bearishPercentageDisplay: React.PropTypes.string.isRequired,
-    }),
-};
+CrowdSentimentBarChart.propTypes = propTypes;
+
+export default CrowdSentimentBarChart;
 

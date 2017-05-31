@@ -1,61 +1,57 @@
 /**
- * Created by workplace on 22/03/2017.
  * @flow
  */
 
-'use strict';
-
 import _ from 'lodash';
 import Rx from 'rxjs';
-import axios from 'axios';
 import moment from 'moment';
-import * as SantimentHttpClient from './httpClient.js';
+import * as SantimentHttpClient from './httpClient';
 
 /**
  * Handles error.
- * 
+ *
  * @param {*} error Error to process.
  */
-const processAndRethrow = error => {
+const processAndRethrow = (error) => {
     const unknownError = {
-        "error": "UnknownError",
-        "message": "Unknown Error",
-        "details": [
-            "Something unexpected happened. Please try again later.",
+        error: 'UnknownError',
+        message: 'Unknown Error',
+        details: [
+            'Something unexpected happened. Please try again later.',
         ],
-        "status": "418"
+        status: '418',
     };
 
     throw (
         error.response
-            ? _.assign(error.response.data, {status: error.response.status})
+            ? _.assign(error.response.data, { status: error.response.status })
             : unknownError
     );
 };
 
 /**
  * Downloads sentiment by user ID.
- * 
+ *
  * @param {String} userId User ID.
  * @return Observable.
  */
 export const getSentiments = (
-    userId: String
+    userId: String,
 ): any => {
     /**
      * Start request.
      */
     const request = SantimentHttpClient.getSentiments(
-        userId
+        userId,
     );
 
     /**
      * Handle response.
      */
     const response = request
-        .then(response => response.data)
+        .then(r => r.data)
         .catch(processAndRethrow);
-    
+
     /**
      * Return observable.
      */
@@ -66,19 +62,19 @@ export const getSentiments = (
         .map(
             sentiments => _.map(
                 sentiments,
-                s => _.assign({}, _.omit(s, 'date'), {timestamp: moment(s.date).unix()})
-            )
+                s => _.assign({}, _.omit(s, 'date'), { timestamp: moment(s.date).unix() }),
+            ),
         );
 };
 
 /**
  * Creates new sentiment on server side.
- * 
+ *
  * @param {Object} sentiment Sentiment.
  * @return Observable.
  */
 export const postSentiment = (
-    sentiment: Object
+    sentiment: Object,
 ): any => {
     /**
      * Prepare sentiment in format required by server API.
@@ -88,27 +84,27 @@ export const postSentiment = (
         },
         _.omit(sentiment, 'timestamp'),
         {
-            date: moment.unix(sentiment.timestamp).toISOString()
-        }
+            date: moment.unix(sentiment.timestamp).toISOString(),
+        },
     );
 
-    console.log("sentiment:\n", JSON.stringify(sentiment, null, 2));
-    console.log("server side sentiment:\n", JSON.stringify(formattedSentiment, null, 2));
+    console.log('sentiment:\n', JSON.stringify(sentiment, null, 2));
+    console.log('server side sentiment:\n', JSON.stringify(formattedSentiment, null, 2));
 
     /**
      * Start request.
      */
     const request = SantimentHttpClient.postSentiment(
-        formattedSentiment
+        formattedSentiment,
     );
 
     /**
      * Handle response.
      */
     const response = request
-        .then(response => response.data)
+        .then(r => r.data)
         .catch(processAndRethrow);
-    
+
     /**
      * Return observable.
      */
@@ -118,7 +114,7 @@ export const postSentiment = (
 
 /**
  * Downloads aggregates for specified currency pairs and date interval.
- * 
+ *
  * @param {string[]} symbols Array of currency pairs, e.g. ["BTC_STEEM", "BTC_USDT"].
  *      Should contain at least one currency pair.
  * @param {Date} startDate Aggregate's start date.
@@ -128,7 +124,7 @@ export const postSentiment = (
 export const getAggregates = (
     symbols: String[],
     startDate: Date = new Date(),
-    endDate: Date = moment().add(1, 'days').toDate()
+    endDate: Date = moment().add(1, 'days').toDate(),
 ): any => {
     /**
      * Send request for each aggregate.
@@ -140,22 +136,22 @@ export const getAggregates = (
         const request = SantimentHttpClient.getAggregate(
             symbol,
             startDate,
-            endDate
+            endDate,
         );
 
         /**
          * Handle response.
          */
         const response = request
-            .then(response => response.data)
+            .then(r => r.data)
             .catch(processAndRethrow);
-        
+
         /**
          * Obtain observable.
          */
         return Rx.Observable.fromPromise(response)
-            .map(items => {
-                let obj = {};
+            .map((items) => {
+                const obj = {};
                 _.set(obj, [symbol], items);
 
                 return obj;
@@ -171,13 +167,13 @@ export const getAggregates = (
 
 /**
  * Downloads feeds.
- * 
+ *
  * @param {string[]} asset Array of currencies, e.g. ["BTC", "ETH"].
  *      Should contain at least one currency.
  * @return Observable.
  */
 export const getFeeds = (
-    assets: String[]
+    assets: String[],
 ): any => {
     /**
      * Send request for each asset.
@@ -187,22 +183,22 @@ export const getFeeds = (
          * Start request.
          */
         const request = SantimentHttpClient.getFeed(
-            asset
+            asset,
         );
 
         /**
          * Handle response.
          */
         const response = request
-            .then(response => response.data)
+            .then(r => r.data)
             .catch(processAndRethrow);
-        
+
         /**
          * Obtain observable.
          */
         return Rx.Observable.fromPromise(response)
-            .map(items => {
-                let obj = {};
+            .map((items) => {
+                const obj = {};
                 _.set(obj, [asset], items);
 
                 return obj;

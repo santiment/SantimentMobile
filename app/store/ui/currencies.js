@@ -1,31 +1,25 @@
 /**
- * Created by workplace on 23/03/2017.
  * @flow
  */
 
-'use strict';
-
 import _ from 'lodash';
 
-import Rx from 'rxjs';
-
-import ReactNative, {
+import {
     ListView,
-    Alert
+    Alert,
 } from 'react-native';
 
-import mobx, {
+import {
     observable,
     computed,
-    autorun,
     action,
-    useStrict
+    useStrict,
 } from 'mobx';
 
 import * as Santiment from '../../api/santiment';
 
-export default class CurrenciesUiStore {
-    
+class CurrenciesUiStore {
+
     domainStore: any;
 
     constructor(domainStore: any) {
@@ -34,9 +28,9 @@ export default class CurrenciesUiStore {
         this.domainStore = domainStore;
     }
 
-    @observable isLoading: Boolean = false;
+    @observable isLoading: boolean = false;
 
-    @action setIsLoading = (value: Boolean): void => {
+    @action setIsLoading = (value: boolean): void => {
         this.isLoading = value;
     };
 
@@ -48,8 +42,8 @@ export default class CurrenciesUiStore {
                     'Refresh Error',
                     error.toString(),
                     [
-                        {text: 'OK', onPress: () => {}},
-                    ]
+                        { text: 'OK', onPress: () => {} },
+                    ],
                 ),
             );
     };
@@ -70,41 +64,40 @@ export default class CurrenciesUiStore {
                     'Sentiment Update Error',
                     error.toString(),
                     [
-                        {text: 'OK', onPress: () => {}},
-                    ]
-                )
-            )
+                        { text: 'OK', onPress: () => {} },
+                    ],
+                ),
+            );
     };
 
     @computed get tickers(): Object[] {
         return _.filter(
             this.domainStore.tickers.slice(),
-            t => _.includes(this.domainStore.symbols.slice(), t.symbol)
+            t => _.includes(this.domainStore.symbols.slice(), t.symbol),
         );
     }
 
     @computed get rows(): Object[] {
-        return this.tickers.map(t => {
-            return {
-                symbol: t.symbol,
-                displaySymbol: _.replace(t.symbol, "_", "/"),
-                dailyChangePercent: t.dailyChangePercent.toFixed(2),
-                price: (() => {
-                    const p = t.price.toPrecision(6);
-                    if (_.includes(p, "e") || p.length > 10) {
-                        return t.price.toFixed(8);
-                    }
-                    return p;
-                })(),
-                volume: t.volume,
-            }
-        });
+        return this.tickers.map(t => ({
+            symbol: t.symbol,
+            displaySymbol: _.replace(t.symbol, '_', '/'),
+            dailyChangePercent: t.dailyChangePercent.toFixed(2),
+            price: (() => {
+                const p = t.price.toPrecision(6);
+                if (_.includes(p, 'e') || p.length > 10) {
+                    return t.price.toFixed(8);
+                }
+                return p;
+            })(),
+            volume: t.volume,
+        }));
     }
 
-    _dataSource = new ListView.DataSource({rowHasChanged: (r1, r2) => r1 !== r2});
-    
+    ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
     @computed get dataSource(): Object {
-        return this._dataSource.cloneWithRows(this.rows.slice());
+        return this.ds.cloneWithRows(this.rows.slice());
     }
 
 }
+
+export default CurrenciesUiStore;
