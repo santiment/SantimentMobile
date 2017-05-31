@@ -3808,9 +3808,9 @@ react-dom@^15.4.2:
     loose-envify "^1.1.0"
     object-assign "^4.1.0"
 
-react-native-charts-wrapper@^0.2.7:
-  version "0.2.7"
-  resolved "https://registry.yarnpkg.com/react-native-charts-wrapper/-/react-native-charts-wrapper-0.2.7.tgz#df368b18352c8c0450c4b8d7f7352c1b26b6f886"
+react-native-charts-wrapper@^0.2.10:
+  version "0.2.10"
+  resolved "https://registry.yarnpkg.com/react-native-charts-wrapper/-/react-native-charts-wrapper-0.2.10.tgz#39485a29e6c3f1e9c76bb134305664754d03f9df"
 
 react-native-communications@2.1.1:
   version "2.1.1"
@@ -3851,9 +3851,9 @@ react-native-invertible-scroll-view@1.0.0:
     react-clone-referenced-element "^1.0.1"
     react-native-scrollable-mixin "^1.0.1"
 
-react-native-keyboard-aware-scrollview@^1.1.5:
-  version "1.1.5"
-  resolved "https://registry.yarnpkg.com/react-native-keyboard-aware-scrollview/-/react-native-keyboard-aware-scrollview-1.1.5.tgz#4b3078074b7bb30579e7745719803f06ffe0be5f"
+react-native-keyboard-aware-scrollview@^1.1.6:
+  version "1.1.6"
+  resolved "https://registry.yarnpkg.com/react-native-keyboard-aware-scrollview/-/react-native-keyboard-aware-scrollview-1.1.6.tgz#3b3524ee829f19974738dc589595a2981189a662"
 
 react-native-lightbox@oblador/react-native-lightbox#c84a8543d4511fe6a44c3d7820747c9c1bddd875:
   version "0.6.0"
@@ -3861,13 +3861,13 @@ react-native-lightbox@oblador/react-native-lightbox#c84a8543d4511fe6a44c3d782074
   dependencies:
     react-timer-mixin "^0.13.3"
 
-react-native-modal-dropdown@^0.4.2:
-  version "0.4.2"
-  resolved "https://registry.yarnpkg.com/react-native-modal-dropdown/-/react-native-modal-dropdown-0.4.2.tgz#a4223823d0aa04eb45c451ded429845c25d62fd3"
+react-native-modal-dropdown@^0.4.3:
+  version "0.4.3"
+  resolved "https://registry.yarnpkg.com/react-native-modal-dropdown/-/react-native-modal-dropdown-0.4.3.tgz#9b708d38b37c3daec4eb5c026892039eab5de975"
 
-react-native-navbar@^1.6.0:
-  version "1.7.0"
-  resolved "https://registry.yarnpkg.com/react-native-navbar/-/react-native-navbar-1.7.0.tgz#f214be58c60dc0725d29829ffdcbec97d6dc698c"
+react-native-navbar@^1.7.1:
+  version "1.7.1"
+  resolved "https://registry.yarnpkg.com/react-native-navbar/-/react-native-navbar-1.7.1.tgz#de0e6f8c2156c7e984bb43c76732bd2437b7df0f"
 
 react-native-parsed-text@0.0.16:
   version "0.0.16"
