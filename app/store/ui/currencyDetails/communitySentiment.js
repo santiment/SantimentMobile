@@ -43,9 +43,9 @@ class CommunitySentimentUiStore {
         };
     }
 
-    @observable isLoading: Boolean = false;
+    @observable isLoading: boolean = false;
 
-    @action setLoading = (value: Boolean): void => {
+    @action setLoading = (value: boolean): void => {
         this.isLoading = value;
     };
 

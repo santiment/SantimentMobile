@@ -27,8 +27,6 @@ import {
 
 import DeviceInfo from 'react-native-device-info';
 
-import CandlestickPeriod from '../../utils/candlestickPeriod';
-
 import * as Poloniex from '../../api/poloniex';
 
 import * as Santiment from '../../api/santiment';
@@ -181,10 +179,10 @@ class DomainStore {
      * Updates history in local storage.
      *
      * @param {string[]} symbols Array of currency pairs.
-     * @param {CandlestickPeriod} candlestickPeriod Candlestick period.
+     * @param {number} candlestickPeriod Candlestick period in seconds, e.g. 14400.
      * @return Observable.
      */
-    @action refreshHistory = (symbols: string[], candlestickPeriod: CandlestickPeriod): Rx.Observable<any> => {
+    @action refreshHistory = (symbols: string[], candlestickPeriod: number): Rx.Observable<any> => {
         /**
          * Console output.
          */
@@ -195,9 +193,10 @@ class DomainStore {
          */
         const endDate = moment().toDate();
 
-        const startDate = candlestickPeriod.findStartDate(
+        const startDate = Poloniex.findStartDateForCandlestickChart(
             endDate,
             this.numberOfCandlesticksToDownload,
+            candlestickPeriod,
         );
 
         /**
@@ -386,9 +385,10 @@ class DomainStore {
          */
         const dateForLastCandle = moment().toDate();
 
-        const dateForFirstCandle = this.selectedCandlestickPeriod.findStartDate(
+        const dateForFirstCandle = Poloniex.findStartDateForCandlestickChart(
             dateForLastCandle,
             this.numberOfCandlesticksToDownload,
+            this.selectedCandlestickPeriod,
         );
 
         /**
@@ -429,7 +429,7 @@ class DomainStore {
     /**
      * Periods for displaying on the list.
      */
-    @observable periods: CandlestickPeriod[] = [
+    @observable periods: number[] = [
         Poloniex.candlestickPeriods.twoHours,
         Poloniex.candlestickPeriods.fourHours,
         Poloniex.candlestickPeriods.oneDay,
@@ -450,7 +450,7 @@ class DomainStore {
     /**
      * Selected candlestick period.
      */
-    @computed get selectedCandlestickPeriod(): CandlestickPeriod {
+    @computed get selectedCandlestickPeriod(): number {
         return this.periods[this.indexOfSelectedPeriod];
     }
 }

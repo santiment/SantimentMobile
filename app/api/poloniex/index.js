@@ -7,7 +7,6 @@ import moment from 'moment';
 import _ from 'lodash';
 
 import * as PoloniexHttpClient from './httpClient';
-import CandlestickPeriod from '../../utils/candlestickPeriod';
 
 /**
  * Candlestick periods.
@@ -16,45 +15,66 @@ import CandlestickPeriod from '../../utils/candlestickPeriod';
  * https://poloniex.com/support/api (`returnChartData` section)
  */
 export const candlestickPeriods = {
-    fiveMinutes: new CandlestickPeriod(300),
-    fifteenMinutes: new CandlestickPeriod(900),
-    thirtyMinutes: new CandlestickPeriod(1800),
-    oneHour: new CandlestickPeriod(3600), // not supported by Poloniex API
-    twoHours: new CandlestickPeriod(7200),
-    fourHours: new CandlestickPeriod(14400),
-    oneDay: new CandlestickPeriod(86400),
+    fiveMinutes: 300,
+    fifteenMinutes: 900,
+    thirtyMinutes: 1800,
+    twoHours: 7200,
+    fourHours: 14400,
+    oneDay: 86400,
 };
 
 /**
  * Returns string representation of Poloniex candlestick period.
  *
- * @param {period} period Period in seconds, e.g. 14400.
+ * @param {number} period Period in seconds, e.g. 14400.
  * @return String representation of Poloniex candlestick period.
  *      In case when period is not included in the list of available periods,
  *      method returns empty string.
  */
 export const periodToString = (
-    period: Number,
-): String => {
-    switch (period) {
-    case candlestickPeriods.fiveMinutes:
-        return '5m';
-    case candlestickPeriods.fifteenMinutes:
-        return '15m';
-    case candlestickPeriods.thirtyMinutes:
-        return '30m';
-    case candlestickPeriods.oneHour:
-        return '1H';
-    case candlestickPeriods.twoHours:
-        return '2H';
-    case candlestickPeriods.fourHours:
-        return '4H';
-    case candlestickPeriods.oneDay:
-        return '1D';
-    default:
-        return '';
+    period: number,
+): string => {
+    const days = period / 86400;
+    const hours = period / 3600;
+    const minutes = period / 60;
+    const seconds = period;
+    const milliseconds = period * 1000;
+
+    if (days >= 1) {
+        return `${days}D`;
+    } else if (hours >= 1) {
+        return `${hours}H`;
+    } else if (minutes >= 1) {
+        return `${minutes}m`;
+    } else if (seconds >= 1) {
+        return `${seconds}s`;
+    } else if (milliseconds >= 1) {
+        return `${milliseconds}ms`;
     }
+    
+    return '';
 };
+
+/**
+ * Returns start date for candlestick chart.
+ *
+ * @param {Date} endDate End date for candlestick chart.
+ * @param {number} requiredNumberOfCandles Number of candlesticks to be displayed.
+ * @param {number} candlestickPeriod Candlestick period.
+ * @return Start date for candlestick chart.
+ */
+export const findStartDateForCandlestickChart = (
+    endDate: Date,
+    requiredNumberOfCandles: number,
+    candlestickPeriod: number,
+): Date => (
+    moment(endDate)
+        .subtract(
+        candlestickPeriod * requiredNumberOfCandles,
+        'seconds',
+    )
+    .toDate()
+);
 
 /**
  * Utils for solving small but frequent tasks.
@@ -67,7 +87,7 @@ export const utils = {
      * @param {string} currencyPair String with currency pair, e.g. "BTC_STEEM".
      * @return String containing reversed pair of currencies.
      */
-    reversePair: currencyPair =>
+    reversePair: (currencyPair: string) =>
         _.join(
             _.reverse(
                 _.split(
@@ -125,7 +145,7 @@ export const getTickers = (
  *      If not specified, 180 days ago date will be used by default.
  * @param {Date} endDate End date.
  *      If not specified, current date will be used by default.
- * @param {CandlestickPeriod} candlestickPeriod Candlestick period.
+ * @param {number} candlestickPeriod Candlestick period in seconds, e.g. 14400.
  *      Poloniex API allows limited set of periods.
  *      For correct usage, you can take period from
  *      one of constants: `candlestickPeriods.thirtyMinutes`,
@@ -137,7 +157,7 @@ export const getCandles = (
     symbols: string[],
     startDate: Date = moment().subtract(180, 'days').toDate(),
     endDate: Date = moment().toDate(),
-    candlestickPeriod: CandlestickPeriod = candlestickPeriods.oneDay,
+    candlestickPeriod: number = candlestickPeriods.oneDay,
 ): any => {
     /**
      * Send request for each symbol.
@@ -180,7 +200,7 @@ export const getCandles = (
                     obj,
                     [
                         symbol,
-                        candlestickPeriod.text,
+                        periodToString(candlestickPeriod),
                     ],
                     _.orderBy(
                         candles,

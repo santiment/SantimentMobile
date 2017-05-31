@@ -5,8 +5,6 @@
 import axios from 'axios';
 import moment from 'moment';
 
-import CandlestickPeriod from '../../utils/candlestickPeriod';
-
 /**
  * Base URL for API endpoints.
  */
@@ -38,14 +36,14 @@ export const getTickers = (): any => {
  * @param {string} symbol Currency pair, e.g. "BTC_STEEM".
  * @param {Date} startDate Start date.
  * @param {Date} endDate End date.
- * @param {CandlestickPeriod} candlestickPeriod Candlestick period.
+ * @param {number} candlestickPeriod Candlestick period in seconds, e.g. 14400.
  * @return Axios request.
  */
 export const getCandles = (
     symbol: string,
     startDate: Date,
     endDate: Date,
-    candlestickPeriod: CandlestickPeriod,
+    candlestickPeriod: number,
 ): any => {
     /**
      * Obtain parameters for request.
@@ -53,7 +51,6 @@ export const getCandles = (
     const command = 'returnChartData';
     const startTimestampInSeconds = moment(startDate).unix();
     const endTimestampInSeconds = moment(endDate).unix();
-    const candlestickPeriodInSeconds = candlestickPeriod.durationInSeconds;
 
     /**
      * Obtain URL for request.
@@ -62,7 +59,7 @@ export const getCandles = (
         + `&currencyPair=${symbol}`
         + `&start=${startTimestampInSeconds}`
         + `&end=${endTimestampInSeconds}`
-        + `&period=${candlestickPeriodInSeconds}`;
+        + `&period=${candlestickPeriod}`;
 
     /**
      * Start request and return it.

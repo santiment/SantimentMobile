@@ -20,6 +20,8 @@ import {
 
 import moment from 'moment';
 
+import * as Poloniex from '../../../api/poloniex';
+
 import Clock from '../../../utils/clock';
 
 class MySentimentUiStore {
@@ -86,12 +88,13 @@ class MySentimentUiStore {
          * Obtain candles.
          */
         const selectedPeriod = this.domainStore.periods[this.domainStore.indexOfSelectedPeriod];
+        const formattedPeriod = Poloniex.periodToString(selectedPeriod);
 
         const timeseries = _.get(
             this.domainStore.history,
             [
                 `${this.ticker.symbol}`,
-                `${selectedPeriod.text}`,
+                `${formattedPeriod}`,
             ],
             [],
         );
@@ -101,7 +104,7 @@ class MySentimentUiStore {
         this.domainStore.sentiments.forEach(
             (s) => {
                 if (_.isEqual(s.asset, this.domainStore.selectedSymbol)) {
-                    const correctedSentimentTimestampInSeconds = s.timestamp - (s.timestamp % selectedPeriod.durationInSeconds);
+                    const correctedSentimentTimestampInSeconds = s.timestamp - (s.timestamp % selectedPeriod);
                     sentimentsForCurrentSymbolHashMap[correctedSentimentTimestampInSeconds] = s;
                 }
             },
@@ -110,7 +113,7 @@ class MySentimentUiStore {
         const candles = _.map(
             timeseries,
             (t) => {
-                const correctedCandleTimestampInSeconds = t.timestamp - (t.timestamp % selectedPeriod.durationInSeconds);
+                const correctedCandleTimestampInSeconds = t.timestamp - (t.timestamp % selectedPeriod);
                 const sentimentObject = sentimentsForCurrentSymbolHashMap[correctedCandleTimestampInSeconds];
 
                 return {
@@ -186,7 +189,7 @@ class MySentimentUiStore {
     };
 
     @computed get dropdownOptions(): string[] {
-        return this.domainStore.periods.map(period => period.text);
+        return this.domainStore.periods.map(Poloniex.periodToString);
     }
 
     @computed get dropdownDefaultValue(): string {
@@ -198,7 +201,7 @@ class MySentimentUiStore {
         /**
          * Return string containing formatted period.
          */
-        return selectedPeriod.text;
+        return Poloniex.periodToString(selectedPeriod);
     }
 
     @computed get dropdownDefaultIndex(): number {
