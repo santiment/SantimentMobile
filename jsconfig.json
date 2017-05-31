@@ -10,7 +10,6 @@
         "removeComments": false,
         "noImplicitAny": false,
         "allowSyntheticDefaultImports": true,
-        "flow.useNPMPackagedFlow": true,
         "javascript.validate.enable": false
     },
     "exclude": [
