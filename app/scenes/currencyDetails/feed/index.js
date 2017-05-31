@@ -19,8 +19,6 @@ import {
     Bubble,
 } from 'react-native-gifted-chat';
 
-import Clock from '../../../utils/clock';
-
 const propTypes = {
     store: React.PropTypes.shape({
         feed: React.PropTypes.any.isRequired,
@@ -84,28 +82,9 @@ const styles = StyleSheet.create({
     },
 });
 
-const feedRefreshPeriod = 5000;
-
 @observer
 class Feed extends React.Component {
-    constructor(props) {
-        super(props);
-
-        /**
-         * Initialize appearance clock and
-         * start to measure time interval.
-         */
-        this.appearanceClock = new Clock();
-        this.appearanceClock.start();
-
-        /**
-         * Initialize state.
-         */
-        this.state = {
-            didAppear: false,
-        };
-    }
-
+    
     componentDidMount() {
         /**
          * Obtain UI store.
@@ -113,46 +92,22 @@ class Feed extends React.Component {
         const uiStore = this.props.store;
 
         /**
-         * Create timer for updating UI store.
+         * Start refreshing UI store.
          */
-        this.refreshStoreTimerId = setInterval(
-            () => {
-                /**
-                 * Update UI store.
-                 */
-                uiStore.refresh();
-            },
-            feedRefreshPeriod,
-        );
-
-        /**
-         * Update state.
-         */
-        this.setState({
-            didAppear: true,
-        });
-
-        /**
-         * End to measure appearance time interval.
-         */
-        const appearanceTimeInterval = this.appearanceClock.stop();
-
-        console.log(
-            'Feed scene did appear in ',
-            appearanceTimeInterval,
-            ' milliseconds',
-        );
+        uiStore.startToRefreshPeriodically();
     }
 
     componentWillUnmount() {
-        clearInterval(
-            this.refreshStoreTimerId,
-        );
+        /**
+         * Obtain UI store.
+         */
+        const uiStore = this.props.store;
+
+        /**
+         * Stop refreshing UI store.
+         */
+        uiStore.stopToRefreshPeriodically();
     }
-
-    appearanceClock: Clock;
-
-    refreshStoreTimerId: any;
 
     render() {
         const { store } = this.props;
