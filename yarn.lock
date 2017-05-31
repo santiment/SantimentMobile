@@ -848,41 +848,7 @@ babel-preset-react-native-stage-0@^1.0.1:
     babel-plugin-transform-function-bind "^6.5.2"
     babel-preset-react-native "^1.5.6"
 
-babel-preset-react-native@^1.5.6, babel-preset-react-native@^1.9.1:
-  version "1.9.1"
-  resolved "https://registry.yarnpkg.com/babel-preset-react-native/-/babel-preset-react-native-1.9.1.tgz#ec8e378274410d78f550fa9f8edd70353f3bb2fe"
-  dependencies:
-    babel-plugin-check-es2015-constants "^6.5.0"
-    babel-plugin-react-transform "2.0.2"
-    babel-plugin-syntax-async-functions "^6.5.0"
-    babel-plugin-syntax-class-properties "^6.5.0"
-    babel-plugin-syntax-flow "^6.5.0"
-    babel-plugin-syntax-jsx "^6.5.0"
-    babel-plugin-syntax-trailing-function-commas "^6.5.0"
-    babel-plugin-transform-class-properties "^6.5.0"
-    babel-plugin-transform-es2015-arrow-functions "^6.5.0"
-    babel-plugin-transform-es2015-block-scoping "^6.5.0"
-    babel-plugin-transform-es2015-classes "^6.5.0"
-    babel-plugin-transform-es2015-computed-properties "^6.5.0"
-    babel-plugin-transform-es2015-destructuring "^6.5.0"
-    babel-plugin-transform-es2015-for-of "^6.5.0"
-    babel-plugin-transform-es2015-function-name "^6.5.0"
-    babel-plugin-transform-es2015-literals "^6.5.0"
-    babel-plugin-transform-es2015-modules-commonjs "^6.5.0"
-    babel-plugin-transform-es2015-parameters "^6.5.0"
-    babel-plugin-transform-es2015-shorthand-properties "^6.5.0"
-    babel-plugin-transform-es2015-spread "^6.5.0"
-    babel-plugin-transform-es2015-template-literals "^6.5.0"
-    babel-plugin-transform-flow-strip-types "^6.5.0"
-    babel-plugin-transform-object-assign "^6.5.0"
-    babel-plugin-transform-object-rest-spread "^6.5.0"
-    babel-plugin-transform-react-display-name "^6.5.0"
-    babel-plugin-transform-react-jsx "^6.5.0"
-    babel-plugin-transform-react-jsx-source "^6.5.0"
-    babel-plugin-transform-regenerator "^6.5.0"
-    react-transform-hmr "^1.0.4"
-
-babel-preset-react-native@^1.9.2:
+babel-preset-react-native@^1.5.6, babel-preset-react-native@^1.9.1, babel-preset-react-native@^1.9.2:
   version "1.9.2"
   resolved "https://registry.yarnpkg.com/babel-preset-react-native/-/babel-preset-react-native-1.9.2.tgz#b22addd2e355ff3b39671b79be807e52dfa145f2"
   dependencies:
@@ -968,13 +934,13 @@ babel-types@^6.18.0, babel-types@^6.19.0, babel-types@^6.21.0, babel-types@^6.22
     lodash "^4.2.0"
     to-fast-properties "^1.0.1"
 
-babylon@^6.11.0, babylon@^6.13.0, babylon@^6.14.1, babylon@^6.15.0, babylon@^6.8.0:
-  version "6.16.1"
-  resolved "https://registry.yarnpkg.com/babylon/-/babylon-6.16.1.tgz#30c5a22f481978a9e7f8cdfdf496b11d94b404d3"
-
-babylon@^6.17.0:
+babylon@^6.11.0, babylon@^6.13.0, babylon@^6.15.0, babylon@^6.17.0, babylon@^6.8.0:
   version "6.17.2"
   resolved "https://registry.yarnpkg.com/babylon/-/babylon-6.17.2.tgz#201d25ef5f892c41bae49488b08db0dd476e9f5c"
+
+babylon@^6.14.1:
+  version "6.16.1"
+  resolved "https://registry.yarnpkg.com/babylon/-/babylon-6.16.1.tgz#30c5a22f481978a9e7f8cdfdf496b11d94b404d3"
 
 balanced-match@^0.4.1:
   version "0.4.2"
@@ -3325,15 +3291,15 @@ mkdirp@^0.5.0, mkdirp@^0.5.1:
   dependencies:
     minimist "0.0.8"
 
-mobx-persist@^0.3.1:
-  version "0.3.1"
-  resolved "https://registry.yarnpkg.com/mobx-persist/-/mobx-persist-0.3.1.tgz#1b94d8fc3955a5e7c09d477d52974ce67ab8ee63"
+mobx-persist@^0.3.3:
+  version "0.3.3"
+  resolved "https://registry.yarnpkg.com/mobx-persist/-/mobx-persist-0.3.3.tgz#43159148a2bd97be9ba239d7d2a2c0978a527a9c"
   dependencies:
-    serializr "^1.1.8"
+    serializr "^1.1.11"
 
-mobx-react@^4.1.0:
-  version "4.1.3"
-  resolved "https://registry.yarnpkg.com/mobx-react/-/mobx-react-4.1.3.tgz#8074a0d06f1211177fd6f2cc4091b106e03d4b89"
+mobx-react@^4.2.1:
+  version "4.2.1"
+  resolved "https://registry.yarnpkg.com/mobx-react/-/mobx-react-4.2.1.tgz#35324834b71ae27a7553d76ad413e5f96ba40db5"
   dependencies:
     hoist-non-react-statics "^1.2.0"
 
@@ -3341,9 +3307,9 @@ mobx-utils@^2.0.1:
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/mobx-utils/-/mobx-utils-2.0.1.tgz#6460d6436f991b2d3250d51995cbcae2c5707b67"
 
-mobx@^3.1.0:
-  version "3.1.7"
-  resolved "https://registry.yarnpkg.com/mobx/-/mobx-3.1.7.tgz#910c01f6e2f7e88ec47baabefee5fe667d37ac00"
+mobx@^3.1.11:
+  version "3.1.11"
+  resolved "https://registry.yarnpkg.com/mobx/-/mobx-3.1.11.tgz#400b1e3c00a4249dfe36e9bca28ef36f057d4a28"
 
 moment@2.17.1:
   version "2.17.1"
@@ -4430,7 +4396,7 @@ serializerr@^1.0.1:
   dependencies:
     protochain "^1.0.5"
 
-serializr@^1.1.8:
+serializr@^1.1.11:
   version "1.1.11"
   resolved "https://registry.yarnpkg.com/serializr/-/serializr-1.1.11.tgz#88434cd5fcb9f82079223443e131f0ce4296cf8a"
 
