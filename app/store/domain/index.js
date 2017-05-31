@@ -1,9 +1,6 @@
 /**
- * Created by workplace on 23/03/2017.
  * @flow
  */
-
-'use strict';
 
 import _ from 'lodash';
 
@@ -11,35 +8,33 @@ import Rx from 'rxjs';
 
 import moment from 'moment';
 
-import ReactNative, {
+import {
     AsyncStorage,
-    Alert
+    Alert,
 } from 'react-native';
 
-import mobx, {
+import {
     observable,
     computed,
-    autorun,
     action,
-    useStrict
+    useStrict,
 } from 'mobx';
 
 import {
     create,
-    persist
+    persist,
 } from 'mobx-persist';
 
-import * as Bitfinex from '../../api/bitfinex';
+import DeviceInfo from 'react-native-device-info';
 
 import * as Poloniex from '../../api/poloniex';
 
 import * as Santiment from '../../api/santiment';
 
 import type {
-    SentimentType
+    SentimentType,
 } from './types';
 
-import DeviceInfo from 'react-native-device-info';
 
 class DomainStore {
     constructor() {
@@ -54,7 +49,7 @@ class DomainStore {
     @persist('object')
     @observable
     user: Object = {
-        id: DeviceInfo.getUniqueID()
+        id: DeviceInfo.getUniqueID(),
     };
 
     /**
@@ -64,13 +59,13 @@ class DomainStore {
 
     @persist('list')
     @observable symbols: string[] = [
-        "BTC_USDT",
-        "ETH_USDT"
+        'BTC_USDT',
+        'ETH_USDT',
     ];
 
     @action setSymbols = (symbols: string[]): void => {
         this.symbols = symbols;
-        console.log("Symbols updated:\n", symbols);
+        console.log('Symbols updated:\n', symbols);
     };
 
     @action addSymbol = (symbol: string): void => {
@@ -81,16 +76,14 @@ class DomainStore {
         this.setSymbols(_.without(this.symbols, symbol));
     };
 
-    @action getAssets = (): string[] => {
-        return this.symbols.map(pairOfCurrencies => {
+    @action getAssets = (): string[] => this.symbols.map((pairOfCurrencies) => {
             /**
              * Extract asset from pair of currencies
              * and return it.
              */
-            const asset = _.split(pairOfCurrencies, "_")[0];
-            return asset;
-        });
-    };
+        const asset = _.split(pairOfCurrencies, '_')[0];
+        return asset;
+    });
 
     /**
      * Selected symbol
@@ -98,11 +91,11 @@ class DomainStore {
      * string
      */
 
-    @observable selectedSymbol: string = "";
+    @observable selectedSymbol: string = '';
 
     @action setSelectedSymbol = (symbol: string): void => {
         this.selectedSymbol = symbol;
-        console.log("Symbol selected:\n", symbol);
+        console.log('Symbol selected:\n', symbol);
     };
 
     /**
@@ -116,29 +109,29 @@ class DomainStore {
 
     @action setTickers = (tickers: Object[]): void => {
         this.tickers = tickers;
-        console.log("Tickers updated:\n", tickers);
+        console.log('Tickers updated:\n', tickers);
     };
 
     /**
      * Updates tickers in local storage.
-     * 
+     *
      * @return Observable.
      */
     @action refreshTickers = (): Rx.Observable<any> => {
         /**
          * Console output.
          */
-        console.log("Did begin to refresh tickers");
+        console.log('Did begin to refresh tickers');
 
         /**
          * Update local storage and return observable.
          */
         return Poloniex.getTickers()
             .do(
-                tickers => {
+                (tickers) => {
                     this.setTickers(tickers);
                 },
-                console.log
+                console.log,
             )
             .do(() => console.log('Did finish to refresh tickers'), console.log);
     };
@@ -158,6 +151,7 @@ class DomainStore {
      * }
      *
      */
+    numberOfCandlesticksToDownload = 360;
 
     @persist('object')
     @observable history: Object = {};
@@ -169,48 +163,59 @@ class DomainStore {
         this.history = _.assign(
             {},
             this.history,
-            history
+            history,
         );
 
         /**
          * Console output.
          */
         console.log(
-            "History updated:\n",
-            history
+            'History updated:\n',
+            history,
         );
     };
 
     /**
      * Updates history in local storage.
-     * 
+     *
      * @param {string[]} symbols Array of currency pairs.
-     * @param {number} candlestickPeriod Candlestick period in seconds.
+     * @param {number} candlestickPeriod Candlestick period in seconds, e.g. 14400.
      * @return Observable.
      */
     @action refreshHistory = (symbols: string[], candlestickPeriod: number): Rx.Observable<any> => {
         /**
          * Console output.
          */
-        console.log("Did begin to refresh history");
+        console.log('Did begin to refresh history');
 
         /**
          * Obtain time interval.
          */
-        const defaultStartDate = moment().subtract(180, 'days').toDate();
-        const defaultEndDate = moment().toDate();
+        const endDate = moment().toDate();
+
+        const startDate = Poloniex.findStartDateForCandlestickChart(
+            endDate,
+            this.numberOfCandlesticksToDownload,
+            candlestickPeriod,
+        );
 
         /**
          * Update local storage and return observable.
          */
-        return Poloniex.getCandles(symbols, defaultStartDate, defaultEndDate, candlestickPeriod)
-            .do(
-                history => {
-                    this.setHistory(history);
-                },
-                console.log
-            )
-            .do(() => console.log('Did finish to refresh history'), console.log);
+        return Poloniex.getCandles(
+            this.symbols,
+            startDate,
+            endDate,
+            candlestickPeriod,
+        ).do(
+            (history) => {
+                this.setHistory(history);
+            },
+            console.log,
+        ).do(
+            () => console.log('Did finish to refresh history'),
+            console.log,
+        );
     };
 
     /**
@@ -229,40 +234,40 @@ class DomainStore {
 
     @action setSentiment = (sentiments: SentimentType[]): void => {
         this.sentiments = sentiments;
-        console.log("Sentiments updated:\n", sentiments);
+        console.log('Sentiments updated:\n', sentiments);
     };
 
     @action addSentiment = (sentiment: SentimentType): Rx.Observable<Object> => {
-        const userSentiment = _.assign(sentiment, {userId: this.user.id});
+        const userSentiment = _.assign(sentiment, { userId: this.user.id });
         const newSentiments = _.concat([], userSentiment, this.sentiments.slice());
 
         this.setSentiment(newSentiments);
 
         return Santiment.postSentiment(userSentiment)
-            .do(() => console.log("POST /sentiment succeeded"));
+            .do(() => console.log('POST /sentiment succeeded'));
     };
 
     /**
      * Updates sentiments in local storage.
-     * 
+     *
      * @param {string} userId User ID.
      * @return Observable.
      */
-    @action refreshSentiments = (userId: string): Rx.Observable<any> => {
+    @action refreshSentiments = (userId: String): Rx.Observable<any> => {
         /**
          * Console output.
          */
-        console.log("Did begin to refresh sentiments");
+        console.log('Did begin to refresh sentiments');
 
         /**
          * Update local storage and return observable.
          */
         return Santiment.getSentiments(userId)
             .do(
-                sentiments => {
+                (sentiments) => {
                     this.setSentiment(sentiments);
                 },
-                console.log
+                console.log,
             )
             .do(() => console.log('Did finish to refresh sentiments'), console.log);
     };
@@ -286,30 +291,30 @@ class DomainStore {
 
     @action setAggregates = (aggregates: Object): void => {
         this.aggregates = aggregates;
-        console.log("Aggregates updated:\n", aggregates);
+        console.log('Aggregates updated:\n', aggregates);
     };
 
     /**
      * Updates feeds in local storage.
-     * 
+     *
      * @param {string[]} symbols Array of currency pairs.
      * @return Observable.
      */
-    @action refreshAggregates = (symbols: string[]): Rx.Observable<Object> => {
+    @action refreshAggregates = (symbols: String[]): Rx.Observable<Object> => {
         /**
          * Console output.
          */
-        console.log("Did begin to refresh aggregates");
+        console.log('Did begin to refresh aggregates');
 
         /**
          * Update local storage and return observable.
          */
         return Santiment.getAggregates(symbols)
             .do(
-                aggregates => {
+                (aggregates) => {
                     this.setAggregates(aggregates);
                 },
-                console.log
+                console.log,
             )
             .do(() => console.log('Did finish to refresh aggregates'), console.log);
     };
@@ -333,12 +338,12 @@ class DomainStore {
 
     @action setFeeds = (feeds: Object): void => {
         this.feeds = feeds;
-        console.log("Feeds updated:\n", feeds);
+        console.log('Feeds updated:\n', feeds);
     };
 
     /**
      * Updates feeds in local storage.
-     * 
+     *
      * @param {string[]} assets Array of currencies, e.g. ["BTC", "ETH"].
      * @return Observable.
      */
@@ -346,17 +351,17 @@ class DomainStore {
         /**
          * Console output.
          */
-        console.log("Did begin to refresh feeds");
+        console.log('Did begin to refresh feeds');
 
         /**
          * Update local storage and return observable.
          */
         return Santiment.getFeeds(assets)
             .do(
-                feeds => {
+                (feeds) => {
                     this.setFeeds(feeds);
                 },
-                console.log
+                console.log,
             )
             .do(() => console.log('Did finish to refresh feeds'), console.log);
     };
@@ -364,16 +369,27 @@ class DomainStore {
     /**
      * Updates tickers, history, sentiments, aggregates and feeds
      * in local storage.
-     * 
+     *
      * @return Observable.
      */
     @action refresh = (): Rx.Observable<any> => {
         /**
          * Console output.
          */
-        console.log("domainStore.refresh() called");
-        console.log("user =", JSON.stringify(this.user, null, 2));
-        console.log("symbols =", JSON.stringify(this.symbols.slice(), null, 2));
+        console.log('domainStore.refresh() called');
+        console.log('user =', JSON.stringify(this.user, null, 2));
+        console.log('symbols =', JSON.stringify(this.symbols.slice(), null, 2));
+
+        /**
+         * Obtain time interval for candles.
+         */
+        const dateForLastCandle = moment().toDate();
+
+        const dateForFirstCandle = Poloniex.findStartDateForCandlestickChart(
+            dateForLastCandle,
+            this.numberOfCandlesticksToDownload,
+            this.selectedCandlestickPeriod,
+        );
 
         /**
          * Update local storage and return observable.
@@ -381,10 +397,21 @@ class DomainStore {
         return Rx.Observable
             .forkJoin(
                 Poloniex.getTickers(),
-                Poloniex.getCandles(this.symbols),
-                Santiment.getSentiments(this.user.id),
-                Santiment.getAggregates(this.symbols),
-                Santiment.getFeeds(this.getAssets()),
+                Poloniex.getCandles(
+                    this.symbols,
+                    dateForFirstCandle,
+                    dateForLastCandle,
+                    this.selectedCandlestickPeriod,
+                ),
+                Santiment.getSentiments(
+                    this.user.id,
+                ),
+                Santiment.getAggregates(
+                    this.symbols,
+                ),
+                Santiment.getFeeds(
+                    this.getAssets(),
+                ),
             )
             .do(
                 ([tickers, history, sentiment, aggregates, feeds]) => {
@@ -394,36 +421,41 @@ class DomainStore {
                     this.setAggregates(aggregates);
                     this.setFeeds(feeds);
                 },
-                console.log
+                console.log,
             )
-            .do(() => console.log('domainStore refreshed'), console.log)
+            .do(() => console.log('domainStore refreshed'), console.log);
     }
+
+    /**
+     * Periods for displaying on the list.
+     */
+    @observable periods: number[] = [
+        Poloniex.candlestickPeriods.twoHours,
+        Poloniex.candlestickPeriods.fourHours,
+        Poloniex.candlestickPeriods.oneDay,
+    ];
+
+    /**
+     * Index of selected candlestick period.
+     */
+    @observable indexOfSelectedPeriod: number = 2;
+
+    /**
+     * Updates index of selected candlestick period.
+     */
+    @action setIndexOfSelectedPeriod = (index: number): void => {
+        this.indexOfSelectedPeriod = index;
+    };
 
     /**
      * Selected candlestick period.
      */
-    @observable selectedCandlestickPeriod: number = Poloniex.candlestickPeriods.oneDay;
-
-    /**
-     * Updates selected candlestick period.
-     */
-    @action setSelectedCandlestickPeriod = (period: number): void => {
-        /**
-         * Update selected candlestick period.
-         */
-        this.selectedCandlestickPeriod = period;
-
-        /**
-         * Console output.
-         */
-        console.log(
-            "Did select candlestick period:\n",
-            period
-        );
-    };
+    @computed get selectedCandlestickPeriod(): number {
+        return this.periods[this.indexOfSelectedPeriod];
+    }
 }
 
-const hydrate = create({storage: AsyncStorage});
+const hydrate = create({ storage: AsyncStorage });
 
 const domainStore = new DomainStore();
 export default domainStore;
@@ -437,7 +469,7 @@ Rx.Observable.fromPromise(hydrate('store', domainStore))
             'Refresh Error',
             error.toString(),
             [
-                {text: 'OK', onPress: () => {}},
-            ]
+                { text: 'OK', onPress: () => {} },
+            ],
         ),
     );

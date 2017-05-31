@@ -3,19 +3,18 @@
  * @flow
  */
 
-'use strict';
 
 import React from 'react';
 
-import AppNavigator from './navigator'
-import Store from './store'
+import AppNavigator from './navigator';
+import Store from './store';
 
-class App extends React.Component {
+class App extends React.PureComponent {
     render() {
         return (
-            <AppNavigator store={Store}/>
-        )
+            <AppNavigator store={Store} />
+        );
     }
 }
 
-export default App
+export default App;

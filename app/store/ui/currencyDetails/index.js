@@ -1,19 +1,20 @@
 /**
- * Created by workplace on 23/03/2017.
  * @flow
  */
 
-'use strict';
+import _ from 'lodash';
 
-import _ from 'lodash'
+import {
+    computed,
+    action,
+    useStrict,
+} from 'mobx';
 
-import mobx, {observable, computed, autorun, action, useStrict} from 'mobx'
+import MySentimentUiStore from './mySentiment';
+import CommunitySentimentUiStore from './communitySentiment';
+import Feed from './feed';
 
-import MySentimentUiStore from './mySentiment'
-import CommunitySentimentUiStore from './communitySentiment'
-import Feed from './feed'
-
-export default class CurrencyDetailsUiStore {
+class CurrencyDetailsUiStore {
     domainStore: any;
     mySentiment: any;
     communitySentiment: any;
@@ -31,7 +32,9 @@ export default class CurrencyDetailsUiStore {
     @action refresh = (): void => {
     };
 
-    @computed get title(): string {
-        return _.replace(this.domainStore.selectedSymbol, "_", "/");
+    @computed get title(): String {
+        return _.replace(this.domainStore.selectedSymbol, '_', '/');
     }
 }
+
+export default CurrencyDetailsUiStore;

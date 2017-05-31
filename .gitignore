@@ -53,5 +53,12 @@ buck-out/
 # Misc
 playground.js
 
-# Visual Studio Code
-jsconfig.json
+# VS Code
+.vscode/.react/debuggerWorker.js
+
+# Sublime Text 3
+*.sublime-project
+*.sublime-workspace
+
+# Yarn
+yarn-error.log

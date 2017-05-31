@@ -1,33 +1,32 @@
 /**
- * Created by workplace on 31/01/2017.
  * @flow
  */
 
-'use strict';
-
 import React from 'react';
 
-import ReactNative, {
+import {
     View,
     Text,
     Dimensions,
     TouchableWithoutFeedback,
-    StyleSheet
+    StyleSheet,
 } from 'react-native';
 
 import {
-    Icon
+    Icon,
 } from 'react-native-elements';
 
 import NavigationBar from 'react-native-navbar';
 
 import ScrollableTabView, {
-    DefaultTabBar
+    DefaultTabBar,
 } from 'react-native-scrollable-tab-view';
 
 import {
-    observer
+    observer,
 } from 'mobx-react/native';
+
+import AndroidBackButton from 'android-back-button';
 
 import MySentimentScene from './mySentiment';
 
@@ -35,65 +34,156 @@ import CommunitySentimentScene from './communitySentiment';
 
 import FeedScene from './feed';
 
-import AndroidBackButton from 'android-back-button';
+import Clock from '../../utils/clock';
+
+const propTypes = {
+    navigator: React.PropTypes.shape({
+        push: React.PropTypes.func.isRequired,
+        pop: React.PropTypes.func.isRequired,
+    }).isRequired,
+    store: React.PropTypes.shape({
+        title: React.PropTypes.string.isRequired,
+        mySentiment: React.PropTypes.any.isRequired,
+        communitySentiment: React.PropTypes.any.isRequired,
+        feed: React.PropTypes.any.isRequired,
+        refresh: React.PropTypes.func.isRequired,
+    }).isRequired,
+};
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        backgroundColor: '#ffffff',
+    },
+    navBar: {
+        borderBottomWidth: StyleSheet.hairlineWidth,
+        borderBottomColor: '#cccccc',
+    },
+    navButton: {
+        padding: 10,
+    },
+    tabBar: {
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    tabButton: {
+        padding: 10,
+        flex: 1,
+    },
+    tabIcon: {},
+    tabText: {
+        textAlign: 'center',
+    },
+    underline: {
+        backgroundColor: 'black',
+        height: 0,
+    },
+});
+
 
 @observer
-export default class CurrencyDetails extends React.Component {
-    
+class CurrencyDetails extends React.Component {
+    constructor(props) {
+        super(props);
+
+        /**
+         * Initialize appearance clock and
+         * start to measure time interval.
+         */
+        this.appearanceClock = new Clock();
+        this.appearanceClock.start();
+
+        /**
+         * Initialize state.
+         */
+        this.state = {
+            didAppear: false,
+        };
+    }
+
+    componentDidMount() {
+        /**
+         * Update state.
+         */
+        this.setState({
+            didAppear: true,
+        });
+
+        /**
+         * End to measure appearance time interval.
+         */
+        const appearanceTimeInterval = this.appearanceClock.stop();
+
+        console.log(
+            'CurrencyDetails scene did appear in ',
+            appearanceTimeInterval,
+            ' milliseconds',
+        );
+    }
+
+    appearanceClock: Clock;
+
     render() {
-        const {navigator, store} = this.props;
+        /**
+         * Uncomment the block below to
+         * speed up screen appearance.
+         */
+        /* if (!this.state.didAppear) {
+            return null;
+        }*/
+
+        const { navigator, store } = this.props;
 
         const tabs = [
             {
-                label: "Me",
-                icon: "person",
+                label: 'Me',
+                icon: 'person',
             },
             {
-                label: "Community",
-                icon: "group",
+                label: 'Community',
+                icon: 'group',
             },
             {
-                label: "Feed",
-                icon: "rss-feed",
+                label: 'Feed',
+                icon: 'rss-feed',
             },
         ];
 
         const screen = Dimensions.get('window');
 
-        const renderTab = (name, page, isTabActive, onPressHandler, onLayoutHandler) => {
-            return (
-                <TouchableWithoutFeedback
-                    onPress={() => onPressHandler(page)}
-                    key={`${name}_${page}`}
-                >
-                    <View style={styles.tabButton}>
-                        <Icon
-                            name={tabs[page].icon}
-                            onLayout={onLayoutHandler}
-                            color={isTabActive ? '#000000' : '#919191'}
-                        />
-                        <Text style={[
-                            styles.tabText,
-                            {color: isTabActive ? '#000000' : '#919191'}
-                        ]}>
-                            {tabs[page].label}
-                        </Text>
-                    </View>
+        const renderTab = (name, page, isTabActive, onPressHandler, onLayoutHandler) => (
+            <TouchableWithoutFeedback
+                onPress={() => onPressHandler(page)}
+                key={`${name}_${page}`}
+            >
+                <View style={styles.tabButton}>
+                    <Icon
+                        name={tabs[page].icon}
+                        onLayout={onLayoutHandler}
+                        color={isTabActive ? '#000000' : '#919191'}
+                    />
+                    <Text style={[
+                        styles.tabText,
+                            { color: isTabActive ? '#000000' : '#919191' },
+                    ]}
+                    >
+                        {tabs[page].label}
+                    </Text>
+                </View>
 
-                </TouchableWithoutFeedback>
-            )
-        };
+            </TouchableWithoutFeedback>
+            );
 
         return (
             <View style={styles.container}>
                 <NavigationBar
-                    title={{title: store.title}}
+                    title={{ title: store.title }}
                     style={styles.navBar}
                     leftButton={
                         <Icon
                             containerStyle={styles.navButton}
                             name="keyboard-arrow-left"
-                            onPress={ () => {
+                            onPress={() => {
                                 navigator.pop();
                             }}
                         />
@@ -101,30 +191,35 @@ export default class CurrencyDetails extends React.Component {
                 />
 
                 <ScrollableTabView
-                    renderTabBar={() =>
+                    renderTabBar={() => (
                         <DefaultTabBar
                             renderTab={renderTab}
-                            backgroundColor={"#f2f2f2"}
+                            backgroundColor={'#f2f2f2'}
                             underlineStyle={[styles.underline, {
                                 width: 30,
-                                marginLeft: (screen.width / tabs.length - 30) / 2
+                                marginLeft: ((screen.width / tabs.length) - 30) / 2,
                             }]}
                             style={styles.tabBar}
-                            activeTextColor={"green"}
-                            inactiveTextColor={"red"}
+                            activeTextColor={'green'}
+                            inactiveTextColor={'red'}
                         />
-                    }
-                    ref={(tabView) => {
-                    }}
-                    tabBarPosition={"bottom"}
-                    locked={true}
+                    )}
+                    ref={(tabView) => {}}
+                    tabBarPosition={'bottom'}
+                    locked
                 >
-                    <MySentimentScene tabLabel={tabs[0].label}
-                                      store={store.mySentiment}/>
-                    <CommunitySentimentScene tabLabel={tabs[1].label}
-                                             store={store.communitySentiment}/>
-                    <FeedScene tabLabel={tabs[2].label}
-                               store={store.feed}/>
+                    <MySentimentScene
+                        tabLabel={tabs[0].label}
+                        store={store.mySentiment}
+                    />
+                    <CommunitySentimentScene
+                        tabLabel={tabs[1].label}
+                        store={store.communitySentiment}
+                    />
+                    <FeedScene
+                        tabLabel={tabs[2].label}
+                        store={store.feed}
+                    />
                 </ScrollableTabView>
 
                 <AndroidBackButton
@@ -138,46 +233,6 @@ export default class CurrencyDetails extends React.Component {
     }
 }
 
-CurrencyDetails.propTypes = {
-    navigator: React.PropTypes.shape({
-        push: React.PropTypes.func.isRequired,
-        pop: React.PropTypes.func.isRequired
-    }),
-    store: React.PropTypes.shape({
-        title: React.PropTypes.string.isRequired,
-        mySentiment: React.PropTypes.any.isRequired,
-        communitySentiment: React.PropTypes.any.isRequired,
-        feed: React.PropTypes.any.isRequired,
-        refresh: React.PropTypes.func.isRequired,
-    })
-};
+CurrencyDetails.propTypes = propTypes;
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: "#ffffff"
-    },
-    navBar: {
-        borderBottomWidth: StyleSheet.hairlineWidth,
-        borderBottomColor: "#cccccc",
-    },
-    navButton: {
-        padding: 10,
-    },
-    tabBar: {
-        justifyContent: "center",
-        alignItems: "center"
-    },
-    tabButton: {
-        padding: 10,
-        flex: 1,
-    },
-    tabIcon: {},
-    tabText: {
-        textAlign: "center"
-    },
-    underline: {
-        backgroundColor: "black",
-        height: 0,
-    }
-});
+export default CurrencyDetails;
