@@ -15,7 +15,7 @@
   },
   "dependencies": {
     "android-back-button": "^1.0.0",
-    "axios": "^0.15.3",
+    "axios": "^0.16.1",
     "bugsnag-react-native": "^2.2.0",
     "eslint-plugin-react-native": "^2.3.2",
     "lodash": "^4.17.4",
@@ -29,7 +29,7 @@
     "react-native": "0.42.3",
     "react-native-charts-wrapper": "^0.2.7",
     "react-native-device-info": "^0.10.2",
-    "react-native-elements": "^0.10.2",
+    "react-native-elements": "^0.12.2",
     "react-native-gifted-chat": "^0.1.4",
     "react-native-keyboard-aware-scrollview": "^1.1.5",
     "react-native-modal-dropdown": "^0.4.2",
@@ -37,7 +37,7 @@
     "react-native-responsive-dimensions": "^1.0.1",
     "react-native-scrollable-tab-view": "^0.7.4",
     "react-native-segmented-control-tab": "^2.0.1",
-    "react-native-vector-icons": "^4.0.0",
+    "react-native-vector-icons": "4.1.1",
     "react-native-version": "^2.3.0",
     "rxjs": "^5.1.1"
   },
