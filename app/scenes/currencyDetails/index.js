@@ -34,8 +34,6 @@ import CommunitySentimentScene from './communitySentiment';
 
 import FeedScene from './feed';
 
-import Clock from '../../utils/clock';
-
 const propTypes = {
     navigator: React.PropTypes.shape({
         push: React.PropTypes.func.isRequired,
@@ -70,7 +68,8 @@ const styles = StyleSheet.create({
         padding: 10,
         flex: 1,
     },
-    tabIcon: {},
+    tabIcon: {
+    },
     tabText: {
         textAlign: 'center',
     },
@@ -83,55 +82,8 @@ const styles = StyleSheet.create({
 
 @observer
 class CurrencyDetails extends React.Component {
-    constructor(props) {
-        super(props);
-
-        /**
-         * Initialize appearance clock and
-         * start to measure time interval.
-         */
-        this.appearanceClock = new Clock();
-        this.appearanceClock.start();
-
-        /**
-         * Initialize state.
-         */
-        this.state = {
-            didAppear: false,
-        };
-    }
-
-    componentDidMount() {
-        /**
-         * Update state.
-         */
-        this.setState({
-            didAppear: true,
-        });
-
-        /**
-         * End to measure appearance time interval.
-         */
-        const appearanceTimeInterval = this.appearanceClock.stop();
-
-        console.log(
-            'CurrencyDetails scene did appear in ',
-            appearanceTimeInterval,
-            ' milliseconds',
-        );
-    }
-
-    appearanceClock: Clock;
-
+    
     render() {
-        /**
-         * Uncomment the block below to
-         * speed up screen appearance.
-         */
-        /* if (!this.state.didAppear) {
-            return null;
-        }*/
-
         const { navigator, store } = this.props;
 
         const tabs = [

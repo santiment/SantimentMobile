@@ -26,8 +26,6 @@ import SentimentChart from '../../../components/sentimentCandlestickChart';
 
 import Cell from './cell';
 
-import Clock from '../../../utils/clock';
-
 const propTypes = {
     store: React.PropTypes.shape({
         domainStore: React.PropTypes.any.isRequired,
@@ -173,55 +171,8 @@ const styles = StyleSheet.create({
 
 @observer
 class MySentiment extends React.Component {
-    constructor(props) {
-        super(props);
-
-        /**
-         * Initialize appearance clock and
-         * start to measure time interval.
-         */
-        this.appearanceClock = new Clock();
-        this.appearanceClock.start();
-
-        /**
-         * Initialize state.
-         */
-        this.state = {
-            didAppear: false,
-        };
-    }
-
-    componentDidMount() {
-        /**
-         * Update state.
-         */
-        this.setState({
-            didAppear: true,
-        });
-
-        /**
-         * End to measure appearance time interval.
-         */
-        const appearanceTimeInterval = this.appearanceClock.stop();
-
-        console.log(
-            'MySentiment scene did appear in ',
-            appearanceTimeInterval,
-            ' milliseconds',
-        );
-    }
-
-    appearanceClock: Clock;
-
+    
     render() {
-        /**
-         * Uncomment the block below to
-         * speed up screen appearance.
-         */
-        /* if (!this.state.didAppear) {
-            return null;
-        }*/
-
         const { store } = this.props;
 
         const renderRow = (data, sectionID) => (
