@@ -26,12 +26,13 @@ class AddCurrencyUiStore {
         this.domainStore = domainStore;
     }
 
-    @observable query: String = '';
-    @action setQuery = (query: String): void => {
+    @observable query: string = '';
+    
+    @action setQuery = (query: string): void => {
         this.query = query;
     };
 
-    @action addSymbol = (symbol: String): void => {
+    @action addSymbol = (symbol: string): void => {
         this.domainStore.addSymbol(symbol);
         this.domainStore.refresh()
             .subscribe(

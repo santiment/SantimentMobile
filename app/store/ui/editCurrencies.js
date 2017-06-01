@@ -17,7 +17,7 @@ class EditCurrenciesUiStore {
         this.domainStore = domainStore;
     }
 
-    @action removeSymbol = (symbol: String): void => {
+    @action removeSymbol = (symbol: string): void => {
         this.domainStore.removeSymbol(symbol);
     };
 

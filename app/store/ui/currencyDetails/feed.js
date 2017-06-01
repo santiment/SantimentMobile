@@ -68,12 +68,12 @@ class FeedUiStore {
     /**
      * Shows whether data is loading now.
      */
-    @observable isLoading: Boolean = false;
+    @observable isLoading: boolean = false;
 
     /**
      * Updates `isLoading` boolean flag.
      */
-    @action setIsLoading = (value: Boolean): void => {
+    @action setIsLoading = (value: boolean): void => {
         this.isLoading = value;
     };
 
@@ -104,7 +104,7 @@ class FeedUiStore {
     /**
      * Asset.
      */
-    @computed get asset(): String {
+    @computed get asset(): string {
         return _.split(this.domainStore.selectedSymbol, '_')[0];
     }
 

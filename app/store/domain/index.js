@@ -77,10 +77,10 @@ class DomainStore {
     };
 
     @action getAssets = (): string[] => this.symbols.map((pairOfCurrencies) => {
-            /**
-             * Extract asset from pair of currencies
-             * and return it.
-             */
+        /**
+         * Extract asset from pair of currencies
+         * and return it.
+         */
         const asset = _.split(pairOfCurrencies, '_')[0];
         return asset;
     });
@@ -253,7 +253,7 @@ class DomainStore {
      * @param {string} userId User ID.
      * @return Observable.
      */
-    @action refreshSentiments = (userId: String): Rx.Observable<any> => {
+    @action refreshSentiments = (userId: string): Rx.Observable<any> => {
         /**
          * Console output.
          */
@@ -300,7 +300,7 @@ class DomainStore {
      * @param {string[]} symbols Array of currency pairs.
      * @return Observable.
      */
-    @action refreshAggregates = (symbols: String[]): Rx.Observable<Object> => {
+    @action refreshAggregates = (symbols: string[]): Rx.Observable<Object> => {
         /**
          * Console output.
          */

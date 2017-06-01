@@ -15,7 +15,7 @@ const apiUrl = 'https://api.coinmarketcap.com/v1';
  * @return Axios request.
  */
 export const getTicker = (
-    limit: Number,
+    limit: number,
 ) => {
     /**
      * Obtain URL for request.

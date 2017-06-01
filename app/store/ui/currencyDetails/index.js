@@ -32,7 +32,7 @@ class CurrencyDetailsUiStore {
     @action refresh = (): void => {
     };
 
-    @computed get title(): String {
+    @computed get title(): string {
         return _.replace(this.domainStore.selectedSymbol, '_', '/');
     }
 }
