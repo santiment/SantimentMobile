@@ -130,40 +130,47 @@ class FeedUiStore {
         /**
          * Obtain formatted feed.
          */
-        const formattedFeed = _.map(_.orderBy(feed, ['timestamp'], ['desc']), (m) => {
-            /**
-             * Obtain unique ID for current message.
-             * Currently it's just a message index,
-             * but later we can just the algorithm
-             * that generates IDs.
-             */
-            // const messageUniqueIdentifier = messageIndex;
+        const formattedFeed = _.map(
+            _.orderBy(
+                feed,
+                ['timestamp'],
+                ['desc'],
+            ),
+            (m) => {
+                /**
+                 * Obtain unique ID for current message.
+                 * Currently it's just a message index,
+                 * but later we can just the algorithm
+                 * that generates IDs.
+                 */
+                const messageUniqueIdentifier = messageIndex;
 
-            /**
-             * Obtain creation date for current message.
-             * Timestamp provided by server is measured in seconds,
-             * but we need to use milliseconds.
-             */
-            const messageCreationDate = new Date(m.timestamp * 1000);
+                /**
+                 * Obtain creation date for current message.
+                 * Timestamp provided by server is measured in seconds,
+                 * but we need to use milliseconds.
+                 */
+                const messageCreationDate = new Date(m.timestamp * 1000);
 
-            /**
-             * Increment index for next message.
-             */
-            messageIndex += 1;
+                /**
+                 * Increment index for next message.
+                 */
+                messageIndex += 1;
 
-            /**
-             * Return formatted message object.
-             */
-            return {
-                _id: messageIndex,
-                text: m.message,
-                createdAt: messageCreationDate,
-                user: {
-                    _id: m.username,
-                    name: m.username,
-                },
-            };
-        });
+                /**
+                 * Return formatted message object.
+                 */
+                return {
+                    _id: messageUniqueIdentifier,
+                    text: m.message,
+                    createdAt: messageCreationDate,
+                    user: {
+                        _id: m.username,
+                        name: m.username,
+                    },
+                };
+            },
+        );
 
         /**
          * Console output (helpful for checking feed's content).

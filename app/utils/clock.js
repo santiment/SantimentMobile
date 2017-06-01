@@ -7,23 +7,17 @@ class Clock {
     /**
      * Start timestamp in milliseconds seconds.
      */
-    get startTimestamp(): number {
-        return this.startTimestamp;
-    }
+    startTimestamp: number = 0;
 
     /**
      * End timestamp in milliseconds.
      */
-    get endTimestamp(): number {
-        return this.endTimestamp;
-    }
+    endTimestamp: number = 0;
 
     /**
      * Last measured time interval in milliseconds.
      */
-    get lastResult(): number {
-        return this.lastResult;
-    }
+    lastResult: number = 0;
 
     /**
      * Shows whether to use debug mode.
@@ -32,17 +26,6 @@ class Clock {
      */
     debug: boolean = false;
 
-    constructor() {
-        this._startTimestamp = null;
-        this._endTimestamp = null;
-        this._lastResult = null;
-
-        this.clearTimestamps = () => {
-            this._startTimestamp = null;
-            this._endTimestamp = null;
-        };
-    }
-
     /**
      * Begins time measurement procedure.
      */
@@ -50,7 +33,7 @@ class Clock {
         /**
          * Update start timestamp.
          */
-        this._startTimestamp = new Date().getTime();
+        this.startTimestamp = new Date().getTime();
 
         /**
          * Output debug information if needed.
@@ -72,17 +55,17 @@ class Clock {
         /**
          * Update end timestamp.
          */
-        this._endTimestamp = new Date().getTime();
+        this.endTimestamp = new Date().getTime();
 
         /**
          * Obtain measured time interval.
          */
-        const measuredTimeIntervalInMilliseconds = this._endTimestamp - this._startTimestamp;
+        const measuredTimeIntervalInMilliseconds = this.endTimestamp - this.startTimestamp;
 
         /**
          * Update last result.
          */
-        this._lastResult = measuredTimeIntervalInMilliseconds;
+        this.lastResult = measuredTimeIntervalInMilliseconds;
 
         /**
          * Output debug information if needed.
@@ -108,6 +91,11 @@ class Clock {
          */
         return measuredTimeIntervalInMilliseconds;
     };
+
+    clearTimestamps() {
+        this.startTimestamp = 0;
+        this.endTimestamp = 0;
+    }
 }
 
 export default Clock;
