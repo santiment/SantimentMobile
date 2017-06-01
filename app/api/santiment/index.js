@@ -161,6 +161,7 @@ export const getAggregates = (
     /**
      * Return observable.
      */
+    // $FlowFixMe
     return Rx.Observable.forkJoin(observables)
         .map(arr => _.assign(...arr));
 };
@@ -208,6 +209,7 @@ export const getFeeds = (
     /**
      * Return observable.
      */
+    // $FlowFixMe
     return Rx.Observable.forkJoin(observables)
         .map(arr => _.assign(...arr));
 };
