@@ -65,10 +65,6 @@ const styles = StyleSheet.create({
         flex: 1,
         backgroundColor: '#ffffff',
     },
-    navBar: {
-        borderBottomWidth: StyleSheet.hairlineWidth,
-        borderBottomColor: '#cccccc',
-    },
     currencyRowContainer: {
         height: responsiveHeight(9),
         flexDirection: 'row',
@@ -77,13 +73,6 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         alignItems: 'center',
         backgroundColor: '#333333',
-    },
-    chartContainer: {
-        padding: 20,
-        alignItems: 'center',
-    },
-    toolbarButton: {
-        padding: 10,
     },
     text: {
         fontSize: 14,
@@ -133,36 +122,9 @@ const styles = StyleSheet.create({
         height: 2,
         backgroundColor: '#333333',
     },
-    spacer: {
-        flex: 1,
-    },
     listViewContainer: {
         backgroundColor: 'white',
         flex: 1,
-    },
-    tabsContainerStyle: {
-        backgroundColor: 'transparent',
-        flexDirection: 'row',
-        marginLeft: 20,
-        marginRight: 20,
-    },
-    tabStyle: {
-        paddingVertical: 5,
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderColor: '#999999',
-        borderWidth: StyleSheet.hairlineWidth,
-        backgroundColor: 'white',
-    },
-    activeTabStyle: {
-        backgroundColor: '#999999',
-    },
-    tabTextStyle: {
-        color: '#666666',
-    },
-    activeTabTextStyle: {
-        color: 'white',
     },
     chart: {
         height: responsiveHeight(40),
@@ -175,6 +137,7 @@ class MySentiment extends React.Component {
     render() {
         const { store } = this.props;
 
+        // eslint-disable-next-line no-unused-vars
         const renderRow = (data, sectionID) => (
             <Cell
                 date={data.date}
@@ -193,14 +156,16 @@ class MySentiment extends React.Component {
             changeColor = '#b1b1b2';
         }
 
+        // eslint-disable-next-line no-unused-vars
         const renderDropdownRow = (rowData, rowID, highlighted) => (
             <View style={styles.periodButton}>
                 <Text style={styles.periodText}>
                     {rowData}
                 </Text>
             </View>
-            );
+        );
 
+        // eslint-disable-next-line no-unused-vars
         const renderSeparator = (sectionID, rowID, adjacentRowHighlighted) => {
             if (_.isEqual(rowID, store.domainStore.periods.length - 1)) return null;
             return (
@@ -240,6 +205,7 @@ class MySentiment extends React.Component {
                             textStyle={styles.periodText}
                             options={store.dropdownOptions}
                             onSelect={
+                                // eslint-disable-next-line no-unused-vars
                                 (index, value) => {
                                     /**
                                      * Update index of selected period in store.

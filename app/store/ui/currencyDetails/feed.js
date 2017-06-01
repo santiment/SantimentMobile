@@ -115,7 +115,7 @@ class FeedUiStore {
         /**
          * Retrieve feed from domain store.
          */
-        const feed = _.get(
+        const feed: Object[] = _.get(
             this.domainStore.feeds,
             [this.asset],
             [],
