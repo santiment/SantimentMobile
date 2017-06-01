@@ -203,7 +203,7 @@ class DomainStore {
          * Update local storage and return observable.
          */
         return Poloniex.getCandles(
-            this.symbols,
+            symbols,
             startDate,
             endDate,
             candlestickPeriod,
