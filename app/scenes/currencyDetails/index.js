@@ -34,6 +34,8 @@ import CommunitySentimentScene from './communitySentiment';
 
 import FeedScene from './feed';
 
+import * as Routes from '../../navigator/routes';
+
 const propTypes = {
     navigator: React.PropTypes.shape({
         push: React.PropTypes.func.isRequired,
@@ -137,6 +139,15 @@ class CurrencyDetails extends React.Component {
                             name="keyboard-arrow-left"
                             onPress={() => {
                                 navigator.pop();
+                            }}
+                        />
+                    }
+                    rightButton={
+                        <Icon
+                            containerStyle={styles.navButton}
+                            name="help"
+                            onPress={() => {
+                                // TODO: Implement transition to Help screen.
                             }}
                         />
                     }
