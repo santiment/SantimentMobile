@@ -7,8 +7,7 @@
         "experimentalDecorators": true,
         "removeComments": false,
         "noImplicitAny": false,
-        "allowSyntheticDefaultImports": true,
-        "javascript.validate.enable": false
+        "allowSyntheticDefaultImports": true
     },
     "exclude": [
         "node_modules"
