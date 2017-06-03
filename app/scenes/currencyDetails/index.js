@@ -34,7 +34,11 @@ import CommunitySentimentScene from './communitySentiment';
 
 import FeedScene from './feed';
 
-import * as Routes from '../../navigator/routes';
+import UserInstruction from '../../components/userInstruction';
+
+import {
+    Instructions,
+} from '../../resources/instructions';
 
 const propTypes = {
     navigator: React.PropTypes.shape({
@@ -70,8 +74,6 @@ const styles = StyleSheet.create({
         padding: 10,
         flex: 1,
     },
-    tabIcon: {
-    },
     tabText: {
         textAlign: 'center',
     },
@@ -80,7 +82,6 @@ const styles = StyleSheet.create({
         height: 0,
     },
 });
-
 
 @observer
 class CurrencyDetails extends React.Component {
@@ -147,7 +148,7 @@ class CurrencyDetails extends React.Component {
                             containerStyle={styles.navButton}
                             name="help"
                             onPress={() => {
-                                // TODO: Implement transition to Help screen.
+                                store.mySentiment.setInstructionVisible(true);
                             }}
                         />
                     }
@@ -184,6 +185,12 @@ class CurrencyDetails extends React.Component {
                         store={store.feed}
                     />
                 </ScrollableTabView>
+
+                <UserInstruction
+                    title={store.title}
+                    text={Instructions.mySentiment}
+                    visible={store.mySentiment.isInstructionVisible}
+                />
 
                 <AndroidBackButton
                     onPress={() => {
