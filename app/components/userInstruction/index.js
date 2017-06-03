@@ -5,13 +5,16 @@
 import React from 'react';
 
 import {
-    View,
+    ScrollView,
     Text,
     Modal,
     StyleSheet,
 } from 'react-native';
 
+import NavigationBar from 'react-native-navbar';
+
 const propTypes = {
+    title: React.PropTypes.string.isRequired,
     text: React.PropTypes.string.isRequired,
     visible: React.PropTypes.bool.isRequired,
 };
@@ -20,7 +23,18 @@ const styles = StyleSheet.create({
     modal: {
         flex: 1,
     },
+    navbar: {
+        borderBottomWidth: StyleSheet.hairlineWidth,
+        borderBottomColor: '#cccccc',
+    },
     contentWrapper: {
+        backgroundColor: '#000000A0',
+        width: '100%',
+        height: '100%',
+    },
+    text: {
+        color: 'white',
+        padding: 20,
     },
 });
 
@@ -31,6 +45,7 @@ class UserInstruction extends React.PureComponent {
          * Obtain properties.
          */
         const {
+            title,
             text,
             visible,
         } = this.props;
@@ -44,11 +59,14 @@ class UserInstruction extends React.PureComponent {
                 transparent
                 visible={visible}
             >
-                <View style={styles.contentWrapper}>
+                <NavigationBar
+                    title={title}
+                />
+                <ScrollView style={styles.contentWrapper}>
                     <Text style={styles.text}>
                         {text}
                     </Text>
-                </View>
+                </ScrollView>
             </Modal>
         );
     }
