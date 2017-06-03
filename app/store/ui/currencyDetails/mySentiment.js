@@ -188,7 +188,20 @@ class MySentimentUiStore {
     @computed get dropdownDefaultIndex(): number {
         return this.domainStore.indexOfSelectedPeriod;
     }
+
+    /**
+     * Shows whether instruction is visible.
+     */
+    @observable isInstructionVisible: boolean = false;
+
+    /**
+     * Updates `isInstructionVisible` flag.
+     *
+     * @param {boolean} visible New value for `isInstructionVisible` flag.
+     */
+    @action setInstructionVisible = (visible: boolean): void => {
+        this.isInstructionVisible = visible;
+    };
 }
 
 export default MySentimentUiStore;
-
