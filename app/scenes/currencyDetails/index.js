@@ -151,7 +151,7 @@ class CurrencyDetails extends React.Component {
                             containerStyle={styles.navButton}
                             name="help"
                             onPress={() => {
-                                store.mySentiment.setInstructionVisible(true);
+                                store.setInstructionVisible(true);
                             }}
                         />
                     }
@@ -174,6 +174,11 @@ class CurrencyDetails extends React.Component {
                     ref={(tabView) => {}}
                     tabBarPosition={'bottom'}
                     locked
+                    // eslint-disable-next-line no-unused-vars
+                    onChangeTab={(tab) => {
+                        console.log(`Index: ${tab.i}`);
+                        store.setCurrentPageIndex(tab.i);
+                    }}
                 >
                     <MySentimentScene
                         tabLabel={tabs[0].label}
@@ -190,11 +195,11 @@ class CurrencyDetails extends React.Component {
                 </ScrollableTabView>
 
                 <UserInstruction
-                    title={InstructionStore.mySentiment.title}
-                    text={InstructionStore.mySentiment.text}
-                    visible={store.mySentiment.isInstructionVisible}
+                    title={store.instructionForCurrentlyActivePage.title}
+                    text={store.instructionForCurrentlyActivePage.text}
+                    visible={store.isInstructionVisible}
                     onRequestToClose={(): void => {
-                        store.mySentiment.setInstructionVisible(false);
+                        store.setInstructionVisible(false);
                     }}
                 />
 
