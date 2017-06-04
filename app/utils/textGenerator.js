@@ -2,9 +2,18 @@
  * @flow
  */
 
-export const TextGenerator = {
+/**
+ * Generates text.
+ */
+class TextGenerator {
     
-    generateIpsumDolor: (length: number): string => {
+    /**
+     * Creates "Ipsum Dolor" text of required length.
+     *
+     * @param {number} length Required length of generated text.
+     * @return "Ipsum Dolor" text of required length.
+     */
+    generateIpsumDolor = (length: number): string => {
         /**
          * Source text.
          */
@@ -37,5 +46,7 @@ export const TextGenerator = {
          * Return result text.
          */
         return resultText;
-    },
-};
+    }
+}
+
+export default TextGenerator;
