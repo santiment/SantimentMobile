@@ -13,10 +13,15 @@ import {
 
 import NavigationBar from 'react-native-navbar';
 
+import {
+    Icon,
+} from 'react-native-elements';
+
 const propTypes = {
     title: React.PropTypes.string.isRequired,
     text: React.PropTypes.string.isRequired,
     visible: React.PropTypes.bool.isRequired,
+    onRequestToClose: React.PropTypes.func.isRequired,
 };
 
 const styles = StyleSheet.create({
@@ -26,6 +31,9 @@ const styles = StyleSheet.create({
     navbar: {
         borderBottomWidth: StyleSheet.hairlineWidth,
         borderBottomColor: '#cccccc',
+    },
+    navbarButton: {
+        padding: 10,
     },
     contentWrapper: {
         backgroundColor: '#000000A0',
@@ -48,6 +56,7 @@ class UserInstruction extends React.PureComponent {
             title,
             text,
             visible,
+            onRequestToClose,
         } = this.props;
 
         /**
@@ -58,9 +67,24 @@ class UserInstruction extends React.PureComponent {
                 animationType={'fade'}
                 transparent
                 visible={visible}
+                onRequestToClose={(): void => {
+                }}
             >
                 <NavigationBar
-                    title={title}
+                    style={styles.navbar}
+                    title={{
+                        title,
+                    }}
+                    leftButton={
+                        <Icon
+                            style={styles.navbarButton}
+                            containerStyle={styles.navButton}
+                            name="keyboard-arrow-left"
+                            onPress={() => {
+                                onRequestToClose();
+                            }}
+                        />
+                    }
                 />
                 <ScrollView style={styles.contentWrapper}>
                     <Text style={styles.text}>

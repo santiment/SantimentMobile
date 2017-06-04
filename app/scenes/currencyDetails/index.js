@@ -36,9 +36,7 @@ import FeedScene from './feed';
 
 import UserInstruction from '../../components/userInstruction';
 
-import {
-    Instructions,
-} from '../../resources/instructions';
+import InstructionStore from '../../resources/instructionStore';
 
 const propTypes = {
     navigator: React.PropTypes.shape({
@@ -187,9 +185,12 @@ class CurrencyDetails extends React.Component {
                 </ScrollableTabView>
 
                 <UserInstruction
-                    title={store.title}
-                    text={Instructions.mySentiment}
+                    title={InstructionStore.mySentiment.title}
+                    text={InstructionStore.mySentiment.text}
                     visible={store.mySentiment.isInstructionVisible}
+                    onRequestToClose={(): void => {
+                        store.mySentiment.setInstructionVisible(false);
+                    }}
                 />
 
                 <AndroidBackButton
