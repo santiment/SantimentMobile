@@ -72,8 +72,13 @@ const styles = StyleSheet.create({
         padding: 10,
         flex: 1,
     },
-    tabText: {
+    activeTabText: {
         textAlign: 'center',
+        color: '#000000',
+    },
+    inactiveTabText: {
+        textAlign: 'center',
+        color: '#919191',
     },
     underline: {
         backgroundColor: 'black',
@@ -115,17 +120,17 @@ class CurrencyDetails extends React.Component {
                         onLayout={onLayoutHandler}
                         color={isTabActive ? '#000000' : '#919191'}
                     />
-                    <Text style={[
-                        styles.tabText,
-                            { color: isTabActive ? '#000000' : '#919191' },
-                    ]}
+                    <Text
+                        style={
+                            isTabActive ? styles.activeTabText : styles.inactiveTabText
+                        }
                     >
                         {tabs[page].label}
                     </Text>
                 </View>
 
             </TouchableWithoutFeedback>
-            );
+        );
 
         return (
             <View style={styles.container}>
