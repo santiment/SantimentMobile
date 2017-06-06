@@ -96,14 +96,17 @@ class CurrencyDetails extends React.Component {
             {
                 label: 'Me',
                 icon: 'person',
+                instruction: InstructionStore.mySentiment,
             },
             {
                 label: 'Community',
                 icon: 'group',
+                instruction: InstructionStore.communitySentiment,
             },
             {
                 label: 'Feed',
                 icon: 'rss-feed',
+                instruction: InstructionStore.feed,
             },
         ];
 
@@ -176,7 +179,6 @@ class CurrencyDetails extends React.Component {
                     locked
                     // eslint-disable-next-line no-unused-vars
                     onChangeTab={(tab) => {
-                        console.log(`Index: ${tab.i}`);
                         store.setCurrentPageIndex(tab.i);
                     }}
                 >
@@ -195,8 +197,8 @@ class CurrencyDetails extends React.Component {
                 </ScrollableTabView>
 
                 <UserInstruction
-                    title={store.instructionForCurrentlyActivePage.title}
-                    text={store.instructionForCurrentlyActivePage.text}
+                    title={tabs[store.currentPageIndex].instruction.title}
+                    text={tabs[store.currentPageIndex].instruction.text}
                     visible={store.isInstructionVisible}
                     onRequestToClose={(): void => {
                         store.setInstructionVisible(false);
@@ -211,6 +213,11 @@ class CurrencyDetails extends React.Component {
                 />
             </View>
         );
+    }
+
+    componentWillMount() {
+        const { store } = this.props;
+        store.setCurrentPageIndex(0);
     }
 }
 

@@ -17,10 +17,6 @@ import CommunitySentimentUiStore from './communitySentiment';
 
 import Feed from './feed';
 
-import InstructionStore from '../../../resources/instructionStore';
-
-import Instruction from '../../../resources/instructionStore/instruction';
-
 class CurrencyDetailsUiStore {
     
     /**
@@ -89,19 +85,6 @@ class CurrencyDetailsUiStore {
     @action setInstructionVisible = (visible: boolean): void => {
         this.isInstructionVisible = visible;
     };
-
-    @computed get instructionForCurrentlyActivePage(): any {
-        switch (this.currentPageIndex) {
-        case 0:
-            return InstructionStore.mySentiment;
-        case 1:
-            return InstructionStore.communitySentiment;
-        case 2:
-            return InstructionStore.feed;
-        default:
-            return null;
-        }
-    }
 }
 
 export default CurrencyDetailsUiStore;
