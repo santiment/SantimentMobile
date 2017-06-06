@@ -36,7 +36,7 @@ import FeedScene from './feed';
 
 import UserInstruction from '../../components/userInstruction';
 
-import InstructionStore from '../../resources/instructionStore';
+import InstructionStore from '../../resources/instructions';
 
 const propTypes = {
     navigator: React.PropTypes.shape({
