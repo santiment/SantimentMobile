@@ -37,7 +37,7 @@ class CrowdSentimentBarChart extends React.PureComponent {
             container: {
                 flex: 1,
                 margin: 20,
-                backgroundColor: Palette.white,
+                backgroundColor: Palette.justWhite,
                 flexDirection: 'column',
                 justifyContent: 'center',
             },

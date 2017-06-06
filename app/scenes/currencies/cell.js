@@ -46,7 +46,7 @@ const styles = StyleSheet.create({
         paddingBottom: 20,
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: Palette.white,
+        backgroundColor: Palette.justWhite,
     },
     sentimentQuestionContainer: {
         backgroundColor: Palette.alabaster,

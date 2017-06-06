@@ -40,12 +40,12 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     contentWrapper: {
-        backgroundColor: ColorGenerator.colorWithOpacity(Palette.black, 0xdd),
+        backgroundColor: ColorGenerator.colorWithOpacity(Palette.justBlack, 0xdd),
         width: '100%',
         height: '100%',
     },
     text: {
-        color: Palette.white,
+        color: Palette.justWhite,
         padding: 20,
     },
 });

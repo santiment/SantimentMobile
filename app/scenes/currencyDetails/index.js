@@ -57,7 +57,7 @@ const propTypes = {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: Palette.white,
+        backgroundColor: Palette.justWhite,
     },
     navBar: {
         borderBottomWidth: StyleSheet.hairlineWidth,
@@ -76,14 +76,14 @@ const styles = StyleSheet.create({
     },
     activeTabText: {
         textAlign: 'center',
-        color: Palette.black,
+        color: Palette.justBlack,
     },
     inactiveTabText: {
         textAlign: 'center',
         color: Palette.suvaGray,
     },
     underline: {
-        backgroundColor: Palette.black,
+        backgroundColor: Palette.justBlack,
         height: 0,
     },
 });
@@ -128,7 +128,7 @@ class CurrencyDetails extends React.Component {
                     <Icon
                         name={tabs[page].icon}
                         onLayout={onLayoutHandler}
-                        color={isTabActive ? Palette.black : Palette.suvaGray}
+                        color={isTabActive ? Palette.justBlack : Palette.suvaGray}
                     />
                     <Text
                         style={

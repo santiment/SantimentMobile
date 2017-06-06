@@ -65,7 +65,7 @@ const propTypes = {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: Palette.white,
+        backgroundColor: Palette.justWhite,
     },
     currencyRowContainer: {
         height: responsiveHeight(9),
@@ -125,7 +125,7 @@ const styles = StyleSheet.create({
         backgroundColor: Palette.mineShaft,
     },
     listViewContainer: {
-        backgroundColor: Palette.white,
+        backgroundColor: Palette.justWhite,
         flex: 1,
     },
     chart: {
