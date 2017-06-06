@@ -19,6 +19,8 @@ import {
     Bubble,
 } from 'react-native-gifted-chat';
 
+import Palette from '../../../resources/colors';
+
 const propTypes = {
     store: React.PropTypes.shape({
         feed: React.PropTypes.any.isRequired,
@@ -28,7 +30,7 @@ const propTypes = {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#ffffff',
+        backgroundColor: Palette.white,
         flexDirection: 'column',
         justifyContent: 'center',
     },
@@ -42,7 +44,7 @@ const styles = StyleSheet.create({
         paddingBottom: 10,
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: '#333333',
+        backgroundColor: Palette.mineShaft,
     },
     priceColumn: {
         flex: 1,
@@ -55,7 +57,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         textAlign: 'left',
         fontWeight: '500',
-        color: '#e6e6e6',
+        color: Palette.mercury,
     },
     changeText: {
         marginLeft: 10,
@@ -68,16 +70,10 @@ const styles = StyleSheet.create({
         alignItems: 'stretch',
         marginRight: 10,
     },
-    periodButton: {
-        paddingTop: 5,
-        paddingBottom: 5,
-        height: 30,
-        backgroundColor: '#454545',
-    },
     periodText: {
         fontSize: 16,
         fontWeight: '500',
-        color: '#cdcdcd',
+        color: Palette.veryLightGray,
         textAlign: 'center',
     },
 });
@@ -126,11 +122,11 @@ class Feed extends React.Component {
         let changeColor;
 
         if (store.ticker.dailyChangePercent > 0) {
-            changeColor = '#27aa36';
+            changeColor = Palette.forestGreen;
         } else if (store.ticker.dailyChangePercent < 0) {
-            changeColor = '#bd2c27';
+            changeColor = Palette.fireBrick;
         } else {
-            changeColor = '#b1b1b2';
+            changeColor = Palette.spunPearl;
         }
 
         return (

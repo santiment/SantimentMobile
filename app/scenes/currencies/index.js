@@ -25,8 +25,9 @@ import _ from 'lodash';
 
 import moment from 'moment';
 
-import { observer } from 'mobx-react/native';
-
+import {
+    observer,
+} from 'mobx-react/native';
 
 import {
     AddCurrencyRoute,
@@ -35,6 +36,8 @@ import {
 } from '../../navigator/routes';
 
 import Cell from './cell';
+
+import Palette from '../../resources/colors';
 
 const propTypes = {
     navigator: React.PropTypes.shape({
@@ -54,10 +57,10 @@ const styles = StyleSheet.create({
     },
     navBar: {
         borderBottomWidth: StyleSheet.hairlineWidth,
-        borderBottomColor: '#cccccc',
+        borderBottomColor: Palette.silver,
     },
     listView: {
-        backgroundColor: '#f0f0f0',
+        backgroundColor: Palette.whiteSmoke,
         flex: 1,
         marginTop: 0,
     },
@@ -90,7 +93,7 @@ const styles = StyleSheet.create({
     },
     noDataText: {
         fontSize: 32,
-        color: '#999999',
+        color: Palette.dustyGray,
         fontWeight: '500',
     },
     noDataButton: {
@@ -146,7 +149,7 @@ class Currencies extends React.PureComponent {
                     buttonStyle={styles.noDataButton}
                     textStyle={{ textAlign: 'center' }}
                     title={'Add coins'}
-                    backgroundColor={'#27aa36'}
+                    backgroundColor={Palette.forestGreen}
                     fontSize={20}
                     onPress={addCurrency}
                 />
@@ -199,7 +202,7 @@ class Currencies extends React.PureComponent {
                         raised
                         reverse
                         name="add"
-                        color="#27aa36"
+                        color={Palette.forestGreen}
                         onPress={addCurrency}
                     />
 

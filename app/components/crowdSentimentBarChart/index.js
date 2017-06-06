@@ -3,9 +3,17 @@
  * @flow
  */
 
-
 import React from 'react';
-import { Text, View, StyleSheet, Image, Dimensions } from 'react-native';
+
+import {
+    Text,
+    View,
+    StyleSheet,
+    Image,
+    Dimensions,
+} from 'react-native';
+
+import Palette from '../../resources/colors';
 
 const propTypes = {
     aggregate: React.PropTypes.shape({
@@ -29,7 +37,7 @@ class CrowdSentimentBarChart extends React.PureComponent {
             container: {
                 flex: 1,
                 margin: 20,
-                backgroundColor: '#ffffff',
+                backgroundColor: Palette.white,
                 flexDirection: 'column',
                 justifyContent: 'center',
             },
@@ -74,7 +82,7 @@ class CrowdSentimentBarChart extends React.PureComponent {
                         />
                     </View>
                     <View style={styles.barContainer}>
-                        <Text style={{ width: (screen.width - imageSize - percentageWidth) * aggregate.bullishPercentage, backgroundColor: '#00e36f' }} />
+                        <Text style={{ width: (screen.width - imageSize - percentageWidth) * aggregate.bullishPercentage, backgroundColor: Palette.springGreen }} />
                     </View>
                     <Text style={styles.percentage}>{aggregate.bullishPercentageDisplay}</Text>
                 </View>
@@ -87,7 +95,7 @@ class CrowdSentimentBarChart extends React.PureComponent {
                         />
                     </View>
                     <View style={styles.barContainer}>
-                        <Text style={{ width: (screen.width - imageSize - percentageWidth) * aggregate.catishPercentage, backgroundColor: '#cccccc' }} />
+                        <Text style={{ width: (screen.width - imageSize - percentageWidth) * aggregate.catishPercentage, backgroundColor: Palette.silver }} />
                     </View>
                     <Text style={styles.percentage}>{aggregate.catishPercentageDisplay}</Text>
                 </View>
@@ -100,7 +108,7 @@ class CrowdSentimentBarChart extends React.PureComponent {
                         />
                     </View>
                     <View style={styles.barContainer}>
-                        <Text style={{ width: (screen.width - imageSize - percentageWidth) * aggregate.bearishPercentage, backgroundColor: '#e73c4c' }} />
+                        <Text style={{ width: (screen.width - imageSize - percentageWidth) * aggregate.bearishPercentage, backgroundColor: Palette.amaranthOne }} />
                     </View>
                     <Text style={styles.percentage}>{aggregate.bearishPercentageDisplay}</Text>
                 </View>

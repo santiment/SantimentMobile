@@ -17,6 +17,8 @@ import {
     Icon,
 } from 'react-native-elements';
 
+import Palette from '../../resources/colors';
+
 const propTypes = {
     title: React.PropTypes.string.isRequired,
     text: React.PropTypes.string.isRequired,
@@ -30,7 +32,7 @@ const styles = StyleSheet.create({
     },
     navbar: {
         borderBottomWidth: StyleSheet.hairlineWidth,
-        borderBottomColor: '#cccccc',
+        borderBottomColor: Palette.silver,
     },
     navbarButton: {
         padding: 10,
@@ -41,7 +43,7 @@ const styles = StyleSheet.create({
         height: '100%',
     },
     text: {
-        color: 'white',
+        color: Palette.white,
         padding: 20,
     },
 });
