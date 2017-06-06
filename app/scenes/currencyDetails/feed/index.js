@@ -122,7 +122,7 @@ class Feed extends React.Component {
         let changeColor;
 
         if (store.ticker.dailyChangePercent > 0) {
-            changeColor = Palette.forestGreen;
+            changeColor = Palette.forestGreenOne;
         } else if (store.ticker.dailyChangePercent < 0) {
             changeColor = Palette.fireBrick;
         } else {

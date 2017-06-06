@@ -149,7 +149,7 @@ class Currencies extends React.PureComponent {
                     buttonStyle={styles.noDataButton}
                     textStyle={{ textAlign: 'center' }}
                     title={'Add coins'}
-                    backgroundColor={Palette.forestGreen}
+                    backgroundColor={Palette.forestGreenOne}
                     fontSize={20}
                     onPress={addCurrency}
                 />
@@ -202,7 +202,7 @@ class Currencies extends React.PureComponent {
                         raised
                         reverse
                         name="add"
-                        color={Palette.forestGreen}
+                        color={Palette.forestGreenOne}
                         onPress={addCurrency}
                     />
 
