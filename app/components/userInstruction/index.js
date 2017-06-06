@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     contentWrapper: {
-        backgroundColor: '#000000A0',
+        backgroundColor: '#000000DD',
         width: '100%',
         height: '100%',
     },
