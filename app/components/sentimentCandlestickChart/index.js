@@ -5,12 +5,26 @@
 
 
 import React from 'react';
-import { View, StyleSheet, processColor, Platform, Text } from 'react-native';
+
+import {
+    View,
+    StyleSheet,
+    processColor,
+    Platform,
+    Text,
+} from 'react-native';
 
 import _ from 'lodash';
+
 import moment from 'moment';
 
-import { CombinedChart } from 'react-native-charts-wrapper';
+import {
+    CombinedChart,
+} from 'react-native-charts-wrapper';
+
+import Palette from '../../resources/colors';
+
+import ColorGenerator from '../../utils/colorGenerator';
 
 const propTypes = {
     style: React.PropTypes.any.isRequired,
@@ -36,11 +50,11 @@ const styles = StyleSheet.create({
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#333333',
+        backgroundColor: Palette.mineShaft,
     },
     noDataText: {
         fontSize: 32,
-        color: '#cdcdcd',
+        color: Palette.veryLightGray,
         fontWeight: '500',
     },
 });
@@ -64,8 +78,8 @@ class Chart extends React.PureComponent {
         const config = {
             xAxis: {
                 drawAxisLine: true,
-                textColor: processColor('#cdcdcd'),
-                axisLineColor: processColor('#cdcdcd'),
+                textColor: processColor(Palette.veryLightGray),
+                axisLineColor: processColor(Palette.veryLightGray),
                 axisLineWidth: 1,
                 drawGridLines: true,
                 gridLineWidth: 1,
@@ -73,7 +87,12 @@ class Chart extends React.PureComponent {
                 //     lineLength: 10,
                 //     spaceLength: 10
                 // },
-                gridColor: processColor('#cdcdcd20'),
+                gridColor: processColor(
+                    ColorGenerator.colorWithOpacity(
+                        Palette.veryLightGray,
+                        0x20,
+                    ),
+                ),
                 position: 'BOTTOM',
                 // avoidFirstLastClipping: true,
                 valueFormatter: xs,
@@ -87,20 +106,20 @@ class Chart extends React.PureComponent {
                 left: {
                     enabled: false,
                     drawAxisLine: false,
-                    axisLineColor: processColor('#cdcdcd'),
+                    axisLineColor: processColor(Palette.veryLightGray),
                     axisLineWidth: 2,
                     drawLabels: false,
                     drawGridLines: false,
                     gridLineWidth: 1,
-                    gridColor: processColor('#cdcdcd'),
+                    gridColor: processColor(Palette.veryLightGray),
                     axisMaximum: 20,
                     axisMinimum: 0,
                 },
                 right: {
                     enabled: true,
                     drawAxisLine: true,
-                    textColor: processColor('#cdcdcd'),
-                    axisLineColor: processColor('#cdcdcd'),
+                    textColor: processColor(Palette.veryLightGray),
+                    axisLineColor: processColor(Palette.veryLightGray),
                     axisLineWidth: 1,
                     drawLabels: true,
                     drawGridLines: true,
@@ -109,7 +128,12 @@ class Chart extends React.PureComponent {
                     //     lineLength: 10,
                     //     spaceLength: 10
                     // },
-                    gridColor: processColor('#cdcdcd20'),
+                    gridColor: processColor(
+                        ColorGenerator.colorWithOpacity(
+                            Palette.veryLightGray,
+                            0x20,
+                        ),
+                    ),
                     // axisMaximum: _.max(_.map(candles, c => c.shadowH)) * 1.0,
                     axisMinimum: _.min(_.map(candlesticks, c => c.shadowL)) * 0.98,
                 },
@@ -132,13 +156,13 @@ class Chart extends React.PureComponent {
                         config: {
                             axisDependency: 'RIGHT',
                             drawValues: false,
-                            highlightColor: processColor('#777777'),
-                            shadowColor: processColor('#777777'),
+                            highlightColor: processColor(Palette.boulder),
+                            shadowColor: processColor(Palette.boulder),
                             shadowWidth: 1,
                             shadowColorSameAsCandle: false,
-                            increasingColor: processColor('#24e174'),
+                            increasingColor: processColor(Palette.mountainMeadow),
                             increasingPaintStyle: 'fill',
-                            decreasingColor: processColor('#e53e50'),
+                            decreasingColor: processColor(Palette.amaranthTwo),
                         },
                     }],
                 },
@@ -151,7 +175,7 @@ class Chart extends React.PureComponent {
                             config: {
                                 axisDependency: 'LEFT',
                                 drawValues: false,
-                                colors: [processColor('#24e174')],
+                                colors: [processColor(Palette.mountainMeadow)],
                             },
                         },
                         {
@@ -161,7 +185,7 @@ class Chart extends React.PureComponent {
                             config: {
                                 axisDependency: 'LEFT',
                                 drawValues: false,
-                                colors: [processColor('#cdcdcd')],
+                                colors: [processColor(Palette.veryLightGray)],
                             },
                         },
                         {
@@ -171,7 +195,7 @@ class Chart extends React.PureComponent {
                             config: {
                                 axisDependency: 'LEFT',
                                 drawValues: false,
-                                colors: [processColor('#e53e50')],
+                                colors: [processColor(Palette.amaranthTwo)],
                             },
                         },
                     ],
@@ -217,7 +241,7 @@ class Chart extends React.PureComponent {
                 dragDecelerationEnabled={false}
                 // dragDecelerationFrictionCoef={0.99}
                 style={styles.chart}
-                chartBackgroundColor={processColor('#333333')}
+                chartBackgroundColor={processColor(Palette.mineShaft)}
 
             />
         );

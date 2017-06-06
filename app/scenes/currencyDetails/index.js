@@ -38,6 +38,8 @@ import UserInstruction from '../../components/userInstruction';
 
 import InstructionStore from '../../resources/instructions';
 
+import Palette from '../../resources/colors';
+
 const propTypes = {
     navigator: React.PropTypes.shape({
         push: React.PropTypes.func.isRequired,
@@ -55,11 +57,11 @@ const propTypes = {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#ffffff',
+        backgroundColor: Palette.white,
     },
     navBar: {
         borderBottomWidth: StyleSheet.hairlineWidth,
-        borderBottomColor: '#cccccc',
+        borderBottomColor: Palette.silver,
     },
     navButton: {
         padding: 10,
@@ -74,20 +76,25 @@ const styles = StyleSheet.create({
     },
     activeTabText: {
         textAlign: 'center',
-        color: '#000000',
+        color: Palette.black,
     },
     inactiveTabText: {
         textAlign: 'center',
-        color: '#919191',
+        color: Palette.suvaGray,
     },
     underline: {
-        backgroundColor: 'black',
+        backgroundColor: Palette.black,
         height: 0,
     },
 });
 
 @observer
 class CurrencyDetails extends React.Component {
+
+    componentWillMount() {
+        const { store } = this.props;
+        store.setCurrentPageIndex(0);
+    }
     
     render() {
         const { navigator, store } = this.props;
@@ -121,7 +128,7 @@ class CurrencyDetails extends React.Component {
                     <Icon
                         name={tabs[page].icon}
                         onLayout={onLayoutHandler}
-                        color={isTabActive ? '#000000' : '#919191'}
+                        color={isTabActive ? Palette.black : Palette.suvaGray}
                     />
                     <Text
                         style={
@@ -164,14 +171,14 @@ class CurrencyDetails extends React.Component {
                     renderTabBar={() => (
                         <DefaultTabBar
                             renderTab={renderTab}
-                            backgroundColor={'#f2f2f2'}
+                            backgroundColor={Palette.concrete}
                             underlineStyle={[styles.underline, {
                                 width: 30,
                                 marginLeft: ((screen.width / tabs.length) - 30) / 2,
                             }]}
                             style={styles.tabBar}
-                            activeTextColor={'green'}
-                            inactiveTextColor={'red'}
+                            activeTextColor={Palette.justGreen}
+                            inactiveTextColor={Palette.justRed}
                         />
                     )}
                     ref={(tabView) => {}}
@@ -213,11 +220,6 @@ class CurrencyDetails extends React.Component {
                 />
             </View>
         );
-    }
-
-    componentWillMount() {
-        const { store } = this.props;
-        store.setCurrentPageIndex(0);
     }
 }
 

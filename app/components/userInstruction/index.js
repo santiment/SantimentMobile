@@ -19,6 +19,8 @@ import {
 
 import Palette from '../../resources/colors';
 
+import ColorGenerator from '../../utils/colorGenerator';
+
 const propTypes = {
     title: React.PropTypes.string.isRequired,
     text: React.PropTypes.string.isRequired,
@@ -38,7 +40,7 @@ const styles = StyleSheet.create({
         padding: 10,
     },
     contentWrapper: {
-        backgroundColor: '#000000DD',
+        backgroundColor: ColorGenerator.colorWithOpacity(Palette.black, 0xdd),
         width: '100%',
         height: '100%',
     },

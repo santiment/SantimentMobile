@@ -28,7 +28,7 @@ const propTypes = {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: Palette.white,
+        backgroundColor: Palette.justWhite,
         flexDirection: 'row',
         justifyContent: 'center',
         marginTop: 0,

@@ -3,7 +3,15 @@
  */
 
 import React from 'react';
-import { View, StyleSheet, Text, Image } from 'react-native';
+
+import {
+    View,
+    StyleSheet,
+    Text,
+    Image,
+} from 'react-native';
+
+import Palette from '../../../resources/colors';
 
 const propTypes = {
     date: React.PropTypes.string.isRequired,
@@ -19,8 +27,8 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: '#ffffff',
-        borderBottomColor: '#CCCCCC',
+        backgroundColor: Palette.white,
+        borderBottomColor: Palette.silver,
         borderBottomWidth: StyleSheet.hairlineWidth,
     },
     date: {
@@ -37,7 +45,7 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: 16,
-        color: '#aaaaaa',
+        color: Palette.silverChalice,
         fontWeight: '500',
     },
     imageContainer: {

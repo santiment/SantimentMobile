@@ -3,8 +3,18 @@
  */
 
 import React from 'react';
-import { View, StyleSheet, Text } from 'react-native';
-import { Icon } from 'react-native-elements';
+
+import {
+    View,
+    StyleSheet,
+    Text,
+} from 'react-native';
+
+import {
+    Icon,
+} from 'react-native-elements';
+
+import Palette from '../../resources/colors';
 
 const propTypes = {
     symbol: React.PropTypes.string.isRequired,
@@ -17,7 +27,7 @@ const styles = StyleSheet.create({
         flexDirection: 'row',
         justifyContent: 'center',
         alignItems: 'center',
-        borderBottomColor: '#CCCCCC',
+        borderBottomColor: Palette.silver,
         borderBottomWidth: StyleSheet.hairlineWidth,
         height: 50,
     },

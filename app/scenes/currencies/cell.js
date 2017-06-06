@@ -19,6 +19,8 @@ import {
     responsiveFontSize,
 } from 'react-native-responsive-dimensions';
 
+import Palette from '../../resources/colors';
+
 const propTypes = {
     symbol: React.PropTypes.string.isRequired,
     dailyChangePercent: React.PropTypes.string.isRequired,
@@ -31,7 +33,7 @@ const styles = StyleSheet.create({
     container: {
         marginLeft: 20,
         marginRight: 20,
-        shadowColor: 'gray',
+        shadowColor: Palette.justGray,
         shadowOpacity: 0.4,
         shadowRadius: 2,
         shadowOffset: { width: 0, height: 1 },
@@ -44,24 +46,24 @@ const styles = StyleSheet.create({
         paddingBottom: 20,
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: '#ffffff',
+        backgroundColor: Palette.white,
     },
     sentimentQuestionContainer: {
-        backgroundColor: '#f8f8f8',
+        backgroundColor: Palette.alabaster,
         padding: 20,
         borderTopWidth: 1,
         borderBottomWidth: 1,
-        borderColor: '#e7e7e7',
+        borderColor: Palette.mercuryTwo,
     },
     buttonRowContainer: {
-        backgroundColor: '#f8f8f8',
+        backgroundColor: Palette.alabaster,
         flexDirection: 'row',
         justifyContent: 'space-around',
         alignItems: 'center',
     },
     questionText: {
         fontSize: 18,
-        color: '#565656',
+        color: Palette.mortar,
         fontWeight: '500',
         textAlign: 'center',
     },
@@ -74,11 +76,11 @@ const styles = StyleSheet.create({
     },
     borderRight: {
         borderRightWidth: 1,
-        borderColor: '#e7e7e7',
+        borderColor: Palette.mercuryTwo,
     },
     borderLeft: {
         borderLeftWidth: 1,
-        borderColor: '#e7e7e7',
+        borderColor: Palette.mercuryTwo,
     },
     imageContainer: {
         padding: 5,
@@ -91,7 +93,7 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         fontSize: 14,
-        color: '#808080',
+        color: Palette.justGray,
         fontWeight: '500',
     },
     symbolColumn: {
@@ -102,7 +104,7 @@ const styles = StyleSheet.create({
     },
     symbolText: {
         fontSize: responsiveFontSize(3),
-        color: '#999999',
+        color: Palette.dustyGray,
         fontWeight: '500',
     },
     priceColumn: {
@@ -113,13 +115,13 @@ const styles = StyleSheet.create({
     },
     priceText: {
         fontSize: responsiveFontSize(2),
-        color: '#999999',
+        color: Palette.dustyGray,
         fontWeight: '500',
         textAlign: 'right',
     },
     changeText: {
         fontSize: responsiveFontSize(2),
-        color: '#999999',
+        color: Palette.dustyGray,
         fontWeight: '500',
         textAlign: 'right',
     },
@@ -131,7 +133,7 @@ const styles = StyleSheet.create({
     },
     text: {
         fontSize: responsiveFontSize(2),
-        color: '#999999',
+        color: Palette.dustyGray,
         fontWeight: '500',
     },
     sentimentBadge: {
@@ -139,7 +141,7 @@ const styles = StyleSheet.create({
         height: 12,
         width: 12,
         borderRadius: 50,
-        backgroundColor: '#28aa38',
+        backgroundColor: Palette.forestGreenTwo,
     },
 });
 
@@ -148,11 +150,11 @@ class CurrencyCell extends React.PureComponent {
         let changeColor;
 
         if (this.props.dailyChangePercent > 0) {
-            changeColor = '#27aa36';
+            changeColor = Palette.forestGreenOne;
         } else if (this.props.dailyChangePercent < 0) {
-            changeColor = '#bd2c27';
+            changeColor = Palette.fireBrick;
         } else {
-            changeColor = '#b1b1b2';
+            changeColor = Palette.spunPearl;
         }
 
         return (
@@ -192,7 +194,7 @@ class CurrencyCell extends React.PureComponent {
                         <TouchableHighlight
                             style={[styles.button, styles.borderRight]}
                             onPress={() => this.props.onVote('bullish')}
-                            underlayColor={'#f0f0f0'}
+                            underlayColor={Palette.whiteSmoke}
                         >
                             <View>
                                 <View style={styles.imageContainer}>
@@ -211,7 +213,7 @@ class CurrencyCell extends React.PureComponent {
                         <TouchableHighlight
                             style={styles.button}
                             onPress={() => this.props.onVote('catish')}
-                            underlayColor={'#f0f0f0'}
+                            underlayColor={Palette.whiteSmoke}
                         >
                             <View>
                                 <View style={styles.imageContainer}>
@@ -230,7 +232,7 @@ class CurrencyCell extends React.PureComponent {
                         <TouchableHighlight
                             style={[styles.button, styles.borderLeft]}
                             onPress={() => this.props.onVote('bearish')}
-                            underlayColor={'#f0f0f0'}
+                            underlayColor={Palette.whiteSmoke}
                         >
                             <View>
                                 <View style={styles.imageContainer}>

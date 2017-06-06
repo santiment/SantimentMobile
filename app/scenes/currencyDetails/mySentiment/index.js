@@ -26,6 +26,8 @@ import SentimentChart from '../../../components/sentimentCandlestickChart';
 
 import Cell from './cell';
 
+import Palette from '../../../resources/colors';
+
 const propTypes = {
     store: React.PropTypes.shape({
         domainStore: React.PropTypes.any.isRequired,
@@ -63,7 +65,7 @@ const propTypes = {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: '#ffffff',
+        backgroundColor: Palette.white,
     },
     currencyRowContainer: {
         height: responsiveHeight(9),
@@ -72,7 +74,7 @@ const styles = StyleSheet.create({
         paddingBottom: 15,
         justifyContent: 'space-between',
         alignItems: 'center',
-        backgroundColor: '#333333',
+        backgroundColor: Palette.mineShaft,
     },
     text: {
         fontSize: 14,
@@ -89,7 +91,7 @@ const styles = StyleSheet.create({
         fontSize: 18,
         textAlign: 'left',
         fontWeight: '500',
-        color: '#e6e6e6',
+        color: Palette.mercuryOne,
     },
     changeText: {
         textAlign: 'left',
@@ -104,26 +106,26 @@ const styles = StyleSheet.create({
         paddingTop: 5,
         paddingBottom: 5,
         height: 30,
-        backgroundColor: '#454545',
+        backgroundColor: Palette.charcoal,
     },
     periodText: {
         fontSize: 16,
         fontWeight: '500',
-        color: '#cdcdcd',
+        color: Palette.veryLightGray,
         textAlign: 'center',
     },
     periodDropdown: {
         width: 80,
-        backgroundColor: '#454545',
-        borderColor: '#333333',
+        backgroundColor: Palette.charcoal,
+        borderColor: Palette.mineShaft,
         borderWidth: 2,
     },
     periodDropdownSeparator: {
         height: 2,
-        backgroundColor: '#333333',
+        backgroundColor: Palette.mineShaft,
     },
     listViewContainer: {
-        backgroundColor: 'white',
+        backgroundColor: Palette.white,
         flex: 1,
     },
     chart: {
@@ -149,11 +151,11 @@ class MySentiment extends React.Component {
         let changeColor;
 
         if (store.ticker.dailyChangePercent > 0) {
-            changeColor = '#27aa36';
+            changeColor = Palette.forestGreenOne;
         } else if (store.ticker.dailyChangePercent < 0) {
-            changeColor = '#bd2c27';
+            changeColor = Palette.fireBrick;
         } else {
-            changeColor = '#b1b1b2';
+            changeColor = Palette.spunPearl;
         }
 
         // eslint-disable-next-line no-unused-vars
