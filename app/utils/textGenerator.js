@@ -13,7 +13,7 @@ class TextGenerator {
      * @param {number} length Required length of generated text.
      * @return "Ipsum Dolor" text of required length.
      */
-    generateIpsumDolor = (length: number): string => {
+    static generateIpsumDolor = (length: number): string => {
         /**
          * Source text.
          */

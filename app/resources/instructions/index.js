@@ -17,7 +17,7 @@ class InstructionStore {
         /**
          * Obtain text for instruction.
          */
-        const ipsumDolor = new TextGenerator().generateIpsumDolor(8000);
+        const ipsumDolor = TextGenerator.generateIpsumDolor(8000);
         const text = `Instruction for My Sentiment screen. ${ipsumDolor}`;
 
         /**
@@ -38,7 +38,7 @@ class InstructionStore {
         /**
          * Obtain text for instruction.
          */
-        const ipsumDolor = new TextGenerator().generateIpsumDolor(8000);
+        const ipsumDolor = TextGenerator.generateIpsumDolor(8000);
         const text = `Instruction for Community Sentiment screen. ${ipsumDolor}`;
 
         /**
@@ -59,7 +59,7 @@ class InstructionStore {
         /**
          * Obtain text for instruction.
          */
-        const ipsumDolor = new TextGenerator().generateIpsumDolor(8000);
+        const ipsumDolor = TextGenerator.generateIpsumDolor(8000);
         const text = `Instruction for Feed screen. ${ipsumDolor}`;
 
         /**
