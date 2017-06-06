@@ -7,9 +7,15 @@
  */
 class Palette {
 
-    static white: string = '#ffffff';
+    static justWhite: string = '#ffffff';
 
-    static black: string = '#000000';
+    static justBlack: string = '#000000';
+
+    static justRed: string = '#ff0000';
+
+    static justGreen: string = '#00ff00';
+
+    static justGray: string = '#808080';
 
     static springGreen: string = '#00e36f';
 
@@ -23,11 +29,15 @@ class Palette {
     
     static dustyGray: string = '#999999';
     
-    static forestGreen: string = '#27aa36';
+    static forestGreenOne: string = '#27aa36';
+
+    static forestGreenTwo: string = '#28aa38';
     
     static mineShaft: string = '#333333';
     
-    static mercury: string = '#e6e6e6';
+    static mercuryOne: string = '#e6e6e6';
+
+    static mercuryTwo: string = '#e7e7e7';
     
     static charcoal: string = '#454545';
     
@@ -46,6 +56,10 @@ class Palette {
     static boulder: string = '#777777';
 
     static mountainMeadow: string = '#24e174';
+
+    static mortar: string = '#565656';
+
+    static alabaster: string = '#f8f8f8';
 }
 
 export default Palette;
