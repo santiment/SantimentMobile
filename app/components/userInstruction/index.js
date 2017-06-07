@@ -17,6 +17,8 @@ import {
     Icon,
 } from 'react-native-elements';
 
+import AndroidBackButton from 'android-back-button';
+
 import getStyles from './styles';
 
 const propTypes = {
@@ -52,7 +54,7 @@ class UserInstruction extends React.PureComponent {
                 animationType={'fade'}
                 transparent
                 visible={visible}
-                onRequestToClose={(): void => {
+                onRequestClose={(): void => {
                 }}
             >
                 <NavigationBar
@@ -76,6 +78,13 @@ class UserInstruction extends React.PureComponent {
                         {text}
                     </Text>
                 </ScrollView>
+
+                <AndroidBackButton
+                    onPress={() => {
+                        onRequestToClose();
+                        return true;
+                    }}
+                />
             </Modal>
         );
     }

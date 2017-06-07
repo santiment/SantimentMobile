@@ -190,19 +190,7 @@ class CurrencyDetails extends React.Component {
 
                 <AndroidBackButton
                     onPress={() => {
-                        /**
-                         * If instruction is visible, close instruction.
-                         * Otherwise, go to previous screen.
-                         */
-                        if (store.isInstructionVisible) {
-                            store.setInstructionVisible(false);
-                        } else {
-                            navigator.pop();
-                        }
-
-                        /**
-                         * Return `true` to prevent closing app.
-                         */
+                        navigator.pop();
                         return true;
                     }}
                 />
