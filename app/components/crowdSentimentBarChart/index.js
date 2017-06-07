@@ -12,9 +12,11 @@ import {
     Dimensions,
 } from 'react-native';
 
-import getStyles from './styles';
-
 import Palette from '../../resources/colors';
+
+import ImageCollection from '../../resources/images';
+
+import getStyles from './styles';
 
 const propTypes = {
     aggregate: React.PropTypes.shape({
@@ -46,7 +48,7 @@ class CrowdSentimentBarChart extends React.PureComponent {
                     <View style={styles.imageContainer}>
                         <Image
                             style={styles.image}
-                            source={require('../../resources/images/bull.png')}
+                            source={ImageCollection.bull}
                         />
                     </View>
                     <View style={styles.barContainer}>
@@ -59,7 +61,7 @@ class CrowdSentimentBarChart extends React.PureComponent {
                     <View style={styles.imageContainer}>
                         <Image
                             style={styles.image}
-                            source={require('../../resources/images/cat.png')}
+                            source={ImageCollection.cat}
                         />
                     </View>
                     <View style={styles.barContainer}>
@@ -72,7 +74,7 @@ class CrowdSentimentBarChart extends React.PureComponent {
                     <View style={styles.imageContainer}>
                         <Image
                             style={styles.image}
-                            source={require('../../resources/images/bear.png')}
+                            source={ImageCollection.bear}
                         />
                     </View>
                     <View style={styles.barContainer}>

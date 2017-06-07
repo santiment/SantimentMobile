@@ -10,6 +10,8 @@ import {
     Image,
 } from 'react-native';
 
+import ImageCollection from '../../../../resources/images';
+
 import getStyles from './styles';
 
 const propTypes = {
@@ -22,12 +24,16 @@ class MySentimentCell extends React.PureComponent {
     render() {
         const styles = getStyles();
 
-        const imagePath = (sentiment) => {
+        const getImage = (sentiment) => {
             switch (sentiment) {
-            case 'bullish': return require('../../../../resources/images/bull.png');
-            case 'catish': return require('../../../../resources/images/cat.png');
-            case 'bearish': return require('../../../../resources/images/bear.png');
-            default: return '';
+            case 'bullish':
+                return ImageCollection.bull;
+            case 'catish':
+                return ImageCollection.cat;
+            case 'bearish':
+                return ImageCollection.bear;
+            default:
+                return '';
             }
         };
 
@@ -36,7 +42,7 @@ class MySentimentCell extends React.PureComponent {
                 <View style={styles.imageContainer}>
                     <Image
                         style={styles.image}
-                        source={imagePath(this.props.sentiment)}
+                        source={getImage(this.props.sentiment)}
                     />
                 </View>
 
