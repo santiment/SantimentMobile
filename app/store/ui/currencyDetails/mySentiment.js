@@ -22,8 +22,6 @@ import moment from 'moment';
 
 import * as Poloniex from '../../../api/poloniex';
 
-import Clock from '../../../utils/clock';
-
 class MySentimentUiStore {
 
     /**
@@ -79,12 +77,6 @@ class MySentimentUiStore {
 
     @computed get chartData(): Object[] {
         /**
-         * Start to measure time interval.
-         */
-        const clock = new Clock();
-        clock.start();
-
-        /**
          * Obtain candles.
          */
         const selectedPeriod = this.domainStore.periods[this.domainStore.indexOfSelectedPeriod];
@@ -122,17 +114,6 @@ class MySentimentUiStore {
                     sentiment: _.get(sentimentObject, 'sentiment'),
                 };
             },
-        );
-
-        /**
-         * Stop to measure time interval.
-         */
-        const algorithmTimeInterval = clock.stop();
-
-        console.log(
-            'sentiment-to-candle algorithm has finished in ',
-            algorithmTimeInterval,
-            ' milliseconds',
         );
 
         /**
@@ -210,4 +191,3 @@ class MySentimentUiStore {
 }
 
 export default MySentimentUiStore;
-

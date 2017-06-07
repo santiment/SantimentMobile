@@ -9,14 +9,11 @@ import {
     Text,
     ListView,
     RefreshControl,
-    StyleSheet,
 } from 'react-native';
 
 import {
-    responsiveHeight,
-} from 'react-native-responsive-dimensions';
-
-import { observer } from 'mobx-react/native';
+    observer,
+} from 'mobx-react/native';
 
 import Dropdown from 'react-native-modal-dropdown';
 
@@ -26,7 +23,9 @@ import SentimentChart from '../../../components/sentimentCandlestickChart';
 
 import Cell from './cell';
 
-import Clock from '../../../utils/clock';
+import Palette from '../../../resources/colors';
+
+import getStyles from './styles';
 
 const propTypes = {
     store: React.PropTypes.shape({
@@ -62,168 +61,17 @@ const propTypes = {
     }).isRequired,
 };
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#ffffff',
-    },
-    navBar: {
-        borderBottomWidth: StyleSheet.hairlineWidth,
-        borderBottomColor: '#cccccc',
-    },
-    currencyRowContainer: {
-        height: responsiveHeight(9),
-        flexDirection: 'row',
-        paddingTop: 20,
-        paddingBottom: 15,
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        backgroundColor: '#333333',
-    },
-    chartContainer: {
-        padding: 20,
-        alignItems: 'center',
-    },
-    toolbarButton: {
-        padding: 10,
-    },
-    text: {
-        fontSize: 14,
-        fontWeight: '400',
-    },
-    priceColumn: {
-        flex: 1,
-        flexDirection: 'column',
-        marginLeft: 10,
-        justifyContent: 'flex-start',
-        alignItems: 'stretch',
-    },
-    priceText: {
-        fontSize: 18,
-        textAlign: 'left',
-        fontWeight: '500',
-        color: '#e6e6e6',
-    },
-    changeText: {
-        textAlign: 'left',
-    },
-    periodColumn: {
-        width: 80,
-        justifyContent: 'center',
-        alignItems: 'stretch',
-        marginRight: 10,
-    },
-    periodButton: {
-        paddingTop: 5,
-        paddingBottom: 5,
-        height: 30,
-        backgroundColor: '#454545',
-    },
-    periodText: {
-        fontSize: 16,
-        fontWeight: '500',
-        color: '#cdcdcd',
-        textAlign: 'center',
-    },
-    periodDropdown: {
-        width: 80,
-        backgroundColor: '#454545',
-        borderColor: '#333333',
-        borderWidth: 2,
-    },
-    periodDropdownSeparator: {
-        height: 2,
-        backgroundColor: '#333333',
-    },
-    spacer: {
-        flex: 1,
-    },
-    listViewContainer: {
-        backgroundColor: 'white',
-        flex: 1,
-    },
-    tabsContainerStyle: {
-        backgroundColor: 'transparent',
-        flexDirection: 'row',
-        marginLeft: 20,
-        marginRight: 20,
-    },
-    tabStyle: {
-        paddingVertical: 5,
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderColor: '#999999',
-        borderWidth: StyleSheet.hairlineWidth,
-        backgroundColor: 'white',
-    },
-    activeTabStyle: {
-        backgroundColor: '#999999',
-    },
-    tabTextStyle: {
-        color: '#666666',
-    },
-    activeTabTextStyle: {
-        color: 'white',
-    },
-    chart: {
-        height: responsiveHeight(40),
-    },
-});
-
 @observer
 class MySentiment extends React.Component {
-    constructor(props) {
-        super(props);
-
-        /**
-         * Initialize appearance clock and
-         * start to measure time interval.
-         */
-        this.appearanceClock = new Clock();
-        this.appearanceClock.start();
-
-        /**
-         * Initialize state.
-         */
-        this.state = {
-            didAppear: false,
-        };
-    }
-
-    componentDidMount() {
-        /**
-         * Update state.
-         */
-        this.setState({
-            didAppear: true,
-        });
-
-        /**
-         * End to measure appearance time interval.
-         */
-        const appearanceTimeInterval = this.appearanceClock.stop();
-
-        console.log(
-            'MySentiment scene did appear in ',
-            appearanceTimeInterval,
-            ' milliseconds',
-        );
-    }
-
-    appearanceClock: Clock;
-
+    
     render() {
-        /**
-         * Uncomment the block below to
-         * speed up screen appearance.
-         */
-        /* if (!this.state.didAppear) {
-            return null;
-        }*/
+        const {
+            store,
+        } = this.props;
 
-        const { store } = this.props;
+        const styles = getStyles();
 
+        // eslint-disable-next-line no-unused-vars
         const renderRow = (data, sectionID) => (
             <Cell
                 date={data.date}
@@ -235,21 +83,23 @@ class MySentiment extends React.Component {
         let changeColor;
 
         if (store.ticker.dailyChangePercent > 0) {
-            changeColor = '#27aa36';
+            changeColor = Palette.forestGreenOne;
         } else if (store.ticker.dailyChangePercent < 0) {
-            changeColor = '#bd2c27';
+            changeColor = Palette.fireBrick;
         } else {
-            changeColor = '#b1b1b2';
+            changeColor = Palette.spunPearl;
         }
 
+        // eslint-disable-next-line no-unused-vars
         const renderDropdownRow = (rowData, rowID, highlighted) => (
             <View style={styles.periodButton}>
                 <Text style={styles.periodText}>
                     {rowData}
                 </Text>
             </View>
-            );
+        );
 
+        // eslint-disable-next-line no-unused-vars
         const renderSeparator = (sectionID, rowID, adjacentRowHighlighted) => {
             if (_.isEqual(rowID, store.domainStore.periods.length - 1)) return null;
             return (
@@ -289,6 +139,7 @@ class MySentiment extends React.Component {
                             textStyle={styles.periodText}
                             options={store.dropdownOptions}
                             onSelect={
+                                // eslint-disable-next-line no-unused-vars
                                 (index, value) => {
                                     /**
                                      * Update index of selected period in store.

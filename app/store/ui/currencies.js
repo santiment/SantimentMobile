@@ -48,7 +48,7 @@ class CurrenciesUiStore {
             );
     };
 
-    @action selectSymbol = (symbol: String): void => {
+    @action selectSymbol = (symbol: string): void => {
         this.domainStore.setSelectedSymbol(symbol);
     };
 

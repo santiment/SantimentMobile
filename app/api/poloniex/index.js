@@ -208,7 +208,7 @@ export const getCandles = (
                         ['asc'],
                     ),
                 );
-
+                
                 return obj;
             });
     });
@@ -216,6 +216,7 @@ export const getCandles = (
     /**
      * Return observable.
      */
+    // $FlowFixMe
     return Rx.Observable.forkJoin(observables)
             .map(arr => _.assign(...arr));
 };

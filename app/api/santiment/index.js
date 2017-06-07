@@ -32,11 +32,11 @@ const processAndRethrow = (error) => {
 /**
  * Downloads sentiment by user ID.
  *
- * @param {String} userId User ID.
+ * @param {string} userId User ID.
  * @return Observable.
  */
 export const getSentiments = (
-    userId: String,
+    userId: string,
 ): any => {
     /**
      * Start request.
@@ -122,7 +122,7 @@ export const postSentiment = (
  * @return Observable.
  */
 export const getAggregates = (
-    symbols: String[],
+    symbols: string[],
     startDate: Date = new Date(),
     endDate: Date = moment().add(1, 'days').toDate(),
 ): any => {
@@ -161,6 +161,7 @@ export const getAggregates = (
     /**
      * Return observable.
      */
+    // $FlowFixMe
     return Rx.Observable.forkJoin(observables)
         .map(arr => _.assign(...arr));
 };
@@ -173,7 +174,7 @@ export const getAggregates = (
  * @return Observable.
  */
 export const getFeeds = (
-    assets: String[],
+    assets: string[],
 ): any => {
     /**
      * Send request for each asset.
@@ -208,6 +209,7 @@ export const getFeeds = (
     /**
      * Return observable.
      */
+    // $FlowFixMe
     return Rx.Observable.forkJoin(observables)
         .map(arr => _.assign(...arr));
 };

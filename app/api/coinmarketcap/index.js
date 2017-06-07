@@ -14,7 +14,7 @@ import * as CoinMarketCapHttpClient from './httpClient';
  * @return Observable.
  */
 export const getTicker = (
-    limit: Number = 50,
+    limit: number = 50,
 ) => {
     /**
      * Start request.

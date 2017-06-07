@@ -7,7 +7,6 @@ import React from 'react';
 import {
     View,
     Text,
-    StyleSheet,
 } from 'react-native';
 
 import {
@@ -19,7 +18,9 @@ import {
     Bubble,
 } from 'react-native-gifted-chat';
 
-import Clock from '../../../utils/clock';
+import Palette from '../../../resources/colors';
+
+import getStyles from './styles';
 
 const propTypes = {
     store: React.PropTypes.shape({
@@ -27,85 +28,9 @@ const propTypes = {
     }).isRequired,
 };
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#ffffff',
-        flexDirection: 'column',
-        justifyContent: 'center',
-    },
-    text: {
-        fontSize: 14,
-        fontWeight: '400',
-    },
-    currencyRowContainer: {
-        flexDirection: 'row',
-        paddingTop: 10,
-        paddingBottom: 10,
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        backgroundColor: '#333333',
-    },
-    priceColumn: {
-        flex: 1,
-        flexDirection: 'row',
-        marginLeft: 10,
-        justifyContent: 'flex-start',
-        alignItems: 'stretch',
-    },
-    priceText: {
-        fontSize: 16,
-        textAlign: 'left',
-        fontWeight: '500',
-        color: '#e6e6e6',
-    },
-    changeText: {
-        marginLeft: 10,
-        textAlign: 'left',
-        fontSize: 16,
-    },
-    periodColumn: {
-        width: 80,
-        justifyContent: 'center',
-        alignItems: 'stretch',
-        marginRight: 10,
-    },
-    periodButton: {
-        paddingTop: 5,
-        paddingBottom: 5,
-        height: 30,
-        backgroundColor: '#454545',
-    },
-    periodText: {
-        fontSize: 16,
-        fontWeight: '500',
-        color: '#cdcdcd',
-        textAlign: 'center',
-    },
-});
-
-const feedRefreshPeriod = 5000;
-
 @observer
 class Feed extends React.Component {
-    constructor(props) {
-        super(props);
-
-        /**
-         * Initialize appearance clock and
-         * start to measure time interval.
-         */
-        this.appearanceClock = new Clock();
-        this.appearanceClock.start();
-
-        /**
-         * Initialize state.
-         */
-        this.state = {
-            didAppear: false,
-        };
-    }
-
+    
     componentDidMount() {
         /**
          * Obtain UI store.
@@ -113,49 +38,29 @@ class Feed extends React.Component {
         const uiStore = this.props.store;
 
         /**
-         * Create timer for updating UI store.
+         * Start refreshing UI store.
          */
-        this.refreshStoreTimerId = setInterval(
-            () => {
-                /**
-                 * Update UI store.
-                 */
-                uiStore.refresh();
-            },
-            feedRefreshPeriod,
-        );
-
-        /**
-         * Update state.
-         */
-        this.setState({
-            didAppear: true,
-        });
-
-        /**
-         * End to measure appearance time interval.
-         */
-        const appearanceTimeInterval = this.appearanceClock.stop();
-
-        console.log(
-            'Feed scene did appear in ',
-            appearanceTimeInterval,
-            ' milliseconds',
-        );
+        uiStore.startToRefreshPeriodically();
     }
 
     componentWillUnmount() {
-        clearInterval(
-            this.refreshStoreTimerId,
-        );
+        /**
+         * Obtain UI store.
+         */
+        const uiStore = this.props.store;
+
+        /**
+         * Stop refreshing UI store.
+         */
+        uiStore.stopToRefreshPeriodically();
     }
 
-    appearanceClock: Clock;
-
-    refreshStoreTimerId: any;
-
     render() {
-        const { store } = this.props;
+        const {
+            store,
+        } = this.props;
+
+        const styles = getStyles();
 
         const renderBubble = props => (
             <Bubble
@@ -166,16 +71,16 @@ class Feed extends React.Component {
                     },
                 }}
             />
-            );
+        );
 
         let changeColor;
 
         if (store.ticker.dailyChangePercent > 0) {
-            changeColor = '#27aa36';
+            changeColor = Palette.forestGreenOne;
         } else if (store.ticker.dailyChangePercent < 0) {
-            changeColor = '#bd2c27';
+            changeColor = Palette.fireBrick;
         } else {
-            changeColor = '#b1b1b2';
+            changeColor = Palette.spunPearl;
         }
 
         return (

@@ -15,12 +15,16 @@ import {
     useStrict,
 } from 'mobx';
 
+const feedRefreshPeriod = 5000;
+
 class FeedUiStore {
 
     /**
      * Domain store.
      */
     domainStore: any;
+
+    refreshTimerId: any;
 
     constructor(domainStore: any) {
         useStrict(true);
@@ -64,12 +68,12 @@ class FeedUiStore {
     /**
      * Shows whether data is loading now.
      */
-    @observable isLoading: Boolean = false;
+    @observable isLoading: boolean = false;
 
     /**
      * Updates `isLoading` boolean flag.
      */
-    @action setIsLoading = (value: Boolean): void => {
+    @action setIsLoading = (value: boolean): void => {
         this.isLoading = value;
     };
 
@@ -100,7 +104,7 @@ class FeedUiStore {
     /**
      * Asset.
      */
-    @computed get asset(): String {
+    @computed get asset(): string {
         return _.split(this.domainStore.selectedSymbol, '_')[0];
     }
 
@@ -111,7 +115,7 @@ class FeedUiStore {
         /**
          * Retrieve feed from domain store.
          */
-        const feed = _.get(
+        const feed: Object[] = _.get(
             this.domainStore.feeds,
             [this.asset],
             [],
@@ -126,40 +130,47 @@ class FeedUiStore {
         /**
          * Obtain formatted feed.
          */
-        const formattedFeed = _.map(_.orderBy(feed, ['timestamp'], ['desc']), (m) => {
-            /**
-             * Obtain unique ID for current message.
-             * Currently it's just a message index,
-             * but later we can just the algorithm
-             * that generates IDs.
-             */
-            // const messageUniqueIdentifier = messageIndex;
+        const formattedFeed = _.map(
+            _.orderBy(
+                feed,
+                ['timestamp'],
+                ['desc'],
+            ),
+            (m) => {
+                /**
+                 * Obtain unique ID for current message.
+                 * Currently it's just a message index,
+                 * but later we can just the algorithm
+                 * that generates IDs.
+                 */
+                const messageUniqueIdentifier = messageIndex;
 
-            /**
-             * Obtain creation date for current message.
-             * Timestamp provided by server is measured in seconds,
-             * but we need to use milliseconds.
-             */
-            const messageCreationDate = new Date(m.timestamp * 1000);
+                /**
+                 * Obtain creation date for current message.
+                 * Timestamp provided by server is measured in seconds,
+                 * but we need to use milliseconds.
+                 */
+                const messageCreationDate = new Date(m.timestamp * 1000);
 
-            /**
-             * Increment index for next message.
-             */
-            messageIndex += 1;
+                /**
+                 * Increment index for next message.
+                 */
+                messageIndex += 1;
 
-            /**
-             * Return formatted message object.
-             */
-            return {
-                _id: messageIndex,
-                text: m.message,
-                createdAt: messageCreationDate,
-                user: {
-                    _id: m.username,
-                    name: m.username,
-                },
-            };
-        });
+                /**
+                 * Return formatted message object.
+                 */
+                return {
+                    _id: messageUniqueIdentifier,
+                    text: m.message,
+                    createdAt: messageCreationDate,
+                    user: {
+                        _id: m.username,
+                        name: m.username,
+                    },
+                };
+            },
+        );
 
         /**
          * Console output (helpful for checking feed's content).
@@ -177,6 +188,55 @@ class FeedUiStore {
          * Return formatted feed.
          */
         return formattedFeed;
+    }
+
+    /**
+     * Starts refreshing store by timer.
+     */
+    startToRefreshPeriodically = (): void => {
+        /**
+         * Check if timer is not already created.
+         */
+        if (this.refreshTimerId) {
+            return;
+        }
+
+        /**
+         * Create timer for updating UI store.
+         */
+        this.refreshTimerId = setInterval(
+            () => {
+                /**
+                 * Update UI store.
+                 */
+                this.refresh();
+            },
+            feedRefreshPeriod,
+        );
+    }
+
+    /**
+     * Stops refreshing store by timer.
+     */
+    stopToRefreshPeriodically = (): void => {
+        /**
+         * Check if timer was created.
+         */
+        if (!this.refreshTimerId) {
+            return;
+        }
+
+        /**
+         * Stop timer.
+         */
+        clearInterval(
+            this.refreshTimerId,
+        );
+
+        /**
+         * Nullify timer ID.
+         */
+        this.refreshTimerId = null;
     }
 }
 

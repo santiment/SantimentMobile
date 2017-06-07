@@ -17,7 +17,7 @@ const apiUrl = 'https://sa4h4y6jgb.execute-api.eu-central-1.amazonaws.com/dev';
  * @return Axios request.
  */
 export const getSentiments = (
-    userId: String,
+    userId: string,
 ): any => {
     /**
      * Obtain URL for request.
@@ -66,7 +66,7 @@ export const postSentiment = (
  * @return Axios request.
  */
 export const getAggregate = (
-    symbol: String,
+    symbol: string,
     startDate: Date,
     endDate: Date,
 ): any => {
@@ -97,7 +97,7 @@ export const getAggregate = (
  * @return Axios request.
  */
 export const getFeed = (
-    asset: String,
+    asset: string,
 ): any => {
     /**
      * Obtain URL for request.

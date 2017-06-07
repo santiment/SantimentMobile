@@ -25,8 +25,9 @@ import _ from 'lodash';
 
 import moment from 'moment';
 
-import { observer } from 'mobx-react/native';
-
+import {
+    observer,
+} from 'mobx-react/native';
 
 import {
     AddCurrencyRoute,
@@ -34,7 +35,11 @@ import {
     EditCurrenciesRoute,
 } from '../../navigator/routes';
 
+import getStyles from './styles';
+
 import Cell from './cell';
+
+import Palette from '../../resources/colors';
 
 const propTypes = {
     navigator: React.PropTypes.shape({
@@ -48,62 +53,12 @@ const propTypes = {
     }).isRequired,
 };
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    navBar: {
-        borderBottomWidth: StyleSheet.hairlineWidth,
-        borderBottomColor: '#cccccc',
-    },
-    listView: {
-        backgroundColor: '#f0f0f0',
-        flex: 1,
-        marginTop: 0,
-    },
-    fabContainer: {
-        position: 'absolute',
-        bottom: 20,
-        right: 20,
-    },
-    toolbarButton: {
-        padding: 10,
-    },
-    header: {
-        height: 20,
-    },
-    footer: {
-        /**
-         * Height includes offset (20 points)
-         * and height of floating action button
-         * (52 points).
-         */
-        height: 20 + 52,
-    },
-    separator: {
-        height: 20,
-    },
-    noData: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-    },
-    noDataText: {
-        fontSize: 32,
-        color: '#999999',
-        fontWeight: '500',
-    },
-    noDataButton: {
-        width: 250,
-        height: 40,
-        margin: 20,
-    },
-});
-
 @observer
 class Currencies extends React.PureComponent {
     render() {
         const { navigator, store } = this.props;
+
+        const styles = getStyles();
 
         const renderRow = (data, sectionID, rowID) => (
             <Cell
@@ -146,7 +101,7 @@ class Currencies extends React.PureComponent {
                     buttonStyle={styles.noDataButton}
                     textStyle={{ textAlign: 'center' }}
                     title={'Add coins'}
-                    backgroundColor={'#27aa36'}
+                    backgroundColor={Palette.forestGreenOne}
                     fontSize={20}
                     onPress={addCurrency}
                 />
@@ -199,7 +154,7 @@ class Currencies extends React.PureComponent {
                         raised
                         reverse
                         name="add"
-                        color="#27aa36"
+                        color={Palette.forestGreenOne}
                         onPress={addCurrency}
                     />
 

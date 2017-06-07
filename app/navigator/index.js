@@ -3,14 +3,24 @@
  */
 
 import React from 'react';
-import { Navigator, View } from 'react-native';
+
+import {
+    Navigator,
+    View,
+    StyleSheet,
+} from 'react-native';
 
 import Currencies from '../scenes/currencies';
+
 import CurrencyDetails from '../scenes/currencyDetails';
+
 import AddCurrency from '../scenes/addCurrency';
+
 import EditCurrencies from '../scenes/editCurrencies';
 
-import { CurrenciesRoute, AddCurrencyRoute, CurrencyDetailsRoute, EditCurrenciesRoute } from './routes';
+import * as Routes from './routes';
+
+import getStyles from './styles';
 
 const propTypes = {
     store: React.PropTypes.shape({
@@ -24,35 +34,74 @@ const propTypes = {
 };
 
 class AppNavigator extends React.Component {
+    
     render() {
         const { store } = this.props;
+
+        const styles = getStyles();
+
         return (
             <Navigator
-                style={{ flex: 1 }}
+                style={styles.navigator}
                 configureScene={(route, routeStack) => {
-                    if (route.name === AddCurrencyRoute || route.name === EditCurrenciesRoute) {
+                    switch (route.name) {
+                    case Routes.CurrenciesRoute:
+                        return Navigator.SceneConfigs.PushFromRight;
+                    case Routes.CurrencyDetailsRoute:
+                        return Navigator.SceneConfigs.PushFromRight;
+                    case Routes.AddCurrencyRoute:
                         return {
                             ...Navigator.SceneConfigs.FloatFromBottom,
-                            gestures: {},
+                            gestures: {
+                            },
                         };
+                    case Routes.EditCurrenciesRoute:
+                        return {
+                            ...Navigator.SceneConfigs.FloatFromBottom,
+                            gestures: {
+                            },
+                        };
+                    default:
+                        return Navigator.SceneConfigs.PushFromRight;
                     }
-                    return Navigator.SceneConfigs.PushFromRight;
                 }}
                 renderScene={(route, navigator) => {
                     switch (route.name) {
-                    case CurrenciesRoute:
-                        return <Currencies navigator={navigator} store={store.ui.currencies} />;
-                    case CurrencyDetailsRoute:
-                        return <CurrencyDetails navigator={navigator} store={store.ui.currencyDetails} />;
-                    case AddCurrencyRoute:
-                        return <AddCurrency navigator={navigator} store={store.ui.addCurrency} />;
-                    case EditCurrenciesRoute:
-                        return <EditCurrencies navigator={navigator} store={store.ui.editCurrencies} />;
+                    case Routes.CurrenciesRoute:
+                        return (
+                            <Currencies
+                                navigator={navigator}
+                                store={store.ui.currencies}
+                            />
+                        );
+                    case Routes.CurrencyDetailsRoute:
+                        return (
+                            <CurrencyDetails
+                                navigator={navigator}
+                                store={store.ui.currencyDetails}
+                            />
+                        );
+                    case Routes.AddCurrencyRoute:
+                        return (
+                            <AddCurrency
+                                navigator={navigator}
+                                store={store.ui.addCurrency}
+                            />
+                        );
+                    case Routes.EditCurrenciesRoute:
+                        return (
+                            <EditCurrencies
+                                navigator={navigator}
+                                store={store.ui.editCurrencies}
+                            />
+                        );
                     default:
-                        return <View />;
+                        return (
+                            <View />
+                        );
                     }
                 }}
-                initialRoute={{ name: CurrenciesRoute }}
+                initialRoute={{ name: Routes.CurrenciesRoute }}
             />
         );
     }
