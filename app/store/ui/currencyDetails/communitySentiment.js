@@ -16,6 +16,7 @@ import {
 } from 'mobx';
 
 class CommunitySentimentUiStore {
+    
     domainStore: any;
 
     constructor(domainStore: any) {

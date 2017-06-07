@@ -191,4 +191,3 @@ class MySentimentUiStore {
 }
 
 export default MySentimentUiStore;
-

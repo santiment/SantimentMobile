@@ -7,7 +7,6 @@ import React from 'react';
 import {
     View,
     Text,
-    StyleSheet,
 } from 'react-native';
 
 import {
@@ -19,68 +18,15 @@ import {
     Bubble,
 } from 'react-native-gifted-chat';
 
+import Palette from '../../../resources/colors';
+
+import getStyles from './styles';
+
 const propTypes = {
     store: React.PropTypes.shape({
         feed: React.PropTypes.any.isRequired,
     }).isRequired,
 };
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#ffffff',
-        flexDirection: 'column',
-        justifyContent: 'center',
-    },
-    text: {
-        fontSize: 14,
-        fontWeight: '400',
-    },
-    currencyRowContainer: {
-        flexDirection: 'row',
-        paddingTop: 10,
-        paddingBottom: 10,
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        backgroundColor: '#333333',
-    },
-    priceColumn: {
-        flex: 1,
-        flexDirection: 'row',
-        marginLeft: 10,
-        justifyContent: 'flex-start',
-        alignItems: 'stretch',
-    },
-    priceText: {
-        fontSize: 16,
-        textAlign: 'left',
-        fontWeight: '500',
-        color: '#e6e6e6',
-    },
-    changeText: {
-        marginLeft: 10,
-        textAlign: 'left',
-        fontSize: 16,
-    },
-    periodColumn: {
-        width: 80,
-        justifyContent: 'center',
-        alignItems: 'stretch',
-        marginRight: 10,
-    },
-    periodButton: {
-        paddingTop: 5,
-        paddingBottom: 5,
-        height: 30,
-        backgroundColor: '#454545',
-    },
-    periodText: {
-        fontSize: 16,
-        fontWeight: '500',
-        color: '#cdcdcd',
-        textAlign: 'center',
-    },
-});
 
 @observer
 class Feed extends React.Component {
@@ -110,7 +56,11 @@ class Feed extends React.Component {
     }
 
     render() {
-        const { store } = this.props;
+        const {
+            store,
+        } = this.props;
+
+        const styles = getStyles();
 
         const renderBubble = props => (
             <Bubble
@@ -121,16 +71,16 @@ class Feed extends React.Component {
                     },
                 }}
             />
-            );
+        );
 
         let changeColor;
 
         if (store.ticker.dailyChangePercent > 0) {
-            changeColor = '#27aa36';
+            changeColor = Palette.forestGreenOne;
         } else if (store.ticker.dailyChangePercent < 0) {
-            changeColor = '#bd2c27';
+            changeColor = Palette.fireBrick;
         } else {
-            changeColor = '#b1b1b2';
+            changeColor = Palette.spunPearl;
         }
 
         return (

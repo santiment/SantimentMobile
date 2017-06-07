@@ -9,14 +9,11 @@ import {
     Text,
     ListView,
     RefreshControl,
-    StyleSheet,
 } from 'react-native';
 
 import {
-    responsiveHeight,
-} from 'react-native-responsive-dimensions';
-
-import { observer } from 'mobx-react/native';
+    observer,
+} from 'mobx-react/native';
 
 import Dropdown from 'react-native-modal-dropdown';
 
@@ -25,6 +22,10 @@ import _ from 'lodash';
 import SentimentChart from '../../../components/sentimentCandlestickChart';
 
 import Cell from './cell';
+
+import Palette from '../../../resources/colors';
+
+import getStyles from './styles';
 
 const propTypes = {
     store: React.PropTypes.shape({
@@ -60,82 +61,15 @@ const propTypes = {
     }).isRequired,
 };
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#ffffff',
-    },
-    currencyRowContainer: {
-        height: responsiveHeight(9),
-        flexDirection: 'row',
-        paddingTop: 20,
-        paddingBottom: 15,
-        justifyContent: 'space-between',
-        alignItems: 'center',
-        backgroundColor: '#333333',
-    },
-    text: {
-        fontSize: 14,
-        fontWeight: '400',
-    },
-    priceColumn: {
-        flex: 1,
-        flexDirection: 'column',
-        marginLeft: 10,
-        justifyContent: 'flex-start',
-        alignItems: 'stretch',
-    },
-    priceText: {
-        fontSize: 18,
-        textAlign: 'left',
-        fontWeight: '500',
-        color: '#e6e6e6',
-    },
-    changeText: {
-        textAlign: 'left',
-    },
-    periodColumn: {
-        width: 80,
-        justifyContent: 'center',
-        alignItems: 'stretch',
-        marginRight: 10,
-    },
-    periodButton: {
-        paddingTop: 5,
-        paddingBottom: 5,
-        height: 30,
-        backgroundColor: '#454545',
-    },
-    periodText: {
-        fontSize: 16,
-        fontWeight: '500',
-        color: '#cdcdcd',
-        textAlign: 'center',
-    },
-    periodDropdown: {
-        width: 80,
-        backgroundColor: '#454545',
-        borderColor: '#333333',
-        borderWidth: 2,
-    },
-    periodDropdownSeparator: {
-        height: 2,
-        backgroundColor: '#333333',
-    },
-    listViewContainer: {
-        backgroundColor: 'white',
-        flex: 1,
-    },
-    chart: {
-        height: responsiveHeight(40),
-    },
-});
-
 @observer
 class MySentiment extends React.Component {
     
     render() {
-        const { store } = this.props;
+        const {
+            store,
+        } = this.props;
+
+        const styles = getStyles();
 
         // eslint-disable-next-line no-unused-vars
         const renderRow = (data, sectionID) => (
@@ -149,11 +83,11 @@ class MySentiment extends React.Component {
         let changeColor;
 
         if (store.ticker.dailyChangePercent > 0) {
-            changeColor = '#27aa36';
+            changeColor = Palette.forestGreenOne;
         } else if (store.ticker.dailyChangePercent < 0) {
-            changeColor = '#bd2c27';
+            changeColor = Palette.fireBrick;
         } else {
-            changeColor = '#b1b1b2';
+            changeColor = Palette.spunPearl;
         }
 
         // eslint-disable-next-line no-unused-vars
