@@ -57,7 +57,7 @@ const styles = StyleSheet.create({
         fontSize: 16,
         textAlign: 'left',
         fontWeight: '500',
-        color: Palette.mercury,
+        color: Palette.mercuryOne,
     },
     changeText: {
         marginLeft: 10,
@@ -117,7 +117,7 @@ class Feed extends React.Component {
                     },
                 }}
             />
-            );
+        );
 
         let changeColor;
 

@@ -12,7 +12,7 @@ import {
     Dimensions,
 } from 'react-native';
 
-import StyleManager from './style';
+import getStyles from './styles';
 
 import Palette from '../../resources/colors';
 
@@ -34,52 +34,51 @@ class CrowdSentimentBarChart extends React.PureComponent {
         const imageSize = 50;
         const percentageWidth = 30;
         const screenDimensions = Dimensions.get('window');
-        
-        const styleManager = new StyleManager(
+
+        const styles = getStyles(
             imageSize,
             percentageWidth,
-            screenDimensions,
         );
 
         return (
-            <View style={styleManager.container}>
-                <View style={styleManager.row}>
-                    <View style={styleManager.imageContainer}>
+            <View style={styles.container}>
+                <View style={styles.row}>
+                    <View style={styles.imageContainer}>
                         <Image
-                            style={styleManager.image}
+                            style={styles.image}
                             source={require('../../resources/images/bull.png')}
                         />
                     </View>
-                    <View style={styleManager.barContainer}>
-                        <Text style={{ width: (screen.width - imageSize - percentageWidth) * aggregate.bullishPercentage, backgroundColor: Palette.springGreen }} />
+                    <View style={styles.barContainer}>
+                        <Text style={{ width: (screenDimensions.width - imageSize - percentageWidth) * aggregate.bullishPercentage, backgroundColor: Palette.springGreen }} />
                     </View>
-                    <Text style={styleManager.percentage}>{aggregate.bullishPercentageDisplay}</Text>
+                    <Text style={styles.percentage}>{aggregate.bullishPercentageDisplay}</Text>
                 </View>
 
-                <View style={styleManager.row}>
-                    <View style={styleManager.imageContainer}>
+                <View style={styles.row}>
+                    <View style={styles.imageContainer}>
                         <Image
-                            style={styleManager.image}
+                            style={styles.image}
                             source={require('../../resources/images/cat.png')}
                         />
                     </View>
-                    <View style={styleManager.barContainer}>
-                        <Text style={{ width: (screen.width - imageSize - percentageWidth) * aggregate.catishPercentage, backgroundColor: Palette.silver }} />
+                    <View style={styles.barContainer}>
+                        <Text style={{ width: (screenDimensions.width - imageSize - percentageWidth) * aggregate.catishPercentage, backgroundColor: Palette.silver }} />
                     </View>
-                    <Text style={styleManager.percentage}>{aggregate.catishPercentageDisplay}</Text>
+                    <Text style={styles.percentage}>{aggregate.catishPercentageDisplay}</Text>
                 </View>
 
-                <View style={styleManager.row}>
-                    <View style={styleManager.imageContainer}>
+                <View style={styles.row}>
+                    <View style={styles.imageContainer}>
                         <Image
-                            style={styleManager.image}
+                            style={styles.image}
                             source={require('../../resources/images/bear.png')}
                         />
                     </View>
-                    <View style={styleManager.barContainer}>
-                        <Text style={{ width: (screen.width - imageSize - percentageWidth) * aggregate.bearishPercentage, backgroundColor: Palette.amaranthOne }} />
+                    <View style={styles.barContainer}>
+                        <Text style={{ width: (screenDimensions.width - imageSize - percentageWidth) * aggregate.bearishPercentage, backgroundColor: Palette.amaranthOne }} />
                     </View>
-                    <Text style={styleManager.percentage}>{aggregate.bearishPercentageDisplay}</Text>
+                    <Text style={styles.percentage}>{aggregate.bearishPercentageDisplay}</Text>
                 </View>
             </View>
         );
