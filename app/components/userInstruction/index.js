@@ -17,9 +17,7 @@ import {
     Icon,
 } from 'react-native-elements';
 
-import Palette from '../../resources/colors';
-
-import ColorGenerator from '../../utils/colorGenerator';
+import getStyles from './styles';
 
 const propTypes = {
     title: React.PropTypes.string.isRequired,
@@ -27,28 +25,6 @@ const propTypes = {
     visible: React.PropTypes.bool.isRequired,
     onRequestToClose: React.PropTypes.func.isRequired,
 };
-
-const styles = StyleSheet.create({
-    modal: {
-        flex: 1,
-    },
-    navbar: {
-        borderBottomWidth: StyleSheet.hairlineWidth,
-        borderBottomColor: Palette.silver,
-    },
-    navbarButton: {
-        padding: 10,
-    },
-    contentWrapper: {
-        backgroundColor: ColorGenerator.colorWithOpacity(Palette.justBlack, 0xdd),
-        width: '100%',
-        height: '100%',
-    },
-    text: {
-        color: Palette.justWhite,
-        padding: 20,
-    },
-});
 
 class UserInstruction extends React.PureComponent {
 
@@ -62,6 +38,11 @@ class UserInstruction extends React.PureComponent {
             visible,
             onRequestToClose,
         } = this.props;
+
+        /**
+         * Obtain styles.
+         */
+        const styles = getStyles();
 
         /**
          * Return layout.

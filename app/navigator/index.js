@@ -20,6 +20,8 @@ import EditCurrencies from '../scenes/editCurrencies';
 
 import * as Routes from './routes';
 
+import getStyles from './styles';
+
 const propTypes = {
     store: React.PropTypes.shape({
         ui: React.PropTypes.shape({
@@ -31,16 +33,12 @@ const propTypes = {
     }).isRequired,
 };
 
-const styles = StyleSheet.create({
-    navigator: {
-        flex: 1,
-    },
-});
-
 class AppNavigator extends React.Component {
     
     render() {
         const { store } = this.props;
+
+        const styles = getStyles();
 
         return (
             <Navigator

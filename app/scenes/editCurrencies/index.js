@@ -3,17 +3,28 @@
  */
 
 import React from 'react';
-import { ListView, View, StyleSheet } from 'react-native';
 
-import { observer } from 'mobx-react/native';
+import {
+    ListView,
+    View,
+} from 'react-native';
+
+import {
+    observer,
+} from 'mobx-react/native';
 
 import AndroidBackButton from 'android-back-button';
 
-import { Icon, List } from 'react-native-elements';
+import {
+    Icon,
+    List,
+} from 'react-native-elements';
 
 import NavigationBar from 'react-native-navbar';
 
 import Cell from './cell';
+
+import getStyles from './styles';
 
 const propTypes = {
     navigator: React.PropTypes.shape({
@@ -26,20 +37,16 @@ const propTypes = {
     }).isRequired,
 };
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    toolbarButton: {
-        padding: 10,
-    },
-});
-
 @observer
 class EditCurrencies extends React.PureComponent {
 
     render() {
-        const { navigator, store } = this.props;
+        const {
+            navigator,
+            store,
+        } = this.props;
+
+        const styles = getStyles();
 
         const renderRow = (data, sectionID) => (
             <Cell
@@ -49,7 +56,7 @@ class EditCurrencies extends React.PureComponent {
         );
 
         return (
-            <View style={{ flex: 1 }}>
+            <View style={styles.container}>
 
                 <NavigationBar
                     title={{ title: 'Edit Portfolio' }}
@@ -64,7 +71,7 @@ class EditCurrencies extends React.PureComponent {
                     }
                 />
 
-                <List containerStyle={{ flex: 1, marginTop: 0 }}>
+                <List containerStyle={styles.listViewContainer}>
                     <ListView
                         renderRow={renderRow}
                         dataSource={store.dataSource}
@@ -87,4 +94,3 @@ class EditCurrencies extends React.PureComponent {
 EditCurrencies.propTypes = propTypes;
 
 export default EditCurrencies;
-

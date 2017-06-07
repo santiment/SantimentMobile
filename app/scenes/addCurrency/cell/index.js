@@ -8,37 +8,21 @@ import React from 'react';
 
 import {
     View,
-    StyleSheet,
     Text,
     TouchableWithoutFeedback,
 } from 'react-native';
 
-import Palette from '../../resources/colors';
+import getStyles from './styles';
 
 const propTypes = {
     symbol: React.PropTypes.string.isRequired,
     onPress: React.PropTypes.func.isRequired,
 };
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        flexDirection: 'row',
-        justifyContent: 'center',
-        alignItems: 'center',
-        borderBottomColor: Palette.silver,
-        borderBottomWidth: StyleSheet.hairlineWidth,
-        height: 50,
-    },
-    text: {
-        flex: 1,
-        marginLeft: 10,
-        marginRight: 10,
-    },
-});
-
 class AddCurrencyCell extends React.PureComponent {
     render() {
+        const styles = getStyles();
+
         return (
             <TouchableWithoutFeedback onPress={this.props.onPress}>
                 <View style={styles.container}>
@@ -52,6 +36,5 @@ class AddCurrencyCell extends React.PureComponent {
 }
 
 AddCurrencyCell.propTypes = propTypes;
-
 
 export default AddCurrencyCell;

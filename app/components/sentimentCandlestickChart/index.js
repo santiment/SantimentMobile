@@ -22,6 +22,8 @@ import {
     CombinedChart,
 } from 'react-native-charts-wrapper';
 
+import getStyles from './styles';
+
 import Palette from '../../resources/colors';
 
 import ColorGenerator from '../../utils/colorGenerator';
@@ -42,26 +44,11 @@ const propTypes = {
     ).isRequired,
 };
 
-const styles = StyleSheet.create({
-    chart: {
-        flex: 1,
-    },
-    noData: {
-        flex: 1,
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: Palette.mineShaft,
-    },
-    noDataText: {
-        fontSize: 32,
-        color: Palette.veryLightGray,
-        fontWeight: '500',
-    },
-});
-
 class Chart extends React.PureComponent {
     render() {
         const { style, data } = this.props;
+
+        const styles = getStyles();
 
         const xs = _.map(data, o => moment.unix(o.timestamp).format('MMM D'));
 

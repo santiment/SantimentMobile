@@ -9,7 +9,6 @@ import {
     Text,
     Dimensions,
     TouchableWithoutFeedback,
-    StyleSheet,
 } from 'react-native';
 
 import {
@@ -40,6 +39,8 @@ import InstructionStore from '../../resources/instructions';
 
 import Palette from '../../resources/colors';
 
+import getStyles from './styles';
+
 const propTypes = {
     navigator: React.PropTypes.shape({
         push: React.PropTypes.func.isRequired,
@@ -54,50 +55,24 @@ const propTypes = {
     }).isRequired,
 };
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: Palette.justWhite,
-    },
-    navBar: {
-        borderBottomWidth: StyleSheet.hairlineWidth,
-        borderBottomColor: Palette.silver,
-    },
-    navButton: {
-        padding: 10,
-    },
-    tabBar: {
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    tabButton: {
-        padding: 10,
-        flex: 1,
-    },
-    activeTabText: {
-        textAlign: 'center',
-        color: Palette.justBlack,
-    },
-    inactiveTabText: {
-        textAlign: 'center',
-        color: Palette.suvaGray,
-    },
-    underline: {
-        backgroundColor: Palette.justBlack,
-        height: 0,
-    },
-});
-
 @observer
 class CurrencyDetails extends React.Component {
 
     componentWillMount() {
-        const { store } = this.props;
+        const {
+            store,
+        } = this.props;
+
         store.setCurrentPageIndex(0);
     }
     
     render() {
-        const { navigator, store } = this.props;
+        const {
+            navigator,
+            store,
+        } = this.props;
+
+        const styles = getStyles();
 
         const tabs = [
             {

@@ -12,6 +12,7 @@ import AndroidBackButton from 'android-back-button';
 
 import Cell from './cell';
 
+import getStyles from './styles';
 
 const propTypes = {
     navigator: React.PropTypes.shape({
@@ -25,25 +26,16 @@ const propTypes = {
     }).isRequired,
 };
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-    },
-    listView: {
-        backgroundColor: 'white',
-        flex: 1,
-        marginTop: 0,
-    },
-    toolbarButton: {
-        padding: 10,
-    },
-});
-
 @observer
 class AddCurrency extends React.PureComponent {
 
     render() {
-        const { navigator, store } = this.props;
+        const {
+            navigator,
+            store,
+        } = this.props;
+
+        const styles = getStyles();
 
         const renderRow = (data, sectionID) => (
             <Cell
