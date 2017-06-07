@@ -3,11 +3,26 @@
  */
 
 import React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Icon, SearchBar } from 'react-native-elements';
-import { KeyboardAwareListView } from 'react-native-keyboard-aware-scrollview';
-import { observer } from 'mobx-react/native';
+
+import {
+    View,
+} from 'react-native';
+
+import {
+    Icon,
+    SearchBar,
+} from 'react-native-elements';
+
+import {
+    KeyboardAwareListView,
+} from 'react-native-keyboard-aware-scrollview';
+
+import {
+    observer,
+} from 'mobx-react/native';
+
 import NavigationBar from 'react-native-navbar';
+
 import AndroidBackButton from 'android-back-button';
 
 import Cell from './cell';

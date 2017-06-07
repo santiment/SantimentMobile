@@ -6,13 +6,15 @@ import {
     StyleSheet,
 } from 'react-native';
 
+import Palette from '../../resources/colors';
+
 const getStyles = (): StyleSheet => (
     StyleSheet.create({
         container: {
             flex: 1,
         },
         listView: {
-            backgroundColor: 'white',
+            backgroundColor: Palette.justWhite,
             flex: 1,
             marginTop: 0,
         },
