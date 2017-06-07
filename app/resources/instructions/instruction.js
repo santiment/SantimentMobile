@@ -2,6 +2,9 @@
  * @flow
  */
 
+/**
+ * Represents instruction with title and text.
+ */
 class Instruction {
 
     /**

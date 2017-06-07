@@ -6,6 +6,9 @@ import Instruction from './instruction';
 
 import TextGenerator from '../../utils/textGenerator';
 
+/**
+ * Collection of instructions.
+ */
 class InstructionStore {
 
     static get mySentiment(): Instruction {
