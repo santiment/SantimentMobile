@@ -3,12 +3,16 @@
  */
 
 import {
+    ScaledSize,
     StyleSheet,
 } from 'react-native';
 
 import Palette from '../../resources/colors';
 
-const getStyles = (): StyleSheet => (
+const getStyles = (
+    screenDimensions: ScaledSize,
+    numberOfTabs: number,
+): StyleSheet => (
     StyleSheet.create({
         container: {
             flex: 1,
@@ -39,7 +43,9 @@ const getStyles = (): StyleSheet => (
         },
         underline: {
             backgroundColor: Palette.justBlack,
+            width: 30,
             height: 0,
+            marginLeft: ((screenDimensions.width / numberOfTabs) - 30) / 2,
         },
     })
 );

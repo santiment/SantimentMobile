@@ -72,8 +72,6 @@ class CurrencyDetails extends React.Component {
             store,
         } = this.props;
 
-        const styles = getStyles();
-
         const tabs = [
             {
                 label: 'Me',
@@ -92,7 +90,12 @@ class CurrencyDetails extends React.Component {
             },
         ];
 
-        const screen = Dimensions.get('window');
+        const screenDimensions = Dimensions.get('window');
+
+        const styles = getStyles(
+            screenDimensions,
+            tabs.length,
+        );
 
         const renderTab = (name, page, isTabActive, onPressHandler, onLayoutHandler) => (
             <TouchableWithoutFeedback
@@ -147,15 +150,13 @@ class CurrencyDetails extends React.Component {
                         <DefaultTabBar
                             renderTab={renderTab}
                             backgroundColor={Palette.concrete}
-                            underlineStyle={[styles.underline, {
-                                width: 30,
-                                marginLeft: ((screen.width / tabs.length) - 30) / 2,
-                            }]}
+                            underlineStyle={styles.underline}
                             style={styles.tabBar}
                             activeTextColor={Palette.justGreen}
                             inactiveTextColor={Palette.justRed}
                         />
                     )}
+                    // eslint-disable-next-line no-unused-vars
                     ref={(tabView) => {}}
                     tabBarPosition={'bottom'}
                     locked
