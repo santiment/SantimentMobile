@@ -22,7 +22,7 @@ local.properties
 ios/build/
 ios/Pods/
 ios/DerivedData/
-ios/._*
+ios/**/._*
 xcuserdata/
 
 *.pbxuser
