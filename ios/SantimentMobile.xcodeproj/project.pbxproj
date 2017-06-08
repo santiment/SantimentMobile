@@ -76,6 +76,7 @@
 		64C7B3E21E80244800A92E6E /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 64C7B3E11E80244800A92E6E /* Secrets.plist */; };
 		64C7B3EA1E804CA000A92E6E /* prepareInfoPlist.sh in Resources */ = {isa = PBXBuildFile; fileRef = 64C7B3E81E804CA000A92E6E /* prepareInfoPlist.sh */; };
 		64C7B3EB1E804CA000A92E6E /* runFabric.sh in Resources */ = {isa = PBXBuildFile; fileRef = 64C7B3E91E804CA000A92E6E /* runFabric.sh */; };
+		698778A11EE9E19100A4BE96 /* RNConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 698778A01EE9E19100A4BE96 /* RNConfig.m */; };
 		8172C28F8BFD461CB351D971 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FB6E983E86A34491BC6745D8 /* Zocial.ttf */; };
 		819F8688F35D4593B41B12D2 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4AC8CBEB9ADB4DA285DB2514 /* Ionicons.ttf */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
@@ -376,6 +377,8 @@
 		64C7B3E11E80244800A92E6E /* Secrets.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Secrets.plist; sourceTree = "<group>"; };
 		64C7B3E81E804CA000A92E6E /* prepareInfoPlist.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = prepareInfoPlist.sh; sourceTree = "<group>"; };
 		64C7B3E91E804CA000A92E6E /* runFabric.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = runFabric.sh; sourceTree = "<group>"; };
+		6987789F1EE9E19100A4BE96 /* RNConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RNConfig.h; path = SantimentMobile/RNConfig.h; sourceTree = "<group>"; };
+		698778A01EE9E19100A4BE96 /* RNConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RNConfig.m; path = SantimentMobile/RNConfig.m; sourceTree = "<group>"; };
 		6CE9B98EAC594496B6B95A43 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		724CB7CBF54B4DDCBE1BC983 /* libRNDeviceInfo.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNDeviceInfo.a; sourceTree = "<group>"; };
 		72C07F66842341709B5ED00A /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
@@ -510,6 +513,8 @@
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
+				6987789F1EE9E19100A4BE96 /* RNConfig.h */,
+				698778A01EE9E19100A4BE96 /* RNConfig.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
@@ -1317,6 +1322,7 @@
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				649AB6501EA620130056D3CD /* RNScatterChartManagerBridge.m in Sources */,
 				649AB6381EA620130056D3CD /* RNCandleStickChartManagerBridge.m in Sources */,
+				698778A11EE9E19100A4BE96 /* RNConfig.m in Sources */,
 				649AB63B1EA620130056D3CD /* RNCombinedChartManager.swift in Sources */,
 				649AB6351EA620130056D3CD /* RNBubbleChartView.swift in Sources */,
 				649AB6371EA620130056D3CD /* RNCandleStickChartManager.swift in Sources */,
@@ -1467,6 +1473,90 @@
 			};
 			name = Release;
 		};
+		698778801EE9DF0E00A4BE96 /* Staging */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Staging;
+		};
+		698778811EE9DF0E00A4BE96 /* Staging */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AE576BB8D0B8EF4CCFF3EBA7 /* Pods-SantimentMobile.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 28;
+				DEVELOPMENT_TEAM = MWNATH4NEC;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
+				);
+				INFOPLIST_FILE = SantimentMobile/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = net.santiment.ios;
+				PRODUCT_NAME = SantimentMobile;
+				PROVISIONING_PROFILE = "58242f90-2034-41b3-9d26-b61b4e1d7099";
+				PROVISIONING_PROFILE_SPECIFIER = "Santiment Development";
+				SWIFT_OBJC_BRIDGING_HEADER = "SantimentMobile-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Staging;
+		};
+		698778821EE9DF0E00A4BE96 /* Staging */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				COPY_PHASE_STRIP = NO;
+				DEVELOPMENT_TEAM = MWNATH4NEC;
+				INFOPLIST_FILE = SantimentMobileTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/$(TARGET_NAME)\"",
+				);
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SantimentMobile.app/SantimentMobile";
+			};
+			name = Staging;
+		};
 		83CBBA201A601CBA00E9B192 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1551,6 +1641,7 @@
 			buildConfigurations = (
 				00E356F61AD99517003FC87E /* Debug */,
 				00E356F71AD99517003FC87E /* Release */,
+				698778821EE9DF0E00A4BE96 /* Staging */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1560,6 +1651,7 @@
 			buildConfigurations = (
 				13B07F941A680F5B00A75B9A /* Debug */,
 				13B07F951A680F5B00A75B9A /* Release */,
+				698778811EE9DF0E00A4BE96 /* Staging */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
@@ -1569,6 +1661,7 @@
 			buildConfigurations = (
 				83CBBA201A601CBA00E9B192 /* Debug */,
 				83CBBA211A601CBA00E9B192 /* Release */,
+				698778801EE9DF0E00A4BE96 /* Staging */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
