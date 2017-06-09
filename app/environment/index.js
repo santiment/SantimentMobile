@@ -3,12 +3,18 @@
  */
 
 import {
-    RNConfig,
+    NativeModules,
 } from 'react-native';
 
 import Configurations from './configurations.json';
 
-const configurationName = RNConfig.buildEnvironment;
+const {
+    AppConfiguration,
+} = NativeModules;
+
+console.log('Native modules: ', NativeModules);
+
+const configurationName = AppConfiguration.buildConfiguration;
 
 /**
  * Represents current environment.

@@ -76,7 +76,7 @@
 		64C7B3E21E80244800A92E6E /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 64C7B3E11E80244800A92E6E /* Secrets.plist */; };
 		64C7B3EA1E804CA000A92E6E /* prepareInfoPlist.sh in Resources */ = {isa = PBXBuildFile; fileRef = 64C7B3E81E804CA000A92E6E /* prepareInfoPlist.sh */; };
 		64C7B3EB1E804CA000A92E6E /* runFabric.sh in Resources */ = {isa = PBXBuildFile; fileRef = 64C7B3E91E804CA000A92E6E /* runFabric.sh */; };
-		698778A11EE9E19100A4BE96 /* RNConfig.m in Sources */ = {isa = PBXBuildFile; fileRef = 698778A01EE9E19100A4BE96 /* RNConfig.m */; };
+		69FEB1FC1EEB5F8C004F1CBA /* AppConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 69FEB1FB1EEB5F8C004F1CBA /* AppConfiguration.m */; };
 		8172C28F8BFD461CB351D971 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FB6E983E86A34491BC6745D8 /* Zocial.ttf */; };
 		819F8688F35D4593B41B12D2 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4AC8CBEB9ADB4DA285DB2514 /* Ionicons.ttf */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
@@ -377,8 +377,8 @@
 		64C7B3E11E80244800A92E6E /* Secrets.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Secrets.plist; sourceTree = "<group>"; };
 		64C7B3E81E804CA000A92E6E /* prepareInfoPlist.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = prepareInfoPlist.sh; sourceTree = "<group>"; };
 		64C7B3E91E804CA000A92E6E /* runFabric.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = runFabric.sh; sourceTree = "<group>"; };
-		6987789F1EE9E19100A4BE96 /* RNConfig.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = RNConfig.h; path = SantimentMobile/RNConfig.h; sourceTree = "<group>"; };
-		698778A01EE9E19100A4BE96 /* RNConfig.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = RNConfig.m; path = SantimentMobile/RNConfig.m; sourceTree = "<group>"; };
+		69FEB1FA1EEB5F8C004F1CBA /* AppConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppConfiguration.h; sourceTree = "<group>"; };
+		69FEB1FB1EEB5F8C004F1CBA /* AppConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppConfiguration.m; sourceTree = "<group>"; };
 		6CE9B98EAC594496B6B95A43 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		724CB7CBF54B4DDCBE1BC983 /* libRNDeviceInfo.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNDeviceInfo.a; sourceTree = "<group>"; };
 		72C07F66842341709B5ED00A /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
@@ -510,11 +510,10 @@
 		13B07FAE1A68108700A75B9A /* SantimentMobile */ = {
 			isa = PBXGroup;
 			children = (
+				69FEB1F31EEB5BEE004F1CBA /* ReactNative */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
-				6987789F1EE9E19100A4BE96 /* RNConfig.h */,
-				698778A01EE9E19100A4BE96 /* RNConfig.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB61A68108700A75B9A /* Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
@@ -724,6 +723,16 @@
 				64C7B3E91E804CA000A92E6E /* runFabric.sh */,
 			);
 			path = scripts;
+			sourceTree = "<group>";
+		};
+		69FEB1F31EEB5BEE004F1CBA /* ReactNative */ = {
+			isa = PBXGroup;
+			children = (
+				69FEB1FA1EEB5F8C004F1CBA /* AppConfiguration.h */,
+				69FEB1FB1EEB5F8C004F1CBA /* AppConfiguration.m */,
+			);
+			name = ReactNative;
+			path = SantimentMobile/ReactNative;
 			sourceTree = "<group>";
 		};
 		78C398B11ACF4ADC00677621 /* Products */ = {
@@ -1302,6 +1311,7 @@
 				649AB6451EA620130056D3CD /* RNPieChartManager.swift in Sources */,
 				649AB6551EA620130056D3CD /* EntryToDictionaryUtils.swift in Sources */,
 				649AB6481EA620130056D3CD /* RadarDataExtract.swift in Sources */,
+				69FEB1FC1EEB5F8C004F1CBA /* AppConfiguration.m in Sources */,
 				649AB6291EA620130056D3CD /* BalloonMarker.swift in Sources */,
 				649AB62A1EA620130056D3CD /* BarDataExtract.swift in Sources */,
 				649AB6311EA620130056D3CD /* RNHorizontalBarChartView.swift in Sources */,
@@ -1322,7 +1332,6 @@
 				13B07FC11A68108700A75B9A /* main.m in Sources */,
 				649AB6501EA620130056D3CD /* RNScatterChartManagerBridge.m in Sources */,
 				649AB6381EA620130056D3CD /* RNCandleStickChartManagerBridge.m in Sources */,
-				698778A11EE9E19100A4BE96 /* RNConfig.m in Sources */,
 				649AB63B1EA620130056D3CD /* RNCombinedChartManager.swift in Sources */,
 				649AB6351EA620130056D3CD /* RNBubbleChartView.swift in Sources */,
 				649AB6371EA620130056D3CD /* RNCandleStickChartManager.swift in Sources */,
@@ -1503,6 +1512,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				SANTIMENT_BUILD_CONFIGURATION = staging;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
@@ -1594,6 +1604,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
+				SANTIMENT_BUILD_CONFIGURATION = development;
 				SDKROOT = iphoneos;
 			};
 			name = Debug;
@@ -1628,6 +1639,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
+				SANTIMENT_BUILD_CONFIGURATION = production;
 				SDKROOT = iphoneos;
 				VALIDATE_PRODUCT = YES;
 			};
