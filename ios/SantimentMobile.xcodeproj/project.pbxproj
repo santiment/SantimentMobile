@@ -76,6 +76,9 @@
 		64C7B3E21E80244800A92E6E /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 64C7B3E11E80244800A92E6E /* Secrets.plist */; };
 		64C7B3EA1E804CA000A92E6E /* prepareInfoPlist.sh in Resources */ = {isa = PBXBuildFile; fileRef = 64C7B3E81E804CA000A92E6E /* prepareInfoPlist.sh */; };
 		64C7B3EB1E804CA000A92E6E /* runFabric.sh in Resources */ = {isa = PBXBuildFile; fileRef = 64C7B3E91E804CA000A92E6E /* runFabric.sh */; };
+		696EEA4F1EEF1E3A00255BED /* Development-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 696EEA4C1EEF1E3A00255BED /* Development-Info.plist */; };
+		696EEA501EEF1E3A00255BED /* Release-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 696EEA4D1EEF1E3A00255BED /* Release-Info.plist */; };
+		696EEA511EEF1E3A00255BED /* Staging-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 696EEA4E1EEF1E3A00255BED /* Staging-Info.plist */; };
 		69FCAFC91EEF162300D5A13B /* RNScatterChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6231EA620130056D3CD /* RNScatterChartView.swift */; };
 		69FCAFCA1EEF162300D5A13B /* RNBarChartViewBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB5F51EA620130056D3CD /* RNBarChartViewBase.swift */; };
 		69FCAFCB1EEF162300D5A13B /* RNHorizontalBarChartManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB5F61EA620130056D3CD /* RNHorizontalBarChartManager.swift */; };
@@ -234,8 +237,6 @@
 		69FCB0921EEF166600D5A13B /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3C30843F3ABF492D9D9CE0C9 /* Octicons.ttf */; };
 		69FCB0931EEF166600D5A13B /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C88720E42D46410C94372DA3 /* SimpleLineIcons.ttf */; };
 		69FCB0941EEF166600D5A13B /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FB6E983E86A34491BC6745D8 /* Zocial.ttf */; };
-		69FCB0A21EEF188700D5A13B /* Development-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 69FCB0A01EEF188700D5A13B /* Development-Info.plist */; };
-		69FCB0A31EEF188700D5A13B /* Staging-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 69FCB0A11EEF188700D5A13B /* Staging-Info.plist */; };
 		69FEB1FC1EEB5F8C004F1CBA /* AppConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 69FEB1FB1EEB5F8C004F1CBA /* AppConfiguration.m */; };
 		8172C28F8BFD461CB351D971 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FB6E983E86A34491BC6745D8 /* Zocial.ttf */; };
 		819F8688F35D4593B41B12D2 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4AC8CBEB9ADB4DA285DB2514 /* Ionicons.ttf */; };
@@ -475,7 +476,6 @@
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = SantimentMobile/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = SantimentMobile/Images.xcassets; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Release-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Release-Info.plist"; path = "SantimentMobile/Release-Info.plist"; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = SantimentMobile/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		15DA26DDAF661E70A1B101A7 /* Pods-SantimentMobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SantimentMobile.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SantimentMobile/Pods-SantimentMobile.debug.xcconfig"; sourceTree = "<group>"; };
@@ -485,7 +485,6 @@
 		3C30843F3ABF492D9D9CE0C9 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		4AC8CBEB9ADB4DA285DB2514 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
-		647516381EA55693009209F5 /* SantimentMobile-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SantimentMobile-Bridging-Header.h"; sourceTree = "<group>"; };
 		649AB5EF1EA620130056D3CD /* BalloonMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalloonMarker.swift; sourceTree = "<group>"; };
 		649AB5F11EA620130056D3CD /* BarDataExtract.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarDataExtract.swift; sourceTree = "<group>"; };
 		649AB5F21EA620130056D3CD /* RNBarChartManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNBarChartManager.swift; sourceTree = "<group>"; };
@@ -537,10 +536,12 @@
 		64C7B3E11E80244800A92E6E /* Secrets.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Secrets.plist; sourceTree = "<group>"; };
 		64C7B3E81E804CA000A92E6E /* prepareInfoPlist.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = prepareInfoPlist.sh; sourceTree = "<group>"; };
 		64C7B3E91E804CA000A92E6E /* runFabric.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = runFabric.sh; sourceTree = "<group>"; };
+		696EEA4C1EEF1E3A00255BED /* Development-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Development-Info.plist"; sourceTree = "<group>"; };
+		696EEA4D1EEF1E3A00255BED /* Release-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Release-Info.plist"; sourceTree = "<group>"; };
+		696EEA4E1EEF1E3A00255BED /* Staging-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Staging-Info.plist"; sourceTree = "<group>"; };
+		696EEA521EEF1FBE00255BED /* SantimentMobile-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "SantimentMobile-Bridging-Header.h"; path = "SantimentMobile/SantimentMobile-Bridging-Header.h"; sourceTree = "<group>"; };
 		69FCB0231EEF162300D5A13B /* SantimentMobile Development.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SantimentMobile Development.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		69FCB09E1EEF166600D5A13B /* SantimentMobile Staging.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SantimentMobile Staging.app"; sourceTree = BUILT_PRODUCTS_DIR; };
-		69FCB0A01EEF188700D5A13B /* Development-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Development-Info.plist"; path = "SantimentMobile/Development-Info.plist"; sourceTree = "<group>"; };
-		69FCB0A11EEF188700D5A13B /* Staging-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Staging-Info.plist"; path = "SantimentMobile/Staging-Info.plist"; sourceTree = "<group>"; };
 		69FEB1FA1EEB5F8C004F1CBA /* AppConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppConfiguration.h; sourceTree = "<group>"; };
 		69FEB1FB1EEB5F8C004F1CBA /* AppConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppConfiguration.m; sourceTree = "<group>"; };
 		6CE9B98EAC594496B6B95A43 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
@@ -721,15 +722,14 @@
 			isa = PBXGroup;
 			children = (
 				69FEB1F31EEB5BEE004F1CBA /* ReactNative */,
+				696EEA4B1EEF1E3A00255BED /* Info */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
-				13B07FB61A68108700A75B9A /* Release-Info.plist */,
-				69FCB0A01EEF188700D5A13B /* Development-Info.plist */,
-				69FCB0A11EEF188700D5A13B /* Staging-Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
+				696EEA521EEF1FBE00255BED /* SantimentMobile-Bridging-Header.h */,
 				64C7B3E11E80244800A92E6E /* Secrets.plist */,
 			);
 			name = SantimentMobile;
@@ -937,6 +937,17 @@
 			path = scripts;
 			sourceTree = "<group>";
 		};
+		696EEA4B1EEF1E3A00255BED /* Info */ = {
+			isa = PBXGroup;
+			children = (
+				696EEA4C1EEF1E3A00255BED /* Development-Info.plist */,
+				696EEA4D1EEF1E3A00255BED /* Release-Info.plist */,
+				696EEA4E1EEF1E3A00255BED /* Staging-Info.plist */,
+			);
+			name = Info;
+			path = SantimentMobile/Info;
+			sourceTree = "<group>";
+		};
 		69FEB1F31EEB5BEE004F1CBA /* ReactNative */ = {
 			isa = PBXGroup;
 			children = (
@@ -1007,7 +1018,6 @@
 				8A8DBC662DB7447EB6D2EDCA /* Resources */,
 				4891F4CD9804C2910A94EEF5 /* Pods */,
 				7BAD646DA09E81CE60AFEB8A /* Frameworks */,
-				647516381EA55693009209F5 /* SantimentMobile-Bridging-Header.h */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -1453,20 +1463,21 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				64C7B3EB1E804CA000A92E6E /* runFabric.sh in Resources */,
-				69FCB0A21EEF188700D5A13B /* Development-Info.plist in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				64C7B3E21E80244800A92E6E /* Secrets.plist in Resources */,
-				69FCB0A31EEF188700D5A13B /* Staging-Info.plist in Resources */,
 				9EAC257911AF4607839018BE /* Entypo.ttf in Resources */,
 				550B6142293442F2A843D18A /* EvilIcons.ttf in Resources */,
+				696EEA511EEF1E3A00255BED /* Staging-Info.plist in Resources */,
 				EA6960A9E24F433F9F17199C /* FontAwesome.ttf in Resources */,
 				64A6D0C2479F4A8289782683 /* Foundation.ttf in Resources */,
 				819F8688F35D4593B41B12D2 /* Ionicons.ttf in Resources */,
 				64C7B3EA1E804CA000A92E6E /* prepareInfoPlist.sh in Resources */,
 				ECAC48855A924BCAA5DE60A9 /* MaterialCommunityIcons.ttf in Resources */,
 				915C4E897F9E4C33A98D1FEA /* MaterialIcons.ttf in Resources */,
+				696EEA4F1EEF1E3A00255BED /* Development-Info.plist in Resources */,
 				41006C3D5D3C4CDC8B07B00F /* Octicons.ttf in Resources */,
 				EAA29584E360415A8408B7E8 /* SimpleLineIcons.ttf in Resources */,
+				696EEA501EEF1E3A00255BED /* Release-Info.plist in Resources */,
 				8172C28F8BFD461CB351D971 /* Zocial.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2034,7 +2045,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 				);
-				INFOPLIST_FILE = "SantimentMobile/Release-Info.plist";
+				INFOPLIST_FILE = "SantimentMobile/Info/Release-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -2045,7 +2056,7 @@
 				PRODUCT_NAME = SantimentMobile;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "SantimentMobile-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "SantimentMobile/SantimentMobile-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -2065,7 +2076,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 				);
-				INFOPLIST_FILE = "SantimentMobile/Release-Info.plist";
+				INFOPLIST_FILE = "SantimentMobile/Info/Release-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -2076,7 +2087,7 @@
 				PRODUCT_NAME = SantimentMobile;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "SantimentMobile-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "SantimentMobile/SantimentMobile-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -2131,7 +2142,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 				);
-				INFOPLIST_FILE = "SantimentMobile/Release-Info.plist";
+				INFOPLIST_FILE = "SantimentMobile/Info/Release-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -2142,7 +2153,7 @@
 				PRODUCT_NAME = SantimentMobile;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "SantimentMobile-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "SantimentMobile/SantimentMobile-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -2181,7 +2192,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 				);
-				INFOPLIST_FILE = "SantimentMobile/Development-Info.plist";
+				INFOPLIST_FILE = "SantimentMobile/Info/Development-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -2192,7 +2203,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "SantimentMobile-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "SantimentMobile/SantimentMobile-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -2212,7 +2223,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 				);
-				INFOPLIST_FILE = "SantimentMobile/Development-Info.plist";
+				INFOPLIST_FILE = "SantimentMobile/Info/Development-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -2223,7 +2234,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "SantimentMobile-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "SantimentMobile/SantimentMobile-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -2242,7 +2253,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 				);
-				INFOPLIST_FILE = "SantimentMobile/Development-Info.plist";
+				INFOPLIST_FILE = "SantimentMobile/Info/Development-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -2253,7 +2264,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "SantimentMobile-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "SantimentMobile/SantimentMobile-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -2273,7 +2284,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 				);
-				INFOPLIST_FILE = "SantimentMobile/Staging-Info.plist";
+				INFOPLIST_FILE = "SantimentMobile/Info/Staging-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -2284,7 +2295,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "SantimentMobile-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "SantimentMobile/SantimentMobile-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -2304,7 +2315,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 				);
-				INFOPLIST_FILE = "SantimentMobile/Staging-Info.plist";
+				INFOPLIST_FILE = "SantimentMobile/Info/Staging-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -2315,7 +2326,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "SantimentMobile-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "SantimentMobile/SantimentMobile-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -2334,7 +2345,7 @@
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 				);
-				INFOPLIST_FILE = "SantimentMobile/Staging-Info.plist";
+				INFOPLIST_FILE = "SantimentMobile/Info/Staging-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -2345,7 +2356,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "SantimentMobile-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "SantimentMobile/SantimentMobile-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
