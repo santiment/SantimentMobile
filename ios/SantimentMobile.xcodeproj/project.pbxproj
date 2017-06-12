@@ -76,6 +76,166 @@
 		64C7B3E21E80244800A92E6E /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 64C7B3E11E80244800A92E6E /* Secrets.plist */; };
 		64C7B3EA1E804CA000A92E6E /* prepareInfoPlist.sh in Resources */ = {isa = PBXBuildFile; fileRef = 64C7B3E81E804CA000A92E6E /* prepareInfoPlist.sh */; };
 		64C7B3EB1E804CA000A92E6E /* runFabric.sh in Resources */ = {isa = PBXBuildFile; fileRef = 64C7B3E91E804CA000A92E6E /* runFabric.sh */; };
+		69FCAFC91EEF162300D5A13B /* RNScatterChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6231EA620130056D3CD /* RNScatterChartView.swift */; };
+		69FCAFCA1EEF162300D5A13B /* RNBarChartViewBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB5F51EA620130056D3CD /* RNBarChartViewBase.swift */; };
+		69FCAFCB1EEF162300D5A13B /* RNHorizontalBarChartManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB5F61EA620130056D3CD /* RNHorizontalBarChartManager.swift */; };
+		69FCAFCC1EEF162300D5A13B /* RNCandleStickChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6021EA620130056D3CD /* RNCandleStickChartView.swift */; };
+		69FCAFCD1EEF162300D5A13B /* RNPieChartManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6121EA620130056D3CD /* RNPieChartManager.swift */; };
+		69FCAFCE1EEF162300D5A13B /* EntryToDictionaryUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6281EA620130056D3CD /* EntryToDictionaryUtils.swift */; };
+		69FCAFCF1EEF162300D5A13B /* RadarDataExtract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6161EA620130056D3CD /* RadarDataExtract.swift */; };
+		69FCAFD01EEF162300D5A13B /* AppConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 69FEB1FB1EEB5F8C004F1CBA /* AppConfiguration.m */; };
+		69FCAFD11EEF162300D5A13B /* BalloonMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB5EF1EA620130056D3CD /* BalloonMarker.swift */; };
+		69FCAFD21EEF162300D5A13B /* BarDataExtract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB5F11EA620130056D3CD /* BarDataExtract.swift */; };
+		69FCAFD31EEF162300D5A13B /* RNHorizontalBarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB5F81EA620130056D3CD /* RNHorizontalBarChartView.swift */; };
+		69FCAFD41EEF162300D5A13B /* ChartDataSetConfigUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6271EA620130056D3CD /* ChartDataSetConfigUtils.swift */; };
+		69FCAFD51EEF162300D5A13B /* RNLineChartManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB60D1EA620130056D3CD /* RNLineChartManager.swift */; };
+		69FCAFD61EEF162300D5A13B /* RNLineChartManagerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 649AB60E1EA620130056D3CD /* RNLineChartManagerBridge.m */; };
+		69FCAFD71EEF162300D5A13B /* RNLineChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB60F1EA620130056D3CD /* RNLineChartView.swift */; };
+		69FCAFD81EEF162300D5A13B /* LargeValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB60A1EA620130056D3CD /* LargeValueFormatter.swift */; };
+		69FCAFD91EEF162300D5A13B /* LineDataExtract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB60C1EA620130056D3CD /* LineDataExtract.swift */; };
+		69FCAFDA1EEF162300D5A13B /* RNPieChartManagerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6131EA620130056D3CD /* RNPieChartManagerBridge.m */; };
+		69FCAFDB1EEF162300D5A13B /* RNBubbleChartManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB5FB1EA620130056D3CD /* RNBubbleChartManager.swift */; };
+		69FCAFDC1EEF162300D5A13B /* RNBarChartManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB5F21EA620130056D3CD /* RNBarChartManager.swift */; };
+		69FCAFDD1EEF162300D5A13B /* RNHorizontalBarChartManagerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 649AB5F71EA620130056D3CD /* RNHorizontalBarChartManagerBridge.m */; };
+		69FCAFDE1EEF162300D5A13B /* RNRadarChartManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6171EA620130056D3CD /* RNRadarChartManager.swift */; };
+		69FCAFDF1EEF162300D5A13B /* BubbleDataExtract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB5FA1EA620130056D3CD /* BubbleDataExtract.swift */; };
+		69FCAFE01EEF162300D5A13B /* RNCombinedChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6071EA620130056D3CD /* RNCombinedChartView.swift */; };
+		69FCAFE11EEF162300D5A13B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
+		69FCAFE21EEF162300D5A13B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		69FCAFE31EEF162300D5A13B /* RNScatterChartManagerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6221EA620130056D3CD /* RNScatterChartManagerBridge.m */; };
+		69FCAFE41EEF162300D5A13B /* RNCandleStickChartManagerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6011EA620130056D3CD /* RNCandleStickChartManagerBridge.m */; };
+		69FCAFE51EEF162300D5A13B /* RNCombinedChartManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6051EA620130056D3CD /* RNCombinedChartManager.swift */; };
+		69FCAFE61EEF162300D5A13B /* RNBubbleChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB5FD1EA620130056D3CD /* RNBubbleChartView.swift */; };
+		69FCAFE71EEF162300D5A13B /* RNCandleStickChartManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6001EA620130056D3CD /* RNCandleStickChartManager.swift */; };
+		69FCAFE81EEF162300D5A13B /* RNScatterChartManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6211EA620130056D3CD /* RNScatterChartManager.swift */; };
+		69FCAFE91EEF162300D5A13B /* RNRadarChartManagerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6181EA620130056D3CD /* RNRadarChartManagerBridge.m */; };
+		69FCAFEA1EEF162300D5A13B /* RNYAxisChartViewBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB61F1EA620130056D3CD /* RNYAxisChartViewBase.swift */; };
+		69FCAFEB1EEF162300D5A13B /* DataExtract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6081EA620130056D3CD /* DataExtract.swift */; };
+		69FCAFEC1EEF162300D5A13B /* RNBarLineChartViewBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB61B1EA620130056D3CD /* RNBarLineChartViewBase.swift */; };
+		69FCAFED1EEF162300D5A13B /* BridgeUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6261EA620130056D3CD /* BridgeUtils.swift */; };
+		69FCAFEE1EEF162300D5A13B /* RNBubbleChartManagerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 649AB5FC1EA620130056D3CD /* RNBubbleChartManagerBridge.m */; };
+		69FCAFEF1EEF162300D5A13B /* PieDataExtract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6111EA620130056D3CD /* PieDataExtract.swift */; };
+		69FCAFF01EEF162300D5A13B /* RNBarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB5F41EA620130056D3CD /* RNBarChartView.swift */; };
+		69FCAFF11EEF162300D5A13B /* RNChartViewBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB61D1EA620130056D3CD /* RNChartViewBase.swift */; };
+		69FCAFF21EEF162300D5A13B /* CandleDataExtract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB5FF1EA620130056D3CD /* CandleDataExtract.swift */; };
+		69FCAFF31EEF162300D5A13B /* CombinedDataExtract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6041EA620130056D3CD /* CombinedDataExtract.swift */; };
+		69FCAFF41EEF162300D5A13B /* RNRadarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6191EA620130056D3CD /* RNRadarChartView.swift */; };
+		69FCAFF51EEF162300D5A13B /* RNCombinedChartManagerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6061EA620130056D3CD /* RNCombinedChartManagerBridge.m */; };
+		69FCAFF61EEF162300D5A13B /* RNPieChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6141EA620130056D3CD /* RNPieChartView.swift */; };
+		69FCAFF71EEF162300D5A13B /* ScatterDataExtract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6241EA620130056D3CD /* ScatterDataExtract.swift */; };
+		69FCAFF81EEF162300D5A13B /* RNBarChartManagerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 649AB5F31EA620130056D3CD /* RNBarChartManagerBridge.m */; };
+		69FCAFFA1EEF162300D5A13B /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
+		69FCAFFB1EEF162300D5A13B /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
+		69FCAFFC1EEF162300D5A13B /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
+		69FCAFFD1EEF162300D5A13B /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
+		69FCAFFE1EEF162300D5A13B /* libRCTImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302C01ABCB91800DB3ED1 /* libRCTImage.a */; };
+		69FCAFFF1EEF162300D5A13B /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
+		69FCB0001EEF162300D5A13B /* libRCTNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302DC1ABCB9D200DB3ED1 /* libRCTNetwork.a */; };
+		69FCB0011EEF162300D5A13B /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
+		69FCB0021EEF162300D5A13B /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
+		69FCB0031EEF162300D5A13B /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
+		69FCB0041EEF162300D5A13B /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
+		69FCB0051EEF162300D5A13B /* Pods_SantimentMobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B294135C648167DF53F493E /* Pods_SantimentMobile.framework */; };
+		69FCB0061EEF162300D5A13B /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1E8DBCE781348339DBEC930 /* libRNVectorIcons.a */; };
+		69FCB0071EEF162300D5A13B /* libBugsnagReactNative.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C90B551BDCCE4061BE922936 /* libBugsnagReactNative.a */; };
+		69FCB0081EEF162300D5A13B /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A47BCA2E1904ED2B38E768C /* libz.tbd */; };
+		69FCB0091EEF162300D5A13B /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 724CB7CBF54B4DDCBE1BC983 /* libRNDeviceInfo.a */; };
+		69FCB00B1EEF162300D5A13B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		69FCB00C1EEF162300D5A13B /* runFabric.sh in Resources */ = {isa = PBXBuildFile; fileRef = 64C7B3E91E804CA000A92E6E /* runFabric.sh */; };
+		69FCB00D1EEF162300D5A13B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
+		69FCB00E1EEF162300D5A13B /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 64C7B3E11E80244800A92E6E /* Secrets.plist */; };
+		69FCB00F1EEF162300D5A13B /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F86632F5BA04EBA91A1D410 /* Entypo.ttf */; };
+		69FCB0101EEF162300D5A13B /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B419A077EA01437CA9A6DA20 /* EvilIcons.ttf */; };
+		69FCB0111EEF162300D5A13B /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2047C121E5224DB8BFF50091 /* FontAwesome.ttf */; };
+		69FCB0121EEF162300D5A13B /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 225A8C3F419B40E292B7FF29 /* Foundation.ttf */; };
+		69FCB0131EEF162300D5A13B /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4AC8CBEB9ADB4DA285DB2514 /* Ionicons.ttf */; };
+		69FCB0141EEF162300D5A13B /* prepareInfoPlist.sh in Resources */ = {isa = PBXBuildFile; fileRef = 64C7B3E81E804CA000A92E6E /* prepareInfoPlist.sh */; };
+		69FCB0151EEF162300D5A13B /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 72C07F66842341709B5ED00A /* MaterialCommunityIcons.ttf */; };
+		69FCB0161EEF162300D5A13B /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E82A534A20474BCEBB937DA7 /* MaterialIcons.ttf */; };
+		69FCB0171EEF162300D5A13B /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3C30843F3ABF492D9D9CE0C9 /* Octicons.ttf */; };
+		69FCB0181EEF162300D5A13B /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C88720E42D46410C94372DA3 /* SimpleLineIcons.ttf */; };
+		69FCB0191EEF162300D5A13B /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FB6E983E86A34491BC6745D8 /* Zocial.ttf */; };
+		69FCB0441EEF166600D5A13B /* RNScatterChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6231EA620130056D3CD /* RNScatterChartView.swift */; };
+		69FCB0451EEF166600D5A13B /* RNBarChartViewBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB5F51EA620130056D3CD /* RNBarChartViewBase.swift */; };
+		69FCB0461EEF166600D5A13B /* RNHorizontalBarChartManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB5F61EA620130056D3CD /* RNHorizontalBarChartManager.swift */; };
+		69FCB0471EEF166600D5A13B /* RNCandleStickChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6021EA620130056D3CD /* RNCandleStickChartView.swift */; };
+		69FCB0481EEF166600D5A13B /* RNPieChartManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6121EA620130056D3CD /* RNPieChartManager.swift */; };
+		69FCB0491EEF166600D5A13B /* EntryToDictionaryUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6281EA620130056D3CD /* EntryToDictionaryUtils.swift */; };
+		69FCB04A1EEF166600D5A13B /* RadarDataExtract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6161EA620130056D3CD /* RadarDataExtract.swift */; };
+		69FCB04B1EEF166600D5A13B /* AppConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 69FEB1FB1EEB5F8C004F1CBA /* AppConfiguration.m */; };
+		69FCB04C1EEF166600D5A13B /* BalloonMarker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB5EF1EA620130056D3CD /* BalloonMarker.swift */; };
+		69FCB04D1EEF166600D5A13B /* BarDataExtract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB5F11EA620130056D3CD /* BarDataExtract.swift */; };
+		69FCB04E1EEF166600D5A13B /* RNHorizontalBarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB5F81EA620130056D3CD /* RNHorizontalBarChartView.swift */; };
+		69FCB04F1EEF166600D5A13B /* ChartDataSetConfigUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6271EA620130056D3CD /* ChartDataSetConfigUtils.swift */; };
+		69FCB0501EEF166600D5A13B /* RNLineChartManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB60D1EA620130056D3CD /* RNLineChartManager.swift */; };
+		69FCB0511EEF166600D5A13B /* RNLineChartManagerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 649AB60E1EA620130056D3CD /* RNLineChartManagerBridge.m */; };
+		69FCB0521EEF166600D5A13B /* RNLineChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB60F1EA620130056D3CD /* RNLineChartView.swift */; };
+		69FCB0531EEF166600D5A13B /* LargeValueFormatter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB60A1EA620130056D3CD /* LargeValueFormatter.swift */; };
+		69FCB0541EEF166600D5A13B /* LineDataExtract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB60C1EA620130056D3CD /* LineDataExtract.swift */; };
+		69FCB0551EEF166600D5A13B /* RNPieChartManagerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6131EA620130056D3CD /* RNPieChartManagerBridge.m */; };
+		69FCB0561EEF166600D5A13B /* RNBubbleChartManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB5FB1EA620130056D3CD /* RNBubbleChartManager.swift */; };
+		69FCB0571EEF166600D5A13B /* RNBarChartManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB5F21EA620130056D3CD /* RNBarChartManager.swift */; };
+		69FCB0581EEF166600D5A13B /* RNHorizontalBarChartManagerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 649AB5F71EA620130056D3CD /* RNHorizontalBarChartManagerBridge.m */; };
+		69FCB0591EEF166600D5A13B /* RNRadarChartManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6171EA620130056D3CD /* RNRadarChartManager.swift */; };
+		69FCB05A1EEF166600D5A13B /* BubbleDataExtract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB5FA1EA620130056D3CD /* BubbleDataExtract.swift */; };
+		69FCB05B1EEF166600D5A13B /* RNCombinedChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6071EA620130056D3CD /* RNCombinedChartView.swift */; };
+		69FCB05C1EEF166600D5A13B /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.m */; };
+		69FCB05D1EEF166600D5A13B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		69FCB05E1EEF166600D5A13B /* RNScatterChartManagerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6221EA620130056D3CD /* RNScatterChartManagerBridge.m */; };
+		69FCB05F1EEF166600D5A13B /* RNCandleStickChartManagerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6011EA620130056D3CD /* RNCandleStickChartManagerBridge.m */; };
+		69FCB0601EEF166600D5A13B /* RNCombinedChartManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6051EA620130056D3CD /* RNCombinedChartManager.swift */; };
+		69FCB0611EEF166600D5A13B /* RNBubbleChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB5FD1EA620130056D3CD /* RNBubbleChartView.swift */; };
+		69FCB0621EEF166600D5A13B /* RNCandleStickChartManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6001EA620130056D3CD /* RNCandleStickChartManager.swift */; };
+		69FCB0631EEF166600D5A13B /* RNScatterChartManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6211EA620130056D3CD /* RNScatterChartManager.swift */; };
+		69FCB0641EEF166600D5A13B /* RNRadarChartManagerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6181EA620130056D3CD /* RNRadarChartManagerBridge.m */; };
+		69FCB0651EEF166600D5A13B /* RNYAxisChartViewBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB61F1EA620130056D3CD /* RNYAxisChartViewBase.swift */; };
+		69FCB0661EEF166600D5A13B /* DataExtract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6081EA620130056D3CD /* DataExtract.swift */; };
+		69FCB0671EEF166600D5A13B /* RNBarLineChartViewBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB61B1EA620130056D3CD /* RNBarLineChartViewBase.swift */; };
+		69FCB0681EEF166600D5A13B /* BridgeUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6261EA620130056D3CD /* BridgeUtils.swift */; };
+		69FCB0691EEF166600D5A13B /* RNBubbleChartManagerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 649AB5FC1EA620130056D3CD /* RNBubbleChartManagerBridge.m */; };
+		69FCB06A1EEF166600D5A13B /* PieDataExtract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6111EA620130056D3CD /* PieDataExtract.swift */; };
+		69FCB06B1EEF166600D5A13B /* RNBarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB5F41EA620130056D3CD /* RNBarChartView.swift */; };
+		69FCB06C1EEF166600D5A13B /* RNChartViewBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB61D1EA620130056D3CD /* RNChartViewBase.swift */; };
+		69FCB06D1EEF166600D5A13B /* CandleDataExtract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB5FF1EA620130056D3CD /* CandleDataExtract.swift */; };
+		69FCB06E1EEF166600D5A13B /* CombinedDataExtract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6041EA620130056D3CD /* CombinedDataExtract.swift */; };
+		69FCB06F1EEF166600D5A13B /* RNRadarChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6191EA620130056D3CD /* RNRadarChartView.swift */; };
+		69FCB0701EEF166600D5A13B /* RNCombinedChartManagerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6061EA620130056D3CD /* RNCombinedChartManagerBridge.m */; };
+		69FCB0711EEF166600D5A13B /* RNPieChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6141EA620130056D3CD /* RNPieChartView.swift */; };
+		69FCB0721EEF166600D5A13B /* ScatterDataExtract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6241EA620130056D3CD /* ScatterDataExtract.swift */; };
+		69FCB0731EEF166600D5A13B /* RNBarChartManagerBridge.m in Sources */ = {isa = PBXBuildFile; fileRef = 649AB5F31EA620130056D3CD /* RNBarChartManagerBridge.m */; };
+		69FCB0751EEF166600D5A13B /* libRCTAnimation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 5E9157331DD0AC6500FF2AA8 /* libRCTAnimation.a */; };
+		69FCB0761EEF166600D5A13B /* libReact.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 146834041AC3E56700842450 /* libReact.a */; };
+		69FCB0771EEF166600D5A13B /* libRCTActionSheet.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302AC1ABCB8CE00DB3ED1 /* libRCTActionSheet.a */; };
+		69FCB0781EEF166600D5A13B /* libRCTGeolocation.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302BA1ABCB90400DB3ED1 /* libRCTGeolocation.a */; };
+		69FCB0791EEF166600D5A13B /* libRCTImage.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302C01ABCB91800DB3ED1 /* libRCTImage.a */; };
+		69FCB07A1EEF166600D5A13B /* libRCTLinking.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 78C398B91ACF4ADC00677621 /* libRCTLinking.a */; };
+		69FCB07B1EEF166600D5A13B /* libRCTNetwork.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302DC1ABCB9D200DB3ED1 /* libRCTNetwork.a */; };
+		69FCB07C1EEF166600D5A13B /* libRCTSettings.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139105C11AF99BAD00B5F7CC /* libRCTSettings.a */; };
+		69FCB07D1EEF166600D5A13B /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
+		69FCB07E1EEF166600D5A13B /* libRCTVibration.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 00C302E41ABCB9EE00DB3ED1 /* libRCTVibration.a */; };
+		69FCB07F1EEF166600D5A13B /* libRCTWebSocket.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 139FDEF41B06529B00C62182 /* libRCTWebSocket.a */; };
+		69FCB0801EEF166600D5A13B /* Pods_SantimentMobile.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 0B294135C648167DF53F493E /* Pods_SantimentMobile.framework */; };
+		69FCB0811EEF166600D5A13B /* libRNVectorIcons.a in Frameworks */ = {isa = PBXBuildFile; fileRef = E1E8DBCE781348339DBEC930 /* libRNVectorIcons.a */; };
+		69FCB0821EEF166600D5A13B /* libBugsnagReactNative.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C90B551BDCCE4061BE922936 /* libBugsnagReactNative.a */; };
+		69FCB0831EEF166600D5A13B /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A47BCA2E1904ED2B38E768C /* libz.tbd */; };
+		69FCB0841EEF166600D5A13B /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 724CB7CBF54B4DDCBE1BC983 /* libRNDeviceInfo.a */; };
+		69FCB0861EEF166600D5A13B /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
+		69FCB0871EEF166600D5A13B /* runFabric.sh in Resources */ = {isa = PBXBuildFile; fileRef = 64C7B3E91E804CA000A92E6E /* runFabric.sh */; };
+		69FCB0881EEF166600D5A13B /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB11A68108700A75B9A /* LaunchScreen.xib */; };
+		69FCB0891EEF166600D5A13B /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 64C7B3E11E80244800A92E6E /* Secrets.plist */; };
+		69FCB08A1EEF166600D5A13B /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F86632F5BA04EBA91A1D410 /* Entypo.ttf */; };
+		69FCB08B1EEF166600D5A13B /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B419A077EA01437CA9A6DA20 /* EvilIcons.ttf */; };
+		69FCB08C1EEF166600D5A13B /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2047C121E5224DB8BFF50091 /* FontAwesome.ttf */; };
+		69FCB08D1EEF166600D5A13B /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 225A8C3F419B40E292B7FF29 /* Foundation.ttf */; };
+		69FCB08E1EEF166600D5A13B /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4AC8CBEB9ADB4DA285DB2514 /* Ionicons.ttf */; };
+		69FCB08F1EEF166600D5A13B /* prepareInfoPlist.sh in Resources */ = {isa = PBXBuildFile; fileRef = 64C7B3E81E804CA000A92E6E /* prepareInfoPlist.sh */; };
+		69FCB0901EEF166600D5A13B /* MaterialCommunityIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 72C07F66842341709B5ED00A /* MaterialCommunityIcons.ttf */; };
+		69FCB0911EEF166600D5A13B /* MaterialIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E82A534A20474BCEBB937DA7 /* MaterialIcons.ttf */; };
+		69FCB0921EEF166600D5A13B /* Octicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 3C30843F3ABF492D9D9CE0C9 /* Octicons.ttf */; };
+		69FCB0931EEF166600D5A13B /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C88720E42D46410C94372DA3 /* SimpleLineIcons.ttf */; };
+		69FCB0941EEF166600D5A13B /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FB6E983E86A34491BC6745D8 /* Zocial.ttf */; };
+		69FCB0A21EEF188700D5A13B /* Development-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 69FCB0A01EEF188700D5A13B /* Development-Info.plist */; };
+		69FCB0A31EEF188700D5A13B /* Staging-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 69FCB0A11EEF188700D5A13B /* Staging-Info.plist */; };
 		69FEB1FC1EEB5F8C004F1CBA /* AppConfiguration.m in Sources */ = {isa = PBXBuildFile; fileRef = 69FEB1FB1EEB5F8C004F1CBA /* AppConfiguration.m */; };
 		8172C28F8BFD461CB351D971 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FB6E983E86A34491BC6745D8 /* Zocial.ttf */; };
 		819F8688F35D4593B41B12D2 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4AC8CBEB9ADB4DA285DB2514 /* Ionicons.ttf */; };
@@ -315,7 +475,7 @@
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = SantimentMobile/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
 		13B07FB51A68108700A75B9A /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; name = Images.xcassets; path = SantimentMobile/Images.xcassets; sourceTree = "<group>"; };
-		13B07FB61A68108700A75B9A /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = SantimentMobile/Info.plist; sourceTree = "<group>"; };
+		13B07FB61A68108700A75B9A /* Release-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Release-Info.plist"; path = "SantimentMobile/Release-Info.plist"; sourceTree = "<group>"; };
 		13B07FB71A68108700A75B9A /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = main.m; path = SantimentMobile/main.m; sourceTree = "<group>"; };
 		146833FF1AC3E56700842450 /* React.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = React.xcodeproj; path = "../node_modules/react-native/React/React.xcodeproj"; sourceTree = "<group>"; };
 		15DA26DDAF661E70A1B101A7 /* Pods-SantimentMobile.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SantimentMobile.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SantimentMobile/Pods-SantimentMobile.debug.xcconfig"; sourceTree = "<group>"; };
@@ -377,6 +537,10 @@
 		64C7B3E11E80244800A92E6E /* Secrets.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Secrets.plist; sourceTree = "<group>"; };
 		64C7B3E81E804CA000A92E6E /* prepareInfoPlist.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = prepareInfoPlist.sh; sourceTree = "<group>"; };
 		64C7B3E91E804CA000A92E6E /* runFabric.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = runFabric.sh; sourceTree = "<group>"; };
+		69FCB0231EEF162300D5A13B /* SantimentMobile Development.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SantimentMobile Development.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		69FCB09E1EEF166600D5A13B /* SantimentMobile Staging.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SantimentMobile Staging.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		69FCB0A01EEF188700D5A13B /* Development-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Development-Info.plist"; path = "SantimentMobile/Development-Info.plist"; sourceTree = "<group>"; };
+		69FCB0A11EEF188700D5A13B /* Staging-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "Staging-Info.plist"; path = "SantimentMobile/Staging-Info.plist"; sourceTree = "<group>"; };
 		69FEB1FA1EEB5F8C004F1CBA /* AppConfiguration.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AppConfiguration.h; sourceTree = "<group>"; };
 		69FEB1FB1EEB5F8C004F1CBA /* AppConfiguration.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AppConfiguration.m; sourceTree = "<group>"; };
 		6CE9B98EAC594496B6B95A43 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
@@ -424,6 +588,52 @@
 				D837C65BCF2F4863A387311C /* libBugsnagReactNative.a in Frameworks */,
 				DF542C6A7B1A4BD697AECDCB /* libz.tbd in Frameworks */,
 				E1876C82AFC1458F9FDBE7C1 /* libRNDeviceInfo.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		69FCAFF91EEF162300D5A13B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				69FCAFFA1EEF162300D5A13B /* libRCTAnimation.a in Frameworks */,
+				69FCAFFB1EEF162300D5A13B /* libReact.a in Frameworks */,
+				69FCAFFC1EEF162300D5A13B /* libRCTActionSheet.a in Frameworks */,
+				69FCAFFD1EEF162300D5A13B /* libRCTGeolocation.a in Frameworks */,
+				69FCAFFE1EEF162300D5A13B /* libRCTImage.a in Frameworks */,
+				69FCAFFF1EEF162300D5A13B /* libRCTLinking.a in Frameworks */,
+				69FCB0001EEF162300D5A13B /* libRCTNetwork.a in Frameworks */,
+				69FCB0011EEF162300D5A13B /* libRCTSettings.a in Frameworks */,
+				69FCB0021EEF162300D5A13B /* libRCTText.a in Frameworks */,
+				69FCB0031EEF162300D5A13B /* libRCTVibration.a in Frameworks */,
+				69FCB0041EEF162300D5A13B /* libRCTWebSocket.a in Frameworks */,
+				69FCB0051EEF162300D5A13B /* Pods_SantimentMobile.framework in Frameworks */,
+				69FCB0061EEF162300D5A13B /* libRNVectorIcons.a in Frameworks */,
+				69FCB0071EEF162300D5A13B /* libBugsnagReactNative.a in Frameworks */,
+				69FCB0081EEF162300D5A13B /* libz.tbd in Frameworks */,
+				69FCB0091EEF162300D5A13B /* libRNDeviceInfo.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		69FCB0741EEF166600D5A13B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				69FCB0751EEF166600D5A13B /* libRCTAnimation.a in Frameworks */,
+				69FCB0761EEF166600D5A13B /* libReact.a in Frameworks */,
+				69FCB0771EEF166600D5A13B /* libRCTActionSheet.a in Frameworks */,
+				69FCB0781EEF166600D5A13B /* libRCTGeolocation.a in Frameworks */,
+				69FCB0791EEF166600D5A13B /* libRCTImage.a in Frameworks */,
+				69FCB07A1EEF166600D5A13B /* libRCTLinking.a in Frameworks */,
+				69FCB07B1EEF166600D5A13B /* libRCTNetwork.a in Frameworks */,
+				69FCB07C1EEF166600D5A13B /* libRCTSettings.a in Frameworks */,
+				69FCB07D1EEF166600D5A13B /* libRCTText.a in Frameworks */,
+				69FCB07E1EEF166600D5A13B /* libRCTVibration.a in Frameworks */,
+				69FCB07F1EEF166600D5A13B /* libRCTWebSocket.a in Frameworks */,
+				69FCB0801EEF166600D5A13B /* Pods_SantimentMobile.framework in Frameworks */,
+				69FCB0811EEF166600D5A13B /* libRNVectorIcons.a in Frameworks */,
+				69FCB0821EEF166600D5A13B /* libBugsnagReactNative.a in Frameworks */,
+				69FCB0831EEF166600D5A13B /* libz.tbd in Frameworks */,
+				69FCB0841EEF166600D5A13B /* libRNDeviceInfo.a in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -515,7 +725,9 @@
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
-				13B07FB61A68108700A75B9A /* Info.plist */,
+				13B07FB61A68108700A75B9A /* Release-Info.plist */,
+				69FCB0A01EEF188700D5A13B /* Development-Info.plist */,
+				69FCB0A11EEF188700D5A13B /* Staging-Info.plist */,
 				13B07FB11A68108700A75B9A /* LaunchScreen.xib */,
 				13B07FB71A68108700A75B9A /* main.m */,
 				64C7B3E11E80244800A92E6E /* Secrets.plist */,
@@ -806,6 +1018,8 @@
 			children = (
 				13B07F961A680F5B00A75B9A /* SantimentMobile.app */,
 				00E356EE1AD99517003FC87E /* SantimentMobileTests.xctest */,
+				69FCB0231EEF162300D5A13B /* SantimentMobile Development.app */,
+				69FCB09E1EEF166600D5A13B /* SantimentMobile Staging.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -871,6 +1085,52 @@
 			productReference = 13B07F961A680F5B00A75B9A /* SantimentMobile.app */;
 			productType = "com.apple.product-type.application";
 		};
+		69FCAFC61EEF162300D5A13B /* SantimentMobile Development */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 69FCB01F1EEF162300D5A13B /* Build configuration list for PBXNativeTarget "SantimentMobile Development" */;
+			buildPhases = (
+				69FCAFC71EEF162300D5A13B /* [CP] Check Pods Manifest.lock */,
+				69FCAFC81EEF162300D5A13B /* Sources */,
+				69FCAFF91EEF162300D5A13B /* Frameworks */,
+				69FCB00A1EEF162300D5A13B /* Resources */,
+				69FCB01A1EEF162300D5A13B /* Bundle React Native code and images */,
+				69FCB01B1EEF162300D5A13B /* [CP] Embed Pods Frameworks */,
+				69FCB01C1EEF162300D5A13B /* [CP] Copy Pods Resources */,
+				69FCB01D1EEF162300D5A13B /* Run Prepare Script */,
+				69FCB01E1EEF162300D5A13B /* Run Fabric Script */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "SantimentMobile Development";
+			productName = "Hello World";
+			productReference = 69FCB0231EEF162300D5A13B /* SantimentMobile Development.app */;
+			productType = "com.apple.product-type.application";
+		};
+		69FCB0411EEF166600D5A13B /* SantimentMobile Staging */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 69FCB09A1EEF166600D5A13B /* Build configuration list for PBXNativeTarget "SantimentMobile Staging" */;
+			buildPhases = (
+				69FCB0421EEF166600D5A13B /* [CP] Check Pods Manifest.lock */,
+				69FCB0431EEF166600D5A13B /* Sources */,
+				69FCB0741EEF166600D5A13B /* Frameworks */,
+				69FCB0851EEF166600D5A13B /* Resources */,
+				69FCB0951EEF166600D5A13B /* Bundle React Native code and images */,
+				69FCB0961EEF166600D5A13B /* [CP] Embed Pods Frameworks */,
+				69FCB0971EEF166600D5A13B /* [CP] Copy Pods Resources */,
+				69FCB0981EEF166600D5A13B /* Run Prepare Script */,
+				69FCB0991EEF166600D5A13B /* Run Fabric Script */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "SantimentMobile Staging";
+			productName = "Hello World";
+			productReference = 69FCB09E1EEF166600D5A13B /* SantimentMobile Staging.app */;
+			productType = "com.apple.product-type.application";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -889,7 +1149,15 @@
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = MWNATH4NEC;
 						LastSwiftMigration = 0830;
-						ProvisioningStyle = Manual;
+						ProvisioningStyle = Automatic;
+					};
+					69FCAFC61EEF162300D5A13B = {
+						DevelopmentTeam = MWNATH4NEC;
+						ProvisioningStyle = Automatic;
+					};
+					69FCB0411EEF166600D5A13B = {
+						DevelopmentTeam = MWNATH4NEC;
+						ProvisioningStyle = Automatic;
 					};
 				};
 			};
@@ -966,6 +1234,8 @@
 			targets = (
 				13B07F861A680F5B00A75B9A /* SantimentMobile */,
 				00E356ED1AD99517003FC87E /* SantimentMobileTests */,
+				69FCAFC61EEF162300D5A13B /* SantimentMobile Development */,
+				69FCB0411EEF166600D5A13B /* SantimentMobile Staging */,
 			);
 		};
 /* End PBXProject section */
@@ -1183,8 +1453,10 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				64C7B3EB1E804CA000A92E6E /* runFabric.sh in Resources */,
+				69FCB0A21EEF188700D5A13B /* Development-Info.plist in Resources */,
 				13B07FBD1A68108700A75B9A /* LaunchScreen.xib in Resources */,
 				64C7B3E21E80244800A92E6E /* Secrets.plist in Resources */,
+				69FCB0A31EEF188700D5A13B /* Staging-Info.plist in Resources */,
 				9EAC257911AF4607839018BE /* Entypo.ttf in Resources */,
 				550B6142293442F2A843D18A /* EvilIcons.ttf in Resources */,
 				EA6960A9E24F433F9F17199C /* FontAwesome.ttf in Resources */,
@@ -1196,6 +1468,50 @@
 				41006C3D5D3C4CDC8B07B00F /* Octicons.ttf in Resources */,
 				EAA29584E360415A8408B7E8 /* SimpleLineIcons.ttf in Resources */,
 				8172C28F8BFD461CB351D971 /* Zocial.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		69FCB00A1EEF162300D5A13B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				69FCB00B1EEF162300D5A13B /* Images.xcassets in Resources */,
+				69FCB00C1EEF162300D5A13B /* runFabric.sh in Resources */,
+				69FCB00D1EEF162300D5A13B /* LaunchScreen.xib in Resources */,
+				69FCB00E1EEF162300D5A13B /* Secrets.plist in Resources */,
+				69FCB00F1EEF162300D5A13B /* Entypo.ttf in Resources */,
+				69FCB0101EEF162300D5A13B /* EvilIcons.ttf in Resources */,
+				69FCB0111EEF162300D5A13B /* FontAwesome.ttf in Resources */,
+				69FCB0121EEF162300D5A13B /* Foundation.ttf in Resources */,
+				69FCB0131EEF162300D5A13B /* Ionicons.ttf in Resources */,
+				69FCB0141EEF162300D5A13B /* prepareInfoPlist.sh in Resources */,
+				69FCB0151EEF162300D5A13B /* MaterialCommunityIcons.ttf in Resources */,
+				69FCB0161EEF162300D5A13B /* MaterialIcons.ttf in Resources */,
+				69FCB0171EEF162300D5A13B /* Octicons.ttf in Resources */,
+				69FCB0181EEF162300D5A13B /* SimpleLineIcons.ttf in Resources */,
+				69FCB0191EEF162300D5A13B /* Zocial.ttf in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		69FCB0851EEF166600D5A13B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				69FCB0861EEF166600D5A13B /* Images.xcassets in Resources */,
+				69FCB0871EEF166600D5A13B /* runFabric.sh in Resources */,
+				69FCB0881EEF166600D5A13B /* LaunchScreen.xib in Resources */,
+				69FCB0891EEF166600D5A13B /* Secrets.plist in Resources */,
+				69FCB08A1EEF166600D5A13B /* Entypo.ttf in Resources */,
+				69FCB08B1EEF166600D5A13B /* EvilIcons.ttf in Resources */,
+				69FCB08C1EEF166600D5A13B /* FontAwesome.ttf in Resources */,
+				69FCB08D1EEF166600D5A13B /* Foundation.ttf in Resources */,
+				69FCB08E1EEF166600D5A13B /* Ionicons.ttf in Resources */,
+				69FCB08F1EEF166600D5A13B /* prepareInfoPlist.sh in Resources */,
+				69FCB0901EEF166600D5A13B /* MaterialCommunityIcons.ttf in Resources */,
+				69FCB0911EEF166600D5A13B /* MaterialIcons.ttf in Resources */,
+				69FCB0921EEF166600D5A13B /* Octicons.ttf in Resources */,
+				69FCB0931EEF166600D5A13B /* SimpleLineIcons.ttf in Resources */,
+				69FCB0941EEF166600D5A13B /* Zocial.ttf in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1258,6 +1574,180 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = ". \"${SRCROOT}/scripts/prepareInfoPlist.sh\"";
+		};
+		69FCAFC71EEF162300D5A13B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		69FCB01A1EEF162300D5A13B /* Bundle React Native code and images */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Bundle React Native code and images";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/packager/react-native-xcode.sh";
+		};
+		69FCB01B1EEF162300D5A13B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SantimentMobile/Pods-SantimentMobile-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		69FCB01C1EEF162300D5A13B /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SantimentMobile/Pods-SantimentMobile-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		69FCB01D1EEF162300D5A13B /* Run Prepare Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run Prepare Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = ". \"${SRCROOT}/scripts/prepareInfoPlist.sh\"";
+		};
+		69FCB01E1EEF162300D5A13B /* Run Fabric Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run Fabric Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = ". \"${SRCROOT}/scripts/runFabric.sh\"";
+		};
+		69FCB0421EEF166600D5A13B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		69FCB0951EEF166600D5A13B /* Bundle React Native code and images */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Bundle React Native code and images";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "export NODE_BINARY=node\n../node_modules/react-native/packager/react-native-xcode.sh";
+		};
+		69FCB0961EEF166600D5A13B /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SantimentMobile/Pods-SantimentMobile-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		69FCB0971EEF166600D5A13B /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SantimentMobile/Pods-SantimentMobile-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		69FCB0981EEF166600D5A13B /* Run Prepare Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run Prepare Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = ". \"${SRCROOT}/scripts/prepareInfoPlist.sh\"";
+		};
+		69FCB0991EEF166600D5A13B /* Run Fabric Script */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Run Fabric Script";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = ". \"${SRCROOT}/scripts/runFabric.sh\"";
 		};
 		DCED6A8DC9203F7DB6DF8BE4 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -1355,6 +1845,116 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		69FCAFC81EEF162300D5A13B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				69FCAFC91EEF162300D5A13B /* RNScatterChartView.swift in Sources */,
+				69FCAFCA1EEF162300D5A13B /* RNBarChartViewBase.swift in Sources */,
+				69FCAFCB1EEF162300D5A13B /* RNHorizontalBarChartManager.swift in Sources */,
+				69FCAFCC1EEF162300D5A13B /* RNCandleStickChartView.swift in Sources */,
+				69FCAFCD1EEF162300D5A13B /* RNPieChartManager.swift in Sources */,
+				69FCAFCE1EEF162300D5A13B /* EntryToDictionaryUtils.swift in Sources */,
+				69FCAFCF1EEF162300D5A13B /* RadarDataExtract.swift in Sources */,
+				69FCAFD01EEF162300D5A13B /* AppConfiguration.m in Sources */,
+				69FCAFD11EEF162300D5A13B /* BalloonMarker.swift in Sources */,
+				69FCAFD21EEF162300D5A13B /* BarDataExtract.swift in Sources */,
+				69FCAFD31EEF162300D5A13B /* RNHorizontalBarChartView.swift in Sources */,
+				69FCAFD41EEF162300D5A13B /* ChartDataSetConfigUtils.swift in Sources */,
+				69FCAFD51EEF162300D5A13B /* RNLineChartManager.swift in Sources */,
+				69FCAFD61EEF162300D5A13B /* RNLineChartManagerBridge.m in Sources */,
+				69FCAFD71EEF162300D5A13B /* RNLineChartView.swift in Sources */,
+				69FCAFD81EEF162300D5A13B /* LargeValueFormatter.swift in Sources */,
+				69FCAFD91EEF162300D5A13B /* LineDataExtract.swift in Sources */,
+				69FCAFDA1EEF162300D5A13B /* RNPieChartManagerBridge.m in Sources */,
+				69FCAFDB1EEF162300D5A13B /* RNBubbleChartManager.swift in Sources */,
+				69FCAFDC1EEF162300D5A13B /* RNBarChartManager.swift in Sources */,
+				69FCAFDD1EEF162300D5A13B /* RNHorizontalBarChartManagerBridge.m in Sources */,
+				69FCAFDE1EEF162300D5A13B /* RNRadarChartManager.swift in Sources */,
+				69FCAFDF1EEF162300D5A13B /* BubbleDataExtract.swift in Sources */,
+				69FCAFE01EEF162300D5A13B /* RNCombinedChartView.swift in Sources */,
+				69FCAFE11EEF162300D5A13B /* AppDelegate.m in Sources */,
+				69FCAFE21EEF162300D5A13B /* main.m in Sources */,
+				69FCAFE31EEF162300D5A13B /* RNScatterChartManagerBridge.m in Sources */,
+				69FCAFE41EEF162300D5A13B /* RNCandleStickChartManagerBridge.m in Sources */,
+				69FCAFE51EEF162300D5A13B /* RNCombinedChartManager.swift in Sources */,
+				69FCAFE61EEF162300D5A13B /* RNBubbleChartView.swift in Sources */,
+				69FCAFE71EEF162300D5A13B /* RNCandleStickChartManager.swift in Sources */,
+				69FCAFE81EEF162300D5A13B /* RNScatterChartManager.swift in Sources */,
+				69FCAFE91EEF162300D5A13B /* RNRadarChartManagerBridge.m in Sources */,
+				69FCAFEA1EEF162300D5A13B /* RNYAxisChartViewBase.swift in Sources */,
+				69FCAFEB1EEF162300D5A13B /* DataExtract.swift in Sources */,
+				69FCAFEC1EEF162300D5A13B /* RNBarLineChartViewBase.swift in Sources */,
+				69FCAFED1EEF162300D5A13B /* BridgeUtils.swift in Sources */,
+				69FCAFEE1EEF162300D5A13B /* RNBubbleChartManagerBridge.m in Sources */,
+				69FCAFEF1EEF162300D5A13B /* PieDataExtract.swift in Sources */,
+				69FCAFF01EEF162300D5A13B /* RNBarChartView.swift in Sources */,
+				69FCAFF11EEF162300D5A13B /* RNChartViewBase.swift in Sources */,
+				69FCAFF21EEF162300D5A13B /* CandleDataExtract.swift in Sources */,
+				69FCAFF31EEF162300D5A13B /* CombinedDataExtract.swift in Sources */,
+				69FCAFF41EEF162300D5A13B /* RNRadarChartView.swift in Sources */,
+				69FCAFF51EEF162300D5A13B /* RNCombinedChartManagerBridge.m in Sources */,
+				69FCAFF61EEF162300D5A13B /* RNPieChartView.swift in Sources */,
+				69FCAFF71EEF162300D5A13B /* ScatterDataExtract.swift in Sources */,
+				69FCAFF81EEF162300D5A13B /* RNBarChartManagerBridge.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		69FCB0431EEF166600D5A13B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				69FCB0441EEF166600D5A13B /* RNScatterChartView.swift in Sources */,
+				69FCB0451EEF166600D5A13B /* RNBarChartViewBase.swift in Sources */,
+				69FCB0461EEF166600D5A13B /* RNHorizontalBarChartManager.swift in Sources */,
+				69FCB0471EEF166600D5A13B /* RNCandleStickChartView.swift in Sources */,
+				69FCB0481EEF166600D5A13B /* RNPieChartManager.swift in Sources */,
+				69FCB0491EEF166600D5A13B /* EntryToDictionaryUtils.swift in Sources */,
+				69FCB04A1EEF166600D5A13B /* RadarDataExtract.swift in Sources */,
+				69FCB04B1EEF166600D5A13B /* AppConfiguration.m in Sources */,
+				69FCB04C1EEF166600D5A13B /* BalloonMarker.swift in Sources */,
+				69FCB04D1EEF166600D5A13B /* BarDataExtract.swift in Sources */,
+				69FCB04E1EEF166600D5A13B /* RNHorizontalBarChartView.swift in Sources */,
+				69FCB04F1EEF166600D5A13B /* ChartDataSetConfigUtils.swift in Sources */,
+				69FCB0501EEF166600D5A13B /* RNLineChartManager.swift in Sources */,
+				69FCB0511EEF166600D5A13B /* RNLineChartManagerBridge.m in Sources */,
+				69FCB0521EEF166600D5A13B /* RNLineChartView.swift in Sources */,
+				69FCB0531EEF166600D5A13B /* LargeValueFormatter.swift in Sources */,
+				69FCB0541EEF166600D5A13B /* LineDataExtract.swift in Sources */,
+				69FCB0551EEF166600D5A13B /* RNPieChartManagerBridge.m in Sources */,
+				69FCB0561EEF166600D5A13B /* RNBubbleChartManager.swift in Sources */,
+				69FCB0571EEF166600D5A13B /* RNBarChartManager.swift in Sources */,
+				69FCB0581EEF166600D5A13B /* RNHorizontalBarChartManagerBridge.m in Sources */,
+				69FCB0591EEF166600D5A13B /* RNRadarChartManager.swift in Sources */,
+				69FCB05A1EEF166600D5A13B /* BubbleDataExtract.swift in Sources */,
+				69FCB05B1EEF166600D5A13B /* RNCombinedChartView.swift in Sources */,
+				69FCB05C1EEF166600D5A13B /* AppDelegate.m in Sources */,
+				69FCB05D1EEF166600D5A13B /* main.m in Sources */,
+				69FCB05E1EEF166600D5A13B /* RNScatterChartManagerBridge.m in Sources */,
+				69FCB05F1EEF166600D5A13B /* RNCandleStickChartManagerBridge.m in Sources */,
+				69FCB0601EEF166600D5A13B /* RNCombinedChartManager.swift in Sources */,
+				69FCB0611EEF166600D5A13B /* RNBubbleChartView.swift in Sources */,
+				69FCB0621EEF166600D5A13B /* RNCandleStickChartManager.swift in Sources */,
+				69FCB0631EEF166600D5A13B /* RNScatterChartManager.swift in Sources */,
+				69FCB0641EEF166600D5A13B /* RNRadarChartManagerBridge.m in Sources */,
+				69FCB0651EEF166600D5A13B /* RNYAxisChartViewBase.swift in Sources */,
+				69FCB0661EEF166600D5A13B /* DataExtract.swift in Sources */,
+				69FCB0671EEF166600D5A13B /* RNBarLineChartViewBase.swift in Sources */,
+				69FCB0681EEF166600D5A13B /* BridgeUtils.swift in Sources */,
+				69FCB0691EEF166600D5A13B /* RNBubbleChartManagerBridge.m in Sources */,
+				69FCB06A1EEF166600D5A13B /* PieDataExtract.swift in Sources */,
+				69FCB06B1EEF166600D5A13B /* RNBarChartView.swift in Sources */,
+				69FCB06C1EEF166600D5A13B /* RNChartViewBase.swift in Sources */,
+				69FCB06D1EEF166600D5A13B /* CandleDataExtract.swift in Sources */,
+				69FCB06E1EEF166600D5A13B /* CombinedDataExtract.swift in Sources */,
+				69FCB06F1EEF166600D5A13B /* RNRadarChartView.swift in Sources */,
+				69FCB0701EEF166600D5A13B /* RNCombinedChartManagerBridge.m in Sources */,
+				69FCB0711EEF166600D5A13B /* RNPieChartView.swift in Sources */,
+				69FCB0721EEF166600D5A13B /* ScatterDataExtract.swift in Sources */,
+				69FCB0731EEF166600D5A13B /* RNBarChartManagerBridge.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -1429,12 +2029,12 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 28;
 				DEAD_CODE_STRIPPING = NO;
-				DEVELOPMENT_TEAM = MWNATH4NEC;
+				DEVELOPMENT_TEAM = "";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 				);
-				INFOPLIST_FILE = SantimentMobile/Info.plist;
+				INFOPLIST_FILE = "SantimentMobile/Release-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1443,8 +2043,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = net.santiment.ios;
 				PRODUCT_NAME = SantimentMobile;
-				PROVISIONING_PROFILE = "58242f90-2034-41b3-9d26-b61b4e1d7099";
-				PROVISIONING_PROFILE_SPECIFIER = "Santiment Development";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "SantimentMobile-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
@@ -1460,12 +2060,12 @@
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 28;
-				DEVELOPMENT_TEAM = MWNATH4NEC;
+				DEVELOPMENT_TEAM = "";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 				);
-				INFOPLIST_FILE = SantimentMobile/Info.plist;
+				INFOPLIST_FILE = "SantimentMobile/Release-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1474,8 +2074,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = net.santiment.ios;
 				PRODUCT_NAME = SantimentMobile;
-				PROVISIONING_PROFILE = "58242f90-2034-41b3-9d26-b61b4e1d7099";
-				PROVISIONING_PROFILE_SPECIFIER = "Santiment Development";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "SantimentMobile-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1526,12 +2126,12 @@
 				CLANG_ENABLE_MODULES = YES;
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				CURRENT_PROJECT_VERSION = 28;
-				DEVELOPMENT_TEAM = MWNATH4NEC;
+				DEVELOPMENT_TEAM = "";
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
 				);
-				INFOPLIST_FILE = SantimentMobile/Info.plist;
+				INFOPLIST_FILE = "SantimentMobile/Release-Info.plist";
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1540,8 +2140,8 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = net.santiment.ios;
 				PRODUCT_NAME = SantimentMobile;
-				PROVISIONING_PROFILE = "58242f90-2034-41b3-9d26-b61b4e1d7099";
-				PROVISIONING_PROFILE_SPECIFIER = "Santiment Development";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "SantimentMobile-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1564,6 +2164,190 @@
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/SantimentMobile.app/SantimentMobile";
+			};
+			name = Staging;
+		};
+		69FCB0201EEF162300D5A13B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 15DA26DDAF661E70A1B101A7 /* Pods-SantimentMobile.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 28;
+				DEAD_CODE_STRIPPING = NO;
+				DEVELOPMENT_TEAM = MWNATH4NEC;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
+				);
+				INFOPLIST_FILE = "SantimentMobile/Development-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "net.santiment.ios-dev";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "SantimentMobile-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Debug;
+		};
+		69FCB0211EEF162300D5A13B /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AE576BB8D0B8EF4CCFF3EBA7 /* Pods-SantimentMobile.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 28;
+				DEVELOPMENT_TEAM = MWNATH4NEC;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
+				);
+				INFOPLIST_FILE = "SantimentMobile/Development-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "net.santiment.ios-dev";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "SantimentMobile-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		69FCB0221EEF162300D5A13B /* Staging */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AE576BB8D0B8EF4CCFF3EBA7 /* Pods-SantimentMobile.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 28;
+				DEVELOPMENT_TEAM = MWNATH4NEC;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
+				);
+				INFOPLIST_FILE = "SantimentMobile/Development-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "net.santiment.ios-dev";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "SantimentMobile-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Staging;
+		};
+		69FCB09B1EEF166600D5A13B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 15DA26DDAF661E70A1B101A7 /* Pods-SantimentMobile.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 28;
+				DEAD_CODE_STRIPPING = NO;
+				DEVELOPMENT_TEAM = MWNATH4NEC;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
+				);
+				INFOPLIST_FILE = "SantimentMobile/Staging-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "net.santiment.ios-stg";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "SantimentMobile-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 3.0;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Debug;
+		};
+		69FCB09C1EEF166600D5A13B /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AE576BB8D0B8EF4CCFF3EBA7 /* Pods-SantimentMobile.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 28;
+				DEVELOPMENT_TEAM = MWNATH4NEC;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
+				);
+				INFOPLIST_FILE = "SantimentMobile/Staging-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "net.santiment.ios-stg";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "SantimentMobile-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
+				VERSIONING_SYSTEM = "apple-generic";
+			};
+			name = Release;
+		};
+		69FCB09D1EEF166600D5A13B /* Staging */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = AE576BB8D0B8EF4CCFF3EBA7 /* Pods-SantimentMobile.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				CURRENT_PROJECT_VERSION = 28;
+				DEVELOPMENT_TEAM = MWNATH4NEC;
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
+				);
+				INFOPLIST_FILE = "SantimentMobile/Staging-Info.plist";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				OTHER_LDFLAGS = (
+					"$(inherited)",
+					"-ObjC",
+					"-lc++",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = "net.santiment.ios-stg";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SWIFT_OBJC_BRIDGING_HEADER = "SantimentMobile-Bridging-Header.h";
+				SWIFT_VERSION = 3.0;
+				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Staging;
 		};
@@ -1664,6 +2448,26 @@
 				13B07F941A680F5B00A75B9A /* Debug */,
 				13B07F951A680F5B00A75B9A /* Release */,
 				698778811EE9DF0E00A4BE96 /* Staging */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		69FCB01F1EEF162300D5A13B /* Build configuration list for PBXNativeTarget "SantimentMobile Development" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				69FCB0201EEF162300D5A13B /* Debug */,
+				69FCB0211EEF162300D5A13B /* Release */,
+				69FCB0221EEF162300D5A13B /* Staging */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		69FCB09A1EEF166600D5A13B /* Build configuration list for PBXNativeTarget "SantimentMobile Staging" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				69FCB09B1EEF166600D5A13B /* Debug */,
+				69FCB09C1EEF166600D5A13B /* Release */,
+				69FCB09D1EEF166600D5A13B /* Staging */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
