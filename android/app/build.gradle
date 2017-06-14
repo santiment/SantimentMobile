@@ -196,13 +196,15 @@ android {
     }
 
     productFlavors {
-        debug {
+        development {
             applicationId "net.santiment.android.dev"
         }
+
         staging {
             applicationId "net.santiment.android.stg"
         }
-        release {
+
+        production {
             applicationId "net.santiment.android"
         }
     }
