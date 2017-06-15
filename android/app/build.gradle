@@ -194,6 +194,20 @@ android {
             }
         }
     }
+
+    productFlavors {
+        development {
+            applicationId "net.santiment.android.dev"
+        }
+
+        staging {
+            applicationId "net.santiment.android.stg"
+        }
+
+        production {
+            applicationId "net.santiment.android"
+        }
+    }
 }
 
 dependencies {
