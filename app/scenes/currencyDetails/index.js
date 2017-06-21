@@ -134,17 +134,6 @@ class CurrencyDetails extends React.Component {
                             }}
                         />
                     }
-                    rightButton={
-                        <Icon
-                            containerStyle={styles.navButton}
-                            type="material-community"
-                            name="help"
-                            size={20}
-                            onPress={() => {
-                                store.setInstructionVisible(true);
-                            }}
-                        />
-                    }
                 />
 
                 <ScrollableTabView
