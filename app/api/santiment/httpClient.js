@@ -8,7 +8,7 @@ import moment from 'moment';
 /**
  * Base URL for API endpoints.
  */
-const apiUrl = 'https://87r27zmjyi.execute-api.eu-central-1.amazonaws.com/default';
+const apiUrl = 'https://8dkvc3baml.execute-api.eu-central-1.amazonaws.com/default';
 
 /**
  * Makes asynchronous request for sentiments by user ID.
