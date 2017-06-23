@@ -100,7 +100,7 @@ class Feed extends React.Component {
                     </View>
 
                     <View style={styles.periodColumn}>
-                        <Text style={styles.periodText}>Poloniex</Text>
+                        <Text style={styles.periodText}>BTC-E Trollbox</Text>
                     </View>
                 </View>
 
