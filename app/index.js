@@ -9,6 +9,7 @@ import React from 'react';
 import AppNavigator from './navigator';
 import Store from './store';
 
+// eslint-disable-next-line react/prefer-stateless-function
 class App extends React.PureComponent {
     render() {
         return (
