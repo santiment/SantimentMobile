@@ -22,7 +22,7 @@ local.properties
 ios/build/
 ios/Pods/
 ios/DerivedData/
-ios/._*
+ios/**/._*
 xcuserdata/
 
 *.pbxuser
@@ -62,3 +62,8 @@ playground.js
 
 # Yarn
 yarn-error.log
+
+# Configuration
+app/config/*.env
+ios/Config.plist
+ios/Secrets.plist

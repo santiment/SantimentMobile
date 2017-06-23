@@ -28,6 +28,7 @@
     "react-dom": "^15.4.2",
     "react-native": "0.42.3",
     "react-native-charts-wrapper": "^0.2.10",
+    "react-native-config": "^0.5.0",
     "react-native-device-info": "^0.10.2",
     "react-native-elements": "^0.12.2",
     "react-native-gifted-chat": "^0.1.4",
