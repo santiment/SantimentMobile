@@ -153,7 +153,7 @@
 		6942F6C91F00FF2C00955781 /* SimpleLineIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C88720E42D46410C94372DA3 /* SimpleLineIcons.ttf */; };
 		6942F6CA1F00FF2C00955781 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FB6E983E86A34491BC6745D8 /* Zocial.ttf */; };
 		6942F7051F0101AB00955781 /* Production-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6942F7031F0101AB00955781 /* Production-Info.plist */; };
-		6942F7061F0101AB00955781 /* Staging-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6942F7041F0101AB00955781 /* Staging-Info.plist */; };
+		698AA9611F016F62005E5732 /* Staging-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 6942F7041F0101AB00955781 /* Staging-Info.plist */; };
 		8172C28F8BFD461CB351D971 /* Zocial.ttf in Resources */ = {isa = PBXBuildFile; fileRef = FB6E983E86A34491BC6745D8 /* Zocial.ttf */; };
 		819F8688F35D4593B41B12D2 /* Ionicons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 4AC8CBEB9ADB4DA285DB2514 /* Ionicons.ttf */; };
 		832341BD1AAA6AB300B99B32 /* libRCTText.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 832341B51AAA6A8300B99B32 /* libRCTText.a */; };
@@ -1308,7 +1308,6 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				64C7B3EB1E804CA000A92E6E /* runFabric.sh in Resources */,
-				6942F7061F0101AB00955781 /* Staging-Info.plist in Resources */,
 				64C7B3E21E80244800A92E6E /* Secrets.plist in Resources */,
 				9EAC257911AF4607839018BE /* Entypo.ttf in Resources */,
 				550B6142293442F2A843D18A /* EvilIcons.ttf in Resources */,
@@ -1329,6 +1328,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				698AA9611F016F62005E5732 /* Staging-Info.plist in Resources */,
 				6942F6BD1F00FF2C00955781 /* Images.xcassets in Resources */,
 				6942F6BE1F00FF2C00955781 /* runFabric.sh in Resources */,
 				6942F6BF1F00FF2C00955781 /* Secrets.plist in Resources */,
@@ -1713,7 +1713,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Info/Production-Info.plist";
 				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";
 				INFOPLIST_PREFIX_HEADER = "${BUILD_DIR}/GeneratedInfoPlistDotEnv.h";
-				INFOPLIST_PREPROCESS = NO;
+				INFOPLIST_PREPROCESS = YES;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
@@ -1748,7 +1748,7 @@
 				INFOPLIST_FILE = "$(SRCROOT)/Info/Production-Info.plist";
 				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";
 				INFOPLIST_PREFIX_HEADER = "${BUILD_DIR}/GeneratedInfoPlistDotEnv.h";
-				INFOPLIST_PREPROCESS = NO;
+				INFOPLIST_PREPROCESS = YES;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				OTHER_LDFLAGS = (
 					"$(inherited)",
