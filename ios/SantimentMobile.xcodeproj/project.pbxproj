@@ -72,7 +72,6 @@
 		649AB6541EA620130056D3CD /* ChartDataSetConfigUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6271EA620130056D3CD /* ChartDataSetConfigUtils.swift */; };
 		649AB6551EA620130056D3CD /* EntryToDictionaryUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6281EA620130056D3CD /* EntryToDictionaryUtils.swift */; };
 		64A6D0C2479F4A8289782683 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 225A8C3F419B40E292B7FF29 /* Foundation.ttf */; };
-		64C7B3E21E80244800A92E6E /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 64C7B3E11E80244800A92E6E /* Secrets.plist */; };
 		64C7B3EA1E804CA000A92E6E /* prepareInfoPlist.sh in Resources */ = {isa = PBXBuildFile; fileRef = 64C7B3E81E804CA000A92E6E /* prepareInfoPlist.sh */; };
 		64C7B3EB1E804CA000A92E6E /* runFabric.sh in Resources */ = {isa = PBXBuildFile; fileRef = 64C7B3E91E804CA000A92E6E /* runFabric.sh */; };
 		692F9CA21F02F6250017E070 /* libReactNativeConfig.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 692F9CA11F02F5E50017E070 /* libReactNativeConfig.a */; };
@@ -142,7 +141,6 @@
 		6942F6BB1F00FF2C00955781 /* libRNDeviceInfo.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 724CB7CBF54B4DDCBE1BC983 /* libRNDeviceInfo.a */; };
 		6942F6BD1F00FF2C00955781 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		6942F6BE1F00FF2C00955781 /* runFabric.sh in Resources */ = {isa = PBXBuildFile; fileRef = 64C7B3E91E804CA000A92E6E /* runFabric.sh */; };
-		6942F6BF1F00FF2C00955781 /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 64C7B3E11E80244800A92E6E /* Secrets.plist */; };
 		6942F6C01F00FF2C00955781 /* Entypo.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 9F86632F5BA04EBA91A1D410 /* Entypo.ttf */; };
 		6942F6C11F00FF2C00955781 /* EvilIcons.ttf in Resources */ = {isa = PBXBuildFile; fileRef = B419A077EA01437CA9A6DA20 /* EvilIcons.ttf */; };
 		6942F6C21F00FF2C00955781 /* FontAwesome.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 2047C121E5224DB8BFF50091 /* FontAwesome.ttf */; };
@@ -458,7 +456,6 @@
 		649AB6261EA620130056D3CD /* BridgeUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BridgeUtils.swift; sourceTree = "<group>"; };
 		649AB6271EA620130056D3CD /* ChartDataSetConfigUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChartDataSetConfigUtils.swift; sourceTree = "<group>"; };
 		649AB6281EA620130056D3CD /* EntryToDictionaryUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntryToDictionaryUtils.swift; sourceTree = "<group>"; };
-		64C7B3E11E80244800A92E6E /* Secrets.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Secrets.plist; sourceTree = "<group>"; };
 		64C7B3E81E804CA000A92E6E /* prepareInfoPlist.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = prepareInfoPlist.sh; sourceTree = "<group>"; };
 		64C7B3E91E804CA000A92E6E /* runFabric.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = runFabric.sh; sourceTree = "<group>"; };
 		692F9C9C1F02F5E40017E070 /* ReactNativeConfig.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeConfig.xcodeproj; path = "../node_modules/react-native-config/ios/ReactNativeConfig.xcodeproj"; sourceTree = "<group>"; };
@@ -627,7 +624,6 @@
 				13B07FB01A68108700A75B9A /* AppDelegate.m */,
 				13B07FB51A68108700A75B9A /* Images.xcassets */,
 				13B07FB71A68108700A75B9A /* main.m */,
-				64C7B3E11E80244800A92E6E /* Secrets.plist */,
 			);
 			name = SantimentMobile;
 			sourceTree = "<group>";
@@ -1340,7 +1336,6 @@
 			files = (
 				13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */,
 				64C7B3EB1E804CA000A92E6E /* runFabric.sh in Resources */,
-				64C7B3E21E80244800A92E6E /* Secrets.plist in Resources */,
 				9EAC257911AF4607839018BE /* Entypo.ttf in Resources */,
 				550B6142293442F2A843D18A /* EvilIcons.ttf in Resources */,
 				EA6960A9E24F433F9F17199C /* FontAwesome.ttf in Resources */,
@@ -1363,7 +1358,6 @@
 				698AA9611F016F62005E5732 /* Staging-Info.plist in Resources */,
 				6942F6BD1F00FF2C00955781 /* Images.xcassets in Resources */,
 				6942F6BE1F00FF2C00955781 /* runFabric.sh in Resources */,
-				6942F6BF1F00FF2C00955781 /* Secrets.plist in Resources */,
 				6942F6C01F00FF2C00955781 /* Entypo.ttf in Resources */,
 				6942F6C11F00FF2C00955781 /* EvilIcons.ttf in Resources */,
 				6942F6C21F00FF2C00955781 /* FontAwesome.ttf in Resources */,
