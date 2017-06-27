@@ -65,5 +65,3 @@ yarn-error.log
 
 # Configuration
 app/config/*.env
-ios/Config.plist
-ios/Secrets.plist
