@@ -1,13 +1,6 @@
 #!/bin/bash
 
-PLISTBUDDY="/usr/libexec/PlistBuddy"
-
-SECRETS_PLIST_PATH="${SRCROOT}/Secrets.plist"
-
-FABRIC_API_KEY=$(${PLISTBUDDY} -c "Print :Fabric:ApiKey" "${SECRETS_PLIST_PATH}")
-FABRIC_API_SECRET=$(${PLISTBUDDY} -c "Print :Fabric:ApiSecret" "${SECRETS_PLIST_PATH}")
-
-#echo "FABRIC_API_KEY=${FABRIC_API_KEY}"
-#echo "FABRIC_API_SECRET=${FABRIC_API_SECRET}"
+echo "FABRIC_API_KEY = \"${FABRIC_API_KEY}\""
+echo "FABRIC_API_SECRET = \"${FABRIC_API_SECRET}\""
 
 "${PODS_ROOT}/Fabric/run" ${FABRIC_API_KEY} ${FABRIC_API_SECRET}
