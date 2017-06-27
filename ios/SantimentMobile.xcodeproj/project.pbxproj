@@ -75,6 +75,8 @@
 		64C7B3E21E80244800A92E6E /* Secrets.plist in Resources */ = {isa = PBXBuildFile; fileRef = 64C7B3E11E80244800A92E6E /* Secrets.plist */; };
 		64C7B3EA1E804CA000A92E6E /* prepareInfoPlist.sh in Resources */ = {isa = PBXBuildFile; fileRef = 64C7B3E81E804CA000A92E6E /* prepareInfoPlist.sh */; };
 		64C7B3EB1E804CA000A92E6E /* runFabric.sh in Resources */ = {isa = PBXBuildFile; fileRef = 64C7B3E91E804CA000A92E6E /* runFabric.sh */; };
+		692F9CA21F02F6250017E070 /* libReactNativeConfig.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 692F9CA11F02F5E50017E070 /* libReactNativeConfig.a */; };
+		692F9CA31F02F6CA0017E070 /* libReactNativeConfig.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 692F9CA11F02F5E50017E070 /* libReactNativeConfig.a */; };
 		6942F67C1F00FF2C00955781 /* RNScatterChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6231EA620130056D3CD /* RNScatterChartView.swift */; };
 		6942F67D1F00FF2C00955781 /* RNBarChartViewBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB5F51EA620130056D3CD /* RNBarChartViewBase.swift */; };
 		6942F67E1F00FF2C00955781 /* RNHorizontalBarChartManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB5F61EA620130056D3CD /* RNHorizontalBarChartManager.swift */; };
@@ -357,6 +359,13 @@
 			remoteGlobalIDString = 8AD256131D6DE5F600C7D842;
 			remoteInfo = BugsnagReactNative;
 		};
+		692F9CA01F02F5E50017E070 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 692F9C9C1F02F5E40017E070 /* ReactNativeConfig.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = EB2648DF1C7BE17A00B8F155;
+			remoteInfo = ReactNativeConfig;
+		};
 		78C398B81ACF4ADC00677621 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 78C398B01ACF4ADC00677621 /* RCTLinking.xcodeproj */;
@@ -452,6 +461,7 @@
 		64C7B3E11E80244800A92E6E /* Secrets.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Secrets.plist; sourceTree = "<group>"; };
 		64C7B3E81E804CA000A92E6E /* prepareInfoPlist.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = prepareInfoPlist.sh; sourceTree = "<group>"; };
 		64C7B3E91E804CA000A92E6E /* runFabric.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = runFabric.sh; sourceTree = "<group>"; };
+		692F9C9C1F02F5E40017E070 /* ReactNativeConfig.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeConfig.xcodeproj; path = "../node_modules/react-native-config/ios/ReactNativeConfig.xcodeproj"; sourceTree = "<group>"; };
 		6942F6D31F00FF2C00955781 /* SantimentMobile Staging.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SantimentMobile Staging.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6942F7031F0101AB00955781 /* Production-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Production-Info.plist"; sourceTree = "<group>"; };
 		6942F7041F0101AB00955781 /* Staging-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Staging-Info.plist"; sourceTree = "<group>"; };
@@ -484,6 +494,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				692F9CA21F02F6250017E070 /* libReactNativeConfig.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
 				00C302E51ABCBA2D00DB3ED1 /* libRCTActionSheet.a in Frameworks */,
@@ -507,6 +518,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				692F9CA31F02F6CA0017E070 /* libReactNativeConfig.a in Frameworks */,
 				6942F6AC1F00FF2C00955781 /* libRCTAnimation.a in Frameworks */,
 				6942F6AD1F00FF2C00955781 /* libReact.a in Frameworks */,
 				6942F6AE1F00FF2C00955781 /* libRCTActionSheet.a in Frameworks */,
@@ -822,6 +834,14 @@
 			path = scripts;
 			sourceTree = "<group>";
 		};
+		692F9C9D1F02F5E40017E070 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				692F9CA11F02F5E50017E070 /* libReactNativeConfig.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		6942F7021F0101AB00955781 /* Info */ = {
 			isa = PBXGroup;
 			children = (
@@ -852,6 +872,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				692F9C9C1F02F5E40017E070 /* ReactNativeConfig.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
 				00C302A71ABCB8CE00DB3ED1 /* RCTActionSheet.xcodeproj */,
@@ -1078,6 +1099,10 @@
 					ProjectRef = 146833FF1AC3E56700842450 /* React.xcodeproj */;
 				},
 				{
+					ProductGroup = 692F9C9D1F02F5E40017E070 /* Products */;
+					ProjectRef = 692F9C9C1F02F5E40017E070 /* ReactNativeConfig.xcodeproj */;
+				},
+				{
 					ProductGroup = 6442F7BA1E9FE29300329903 /* Products */;
 					ProjectRef = 25209279713A4448B36F74E6 /* RNDeviceInfo.xcodeproj */;
 				},
@@ -1276,6 +1301,13 @@
 			fileType = archive.ar;
 			path = libBugsnagReactNative.a;
 			remoteRef = 64C7B3C11E7FEF7000A92E6E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		692F9CA11F02F5E50017E070 /* libReactNativeConfig.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libReactNativeConfig.a;
+			remoteRef = 692F9CA01F02F5E50017E070 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		78C398B91ACF4ADC00677621 /* libRCTLinking.a */ = {
@@ -1709,6 +1741,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
+					"$(SRCROOT)/../node_modules/react-native-config/ios/**",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Info/Production-Info.plist";
 				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";
@@ -1744,6 +1777,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
+					"$(SRCROOT)/../node_modules/react-native-config/ios/**",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Info/Production-Info.plist";
 				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";
@@ -1779,6 +1813,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
+					"$(SRCROOT)/../node_modules/react-native-config/ios/**",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Info/Staging-Info.plist";
 				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";
@@ -1814,6 +1849,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SRCROOT)/../node_modules/react-native-device-info/RNDeviceInfo",
+					"$(SRCROOT)/../node_modules/react-native-config/ios/**",
 				);
 				INFOPLIST_FILE = "$(SRCROOT)/Info/Staging-Info.plist";
 				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";
@@ -1869,6 +1905,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";
 				INFOPLIST_PREFIX_HEADER = "${BUILD_DIR}/GeneratedInfoPlistDotEnv.h";
 				INFOPLIST_PREPROCESS = NO;
@@ -1907,6 +1944,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
+				HEADER_SEARCH_PATHS = "";
 				INFOPLIST_OTHER_PREPROCESSOR_FLAGS = "-traditional";
 				INFOPLIST_PREFIX_HEADER = "${BUILD_DIR}/GeneratedInfoPlistDotEnv.h";
 				INFOPLIST_PREPROCESS = NO;
