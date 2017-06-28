@@ -4,11 +4,12 @@
 
 import axios from 'axios';
 import moment from 'moment';
+import Environment from '../../config';
 
 /**
  * Base URL for API endpoints.
  */
-const apiUrl = 'https://8dkvc3baml.execute-api.eu-central-1.amazonaws.com/default';
+const apiUrl = Environment.santiment.apiUrl;
 
 /**
  * Makes asynchronous request for sentiments by user ID.
