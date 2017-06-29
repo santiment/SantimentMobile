@@ -13,6 +13,7 @@ import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Properties;
@@ -48,17 +49,26 @@ public class MainApplication extends Application implements ReactApplication {
   @Override
   public void onCreate() {
     super.onCreate();
-    Fabric.with(this, new Crashlytics());
 
-    try {
-      Properties prop = new Properties();
-      prop.load(getAssets().open("secrets.properties"));
-      BugsnagReactNative.startWithApiKey(this, prop.getProperty("BUGSNAG_API_KEY"));
-    }
-    catch (IOException e) {
-      e.printStackTrace();
-    }
+    /**
+     * Initialize Fabric.
+     */
+    Fabric.with(
+      this,
+      new Crashlytics()
+    );
 
+    /**
+     * Initialize Bugsnag.
+     */
+    BugsnagReactNative.startWithApiKey(
+      this,
+      BuildConfig.BUGSNAG_API_KEY
+    );
+
+    /**
+     * Initialize SoLoader.
+     */
     SoLoader.init(this, /* native exopackage */ false);
   }
 }
