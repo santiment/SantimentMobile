@@ -89,6 +89,13 @@ import groovy.xml.MarkupBuilder
 
 apply from: "../../node_modules/react-native/react.gradle"
 
+project.ext.envConfigFiles = [
+        staging: "${project.rootDir}/../app/config/staging.env",
+        production: "${project.rootDir}/../app/config/production.env",
+]
+
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
+
 /**
  * Set this to true to create two separate APKs instead of one:
  *   - An APK that only works on ARM devices
@@ -106,6 +113,7 @@ def enableProguardInReleaseBuilds = false
 
 android {
     compileSdkVersion 23
+
     buildToolsVersion '23.0.1'
 
     defaultConfig {
@@ -119,23 +127,15 @@ android {
         }
     }
 
-    // Secrets
-    Properties secrets = new Properties()
-    secrets.load(new FileInputStream(file("${project.rootDir}/app/src/main/assets/secrets.properties")))
-    // -------
-
     // Fabric
     Properties fabricProps = new Properties()
     String fabricPath = "${project.rootDir}/app/fabric.properties"
     File fabricFile = new File(fabricPath)
     fabricFile.createNewFile()
-
     fabricProps.load(new FileInputStream(fabricFile))
-
-    fabricProps.setProperty("apiKey", secrets['FABRIC_API_KEY'])
-    fabricProps.setProperty("apiSecret", secrets['FABRIC_API_SECRET'])
-    fabricProps.setProperty("organization", secrets['FABRIC_ORGANIZATION'])
-
+    fabricProps.setProperty("apiKey", BuildConfig.FABRIC_API_KEY)
+    fabricProps.setProperty("apiSecret", BuildConfig.FABRIC_API_SECRET)
+    fabricProps.setProperty("organization", BuildConfig.FABRIC_ORGANIZATION)
     fabricProps.store(new FileOutputStream(fabricFile), null)
     fabricFile.withWriter { fabricProps.store(it, null) }
     // -------
@@ -143,21 +143,19 @@ android {
     // Bugsnag
     def sw = new StringWriter()
     def xml = new MarkupBuilder(sw)
-
     xml.resources() {
-        string(name: "BUGSNAG_API_KEY", secrets['BUGSNAG_API_KEY'])
+        string(name: "BUGSNAG_API_KEY", BuildConfig.BUGSNAG_API_KEY)
     }
-
     def stringsFile = new File("${project.rootDir}/app/src/main/res/values/bugsnag.xml")
     stringsFile.write(sw.toString())
     // -------
 
     signingConfigs {
         release {
-            storeFile file(secrets['RELEASE_KEYSTORE_PATH'])
-            storePassword secrets['RELEASE_KEYSTORE_PASSWORD']
-            keyAlias secrets['RELEASE_KEYSTORE_ALIAS']
-            keyPassword secrets['RELEASE_KEYSTORE_ALIAS_PASSWORD']
+            storeFile file(BuildConfig.ANDROID_RELEASE_KEYSTORE_PATH)
+            storePassword BuildConfig.ANDROID_RELEASE_KEYSTORE_PASSWORD
+            keyAlias BuildConfig.ANDROID_RELEASE_KEYSTORE_ALIAS
+            keyPassword BuildConfig.ANDROID_RELEASE_KEYSTORE_ALIAS_PASSWORD
         }
     }
 
@@ -175,23 +173,49 @@ android {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
 
-            ext.betaDistributionGroupAliases=secrets['FABRIC_GROUP_ALIASES']
-            ext.betaDistributionNotifications=secrets['FABRIC_NOTIFY_TESTERS']
+            ext.betaDistributionGroupAliases = BuildConfig.FABRIC_GROUP_ALIASES
+            ext.betaDistributionNotifications = BuildConfig.FABRIC_NOTIFY_TESTERS
 
             signingConfig signingConfigs.release
         }
     }
+
     // applicationVariants are e.g. debug, release
     applicationVariants.all { variant ->
         variant.outputs.each { output ->
             // For each separate APK per architecture, set a unique version code as described here:
             // http://tools.android.com/tech-docs/new-build-system/user-guide/apk-splits
-            def versionCodes = ["armeabi-v7a":1, "x86":2]
+            def versionCodes = ["armeabi-v7a": 1, "x86": 2]
             def abi = output.getFilter(OutputFile.ABI)
             if (abi != null) {  // null for the universal-debug, universal-release variants
                 output.versionCodeOverride =
                         versionCodes.get(abi) * 1048576 + defaultConfig.versionCode
             }
+        }
+    }
+
+    /*scripts {
+        staging "ENVFILE=app/config/staging.env react-native run-android"
+        buildStaging "export ENVFILE=app/config/staging.env && cd android && ./gradlew assembleRelease && cd .."
+        production "ENVFILE=app/config/production.env react-native run-android"
+        buildProduction "export ENVFILE=app/config/production.env && cd android && ./gradlew assembleRelease && cd .."
+    }*/
+
+    productFlavors {
+        production {
+            minSdkVersion 16
+            applicationId 'net.santiment.android'
+            targetSdkVersion 22
+            versionCode 28
+            versionName '0.3.10'
+        }
+
+        staging {
+            minSdkVersion 16
+            applicationId 'net.santiment.android.stg'
+            targetSdkVersion 22
+            versionCode 28
+            versionName '0.3.10'
         }
     }
 }
@@ -201,9 +225,11 @@ dependencies {
     compile project(':react-native-device-info')
     compile project(':bugsnag-react-native')
     compile project(':react-native-vector-icons')
-    compile fileTree(dir: "libs", include: ["*.jar"])
-    compile "com.android.support:appcompat-v7:23.0.1"
-    compile "com.facebook.react:react-native:+"  // From node_modules
+    compile project(':react-native-config')
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.android.support:appcompat-v7:23.0.1'
+    compile 'com.facebook.react:react-native:+'
+    // From node_modules
     compile('com.crashlytics.sdk.android:crashlytics:2.6.6@aar') {
         transitive = true;
     }
