@@ -194,13 +194,6 @@ android {
         }
     }
 
-    /*scripts {
-        staging "ENVFILE=app/config/staging.env react-native run-android"
-        buildStaging "export ENVFILE=app/config/staging.env && cd android && ./gradlew assembleRelease && cd .."
-        production "ENVFILE=app/config/production.env react-native run-android"
-        buildProduction "export ENVFILE=app/config/production.env && cd android && ./gradlew assembleRelease && cd .."
-    }*/
-
     productFlavors {
         production {
             minSdkVersion 16

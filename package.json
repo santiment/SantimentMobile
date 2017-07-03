@@ -11,7 +11,10 @@
     "test": "jest",
     "flow": "node_modules/.bin/flow",
     "postversion": "react-native-version",
-    "cleanup": "rm -rf android/build/ android/app/build/ ios/build/ node_modules/ ; yarn cache clean ; yarn install"
+    "cleanup": "rm -rf android/build/ android/app/build/ ios/build/ node_modules/ ; yarn cache clean ; yarn install",
+
+    "android-staging": "ENVFILE=app/config/staging.env react-native run-android",
+    "android-production": "ENVFILE=app/config/production.env react-native run-android"
   },
   "dependencies": {
     "android-back-button": "^1.0.0",
