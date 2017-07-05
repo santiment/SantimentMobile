@@ -1,14 +1,14 @@
-apply plugin: "com.android.application"
-apply plugin: 'io.fabric'
-
 repositories {
-  maven { url 'https://maven.fabric.io/public' }
+    maven {
+        url 'https://maven.fabric.io/public'
+    }
 }
-
 
 buildscript {
     repositories {
-        maven { url 'https://maven.fabric.io/public' }
+        maven {
+            url 'https://maven.fabric.io/public'
+        }
     }
 
     dependencies {
@@ -20,6 +20,9 @@ buildscript {
         classpath 'io.fabric.tools:gradle:1.+'
     }
 }
+
+apply plugin: "com.android.application"
+apply plugin: 'io.fabric'
 
 import com.android.build.OutputFile
 import groovy.xml.MarkupBuilder
@@ -222,10 +225,14 @@ android {
     }
 
     buildTypes {
+        debug {
+            ext.enableCrashlytics = true
+        }
         release {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
 
+            ext.enableCrashlytics = true
             ext.betaDistributionGroupAliases = environment['FABRIC_GROUP_ALIASES']
             ext.betaDistributionNotifications = environment['FABRIC_NOTIFY_TESTERS']
 
@@ -276,7 +283,7 @@ dependencies {
     compile 'com.android.support:appcompat-v7:23.0.1'
     compile 'com.facebook.react:react-native:+'
     // From node_modules
-    compile('com.crashlytics.sdk.android:crashlytics:2.6.6@aar') {
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {
         transitive = true;
     }
 }
