@@ -24,6 +24,11 @@ buildscript {
 import com.android.build.OutputFile
 import groovy.xml.MarkupBuilder
 
+import java.util.regex.Matcher
+import java.util.regex.Pattern
+
+import org.gradle.api.invocation.Gradle;
+
 /**
  * The react.gradle file registers a task for each build variant (e.g. bundleDebugJsAndAssets
  * and bundleReleaseJsAndAssets).
@@ -111,6 +116,44 @@ def enableSeparateBuildPerCPUArchitecture = false
  */
 def enableProguardInReleaseBuilds = false
 
+def getCurrentFlavor() {
+    Gradle gradle = getGradle()
+    String tskReqStr = gradle.getStartParameter().getTaskRequests().toString()
+
+    Pattern pattern;
+
+    if(tskReqStr.contains("assemble")) {
+        pattern = Pattern.compile("assemble(\\w+)(Release|Debug)")
+    }
+    else {
+        pattern = Pattern.compile("generate(\\w+)(Release|Debug)")
+    }
+
+    Matcher matcher = pattern.matcher(tskReqStr)
+
+    if(matcher.find()) {
+        return matcher.group(1).toLowerCase()
+    } else {
+        return ""
+    }
+}
+
+def getEnvironmentFilePath() {
+    String currentFlavor = getCurrentFlavor().toLowerCase()
+    String environmentFileName;
+
+    if (currentFlavor == "production") {
+        environmentFileName = "production.env";
+    } else if (currentFlavor == "staging") {
+        environmentFileName = "staging.env";
+    } else {
+        environmentFileName = "";
+    }
+
+    //return "${project.rootDir}/../app/config/" + environmentFileName;
+    return "../../app/config/production.env"; // hardcode file path for now
+}
+
 android {
     compileSdkVersion 23
 
@@ -127,15 +170,25 @@ android {
         }
     }
 
+    // Environment file
+    Properties environment = new Properties()
+    environment.load(
+            new FileInputStream(
+                    file(
+                            getEnvironmentFilePath()
+                    )
+            )
+    )
+
     // Fabric
     Properties fabricProps = new Properties()
     String fabricPath = "${project.rootDir}/app/fabric.properties"
     File fabricFile = new File(fabricPath)
     fabricFile.createNewFile()
     fabricProps.load(new FileInputStream(fabricFile))
-    fabricProps.setProperty("apiKey", BuildConfig.FABRIC_API_KEY)
-    fabricProps.setProperty("apiSecret", BuildConfig.FABRIC_API_SECRET)
-    fabricProps.setProperty("organization", BuildConfig.FABRIC_ORGANIZATION)
+    fabricProps.setProperty("apiKey", environment['FABRIC_API_KEY'])
+    fabricProps.setProperty("apiSecret", environment['FABRIC_API_SECRET'])
+    fabricProps.setProperty("organization", environment['FABRIC_ORGANIZATION'])
     fabricProps.store(new FileOutputStream(fabricFile), null)
     fabricFile.withWriter { fabricProps.store(it, null) }
     // -------
@@ -144,7 +197,7 @@ android {
     def sw = new StringWriter()
     def xml = new MarkupBuilder(sw)
     xml.resources() {
-        string(name: "BUGSNAG_API_KEY", BuildConfig.BUGSNAG_API_KEY)
+        string(name: "BUGSNAG_API_KEY", environment['BUGSNAG_API_KEY'])
     }
     def stringsFile = new File("${project.rootDir}/app/src/main/res/values/bugsnag.xml")
     stringsFile.write(sw.toString())
@@ -152,10 +205,10 @@ android {
 
     signingConfigs {
         release {
-            storeFile file(BuildConfig.ANDROID_RELEASE_KEYSTORE_PATH)
-            storePassword BuildConfig.ANDROID_RELEASE_KEYSTORE_PASSWORD
-            keyAlias BuildConfig.ANDROID_RELEASE_KEYSTORE_ALIAS
-            keyPassword BuildConfig.ANDROID_RELEASE_KEYSTORE_ALIAS_PASSWORD
+            storeFile file(environment['ANDROID_RELEASE_KEYSTORE_PATH'])
+            storePassword environment['ANDROID_RELEASE_KEYSTORE_PASSWORD']
+            keyAlias environment['ANDROID_RELEASE_KEYSTORE_ALIAS']
+            keyPassword environment['ANDROID_RELEASE_KEYSTORE_ALIAS_PASSWORD']
         }
     }
 
@@ -173,8 +226,8 @@ android {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
 
-            ext.betaDistributionGroupAliases = BuildConfig.FABRIC_GROUP_ALIASES
-            ext.betaDistributionNotifications = BuildConfig.FABRIC_NOTIFY_TESTERS
+            ext.betaDistributionGroupAliases = environment['FABRIC_GROUP_ALIASES']
+            ext.betaDistributionNotifications = environment['FABRIC_NOTIFY_TESTERS']
 
             signingConfig signingConfigs.release
         }
