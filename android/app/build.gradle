@@ -137,24 +137,14 @@ def getCurrentFlavor() {
     if(matcher.find()) {
         return matcher.group(1).toLowerCase()
     } else {
-        return ""
+        //return ""
+        return "production" // hardcode production for now
     }
 }
 
 def getEnvironmentFilePath() {
     String currentFlavor = getCurrentFlavor().toLowerCase()
-    String environmentFileName;
-
-    if (currentFlavor == "production") {
-        environmentFileName = "production.env";
-    } else if (currentFlavor == "staging") {
-        environmentFileName = "staging.env";
-    } else {
-        environmentFileName = "";
-    }
-
-    //return "${project.rootDir}/../app/config/" + environmentFileName;
-    return "../../app/config/production.env"; // hardcode file path for now
+    return "${project.rootDir}/../app/config/${currentFlavor}.env";
 }
 
 android {
@@ -226,7 +216,7 @@ android {
 
     buildTypes {
         debug {
-            ext.enableCrashlytics = true
+            ext.enableCrashlytics = false
         }
         release {
             minifyEnabled enableProguardInReleaseBuilds
