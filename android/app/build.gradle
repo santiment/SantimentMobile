@@ -1,3 +1,11 @@
+import com.android.build.OutputFile
+import groovy.xml.MarkupBuilder
+
+import java.util.regex.Matcher
+import java.util.regex.Pattern
+
+import org.gradle.api.invocation.Gradle;
+
 repositories {
     maven {
         url 'https://maven.fabric.io/public'
@@ -23,14 +31,6 @@ buildscript {
 
 apply plugin: "com.android.application"
 apply plugin: 'io.fabric'
-
-import com.android.build.OutputFile
-import groovy.xml.MarkupBuilder
-
-import java.util.regex.Matcher
-import java.util.regex.Pattern
-
-import org.gradle.api.invocation.Gradle;
 
 project.ext.envConfigFiles = [
         staging: "${project.rootDir}/../app/config/staging.env",
@@ -119,7 +119,7 @@ def enableSeparateBuildPerCPUArchitecture = false
  */
 def enableProguardInReleaseBuilds = false
 
-def getCurrentFlavor() {
+def getCurrentFlavorName() {
     Gradle gradle = getGradle()
     String tskReqStr = gradle.getStartParameter().getTaskRequests().toString()
 
@@ -142,9 +142,14 @@ def getCurrentFlavor() {
     }
 }
 
-def getEnvironmentFilePath() {
-    String currentFlavor = getCurrentFlavor().toLowerCase()
-    return "${project.rootDir}/../app/config/${currentFlavor}.env";
+/**
+ * Returns path to *.env file that includes configuration.
+ *
+ * @param environmentName The name of environment.
+ * @return Path to *.env file.
+ */
+def getEnvironmentFilePath(String environmentName) {
+    return "${project.rootDir}/../app/config/${environmentName}.env";
 }
 
 android {
@@ -168,7 +173,9 @@ android {
     environment.load(
             new FileInputStream(
                     file(
-                            getEnvironmentFilePath()
+                            getEnvironmentFilePath(
+                                    getCurrentFlavorName()
+                            )
                     )
             )
     )
