@@ -32,6 +32,13 @@ import java.util.regex.Pattern
 
 import org.gradle.api.invocation.Gradle;
 
+project.ext.envConfigFiles = [
+        staging: "${project.rootDir}/../app/config/staging.env",
+        production: "${project.rootDir}/../app/config/production.env",
+]
+
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
+
 /**
  * The react.gradle file registers a task for each build variant (e.g. bundleDebugJsAndAssets
  * and bundleReleaseJsAndAssets).
@@ -96,13 +103,6 @@ import org.gradle.api.invocation.Gradle;
  */
 
 apply from: "../../node_modules/react-native/react.gradle"
-
-project.ext.envConfigFiles = [
-        staging: "${project.rootDir}/../app/config/staging.env",
-        production: "${project.rootDir}/../app/config/production.env",
-]
-
-apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
 /**
  * Set this to true to create two separate APKs instead of one:
@@ -216,7 +216,7 @@ android {
 
     buildTypes {
         debug {
-            ext.enableCrashlytics = false
+            ext.enableCrashlytics = true
         }
         release {
             minifyEnabled enableProguardInReleaseBuilds
@@ -246,19 +246,11 @@ android {
 
     productFlavors {
         production {
-            minSdkVersion 16
             applicationId 'net.santiment.android'
-            targetSdkVersion 22
-            versionCode 28
-            versionName '0.3.10'
         }
 
         staging {
-            minSdkVersion 16
             applicationId 'net.santiment.android.stg'
-            targetSdkVersion 22
-            versionCode 28
-            versionName '0.3.10'
         }
     }
 }
