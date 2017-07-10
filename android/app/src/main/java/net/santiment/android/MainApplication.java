@@ -6,6 +6,7 @@ import com.facebook.react.ReactApplication;
 import com.github.wuxudong.rncharts.MPAndroidChartPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.bugsnag.BugsnagReactNative;
+import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
@@ -30,10 +31,11 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new MPAndroidChartPackage(),
-            new RNDeviceInfo(),
-            BugsnagReactNative.getPackage(),
-            new VectorIconsPackage()
+          new ReactNativeConfigPackage(),
+          new MPAndroidChartPackage(),
+          new RNDeviceInfo(),
+          BugsnagReactNative.getPackage(),
+          new VectorIconsPackage()
       );
     }
   };
@@ -58,10 +60,10 @@ public class MainApplication extends Application implements ReactApplication {
     /**
      * Initialize Bugsnag.
      */
-    BugsnagReactNative.startWithApiKey(
+    /*BugsnagReactNative.startWithApiKey(
       this,
       BuildConfig.BUGSNAG_API_KEY
-    );
+    );*/
 
     /**
      * Initialize SoLoader.
