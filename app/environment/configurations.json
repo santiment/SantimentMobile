@@ -1,0 +1,11 @@
+{
+    "development": {
+        "santimentApiUrl": "https://sa4h4y6jgb.execute-api.eu-central-1.amazonaws.com/dev"
+    },
+    "staging": {
+        "santimentApiUrl": "https://sa4h4y6jgb.execute-api.eu-central-1.amazonaws.com/dev"
+    },
+    "production": {
+        "santimentApiUrl": "https://sa4h4y6jgb.execute-api.eu-central-1.amazonaws.com/dev"
+    }
+}
