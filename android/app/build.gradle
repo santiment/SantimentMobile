@@ -165,8 +165,8 @@ android {
         applicationId "net.santiment.android"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 29
-        versionName "0.3.14"
+        versionCode 30
+        versionName "0.3.15"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
