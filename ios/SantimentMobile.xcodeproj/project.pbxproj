@@ -407,7 +407,6 @@
 		3C30843F3ABF492D9D9CE0C9 /* Octicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Octicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Octicons.ttf"; sourceTree = "<group>"; };
 		4AC8CBEB9ADB4DA285DB2514 /* Ionicons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = Ionicons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/Ionicons.ttf"; sourceTree = "<group>"; };
 		5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTAnimation.xcodeproj; path = "../node_modules/react-native/Libraries/NativeAnimation/RCTAnimation.xcodeproj"; sourceTree = "<group>"; };
-		647516381EA55693009209F5 /* SantimentMobile-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "SantimentMobile-Bridging-Header.h"; sourceTree = "<group>"; };
 		649AB5EF1EA620130056D3CD /* BalloonMarker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BalloonMarker.swift; sourceTree = "<group>"; };
 		649AB5F11EA620130056D3CD /* BarDataExtract.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BarDataExtract.swift; sourceTree = "<group>"; };
 		649AB5F21EA620130056D3CD /* RNBarChartManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RNBarChartManager.swift; sourceTree = "<group>"; };
@@ -462,6 +461,7 @@
 		6942F6D31F00FF2C00955781 /* SantimentMobile Staging.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SantimentMobile Staging.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6942F7031F0101AB00955781 /* Production-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Production-Info.plist"; sourceTree = "<group>"; };
 		6942F7041F0101AB00955781 /* Staging-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Staging-Info.plist"; sourceTree = "<group>"; };
+		694595291F15130800A9DDE6 /* SantimentMobile-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = "SantimentMobile-Bridging-Header.h"; path = "SantimentMobile/SantimentMobile-Bridging-Header.h"; sourceTree = "<group>"; };
 		6CE9B98EAC594496B6B95A43 /* RNVectorIcons.xcodeproj */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = "wrapper.pb-project"; name = RNVectorIcons.xcodeproj; path = "../node_modules/react-native-vector-icons/RNVectorIcons.xcodeproj"; sourceTree = "<group>"; };
 		724CB7CBF54B4DDCBE1BC983 /* libRNDeviceInfo.a */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = archive.ar; path = libRNDeviceInfo.a; sourceTree = "<group>"; };
 		72C07F66842341709B5ED00A /* MaterialCommunityIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialCommunityIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialCommunityIcons.ttf"; sourceTree = "<group>"; };
@@ -908,7 +908,7 @@
 				8A8DBC662DB7447EB6D2EDCA /* Resources */,
 				4891F4CD9804C2910A94EEF5 /* Pods */,
 				7BAD646DA09E81CE60AFEB8A /* Frameworks */,
-				647516381EA55693009209F5 /* SantimentMobile-Bridging-Header.h */,
+				694595291F15130800A9DDE6 /* SantimentMobile-Bridging-Header.h */,
 			);
 			indentWidth = 2;
 			sourceTree = "<group>";
@@ -1756,7 +1756,7 @@
 				PRODUCT_NAME = SantimentMobile;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "SantimentMobile-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "SantimentMobile/SantimentMobile-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1797,7 +1797,7 @@
 				PRODUCT_NAME = SantimentMobile;
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "SantimentMobile-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "SantimentMobile/SantimentMobile-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1838,7 +1838,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "SantimentMobile-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "SantimentMobile/SantimentMobile-Bridging-Header.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
@@ -1879,7 +1879,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				PROVISIONING_PROFILE_SPECIFIER = "";
-				SWIFT_OBJC_BRIDGING_HEADER = "SantimentMobile-Bridging-Header.h";
+				SWIFT_OBJC_BRIDGING_HEADER = "SantimentMobile/SantimentMobile-Bridging-Header.h";
 				SWIFT_VERSION = 3.0;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -1927,6 +1927,7 @@
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "SantimentMobile/SantimentMobile-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -1965,6 +1966,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
+				SWIFT_OBJC_BRIDGING_HEADER = "SantimentMobile/SantimentMobile-Bridging-Header.h";
 				VALIDATE_PRODUCT = YES;
 			};
 			name = Release;
