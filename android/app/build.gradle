@@ -33,8 +33,8 @@ apply plugin: "com.android.application"
 apply plugin: 'io.fabric'
 
 project.ext.envConfigFiles = [
-        staging: "${project.rootDir}/../app/config/staging.env",
-        production: "${project.rootDir}/../app/config/production.env",
+        staging: "app/config/staging.env",
+        production: "app/config/production.env",
 ]
 
 apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
@@ -140,6 +140,30 @@ def getCurrentFlavorName() {
         //return ""
         return "production" // hardcode production for now
     }
+}
+
+def getCurrentFlavorName2() {
+    Gradle gradle = getGradle()
+
+    // match optional modules followed by the task
+    // (?:.*:)* is a non-capturing group to skip any :foo:bar: if they exist
+    // *[a-z]+([A-Za-z]+) will capture the flavor part of the task name onward (e.g., assembleRelease --> Release)
+    def pattern = Pattern.compile("(?:.*:)*[a-z]+([A-Z][A-Za-z]+)")
+    def flavor = ""
+
+    gradle.getStartParameter().getTaskNames().any { name ->
+        Matcher matcher = pattern.matcher(name)
+        if (matcher.find()) {
+            flavor = matcher.group(1).toLowerCase()
+            return true
+        }
+    }
+
+    if (flavor.length() == 0) {
+        flavor = "production"; // hardcode production for now
+    }
+
+    return flavor
 }
 
 /**
