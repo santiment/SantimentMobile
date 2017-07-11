@@ -62,3 +62,6 @@ playground.js
 
 # Yarn
 yarn-error.log
+
+# Configuration
+app/config/*.env

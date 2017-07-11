@@ -1,14 +1,22 @@
-apply plugin: "com.android.application"
-apply plugin: 'io.fabric'
+import com.android.build.OutputFile
+import groovy.xml.MarkupBuilder
+
+import java.util.regex.Matcher
+import java.util.regex.Pattern
+
+import org.gradle.api.invocation.Gradle;
 
 repositories {
-  maven { url 'https://maven.fabric.io/public' }
+    maven {
+        url 'https://maven.fabric.io/public'
+    }
 }
-
 
 buildscript {
     repositories {
-        maven { url 'https://maven.fabric.io/public' }
+        maven {
+            url 'https://maven.fabric.io/public'
+        }
     }
 
     dependencies {
@@ -21,8 +29,15 @@ buildscript {
     }
 }
 
-import com.android.build.OutputFile
-import groovy.xml.MarkupBuilder
+apply plugin: "com.android.application"
+apply plugin: 'io.fabric'
+
+project.ext.envConfigFiles = [
+        staging: "app/config/staging.env",
+        production: "app/config/production.env",
+]
+
+apply from: project(':react-native-config').projectDir.getPath() + "/dotenv.gradle"
 
 /**
  * The react.gradle file registers a task for each build variant (e.g. bundleDebugJsAndAssets
@@ -104,60 +119,107 @@ def enableSeparateBuildPerCPUArchitecture = false
  */
 def enableProguardInReleaseBuilds = false
 
+/**
+ * Returns name of current flavor.
+ * @return Name of current flavor.
+ */
+def getCurrentFlavorName() {
+    Gradle gradle = getGradle()
+    String tskReqStr = gradle.getStartParameter().getTaskRequests().toString()
+
+    Pattern pattern;
+
+    if(tskReqStr.contains("assemble")) {
+        pattern = Pattern.compile("assemble(\\w+)(Release|Debug)")
+    }
+    else {
+        pattern = Pattern.compile("generate(\\w+)(Release|Debug)")
+    }
+
+    Matcher matcher = pattern.matcher(tskReqStr)
+
+    if(matcher.find()) {
+        return matcher.group(1).toLowerCase()
+    } else {
+        //return ""
+        return "production" // hardcode production for now
+    }
+}
+
+/**
+ * Returns path to *.env file that includes configuration.
+ *
+ * @param environmentName The name of environment.
+ * @return Path to *.env file.
+ */
+def getEnvironmentFilePath(String environmentName) {
+    return "${project.rootDir}/../app/config/${environmentName}.env";
+}
+
 android {
     compileSdkVersion 23
+
     buildToolsVersion '23.0.1'
 
     defaultConfig {
         applicationId "net.santiment.android"
         minSdkVersion 16
         targetSdkVersion 22
-        versionCode 28
-        versionName "0.3.10"
+        versionCode 30
+        versionName "0.3.15"
         ndk {
             abiFilters "armeabi-v7a", "x86"
         }
     }
 
-    // Secrets
-    Properties secrets = new Properties()
-    secrets.load(new FileInputStream(file("${project.rootDir}/app/src/main/assets/secrets.properties")))
-    // -------
+    // Environment file
+    Properties environment = new Properties()
+    environment.load(
+            new FileInputStream(
+                    file(
+                            getEnvironmentFilePath(
+                                    getCurrentFlavorName()
+                            )
+                    )
+            )
+    )
 
     // Fabric
     Properties fabricProps = new Properties()
     String fabricPath = "${project.rootDir}/app/fabric.properties"
     File fabricFile = new File(fabricPath)
     fabricFile.createNewFile()
-
     fabricProps.load(new FileInputStream(fabricFile))
-
-    fabricProps.setProperty("apiKey", secrets['FABRIC_API_KEY'])
-    fabricProps.setProperty("apiSecret", secrets['FABRIC_API_SECRET'])
-    fabricProps.setProperty("organization", secrets['FABRIC_ORGANIZATION'])
-
+    fabricProps.setProperty("apiKey", environment['FABRIC_API_KEY'])
+    fabricProps.setProperty("apiSecret", environment['FABRIC_API_SECRET'])
+    fabricProps.setProperty("organization", environment['FABRIC_ORGANIZATION'])
     fabricProps.store(new FileOutputStream(fabricFile), null)
     fabricFile.withWriter { fabricProps.store(it, null) }
     // -------
 
     // Bugsnag
-    def sw = new StringWriter()
+    /**
+     * Uncomment the block below to generate
+     * `bugsnag.xml` file.
+     *
+     * For now, it's not necessary because Bugsnag API key
+     * is already presented within `generated.xml`.
+     */
+    /*def sw = new StringWriter()
     def xml = new MarkupBuilder(sw)
-
     xml.resources() {
-        string(name: "BUGSNAG_API_KEY", secrets['BUGSNAG_API_KEY'])
+        string(name: "BUGSNAG_API_KEY", environment['BUGSNAG_API_KEY'])
     }
-
     def stringsFile = new File("${project.rootDir}/app/src/main/res/values/bugsnag.xml")
-    stringsFile.write(sw.toString())
+    stringsFile.write(sw.toString())*/
     // -------
 
     signingConfigs {
         release {
-            storeFile file(secrets['RELEASE_KEYSTORE_PATH'])
-            storePassword secrets['RELEASE_KEYSTORE_PASSWORD']
-            keyAlias secrets['RELEASE_KEYSTORE_ALIAS']
-            keyPassword secrets['RELEASE_KEYSTORE_ALIAS_PASSWORD']
+            storeFile file(environment['ANDROID_RELEASE_KEYSTORE_PATH'])
+            storePassword environment['ANDROID_RELEASE_KEYSTORE_PASSWORD']
+            keyAlias environment['ANDROID_RELEASE_KEYSTORE_ALIAS']
+            keyPassword environment['ANDROID_RELEASE_KEYSTORE_ALIAS_PASSWORD']
         }
     }
 
@@ -171,22 +233,27 @@ android {
     }
 
     buildTypes {
+        debug {
+            ext.enableCrashlytics = true
+        }
         release {
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"
 
-            ext.betaDistributionGroupAliases=secrets['FABRIC_GROUP_ALIASES']
-            ext.betaDistributionNotifications=secrets['FABRIC_NOTIFY_TESTERS']
+            ext.enableCrashlytics = true
+            ext.betaDistributionGroupAliases = environment['FABRIC_GROUP_ALIASES']
+            ext.betaDistributionNotifications = environment['FABRIC_NOTIFY_TESTERS']
 
             signingConfig signingConfigs.release
         }
     }
+
     // applicationVariants are e.g. debug, release
     applicationVariants.all { variant ->
         variant.outputs.each { output ->
             // For each separate APK per architecture, set a unique version code as described here:
             // http://tools.android.com/tech-docs/new-build-system/user-guide/apk-splits
-            def versionCodes = ["armeabi-v7a":1, "x86":2]
+            def versionCodes = ["armeabi-v7a": 1, "x86": 2]
             def abi = output.getFilter(OutputFile.ABI)
             if (abi != null) {  // null for the universal-debug, universal-release variants
                 output.versionCodeOverride =
@@ -196,16 +263,12 @@ android {
     }
 
     productFlavors {
-        development {
-            applicationId "net.santiment.android.dev"
+        production {
+            applicationId 'net.santiment.android'
         }
 
         staging {
-            applicationId "net.santiment.android.stg"
-        }
-
-        production {
-            applicationId "net.santiment.android"
+            applicationId 'net.santiment.android.stg'
         }
     }
 }
@@ -215,10 +278,12 @@ dependencies {
     compile project(':react-native-device-info')
     compile project(':bugsnag-react-native')
     compile project(':react-native-vector-icons')
-    compile fileTree(dir: "libs", include: ["*.jar"])
-    compile "com.android.support:appcompat-v7:23.0.1"
-    compile "com.facebook.react:react-native:+"  // From node_modules
-    compile('com.crashlytics.sdk.android:crashlytics:2.6.6@aar') {
+    compile project(':react-native-config')
+    compile fileTree(include: ['*.jar'], dir: 'libs')
+    compile 'com.android.support:appcompat-v7:23.0.1'
+    compile 'com.facebook.react:react-native:+'
+    // From node_modules
+    compile('com.crashlytics.sdk.android:crashlytics:2.6.8@aar') {
         transitive = true;
     }
 }

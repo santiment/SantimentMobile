@@ -47,7 +47,7 @@ const getStyles = (): StyleSheet => (
             fontSize: 16,
         },
         periodColumn: {
-            width: 80,
+            width: 160,
             justifyContent: 'center',
             alignItems: 'stretch',
             marginRight: 10,
@@ -56,7 +56,7 @@ const getStyles = (): StyleSheet => (
             fontSize: 16,
             fontWeight: '500',
             color: Palette.veryLightGray,
-            textAlign: 'center',
+            textAlign: 'right',
         },
     })
 );

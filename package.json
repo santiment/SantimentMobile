@@ -1,6 +1,6 @@
 {
   "name": "SantimentMobile",
-  "version": "0.3.10",
+  "version": "0.3.15",
   "description": "Mobile MVP for Santiment project <http://santiment.net>",
   "repository": "https://github.com/santiment/SantimentMobile",
   "author": "Eugene Tartakovsky",
@@ -11,7 +11,9 @@
     "test": "jest",
     "flow": "node_modules/.bin/flow",
     "postversion": "react-native-version",
-    "cleanup": "rm -rf android/build/ android/app/build/ ios/build/ node_modules/ ; yarn cache clean ; yarn install"
+    "cleanup": "rm -rf android/build/ android/app/build/ ios/build/ node_modules/ ; yarn cache clean ; yarn install",
+    "android-staging": "ENVFILE=app/config/staging.env react-native run-android",
+    "android-production": "ENVFILE=app/config/production.env react-native run-android"
   },
   "dependencies": {
     "android-back-button": "^1.0.0",
@@ -28,6 +30,7 @@
     "react-dom": "^15.4.2",
     "react-native": "0.42.3",
     "react-native-charts-wrapper": "^0.2.10",
+    "react-native-config": "^0.5.0",
     "react-native-device-info": "^0.10.2",
     "react-native-elements": "^0.12.2",
     "react-native-gifted-chat": "^0.1.4",

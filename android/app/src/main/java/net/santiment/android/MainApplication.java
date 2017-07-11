@@ -6,16 +6,15 @@ import com.facebook.react.ReactApplication;
 import com.github.wuxudong.rncharts.MPAndroidChartPackage;
 import com.learnium.RNDeviceInfo.RNDeviceInfo;
 import com.bugsnag.BugsnagReactNative;
+import com.lugg.ReactNativeConfig.ReactNativeConfigPackage;
 import com.oblador.vectoricons.VectorIconsPackage;
 import com.facebook.react.ReactNativeHost;
 import com.facebook.react.ReactPackage;
 import com.facebook.react.shell.MainReactPackage;
 import com.facebook.soloader.SoLoader;
 
-import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Properties;
 
 import com.crashlytics.android.Crashlytics;
 import io.fabric.sdk.android.Fabric;
@@ -32,10 +31,11 @@ public class MainApplication extends Application implements ReactApplication {
     protected List<ReactPackage> getPackages() {
       return Arrays.<ReactPackage>asList(
           new MainReactPackage(),
-            new MPAndroidChartPackage(),
-            new RNDeviceInfo(),
-            BugsnagReactNative.getPackage(),
-            new VectorIconsPackage()
+          new ReactNativeConfigPackage(),
+          new MPAndroidChartPackage(),
+          new RNDeviceInfo(),
+          BugsnagReactNative.getPackage(),
+          new VectorIconsPackage()
       );
     }
   };
@@ -48,17 +48,26 @@ public class MainApplication extends Application implements ReactApplication {
   @Override
   public void onCreate() {
     super.onCreate();
-    Fabric.with(this, new Crashlytics());
 
-    try {
-      Properties prop = new Properties();
-      prop.load(getAssets().open("secrets.properties"));
-      BugsnagReactNative.startWithApiKey(this, prop.getProperty("BUGSNAG_API_KEY"));
-    }
-    catch (IOException e) {
-      e.printStackTrace();
-    }
+    /**
+     * Initialize Fabric.
+     */
+    Fabric.with(
+      this,
+      new Crashlytics()
+    );
 
+    /**
+     * Initialize Bugsnag.
+     */
+    BugsnagReactNative.startWithApiKey(
+      this,
+      BuildConfig.BUGSNAG_API_KEY
+    );
+
+    /**
+     * Initialize SoLoader.
+     */
     SoLoader.init(this, /* native exopackage */ false);
   }
 }
