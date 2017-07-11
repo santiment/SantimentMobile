@@ -218,13 +218,20 @@ android {
     // -------
 
     // Bugsnag
-    def sw = new StringWriter()
+    /**
+     * Uncomment the block below to generate
+     * `bugsnag.xml` file.
+     *
+     * For now, it's not necessary because Bugsnag API key
+     * is already presented within `generated.xml`.
+     */
+    /*def sw = new StringWriter()
     def xml = new MarkupBuilder(sw)
     xml.resources() {
         string(name: "BUGSNAG_API_KEY", environment['BUGSNAG_API_KEY'])
     }
     def stringsFile = new File("${project.rootDir}/app/src/main/res/values/bugsnag.xml")
-    stringsFile.write(sw.toString())
+    stringsFile.write(sw.toString())*/
     // -------
 
     signingConfigs {
