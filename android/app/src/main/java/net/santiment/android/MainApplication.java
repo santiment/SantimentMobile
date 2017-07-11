@@ -60,10 +60,10 @@ public class MainApplication extends Application implements ReactApplication {
     /**
      * Initialize Bugsnag.
      */
-    /*BugsnagReactNative.startWithApiKey(
+    BugsnagReactNative.startWithApiKey(
       this,
       BuildConfig.BUGSNAG_API_KEY
-    );*/
+    );
 
     /**
      * Initialize SoLoader.
