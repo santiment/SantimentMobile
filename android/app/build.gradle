@@ -119,6 +119,10 @@ def enableSeparateBuildPerCPUArchitecture = false
  */
 def enableProguardInReleaseBuilds = false
 
+/**
+ * Returns name of current flavor.
+ * @return Name of current flavor.
+ */
 def getCurrentFlavorName() {
     Gradle gradle = getGradle()
     String tskReqStr = gradle.getStartParameter().getTaskRequests().toString()
@@ -140,30 +144,6 @@ def getCurrentFlavorName() {
         //return ""
         return "production" // hardcode production for now
     }
-}
-
-def getCurrentFlavorName2() {
-    Gradle gradle = getGradle()
-
-    // match optional modules followed by the task
-    // (?:.*:)* is a non-capturing group to skip any :foo:bar: if they exist
-    // *[a-z]+([A-Za-z]+) will capture the flavor part of the task name onward (e.g., assembleRelease --> Release)
-    def pattern = Pattern.compile("(?:.*:)*[a-z]+([A-Z][A-Za-z]+)")
-    def flavor = ""
-
-    gradle.getStartParameter().getTaskNames().any { name ->
-        Matcher matcher = pattern.matcher(name)
-        if (matcher.find()) {
-            flavor = matcher.group(1).toLowerCase()
-            return true
-        }
-    }
-
-    if (flavor.length() == 0) {
-        flavor = "production"; // hardcode production for now
-    }
-
-    return flavor
 }
 
 /**
