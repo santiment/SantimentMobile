@@ -23,7 +23,7 @@ export const getSentiments = (
     /**
      * Obtain URL for request.
      */
-    const url = `${Environment.santimentApiUrl}/sentiment?userId=${userId}`;
+    const url = `${apiUrl}/sentiment?userId=${userId}`;
 
     /**
      * Start request and return it.
@@ -47,7 +47,7 @@ export const postSentiment = (
     /*
      * Obtain URL for request.
      */
-    const url = `${Environment.santimentApiUrl}/sentiment`;
+    const url = `${apiUrl}/sentiment`;
 
     /**
      * Start request and return it.
@@ -81,7 +81,7 @@ export const getAggregate = (
     /**
      * Obtain URL for request.
      */
-    const url = `${Environment.santimentApiUrl}/sentiment/aggregate?asset=${symbol}&from=${formattedStartDate}&to=${formattedEndDate}`;
+    const url = `${apiUrl}/sentiment/aggregate?asset=${symbol}&from=${formattedStartDate}&to=${formattedEndDate}`;
 
     /**
      * Start request and return it.
@@ -103,7 +103,7 @@ export const getFeed = (
     /**
      * Obtain URL for request.
      */
-    const url = `${Environment.santimentApiUrl}/feed?keyword=${asset}`;
+    const url = `${apiUrl}/feed?keyword=${asset}`;
 
     /**
      * Start request and return it.
