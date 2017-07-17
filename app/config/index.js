@@ -16,12 +16,12 @@ const Environment = {
         /**
          * Shows whether current build is production.
          */
-        isProduction: Config.BUILD_TYPE === 'production',
+        isProduction: Config.ENVIRONMENT_TYPE === 'production',
 
         /**
          * Shows whether current build is staging.
          */
-        isStaging: Config.BUILD_TYPE === 'staging',
+        isStaging: Config.ENVIRONMENT_TYPE === 'staging',
     },
 
     /**
