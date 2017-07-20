@@ -17,6 +17,7 @@
   },
   "dependencies": {
     "android-back-button": "1.0.0",
+    "aws-sdk": "^2.87.0",
     "axios": "0.16.1",
     "bugsnag-react-native": "2.2.3",
     "eslint-plugin-react-native": "2.3.2",
@@ -37,6 +38,7 @@
     "react-native-keyboard-aware-scrollview": "1.1.6",
     "react-native-modal-dropdown": "0.4.3",
     "react-native-navbar": "1.7.1",
+    "react-native-push-notification": "^3.0.0",
     "react-native-responsive-dimensions": "1.0.1",
     "react-native-scrollable-tab-view": "0.7.4",
     "react-native-segmented-control-tab": "3.0.2",
