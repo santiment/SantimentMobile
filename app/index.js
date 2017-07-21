@@ -50,7 +50,7 @@ class App extends React.PureComponent {
              * Optional - not required for local notifications,
              * but is needed to receive remote push notifications.
              */
-            senderID: 'INPUT_GCM_SENDER_ID',
+            senderID: Environment.android.gcmSenderId,
 
             /**
              * iOS only.

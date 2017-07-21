@@ -34,6 +34,13 @@ const Environment = {
          */
         apiUrl: Config.SANTIMENT_API_URL,
     },
+
+    /**
+     * Android-related data.
+     */
+    android: {
+        gcmSenderId: Config.ANDROID_GCM_SENDER_ID,
+    },
 };
 
 export default Environment;
