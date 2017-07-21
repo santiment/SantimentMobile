@@ -92,7 +92,7 @@ class App extends React.PureComponent {
         } else if (Environment.buildType.isStaging) {
             console.disableYellowBox = false;
         }
-    };=8
+    };
 
     render() {
         /**
