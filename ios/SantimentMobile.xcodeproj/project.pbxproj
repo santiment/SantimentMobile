@@ -74,6 +74,7 @@
 		64A6D0C2479F4A8289782683 /* Foundation.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 225A8C3F419B40E292B7FF29 /* Foundation.ttf */; };
 		64C7B3EA1E804CA000A92E6E /* prepareInfoPlist.sh in Resources */ = {isa = PBXBuildFile; fileRef = 64C7B3E81E804CA000A92E6E /* prepareInfoPlist.sh */; };
 		64C7B3EB1E804CA000A92E6E /* runFabric.sh in Resources */ = {isa = PBXBuildFile; fileRef = 64C7B3E91E804CA000A92E6E /* runFabric.sh */; };
+		691E32681F224E8A00884F10 /* libRCTPushNotification.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 691E32531F224E7F00884F10 /* libRCTPushNotification.a */; };
 		692F9CA21F02F6250017E070 /* libReactNativeConfig.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 692F9CA11F02F5E50017E070 /* libReactNativeConfig.a */; };
 		692F9CA31F02F6CA0017E070 /* libReactNativeConfig.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 692F9CA11F02F5E50017E070 /* libReactNativeConfig.a */; };
 		6942F67C1F00FF2C00955781 /* RNScatterChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 649AB6231EA620130056D3CD /* RNScatterChartView.swift */; };
@@ -357,6 +358,20 @@
 			remoteGlobalIDString = 8AD256131D6DE5F600C7D842;
 			remoteInfo = BugsnagReactNative;
 		};
+		691E32521F224E7F00884F10 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 691E32421F224E7F00884F10 /* RCTPushNotification.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 134814201AA4EA6300B7C361;
+			remoteInfo = RCTPushNotification;
+		};
+		691E32541F224E7F00884F10 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 691E32421F224E7F00884F10 /* RCTPushNotification.xcodeproj */;
+			proxyType = 2;
+			remoteGlobalIDString = 3D05745F1DE6004600184BB4;
+			remoteInfo = "RCTPushNotification-tvOS";
+		};
 		692F9CA01F02F5E50017E070 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 692F9C9C1F02F5E40017E070 /* ReactNativeConfig.xcodeproj */;
@@ -457,6 +472,7 @@
 		649AB6281EA620130056D3CD /* EntryToDictionaryUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EntryToDictionaryUtils.swift; sourceTree = "<group>"; };
 		64C7B3E81E804CA000A92E6E /* prepareInfoPlist.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = prepareInfoPlist.sh; sourceTree = "<group>"; };
 		64C7B3E91E804CA000A92E6E /* runFabric.sh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.script.sh; path = runFabric.sh; sourceTree = "<group>"; };
+		691E32421F224E7F00884F10 /* RCTPushNotification.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = RCTPushNotification.xcodeproj; path = "../node_modules/react-native/Libraries/PushNotificationIOS/RCTPushNotification.xcodeproj"; sourceTree = "<group>"; };
 		692F9C9C1F02F5E40017E070 /* ReactNativeConfig.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ReactNativeConfig.xcodeproj; path = "../node_modules/react-native-config/ios/ReactNativeConfig.xcodeproj"; sourceTree = "<group>"; };
 		6942F6D31F00FF2C00955781 /* SantimentMobile Staging.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "SantimentMobile Staging.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		6942F7031F0101AB00955781 /* Production-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "Production-Info.plist"; sourceTree = "<group>"; };
@@ -491,6 +507,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				691E32681F224E8A00884F10 /* libRCTPushNotification.a in Frameworks */,
 				692F9CA21F02F6250017E070 /* libReactNativeConfig.a in Frameworks */,
 				5E9157361DD0AC6A00FF2AA8 /* libRCTAnimation.a in Frameworks */,
 				146834051AC3E58100842450 /* libReact.a in Frameworks */,
@@ -830,6 +847,15 @@
 			path = scripts;
 			sourceTree = "<group>";
 		};
+		691E32431F224E7F00884F10 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				691E32531F224E7F00884F10 /* libRCTPushNotification.a */,
+				691E32551F224E7F00884F10 /* libRCTPushNotification-tvOS.a */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		692F9C9D1F02F5E40017E070 /* Products */ = {
 			isa = PBXGroup;
 			children = (
@@ -868,6 +894,7 @@
 		832341AE1AAA6A7D00B99B32 /* Libraries */ = {
 			isa = PBXGroup;
 			children = (
+				691E32421F224E7F00884F10 /* RCTPushNotification.xcodeproj */,
 				692F9C9C1F02F5E40017E070 /* ReactNativeConfig.xcodeproj */,
 				5E91572D1DD0AC6500FF2AA8 /* RCTAnimation.xcodeproj */,
 				146833FF1AC3E56700842450 /* React.xcodeproj */,
@@ -1025,7 +1052,7 @@
 					};
 					13B07F861A680F5B00A75B9A = {
 						DevelopmentTeam = MWNATH4NEC;
-						LastSwiftMigration = 0830;
+						LastSwiftMigration = 830;
 						ProvisioningStyle = Automatic;
 					};
 					6942F6791F00FF2C00955781 = {
@@ -1073,6 +1100,10 @@
 				{
 					ProductGroup = 00C302D41ABCB9D200DB3ED1 /* Products */;
 					ProjectRef = 00C302D31ABCB9D200DB3ED1 /* RCTNetwork.xcodeproj */;
+				},
+				{
+					ProductGroup = 691E32431F224E7F00884F10 /* Products */;
+					ProjectRef = 691E32421F224E7F00884F10 /* RCTPushNotification.xcodeproj */;
 				},
 				{
 					ProductGroup = 139105B71AF99BAD00B5F7CC /* Products */;
@@ -1297,6 +1328,20 @@
 			fileType = archive.ar;
 			path = libBugsnagReactNative.a;
 			remoteRef = 64C7B3C11E7FEF7000A92E6E /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		691E32531F224E7F00884F10 /* libRCTPushNotification.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = libRCTPushNotification.a;
+			remoteRef = 691E32521F224E7F00884F10 /* PBXContainerItemProxy */;
+			sourceTree = BUILT_PRODUCTS_DIR;
+		};
+		691E32551F224E7F00884F10 /* libRCTPushNotification-tvOS.a */ = {
+			isa = PBXReferenceProxy;
+			fileType = archive.ar;
+			path = "libRCTPushNotification-tvOS.a";
+			remoteRef = 691E32541F224E7F00884F10 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 		692F9CA11F02F5E50017E070 /* libReactNativeConfig.a */ = {
