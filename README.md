@@ -19,18 +19,18 @@
   - `$ yarn install`
 - Install Flow type definitions
   - `$ flow-typed install`
-- Set your private keys in `ios/Secrets.plist` file
-- Set your private keys in `android/app/src/main/assets/secrets.properties` file
-- Ignore changes in secrets files
-  - `$ git update-index --assume-unchanged ios/Secrets.plist`
-  - `$ git update-index --assume-unchanged android/app/src/main/assets/secrets.properties`
-  
+- Set your private keys in `app/config/production.env` file
+- Set your private keys in `app/config/staging.env` file
+- Ignore changes in configuration files
+  - `$ git update-index --assume-unchanged app/config/production.env`
+  - `$ git update-index --assume-unchanged app/config/production.env`
+
 ## Running on iOS 
 - `$ cd SantimentMobile/ios`
 - `$ pod install`
 - TODO
 
-## Runnion on Android
+## Running on Android
 - TODO
 
 ## Linked dependencies
@@ -39,5 +39,5 @@
 - `react-native-device-info`. Unlink before uninstalling `react-native-device-info` package.
 
 ## Files under `git update-index --assume-unchanged`
-- `ios/Secrets.plist`
-- `android/app/src/main/assets/secrets.properties`
+- `app/config/production.env`
+- `app/config/staging.env`
