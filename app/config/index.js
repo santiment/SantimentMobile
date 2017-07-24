@@ -25,8 +25,7 @@ const Environment = {
     },
 
     /**
-     * Santiment data.
-     * Everything that is related to Santiment mobile app and server.
+     * Santiment settings.
      */
     santiment: {
         /**
@@ -36,9 +35,38 @@ const Environment = {
     },
 
     /**
-     * Android-related data.
+     * Fabric settings.
+     */
+    fabric: {
+        /**
+         * Fabric API key.
+         */
+        apiKey: Config.FABRIC_API_KEY,
+
+        /**
+         * Fabric API secret.
+         */
+        apiSecret: Config.FABRIC_API_SECRET,
+    },
+
+    /**
+     * Bugsnag settings.
+     */
+    bugsnag: {
+        /**
+         * Bugsnag API key.
+         */
+        apiKey: Config.BUGSNAG_API_KEY,
+    },
+
+    /**
+     * Android settings.
      */
     android: {
+        /**
+         * Android GCM sender ID.
+         * Required for push notifications.
+         */
         gcmSenderId: Config.ANDROID_GCM_SENDER_ID,
     },
 };
