@@ -8,6 +8,7 @@ import React from 'react';
 import AppNavigator from './navigator';
 import Store from './store';
 import Environment from './config';
+import PushNotificationManager from './utils/pushNotificationManager';
 
 // eslint-disable-next-line react/prefer-stateless-function
 class App extends React.PureComponent {
@@ -16,69 +17,30 @@ class App extends React.PureComponent {
      * Settings for push notifications.
      */
     setupPushNotifications = (): void => {
-        const PushNotification = require('react-native-push-notification');
+        PushNotificationManager.setup({
+            androidGcmSenderId: Environment.android.gcmSenderId,
 
-        PushNotification.configure({
-
-            /**
-             * Optional.
-             * Called when Token is generated (iOS and Android).
-             * @param {*} token Token.
-             */
-            onRegister(token) {
+            onIOSToken(token) {
                 console.log(
-                    'Push notification token: ',
+                    'PushNotificationManager did receive iOS token: ',
                     token,
                 );
             },
 
-            /**
-             * Required.
-             * Called when a remote or local notification is opened or received.
-             * @param {*} notification Notification.
-             */
-            onNotification(notification) {
+            onAndroidToken(token) {
                 console.log(
-                    'Did receive notification: ',
-                    notification,
+                    'PushNotificationManager did receive Android token: ',
+                    token,
                 );
             },
 
-            /**
-             * Android only.
-             * GCM Sender ID.
-             * Optional - not required for local notifications,
-             * but is needed to receive remote push notifications.
-             */
-            senderID: Environment.android.gcmSenderId,
-
-            /**
-             * iOS only.
-             * Optional.
-             * Permissions to register.
-             * All permissions are `true` by default.
-             */
-            permissions: {
-                alert: true,
-                badge: true,
-                sound: true,
+            onReceivedNotification(notification) {
+                console.log(
+                    'PushNotificationManager did receive notification: ',
+                    notification,
+                );
             },
-
-            /**
-             * Shows whether the initial notification should be popped automatically.
-             * By default, the value is `true`.
-             */
-            popInitialNotification: true,
-
-            /**
-             * Optional.
-             * Specified if permissions (iOS) and token (Android and iOS)
-             * will be requested or not.
-             * If not, you must call `PushNotificationsHandler.requestPermissions()` later.
-             * By default, value is `true`.
-             */
-            requestPermissions: true,
-        });
+        }).requestPermissions();
     }
     
     /**
