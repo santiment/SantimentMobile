@@ -112,3 +112,41 @@ export const getFeed = (
         url,
     );
 };
+
+/**
+ * Subscribes device for push notifications.
+ * Requires one of two arguments: iOS token or Android token.
+ *
+ * @param {string} iOSToken Token for iOS device.
+ * @param {string} androidToken Token for Android device.
+ */
+export const subscribeDevice = (
+    iOSToken?: string,
+    androidToken?: string,
+): any => {
+    /**
+     * Obtain URL for request.
+     */
+    const url = `${apiUrl}/push/subscribe`;
+
+    /**
+     * Prepare data for request's body.
+     */
+    const data = {
+        ios: {
+            token: iOSToken,
+        },
+        android: {
+            token: androidToken,
+        },
+    };
+
+    /**
+     * Start request and return it.
+     */
+    return axios.post(
+        url,
+        data,
+        null,
+    );
+};

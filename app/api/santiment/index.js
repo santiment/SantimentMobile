@@ -213,3 +213,61 @@ export const getFeeds = (
     return Rx.Observable.forkJoin(observables)
         .map(arr => _.assign(...arr));
 };
+
+/**
+ * Subscribes iOS device for push notifications.
+ *
+ * @param {string} token iOS device token.
+ */
+export const subscribeIOSDevice = (
+    token: string,
+): any => {
+    /**
+     * Start request.
+     */
+    const request = SantimentHttpClient.subscribeDevice(
+        token,
+        undefined,
+    );
+
+    /**
+     * Handle response.
+     */
+    const response = request
+        .then(r => r.data)
+        .catch(processAndRethrow);
+
+    /**
+     * Return observable.
+     */
+    return Rx.Observable.fromPromise(response);
+};
+
+/**
+ * Subscribes Android device for push notifications.
+ *
+ * @param {string} token Android device token.
+ */
+export const subscribeAndroidDevice = (
+    token: string,
+): any => {
+    /**
+     * Start request.
+     */
+    const request = SantimentHttpClient.subscribeDevice(
+        undefined,
+        token,
+    );
+
+    /**
+     * Handle response.
+     */
+    const response = request
+        .then(r => r.data)
+        .catch(processAndRethrow);
+
+    /**
+     * Return observable.
+     */
+    return Rx.Observable.fromPromise(response);
+};
