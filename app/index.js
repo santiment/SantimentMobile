@@ -9,6 +9,7 @@ import AppNavigator from './navigator';
 import Store from './store';
 import Environment from './config';
 import PushNotificationManager from './utils/pushNotificationManager';
+import * as SantimentApiClient from './api/santiment';
 
 // eslint-disable-next-line react/prefer-stateless-function
 class App extends React.PureComponent {
@@ -25,11 +26,19 @@ class App extends React.PureComponent {
                     'PushNotificationManager did receive iOS token: ',
                     token,
                 );
+
+                SantimentApiClient.subscribeIOSDevice(
+                    token,
+                );
             },
 
             onAndroidToken(token) {
                 console.log(
                     'PushNotificationManager did receive Android token: ',
+                    token,
+                );
+
+                SantimentApiClient.subscribeAndroidDevice(
                     token,
                 );
             },
