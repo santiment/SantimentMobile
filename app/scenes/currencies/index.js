@@ -11,7 +11,6 @@ import {
     Text,
     ListView,
     RefreshControl,
-    StyleSheet,
 } from 'react-native';
 
 import {
@@ -56,7 +55,10 @@ const propTypes = {
 @observer
 class Currencies extends React.PureComponent {
     render() {
-        const { navigator, store } = this.props;
+        const {
+            navigator,
+            store,
+        } = this.props;
 
         const styles = getStyles();
 

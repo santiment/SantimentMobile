@@ -82,6 +82,22 @@ const getStyles = (): StyleSheet => (
         chart: {
             height: responsiveHeight(40),
         },
+        fabContainer: {
+            position: 'absolute',
+            bottom: 20,
+            right: 20,
+        },
+        header: {
+            height: 0,
+        },
+        footer: {
+            /**
+             * Height includes offset (20 points)
+             * and height of floating action button
+             * (52 points).
+             */
+            height: 20 + 52,
+        },
     })
 );
 

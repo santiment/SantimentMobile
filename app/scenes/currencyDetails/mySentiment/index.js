@@ -12,6 +12,10 @@ import {
 } from 'react-native';
 
 import {
+    Icon,
+} from 'react-native-elements';
+
+import {
     observer,
 } from 'mobx-react/native';
 
@@ -167,6 +171,8 @@ class MySentiment extends React.Component {
                 <View style={styles.listViewContainer}>
                     <ListView
                         renderRow={renderRow}
+                        renderHeader={() => <View style={styles.header} />}
+                        renderFooter={() => <View style={styles.footer} />}
                         dataSource={store.dataSource}
                         enableEmptySections
                         removeClippedSubviews={false}
@@ -177,6 +183,18 @@ class MySentiment extends React.Component {
                             />
                         }
                     />
+                </View>
+
+                <View style={styles.fabContainer}>
+
+                    <Icon
+                        raised
+                        reverse
+                        name="refresh"
+                        color={Palette.forestGreenOne}
+                        onPress={store.refresh}
+                    />
+
                 </View>
 
             </View>
